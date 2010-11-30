@@ -97,6 +97,7 @@ TIPO_PROGRAMA = (
 
 
 class Profesor(models.Model):
+  
   # Informacion personal
   nombre = models.CharField(max_length=200)
   apellido = models.CharField(max_length=200)
@@ -106,18 +107,22 @@ class Profesor(models.Model):
   lugar_expedicion = models.CharField(max_length=200, blank = True)
   fecha_nacimiento = models.DateField()
   lugar_nacimiento = models.CharField(max_length=200)
+  foto = models.CharField(max_length=200, blank=True)
+  
+  # Informacion de contacto
   direccion = models.CharField(max_length=200)
   lugar_residencia = models.CharField(max_length=200)
   telefono = models.CharField(max_length=200)
   email = models.EmailField(unique = True)
   web = models.URLField(blank=True)
-  foto = models.CharField(max_length=200, blank=True)
   
   def __unicode__(self):
     salida = self.apellido + ', ' + self.nombre
     return salida
 
+
 class Estudiante(models.Model):
+  
   # Informacion personal  
   nombre = models.CharField(max_length=200)
   apellido = models.CharField(max_length=200)
@@ -127,12 +132,14 @@ class Estudiante(models.Model):
   lugar_expedicion = models.CharField(max_length=200, blank = True)
   fecha_nacimiento = models.DateField()
   lugar_nacimiento = models.CharField(max_length=200)
+  foto = models.CharField(max_length=200, blank=True)
+  
+  # Informacion de contacto
   direccion = models.CharField(max_length=200)
   lugar_residencia = models.CharField(max_length=200)
   telefono = models.CharField(max_length=200)
   email = models.EmailField(unique = True)
   web = models.URLField(blank=True)
-  foto = models.CharField(max_length=200, blank=True)
 
 
 class OtrosEstudios(models.Model):
@@ -155,6 +162,7 @@ class Referencia(models.Model):
 
   
 class Salon(models.Model):
+  
   codigo = models.CharField(max_length=200)
   descripcion = models.TextField(max_length=200, blank = True)
   capacidad = models.IntegerField(blank = True)
@@ -165,18 +173,24 @@ class Salon(models.Model):
   
   
 class Programa(models.Model):
+  
+  # Informacion general
   tipo_programa = models.CharField(max_length=1, choices=TIPO_PROGRAMA)
   codigo = models.CharField(max_length=200)
   nombre = models.CharField(max_length=200)
   descripcion = models.TextField(max_length=200, blank = True)
   titulo = models.CharField(max_length=200, help_text = "Título otorgado al finalizar el programa.")
-  resolucion = models.CharField(max_length=200, help_text = "Acto administrativo que valida este programa.", blank = True)  
-  actitudes = models.TextField(max_length=200, help_text = "Actitudes requeridas para los aspirantes.", blank = True)  
-  perfil_profesional = models.TextField(max_length=200, help_text = "Perfil profesional del egresado.", blank = True)
-  funciones = models.TextField(max_length=200, help_text = "Funciones en las que se puede desempeñar el egresado.", blank = True)  
+  resolucion = models.CharField(max_length=200, help_text = "Acto administrativo que valida este programa.", blank = True)
+  
+  # Horario
   periodicidad = models.CharField(max_length=1, choices=PERIODICIDAD) 
   duracion = models.IntegerField()
   jornada = models.CharField(max_length=1, choices=JORNADA)
+  
+  # Extra
+  actitudes = models.TextField(max_length=200, help_text = "Actitudes requeridas para los aspirantes.", blank = True)
+  perfil_profesional = models.TextField(max_length=200, help_text = "Perfil profesional del egresado.", blank = True)
+  funciones = models.TextField(max_length=200, help_text = "Funciones en las que se puede desempeñar el egresado.", blank = True)
   
   def __unicode__(self):
     r = self.nombre + ' - ' + self.jornada.long_description
@@ -184,6 +198,7 @@ class Programa(models.Model):
   
 
 class MatriculaEstudiante(models.Model):
+  
   # Informacion general
   fecha_inscripcion = models.DateField()
   estudiante = models.ForeignKey(Estudiante)
