@@ -2,10 +2,17 @@
 from academico.models import *
 from django.contrib import admin
 
+
+class CorteInline(admin.TabularInline):
+	model = Corte
+	extra = 1
+
+
 class MatriculaCursoAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': ['curso', 'estudiante', 'nota']}),
-    ]
+	fieldsets = [
+		(None, {'fields': ['curso', 'matricula_estudiante', 'nota_definitiva', 'nota_habilitacion']}),
+	]
+	inlines = [CorteInline]
 
 
 class ProgramaAdmin(admin.ModelAdmin):
@@ -25,18 +32,18 @@ class SalonAdmin(admin.ModelAdmin):
 
 class CompetenciaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['programa', 'codigo', 'nombre', 'descripcion', 'modulo', 'periodo']}),
+        (None, {'fields': ['programa', 'codigo', 'nombre', 'descripcion', 'modulo', 'intensidad', 'periodo']}),
     ]
     
 
 class OtrosEstudiosInline(admin.TabularInline):
-  model = OtrosEstudios
-  extra = 1
+	model = OtrosEstudios
+	extra = 1
 
 
 class ReferenciaInline(admin.TabularInline):
-  model = Referencia
-  extra = 1
+	model = Referencia
+	extra = 1
 
 
 class EstudianteAdmin(admin.ModelAdmin):
@@ -53,19 +60,29 @@ class EstudianteAdmin(admin.ModelAdmin):
 
 
 class PagoInline(admin.TabularInline):
-  model = Pago
-  extra = 1
+	model = Pago
+	extra = 1
   
   
 class AmonestacionInline(admin.TabularInline):
-  model = Amonestacion
-  extra = 1
+	model = Amonestacion
+	extra = 1
   
 class MatriculaEstudianteAdmin(admin.ModelAdmin):
     fieldsets = [
-      (None,  {'fields': ['fecha_inscripcion', 'estudiante', 'estado', 'programa', 'codigo', 'usuario', 'contrasena']}),
+      (None,  {'fields': ['fecha_matricula', 'estudiante', 'estado', 'programa', 'codigo', 'usuario', 'contrasena']}),
     ]
     inlines = [PagoInline, AmonestacionInline] 
+
+
+class ExperienciaLaboralInline(admin.TabularInline):
+	model = ExperienciaLaboral
+	extra = 1
+
+
+class OtrosEstudiosProfesorlInline(admin.TabularInline):
+	model = OtrosEstudiosProfesor
+	extra = 1
 
 
 class ProfesorAdmin(admin.ModelAdmin):
@@ -78,6 +95,8 @@ class ProfesorAdmin(admin.ModelAdmin):
         {'fields': ['direccion', 'lugar_residencia', 'telefono', 'email', 'web'], 
         'classes': ['collapse']}),
     ]
+    inlines = [ExperienciaLaboralInline, OtrosEstudiosProfesorlInline] 
+
 
 class SesionInline(admin.TabularInline):
     model = Sesion
