@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-# import Image
 
+# TODO: Leer configuracion desde un archivo externo,
+# p.e., valores de constantes.
+# http://docs.python.org/library/configparser.html
 
 TIPO_COMPORTAMIENTO = (
     ('E',  'Excelente'),
@@ -122,7 +124,7 @@ class Profesor(models.Model):
 	lugar_expedicion = models.CharField(max_length=200, blank=True)
 	fecha_nacimiento = models.DateField()
 	lugar_nacimiento = models.CharField(max_length=200)
-	foto = models.CharField(max_length=200, blank=True)
+	foto = models.FileField(upload_to='/', blank=True)
 	
 	# Informacion de contacto
 	direccion = models.CharField(max_length=200)
@@ -130,6 +132,11 @@ class Profesor(models.Model):
 	telefono = models.CharField(max_length=200)
 	email = models.EmailField(unique = True)
 	web = models.URLField(blank=True)
+	
+	# Informacion de acceso
+	usuario = models.CharField(max_length=200, unique = True)
+	contrasena = models.CharField(max_length=200)
+	codigo = models.CharField(max_length=200, unique = True)
 	
 	def __unicode__(self):
 		salida = self.apellido + ', ' + self.nombre
@@ -155,48 +162,6 @@ class OtrosEstudiosProfesor(models.Model):
 	fecha_graduacion = models.DateField(blank=True)
 
 
-class Estudiante(models.Model):
-  
-	# Informacion personal  
-	nombre = models.CharField(max_length=200)
-	apellido = models.CharField(max_length=200)
-	sexo = models.CharField(max_length=1, choices=SEXO) 
-	tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO) 
-	documento = models.CharField(max_length=200, unique = True)
-	lugar_expedicion = models.CharField(max_length=200, blank=True)
-	fecha_nacimiento = models.DateField()
-	lugar_nacimiento = models.CharField(max_length=200)
-	foto = models.CharField(max_length=200, blank=True)
-	
-	# Informacion de contacto
-	direccion = models.CharField(max_length=200)
-	lugar_residencia = models.CharField(max_length=200)
-	telefono = models.CharField(max_length=200)
-	email = models.EmailField(unique = True)
-	web = models.URLField(blank=True)
-
-
-class OtrosEstudios(models.Model):
-
-	estudiante = models.ForeignKey(Estudiante)
-	tipo_estudio = models.CharField(max_length=1, choices=TIPO_ESTUDIO, blank=True) 
-	institucion = models.CharField(max_length=200, blank=True)
-	titulo = models.CharField(max_length=200, blank=True)
-	fecha_graduacion = models.DateField(blank=True)
-
-
-class Referencia(models.Model):
-
-	estudiante = models.ForeignKey(Estudiante)
-	tipo_referencia = models.CharField(max_length=1, choices=TIPO_REFERENCIA, blank=True) 
-	nombre = models.CharField(max_length=200, blank=True)
-	tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True)
-	documento = models.CharField(max_length=200, blank=True)
-	ciudad_expedicion = models.CharField(max_length=200, blank=True)
-	direccion = models.CharField(max_length=200, blank=True)
-	telefono = models.CharField(max_length=200, blank=True)
-
-  
 class Salon(models.Model):
   
 	codigo = models.CharField(max_length=200)
@@ -223,29 +188,88 @@ class Programa(models.Model):
 	duracion = models.IntegerField()
 	jornada = models.CharField(max_length=1, choices=JORNADA)
 	
-	# Extra
+	# Informacion adicional
 	actitudes = models.TextField(max_length=200, help_text="Actitudes requeridas para los aspirantes.", blank=True)
 	perfil_profesional = models.TextField(max_length=200, help_text="Perfil profesional del egresado.", blank=True)
 	funciones = models.TextField(max_length=200, help_text="Funciones en las que se puede desempeñar el egresado.", blank=True)
 	
 	def __unicode__(self):
-		r = self.nombre + ' - ' + self.jornada.long_description
-		return r
-  
+		salida = self.nombre + ' - ' + self.jornada.long_description
+		return salida
 
-class MatriculaEstudiante(models.Model):
-  
-	# Informacion general
-	fecha_matricula = models.DateField()
-	estudiante = models.ForeignKey(Estudiante)
-	estado = models.CharField(max_length=1, choices=ESTADO_ESTUDIANTE, default = 'A')
+
+class Estudiante(models.Model):
+
+	# Informacion academica
 	programa = models.ForeignKey(Programa)
+	
+	# Informacion personal  
+	nombre = models.CharField(max_length=200)
+	apellido = models.CharField(max_length=200)
+	sexo = models.CharField(max_length=1, choices=SEXO) 
+	tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO) 
+	documento = models.CharField(max_length=200, unique = True)
+	lugar_expedicion = models.CharField(max_length=200, blank=True)
+	fecha_nacimiento = models.DateField()
+	lugar_nacimiento = models.CharField(max_length=200)
+	
+	# Requisitos
+	fotocopia_documento = models.FileField(upload_to='/', blank=True)
+	fotocopia_diploma = models.FileField(upload_to='/', blank=True)
+	foto = models.FileField(upload_to='/', blank=True)
+	
+	# Informacion de contacto
+	direccion = models.CharField(max_length=200)
+	lugar_residencia = models.CharField(max_length=200)
+	telefono = models.CharField(max_length=200)
+	email = models.EmailField(unique = True)
+	web = models.URLField(blank=True)
+	
+	# Informacion de acceso
 	usuario = models.CharField(max_length=200, unique = True)
 	contrasena = models.CharField(max_length=200)
 	codigo = models.CharField(max_length=200, unique = True)
 	
 	def __unicode__(self):
 		return self.codigo
+
+
+class OtrosEstudiosEstudiante(models.Model):
+
+	estudiante = models.ForeignKey(Estudiante)
+	tipo_estudio = models.CharField(max_length=1, choices=TIPO_ESTUDIO, blank=True) 
+	institucion = models.CharField(max_length=200, blank=True)
+	titulo = models.CharField(max_length=200, blank=True)
+	fecha_graduacion = models.DateField(blank=True)
+
+
+class Referencia(models.Model):
+
+	estudiante = models.ForeignKey(Estudiante)
+	tipo_referencia = models.CharField(max_length=1, choices=TIPO_REFERENCIA, blank=True) 
+	nombre = models.CharField(max_length=200, blank=True)
+	tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True)
+	documento = models.CharField(max_length=200, blank=True)
+	ciudad_expedicion = models.CharField(max_length=200, blank=True)
+	direccion = models.CharField(max_length=200, blank=True)
+	telefono = models.CharField(max_length=200, blank=True)
+
+
+
+class MatriculaEstudiante(models.Model):
+  
+	# Informacion general
+	fecha_matricula = models.DateField()
+	estudiante = models.ForeignKey(Estudiante)
+	estado = models.CharField(max_length=1, choices=ESTADO_ESTUDIANTE, default='A')
+	becado = models.BooleanField(help_text="Indica si el estudiante recibe o no beca.")
+	valor_matricula = models.FloatField(default=520000)
+	valor_inscripcion = models.FloatField(default=50000)
+	cuotas = models.IntegerField(help_text="Número de cuotas a diferir el valor de la matrícula.", default=1)
+	letras = models.FileField(upload_to='/', blank=True, help_text='Letras de cambio en caso de financiación del valor de la matrícula')
+	
+	def __unicode__(self):
+		return self.estudiante
 
 
 class Pago(models.Model):
