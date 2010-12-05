@@ -19,44 +19,44 @@ class MatriculaCursoAdmin(admin.ModelAdmin):
 
 
 class ProgramaAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': [ 'tipo_programa', 
+	fieldsets = [
+		(None, {'fields': [ 'tipo_programa', 
 							'codigo', 
 							'nombre', 
 							'descripcion', 
 							'titulo', 
 							'resolucion']}),
-        ('Horario', {'fields': ['periodicidad', 
-        						'duracion', 
-        						'jornada'], 
-        			'classes': ['collapse']}),
-        ('Informacion adicional', {'fields': [	'actitudes', 
-        										'perfil_profesional', 
-       					 						'funciones'], 
-        			'classes': ['collapse']}),
-    ]
-    list_display = ('codigo', 'nombre', 'jornada')
+		('Horario', {'fields': ['periodicidad', 
+								'duracion', 
+								'jornada'], 
+					'classes': ['collapse']}),
+		('Informacion adicional', {'fields': [	'actitudes', 
+												'perfil_profesional', 
+												'funciones'], 
+					'classes': ['collapse']}),
+	]
+	list_display = ('codigo', 'nombre', 'jornada')
 
 
 class SalonAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': [ 'codigo', 
-        					'descripcion', 
-        					'capacidad', 
-        					'tipo_salon']}),
-    ]
+	fieldsets = [
+		(None, {'fields': [ 'codigo', 
+							'descripcion', 
+							'capacidad', 
+							'tipo_salon']}),
+	]
 
 
 class CompetenciaAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': [ 'programa', 
-        					'codigo', 
-        					'nombre', 
-        					'descripcion', 
-        					'modulo', 
-        					'intensidad', 
-        					'periodo']}),
-    ]
+	fieldsets = [
+		(None, {'fields': [ 'programa', 
+							'codigo', 
+							'nombre', 
+							'descripcion', 
+							'modulo', 
+							'intensidad', 
+							'periodo']}),
+	]
     
 
 class OtrosEstudiosEstudianteInline(admin.TabularInline):
@@ -70,37 +70,37 @@ class ReferenciaInline(admin.TabularInline):
 
 
 class EstudianteAdmin(admin.ModelAdmin):
-    fieldsets = [
-    	(None,	{'fields': ['programa']}),
-        ('Informacion Personal', 
-        {'fields': ['nombre', 
-        			'apellido', 
-        			'sexo', 
-        			'tipo_documento', 
-        			'documento', 
-        			'lugar_expedicion',
-        			'fecha_nacimiento', 
-        			'lugar_nacimiento'], 
-        			'classes': ['collapse']}),
-        ('Requisitos', 
-        {'fields': ['fotocopia_documento', 
-        			'fotocopia_diploma', 
-        			'foto'], 
-        			'classes': ['collapse']}),
-        ('Informacion de contacto', 
-        {'fields': ['direccion', 
-        			'lugar_residencia', 
-        			'telefono', 
-        			'email', 
-        			'web'], 
-        			'classes': ['collapse']}),
-        ('Informacion de acceso', 
-        {'fields': ['codigo', 
-        			'usuario', 
-        			'contrasena'], 
-        'classes': ['collapse']}),
-    ]
-    inlines = [OtrosEstudiosEstudianteInline, ReferenciaInline]
+	fieldsets = [
+		(None,	{'fields': ['programa']}),
+		('Informacion Personal', 
+		{'fields': ['nombre', 
+					'apellido', 
+					'sexo', 
+					'tipo_documento', 
+					'documento', 
+					'lugar_expedicion',
+					'fecha_nacimiento', 
+					'lugar_nacimiento'], 
+					'classes': ['collapse']}),
+		('Requisitos', 
+		{'fields': ['fotocopia_documento', 
+					'fotocopia_diploma', 
+					'foto'], 
+					'classes': ['collapse']}),
+		('Informacion de contacto', 
+		{'fields': ['direccion', 
+					'lugar_residencia', 
+					'telefono', 
+					'email', 
+					'web'], 
+					'classes': ['collapse']}),
+		('Informacion de acceso', 
+		{'fields': ['codigo', 
+					'usuario', 
+					'contrasena'], 
+		'classes': ['collapse']}),
+	]
+	inlines = [OtrosEstudiosEstudianteInline, ReferenciaInline]
 
 
 class PagoInline(admin.TabularInline):
@@ -113,17 +113,17 @@ class AmonestacionInline(admin.TabularInline):
 	extra = 1
   
 class MatriculaEstudianteAdmin(admin.ModelAdmin):
-    fieldsets = [
-      (None,  {'fields': [  'fecha_matricula', 
-      						'estudiante', 
-      						'estado',
-      						'becado',
-      						'valor_inscripcion',
-      						'valor_matricula',
-      						'cuotas',
-      						'letras']}),
-    ]
-    inlines = [PagoInline, AmonestacionInline] 
+	fieldsets = [
+	  (None,  {'fields': [  'fecha_matricula', 
+							'estudiante', 
+							'estado',
+							'becado',
+							'valor_inscripcion',
+							'valor_matricula',
+							'cuotas',
+							'letras']}),
+	]
+	inlines = [PagoInline, AmonestacionInline] 
 
 
 class ExperienciaLaboralInline(admin.TabularInline):
@@ -137,49 +137,49 @@ class OtrosEstudiosProfesorlInline(admin.TabularInline):
 
 
 class ProfesorAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Informacion Personal', 
-        {'fields': ['nombre', 
-        			'apellido', 
-        			'sexo', 
-        			'tipo_documento', 
-        			'documento', 
-        			'lugar_expedicion',
-        			'fecha_nacimiento', 
-        			'lugar_nacimiento', 
-        			'foto'], 
-        			'classes': ['collapse']}),
-        ('Informacion de contacto', 
-        {'fields': ['direccion', 
-        			'lugar_residencia', 
-        			'telefono', 
-        			'email', 
-        			'web'],
-        			'classes': ['collapse']}),
-        ('Informacion de acceso', 
-        {'fields': ['codigo', 
-        			'usuario', 
-        			'contrasena'],
-        			'classes': ['collapse']}),
-    ]
-    inlines = [ExperienciaLaboralInline, OtrosEstudiosProfesorlInline] 
+	fieldsets = [
+		('Informacion Personal', 
+		{'fields': ['nombre', 
+					'apellido', 
+					'sexo', 
+					'tipo_documento', 
+					'documento', 
+					'lugar_expedicion',
+					'fecha_nacimiento', 
+					'lugar_nacimiento', 
+					'foto'], 
+					'classes': ['collapse']}),
+		('Informacion de contacto', 
+		{'fields': ['direccion', 
+					'lugar_residencia', 
+					'telefono', 
+					'email', 
+					'web'],
+					'classes': ['collapse']}),
+		('Informacion de acceso', 
+		{'fields': ['codigo', 
+					'usuario', 
+					'contrasena'],
+					'classes': ['collapse']}),
+	]
+	inlines = [ExperienciaLaboralInline, OtrosEstudiosProfesorlInline] 
 
 
 class SesionInline(admin.TabularInline):
-    model = Sesion
-    extra = 1
+	model = Sesion
+	extra = 1
 
     
 class CursoAdmin(admin.ModelAdmin):
-    fieldsets = [
-        (None, {'fields': [ 'competencia', 
-        					'grupo', 
-        					'numero_estudiantes', 
-        					'fecha_inicio', 
-        					'fecha_fin', 
-        					'profesor']}),
-    ]
-    inlines = [SesionInline]
+	fieldsets = [
+		(None, {'fields': [ 'competencia', 
+							'grupo', 
+							'fecha_inicio', 
+							'fecha_fin', 
+							'profesor',
+							'estudiantes']}),
+	]
+	inlines = [SesionInline]
 
 
 admin.site.register(MatriculaEstudiante, MatriculaEstudianteAdmin)
