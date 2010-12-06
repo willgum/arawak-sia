@@ -12,7 +12,7 @@ class MatriculaCursoAdmin(admin.ModelAdmin):
   fieldsets = [
     (None, {'fields': [
               'curso', 
-              'matricula_academica_estudiante',
+              'inscripcion_estudiante',
               'perdio_fallas',
               'nota_definitiva', 
               'nota_habilitacion']}),
@@ -51,6 +51,8 @@ class SalonAdmin(admin.ModelAdmin):
               'capacidad', 
               'tipo_salon']}),
   ]
+  list_display = ('codigo', 'descripcion', 'capacidad', 'tipo_salon')
+  search_fields = ['codigo']
 
 
 class CompetenciaAdmin(admin.ModelAdmin):
@@ -64,6 +66,7 @@ class CompetenciaAdmin(admin.ModelAdmin):
               'intensidad', 
               'periodo']}),
   ]
+  list_display = ('nombre', 'programa', 'intensidad', 'modulo', 'periodo')
     
 
 class OtrosEstudiosEstudianteInline(admin.TabularInline):
@@ -81,6 +84,11 @@ class InscripcionEstudianteInline(admin.TabularInline):
   extra = 1
   
   
+class AmonestacionInline(admin.TabularInline):
+  model = Amonestacion
+  extra = 1
+
+
 class EstudianteAdmin(admin.ModelAdmin):
   fieldsets = [
     ('Informacion Personal', {'fields': [
@@ -112,24 +120,11 @@ class EstudianteAdmin(admin.ModelAdmin):
   ]
   inlines = [ OtrosEstudiosEstudianteInline, 
               ReferenciaInline,
-              InscripcionEstudianteInline]
-
-
-class AmonestacionInline(admin.TabularInline):
-  model = Amonestacion
-  extra = 1
+              InscripcionEstudianteInline,
+              AmonestacionInline]
+  list_display = ('documento', 'nombre', 'apellido')
+  search_fields = ['documento', 'nombre', 'apellido']
   
-
-class MatriculaAcademicaEstudianteAdmin(admin.ModelAdmin):
-  fieldsets = [
-    (None,  {'fields': [  
-              'fecha_expedicion', 
-              'inscripcion_estudiante', 
-              'estado',
-              'becado']}),
-  ]
-  inlines = [AmonestacionInline] 
-
 
 class ExperienciaLaboralProfesorInline(admin.TabularInline):
   model = ExperienciaLaboralProfesor
@@ -196,13 +191,12 @@ class AsistenciaAdmin(admin.ModelAdmin):
   fieldsets = [
     (None, {'fields': [
               'sesion_curso', 
-              'matricula_academica_estudiante', 
+              'inscripcion_estudiante', 
               'asistio', 
               'observaciones']}),
   ]
 
 admin.site.register(Asistencia, AsistenciaAdmin)
-admin.site.register(MatriculaAcademicaEstudiante, MatriculaAcademicaEstudianteAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(MatriculaCurso, MatriculaCursoAdmin)
 admin.site.register(Competencia, CompetenciaAdmin)

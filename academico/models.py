@@ -13,7 +13,7 @@ TIPO_COMPORTAMIENTO = (
   ('N', 'No aplica'),
 )
 
-ESTADO_MATRICULA_ACADEMICA_ESTUDIANTE = (
+ESTADO_INSCRIPCION = (
   ('A', 'Activo'),
   ('E', 'Egresado'),
   ('X', 'Expulsado'),
@@ -106,31 +106,34 @@ class Profesor(models.Model):
   # Informacion personal
   nombre = models.CharField(max_length=200)
   apellido = models.CharField(max_length=200)
-  sexo = models.CharField(max_length=1, choices=SEXO) 
-  tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO) 
+  sexo = models.CharField(max_length=1, choices=SEXO, blank=True) 
+  tipo_documento = models.CharField(max_length=1, 
+  	                                choices=TIPO_DOCUMENTO,
+  	                                blank=True) 
   documento = models.CharField(max_length=200, unique = True)
   lugar_expedicion = models.CharField(verbose_name='Lugar expedición', 
                                       max_length=200, 
                                       blank=True)
-  fecha_nacimiento = models.DateField()
-  lugar_nacimiento = models.CharField(max_length=200)
+  fecha_nacimiento = models.DateField(blank=True)
+  lugar_nacimiento = models.CharField(blank=True, max_length=200)
   foto = models.FileField(upload_to='/', blank=True)
   # Informacion de contacto
-  direccion = models.CharField(verbose_name='Dirección', max_length=200)
-  lugar_residencia = models.CharField(max_length=200)
-  telefono = models.CharField(verbose_name='Teléfono', max_length=200)
-  email = models.EmailField(unique = True)
+  direccion = models.CharField(verbose_name='Dirección', 
+                               max_length=200,
+                               blank=True)
+  lugar_residencia = models.CharField(max_length=200, blank=True)
+  telefono = models.CharField(verbose_name='Teléfono', 
+                              max_length=200,
+                              blank=True)
+  email = models.EmailField(unique = True, blank=True)
   web = models.URLField(blank=True)
   # Informacion de acceso
   usuario = models.CharField(max_length=200, unique = True)
   contrasena = models.CharField(verbose_name='Contraseña', 
                                 max_length=200)
-  codigo = models.CharField(verbose_name='Código', 
-                            max_length=200, 
-                            unique = True)
   
   def __unicode__(self):
-    return u'%s %s' % (self.nombre, self.apellido)
+    return self.documento
     
   class Meta:
     verbose_name_plural = 'profesores'
@@ -187,26 +190,30 @@ class Salon(models.Model):
 class Programa(models.Model):
   # Informacion general
   tipo_programa = models.CharField(max_length=1, 
-                                    choices=TIPO_PROGRAMA)
+                                    choices=TIPO_PROGRAMA,
+                                    blank=True)
   codigo = models.CharField(verbose_name='Código', 
                             max_length=200)
-  nombre = models.CharField(max_length=200)
+  nombre = models.CharField(max_length=200, blank=True)
   descripcion = models.TextField(verbose_name='Descripción', 
                                   max_length=200, 
                                   blank=True)
   titulo = models.CharField(verbose_name='Título', 
                             max_length=200, 
-                            help_text='Título otorgado al finalizar el programa.')
+                            help_text='Título otorgado al finalizar el programa.',
+                            blank=True)
   resolucion = models.CharField(verbose_name='Resolución', 
                                 max_length=200, 
                                 help_text="Acto administrativo que valida este programa.", 
                                 blank=True)
   # Horario
   periodicidad = models.CharField(max_length=1, 
-                                  choices=PERIODICIDAD) 
-  duracion = models.IntegerField(verbose_name='Duración')
+                                  choices=PERIODICIDAD,
+                                  blank=True) 
+  duracion = models.IntegerField(verbose_name='Duración', blank=True)
   jornada = models.CharField(max_length=1, 
-                              choices=JORNADA)
+                              choices=JORNADA,
+                              blank=True)
   # Informacion adicional
   actitudes = models.TextField(max_length=200, 
                                 help_text="Actitudes requeridas para los aspirantes.", 
@@ -219,7 +226,7 @@ class Programa(models.Model):
                                 blank=True)
   
   def __unicode__(self):
-    return u'%s %s' % (self.nombre, self.jornada.long_description)
+  	return self.codigo
 
 
 class Estudiante(models.Model):
@@ -227,27 +234,31 @@ class Estudiante(models.Model):
   nombre = models.CharField(max_length=200)
   apellido = models.CharField(max_length=200)
   sexo = models.CharField(max_length=1, 
-                          choices=SEXO) 
+                          choices=SEXO,
+                          blank=True) 
   tipo_documento = models.CharField(max_length=1, 
-                                    choices=TIPO_DOCUMENTO) 
+                                    choices=TIPO_DOCUMENTO,
+                                    blank=True) 
   documento = models.CharField( max_length=200, 
                                 unique = True)
   lugar_expedicion = models.CharField(max_length=200, 
                                       verbose_name='Lugar expedición',
                                       blank=True)
-  fecha_nacimiento = models.DateField()
-  lugar_nacimiento = models.CharField(max_length=200)
+  fecha_nacimiento = models.DateField(blank=True)
+  lugar_nacimiento = models.CharField(max_length=200, blank=True)
   # Requisitos
   fotocopia_documento = models.FileField(upload_to='/', blank=True)
   fotocopia_diploma = models.FileField(upload_to='/', blank=True)
   foto = models.FileField(upload_to='/', blank=True)
   # Informacion de contacto
   direccion = models.CharField( verbose_name='Dirección',
-                                max_length=200)
-  lugar_residencia = models.CharField(max_length=200)
+                                max_length=200,
+                                blank=True)
+  lugar_residencia = models.CharField(max_length=200, blank=True)
   telefono = models.CharField(verbose_name='Teléfono',
-                              max_length=200)
-  email = models.EmailField(unique = True)
+                              max_length=200,
+                              blank=True)
+  email = models.EmailField(unique = True, blank=True)
   web = models.URLField(blank=True)
   # Informacion de acceso
   usuario = models.CharField(max_length=200, unique = True)
@@ -293,46 +304,46 @@ class Referencia(models.Model):
 
 class InscripcionEstudiante(models.Model):
   estudiante = models.ForeignKey(Estudiante)
-  fecha = models.DateField()
+  fecha_expedicion = models.DateField()
   programa = models.ForeignKey(Programa)
   codigo = models.CharField(verbose_name='Código',
                             max_length=200, 
                             unique = True)
-  
-  
-class MatriculaAcademicaEstudiante(models.Model):
-  # Informacion general
-  inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
-  fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
   estado = models.CharField(max_length=1, 
-              choices=ESTADO_MATRICULA_ACADEMICA_ESTUDIANTE, 
-              default='A')
+                            choices=ESTADO_INSCRIPCION, 
+                            default='A')
+  fecha_vencimiento = models.DateField()
   becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
   
+
   def __unicode__(self):
-    return self.estudiante
+    return self.codigo
+  
 
 
 class Competencia(models.Model):
   programa = models.ForeignKey(Programa)
   codigo = models.CharField(verbose_name='Código', 
                             max_length=200)
-  nombre = models.CharField(max_length=200)
+  nombre = models.CharField(max_length=200, blank=True)
   descripcion = models.TextField( verbose_name='Descripción', 
                                   max_length=200, 
                                   blank=True)
   modulo = models.CharField(verbose_name='Módulo', 
                             max_length=1, 
-                            choices=MODULO)
-  periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.')
-  intensidad = models.IntegerField(help_text='Número de horas requeridas para dictar la compentencia.')
+                            choices=MODULO,
+                            blank=True)
+  periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.',
+                                blank=True)
+  intensidad = models.IntegerField(help_text='Número de horas requeridas para dictar la compentencia.',
+                                   blank=True)
   
   def __unicode__(self):
-    return u'%s - %s' % (self.codigo, self.nombre)
+    return self.codigo
   
   
 class Amonestacion(models.Model):
-  matricula_academica_estudiante = models.ForeignKey(MatriculaAcademicaEstudiante)
+  estudiante = models.ForeignKey(Estudiante)
   profesor = models.ForeignKey(Profesor)
   competencia = models.ForeignKey(Competencia)
   fecha = models.DateField()
@@ -346,20 +357,23 @@ class Amonestacion(models.Model):
     
 class Curso(models.Model):
   competencia = models.ForeignKey(Competencia)
-  fecha_inicio = models.DateField()
-  fecha_fin = models.DateField()
+  codigo = models.CharField(verbose_name='Código', 
+                            max_length=200)
+  fecha_inicio = models.DateField(blank=True)
+  fecha_fin = models.DateField(blank=True)
   profesor = models.ForeignKey(Profesor)
-  grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...')
+  grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...',
+                              blank=True)
   estudiantes = models.IntegerField(help_text='Número esperado de estudiantes.', 
                                     blank=True)
   
   def __unicode__(self):
-    return u'%s - %s' % (self.codigo, self.grupo)
+    return self.codigo
 
 
 class MatriculaCurso(models.Model):
   curso = models.ForeignKey(Curso)
-  matricula_academica_estudiante = models.ForeignKey(MatriculaAcademicaEstudiante)
+  inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
   nota_definitiva = models.FloatField(blank=True)
   nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', 
                                         blank=True)
@@ -374,7 +388,8 @@ class Corte(models.Model):
   fallas = models.IntegerField( help_text="Número de fallas durante el corte.", 
                                 blank=True)
   comportamiento = models.CharField(max_length=1, 
-                                    choices=TIPO_COMPORTAMIENTO) 
+                                    choices=TIPO_COMPORTAMIENTO,
+                                    blank=True) 
   
   
 class HorarioCurso(models.Model):
@@ -395,7 +410,7 @@ class SesionCurso(models.Model):
 
 class Asistencia(models.Model):
   sesion_curso = models.ForeignKey(SesionCurso)
-  matricula_academica_estudiante = models.ForeignKey(MatriculaAcademicaEstudiante)
+  inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
   asistio = models.BooleanField(verbose_name='Asistío', default=True)
   observaciones = models.TextField( max_length=200, 
                                     blank=True)
