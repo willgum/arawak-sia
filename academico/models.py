@@ -146,8 +146,8 @@ class ExperienciaLaboralProfesor(models.Model):
   profesor = models.ForeignKey(Profesor)
   cargo = models.CharField(max_length=200, blank=True)
   empresa = models.CharField(max_length=200, blank=True)
-  fecha_inicio = models.DateField(blank=True)
-  fecha_fin = models.DateField(blank=True)
+  fecha_inicio = models.DateField(blank=True, null=True)
+  fecha_fin = models.DateField(blank=True, null=True)
   actualmente = models.BooleanField()
   
   class Meta:
@@ -166,7 +166,8 @@ class OtrosEstudiosProfesor(models.Model):
                             max_length=200, 
                             blank=True)
   fecha_graduacion = models.DateField(verbose_name='Fecha graduación', 
-                                      blank=True)
+                                      blank=True,
+                                      null=True)
 
   class Meta:
     verbose_name_plural = 'otros estudios profesores'
@@ -213,7 +214,9 @@ class Programa(models.Model):
   periodicidad = models.CharField(max_length=1, 
                                   choices=PERIODICIDAD,
                                   blank=True) 
-  duracion = models.IntegerField(verbose_name='Duración', blank=True)
+  duracion = models.IntegerField(verbose_name='Duración', 
+                                 blank=True,
+                                 null=True)
   jornada = models.CharField(max_length=1, 
                               choices=JORNADA,
                               blank=True)
@@ -247,7 +250,7 @@ class Estudiante(models.Model):
   lugar_expedicion = models.CharField(max_length=200, 
                                       verbose_name='Lugar expedición',
                                       blank=True)
-  fecha_nacimiento = models.DateField(blank=True)
+  fecha_nacimiento = models.DateField(blank=True, null=True)
   lugar_nacimiento = models.CharField(max_length=200, blank=True)
   # Requisitos
   fotocopia_documento = models.FileField(upload_to='/', blank=True)
@@ -287,7 +290,8 @@ class OtrosEstudiosEstudiante(models.Model):
                             max_length=200, 
                             blank=True)
   fecha_graduacion = models.DateField(verbose_name='Fecha graduación', 
-                                      blank=True)
+                                      blank=True, 
+                                      null=True)
 
 
 class Referencia(models.Model):
@@ -310,7 +314,7 @@ class Referencia(models.Model):
 
 class InscripcionEstudiante(models.Model):
   estudiante = models.ForeignKey(Estudiante)
-  fecha_expedicion = models.DateField()
+  fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
   programa = models.ForeignKey(Programa)
   codigo = models.CharField(verbose_name='Código',
                             max_length=200, 
@@ -321,10 +325,8 @@ class InscripcionEstudiante(models.Model):
   fecha_vencimiento = models.DateField()
   becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
   
-
   def __unicode__(self):
     return self.codigo
-  
 
 
 class Competencia(models.Model):
@@ -365,8 +367,8 @@ class Curso(models.Model):
   competencia = models.ForeignKey(Competencia)
   codigo = models.CharField(verbose_name='Código', 
                             max_length=200)
-  fecha_inicio = models.DateField(blank=True)
-  fecha_fin = models.DateField(blank=True)
+  fecha_inicio = models.DateField(blank=True, null=True)
+  fecha_fin = models.DateField(blank=True, null=True)
   profesor = models.ForeignKey(Profesor)
   grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...',
                               blank=True)
@@ -390,8 +392,8 @@ class Corte(models.Model):
   codigo = models.CharField(max_length=200)
   porcentaje = models.IntegerField( help_text="Ingrese un número entre 1 y 100.", 
                                     blank=True)
-  fecha_inicio = models.DateField(blank=True)
-  fecha_fin = models.DateField(blank=True)
+  fecha_inicio = models.DateField(blank=True, null=True)
+  fecha_fin = models.DateField(blank=True, null=True)
   
   def __unicode__(self):
     return self.codigo
@@ -420,8 +422,8 @@ class HorarioCurso(models.Model):
 
 class SesionCurso(models.Model):
   curso = models.ForeignKey(Curso)
-  hora_inicio = models.DateTimeField()
-  hora_fin = models.DateTimeField()
+  hora_inicio = models.DateTimeField(blank=True, null=True)
+  hora_fin = models.DateTimeField(blank=True, null=True)
 
 
 class Asistencia(models.Model):
