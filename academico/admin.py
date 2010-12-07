@@ -3,8 +3,8 @@ from academico.models import *
 from django.contrib import admin
 
 
-class CorteInline(admin.TabularInline):
-  model = Corte
+class NotaCorteInline(admin.TabularInline):
+  model = NotaCorte
   extra = 1
 
 
@@ -17,7 +17,17 @@ class MatriculaCursoAdmin(admin.ModelAdmin):
               'nota_definitiva', 
               'nota_habilitacion']}),
   ]
-  inlines = [CorteInline]
+  inlines = [NotaCorteInline]
+
+class CorteAdmin(admin.ModelAdmin):
+  fieldsets = [
+    (None, {'fields': [
+              'codigo', 
+              'porcentaje',
+              'fecha_inicio',
+              'fecha_fin']}),
+  ]
+  list_display = ('codigo', 'porcentaje', 'fecha_inicio', 'fecha_fin')
 
 
 class ProgramaAdmin(admin.ModelAdmin):
@@ -157,12 +167,13 @@ class ProfesorAdmin(admin.ModelAdmin):
               'web'],
               'classes': ['collapse']}),
     ('Informacion de acceso', {'fields': [
-              'codigo', 
               'usuario', 
               'contrasena'],
               'classes': ['collapse']}),
   ]
-  inlines = [ExperienciaLaboralProfesorInline, OtrosEstudiosProfesorlInline] 
+  inlines = [ExperienciaLaboralProfesorInline, OtrosEstudiosProfesorlInline]
+  list_display = ('documento', 'nombre', 'apellido')
+  search_fields = ['documento', 'nombre', 'apellido']
 
 
 class HorarioCursoInline(admin.TabularInline):
@@ -179,7 +190,8 @@ class CursoAdmin(admin.ModelAdmin):
   fieldsets = [
     (None, {'fields': [
               'competencia', 
-              'grupo', 
+              'grupo',
+              'codigo',
               'fecha_inicio', 
               'fecha_fin', 
               'profesor',
@@ -197,10 +209,11 @@ class AsistenciaAdmin(admin.ModelAdmin):
   ]
 
 admin.site.register(Asistencia, AsistenciaAdmin)
-admin.site.register(Curso, CursoAdmin)
-admin.site.register(MatriculaCurso, MatriculaCursoAdmin)
+admin.site.register(Corte, CorteAdmin)
 admin.site.register(Competencia, CompetenciaAdmin)
+admin.site.register(Curso, CursoAdmin)
+admin.site.register(Estudiante, EstudianteAdmin)
+admin.site.register(MatriculaCurso, MatriculaCursoAdmin)
 admin.site.register(Salon, SalonAdmin)
 admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(Profesor, ProfesorAdmin)
-admin.site.register(Estudiante, EstudianteAdmin)

@@ -114,7 +114,7 @@ class Profesor(models.Model):
   lugar_expedicion = models.CharField(verbose_name='Lugar expedición', 
                                       max_length=200, 
                                       blank=True)
-  fecha_nacimiento = models.DateField(blank=True)
+  fecha_nacimiento = models.DateField(blank=True, null=True)
   lugar_nacimiento = models.CharField(blank=True, max_length=200)
   foto = models.FileField(upload_to='/', blank=True)
   # Informacion de contacto
@@ -128,9 +128,12 @@ class Profesor(models.Model):
   email = models.EmailField(unique = True, blank=True)
   web = models.URLField(blank=True)
   # Informacion de acceso
-  usuario = models.CharField(max_length=200, unique = True)
+  usuario = models.CharField(max_length=200, 
+                             unique = True,
+                             blank=True)
   contrasena = models.CharField(verbose_name='Contraseña', 
-                                max_length=200)
+                                max_length=200,
+                                blank=True)
   
   def __unicode__(self):
     return self.documento
@@ -261,9 +264,12 @@ class Estudiante(models.Model):
   email = models.EmailField(unique = True, blank=True)
   web = models.URLField(blank=True)
   # Informacion de acceso
-  usuario = models.CharField(max_length=200, unique = True)
+  usuario = models.CharField(max_length=200, 
+                             unique = True,
+                             blank=True)
   contrasena = models.CharField(verbose_name='Contraseña',
-                                max_length=200)
+                                max_length=200,
+                                blank=True)
   
   def __unicode__(self):
     return self.documento
@@ -381,16 +387,26 @@ class MatriculaCurso(models.Model):
 
 
 class Corte(models.Model):
-  matricula_curso = models.ForeignKey(MatriculaCurso)
-  nota = models.FloatField(blank=True)
+  codigo = models.CharField(max_length=200)
   porcentaje = models.IntegerField( help_text="Ingrese un número entre 1 y 100.", 
                                     blank=True)
+  fecha_inicio = models.DateField(blank=True)
+  fecha_fin = models.DateField(blank=True)
+  
+  def __unicode__(self):
+    return self.codigo
+
+
+class NotaCorte(models.Model):
+  matricula_curso = models.ForeignKey(MatriculaCurso)
+  corte = models.ForeignKey(Corte)
+  nota = models.FloatField(blank=True)
   fallas = models.IntegerField( help_text="Número de fallas durante el corte.", 
                                 blank=True)
   comportamiento = models.CharField(max_length=1, 
                                     choices=TIPO_COMPORTAMIENTO,
                                     blank=True) 
-  
+
   
 class HorarioCurso(models.Model):
   curso = models.ForeignKey(Curso)
@@ -404,8 +420,8 @@ class HorarioCurso(models.Model):
 
 class SesionCurso(models.Model):
   curso = models.ForeignKey(Curso)
-  inicio = models.DateTimeField()
-  fin = models.DateTimeField()
+  hora_inicio = models.DateTimeField()
+  hora_fin = models.DateTimeField()
 
 
 class Asistencia(models.Model):
