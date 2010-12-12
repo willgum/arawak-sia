@@ -40,5 +40,16 @@ class MultaAdmin(admin.ModelAdmin):
   ]
   
   
-admin.site.register(Multa, MultaAdmin)
+class HoraCatedraAdmin(admin.ModelAdmin):
+  fieldsets = [
+    (None,  {'fields': [
+              'profesor',
+              'curso',
+              'valor_hora',
+              'observaciones']}),
+  ]
+
+
+admin.site.register(HoraCatedra, HoraCatedraAdmin)
 admin.site.register(MatriculaFinanciera, MatriculaFinancieraAdmin)
+admin.site.register(Multa, MultaAdmin)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from academico.models import InscripcionEstudiante
+from academico.models import InscripcionEstudiante, Profesor, Curso
 
 # TODO: Leer configuracion desde un archivo externo,
 # p.e., valores de constantes.
@@ -57,4 +57,13 @@ class Multa(models.Model):
   fecha_pago = models.DateField()
   cancelada = models.BooleanField(help_text='Indica si no existen deudas.')
   
+
+class HoraCatedra(models.Model):
+  profesor = models.ForeignKey(Profesor)
+  curso = models.ForeignKey(Curso)
+  valor_hora = models.FloatField(blank=True, null=True)
+  observaciones = models.TextField(max_length=200, blank=True)
   
+  class Meta:
+    verbose_name_plural = 'horas cátedra'
+    verbose_name = 'hora cátedra'
