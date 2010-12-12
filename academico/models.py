@@ -324,6 +324,7 @@ class InscripcionEstudiante(models.Model):
                             default='A')
   fecha_vencimiento = models.DateField()
   becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
+  promedio_acumulado = models.FloatField(blank=True, null=True)
   
   def __unicode__(self):
     return self.codigo
@@ -350,6 +351,18 @@ class Competencia(models.Model):
     return self.codigo
   
   
+class MatriculaPrograma(models.Model):
+  fecha_expedicion = models.DateField()
+  inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
+  programa = models.ForeignKey(Programa)
+  fecha_vencimiento = models.DateField(blank=True, null=True)
+  promedio_periodo = models.FloatField(blank=True, null=True)
+  puesto = models.IntegerField(help_text='Puesto ocupado durante el periodo academico.',
+                               blank=True)
+  observaciones = models.TextField(max_length=200, blank=True)
+  def __unicode__(self):
+    return self.codigo
+
 class Amonestacion(models.Model):
   estudiante = models.ForeignKey(Estudiante)
   profesor = models.ForeignKey(Profesor)
@@ -402,7 +415,7 @@ class Corte(models.Model):
 class NotaCorte(models.Model):
   matricula_curso = models.ForeignKey(MatriculaCurso)
   corte = models.ForeignKey(Corte)
-  nota = models.FloatField(blank=True)
+  nota = models.FloatField(blank=True, null=True)
   fallas = models.IntegerField( help_text="Número de fallas durante el corte.", 
                                 blank=True)
   comportamiento = models.CharField(max_length=1, 

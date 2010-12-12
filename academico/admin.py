@@ -8,6 +8,19 @@ class NotaCorteInline(admin.TabularInline):
   extra = 1
 
 
+class MatriculaProgramaAdmin(admin.ModelAdmin):
+  fieldsets = [
+    (None, {'fields': [
+              'fecha_expedicion', 
+              'inscripcion_estudiante',
+              'programa',
+              'fecha_vencimiento',
+              'promedio_periodo',
+              'puesto',
+              'observaciones']}),
+  ]
+
+
 class MatriculaCursoAdmin(admin.ModelAdmin):
   fieldsets = [
     (None, {'fields': [
@@ -208,12 +221,14 @@ class AsistenciaAdmin(admin.ModelAdmin):
               'observaciones']}),
   ]
 
+
 admin.site.register(Asistencia, AsistenciaAdmin)
 admin.site.register(Corte, CorteAdmin)
 admin.site.register(Competencia, CompetenciaAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(Estudiante, EstudianteAdmin)
 admin.site.register(MatriculaCurso, MatriculaCursoAdmin)
+admin.site.register(MatriculaPrograma, MatriculaProgramaAdmin)
 admin.site.register(Salon, SalonAdmin)
 admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(Profesor, ProfesorAdmin)

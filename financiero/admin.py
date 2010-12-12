@@ -13,7 +13,7 @@ class LetraInline(admin.TabularInline):
   extra = 1
   
   
-class MatriculaFinancieraEstudianteAdmin(admin.ModelAdmin):
+class MatriculaFinancieraAdmin(admin.ModelAdmin):
   fieldsets = [
     (None,  {'fields': [
               'fecha_expedicion',
@@ -32,7 +32,7 @@ class MultaAdmin(admin.ModelAdmin):
   fieldsets = [
     (None,  {'fields': [
               'fecha_expedicion',
-              'matricula_financiera_estudiante',
+              'matricula_financiera',
               'valor',
               'concepto',
               'fecha_pago',
@@ -41,4 +41,4 @@ class MultaAdmin(admin.ModelAdmin):
   
   
 admin.site.register(Multa, MultaAdmin)
-admin.site.register(MatriculaFinancieraEstudiante, MatriculaFinancieraEstudianteAdmin)
+admin.site.register(MatriculaFinanciera, MatriculaFinancieraAdmin)
