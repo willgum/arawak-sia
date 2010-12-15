@@ -19,6 +19,11 @@ class MatriculaProgramaAdmin(admin.ModelAdmin):
               'puesto',
               'observaciones']}),
   ]
+  list_display = ('fecha_expedicion', 'inscripcion_estudiante', 'programa', 'promedio_periodo')
+  list_filter = ['fecha_expedicion', 'programa']
+  search_fields = ('inscripcion_estudiante',)
+  date_hierarchy = 'fecha_expedicion'
+
 
 
 class MatriculaCursoAdmin(admin.ModelAdmin):
@@ -90,7 +95,9 @@ class CompetenciaAdmin(admin.ModelAdmin):
               'periodo']}),
   ]
   list_display = ('nombre', 'programa', 'intensidad', 'modulo', 'periodo')
-    
+  list_filter = ['programa', 'modulo']
+  search_fields = ('nombre',)
+
 
 class OtrosEstudiosEstudianteInline(admin.TabularInline):
   model = OtrosEstudiosEstudiante
@@ -211,6 +218,8 @@ class CursoAdmin(admin.ModelAdmin):
               'estudiantes']}),
   ]
   inlines = [HorarioCursoInline, SesionCursoInline]
+  list_display = ('codigo', 'profesor',)
+  search_fields = ('competencia',)
 
 class AsistenciaAdmin(admin.ModelAdmin):
   fieldsets = [

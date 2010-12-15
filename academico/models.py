@@ -343,9 +343,11 @@ class Competencia(models.Model):
                             choices=MODULO,
                             blank=True)
   periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.',
-                                blank=True)
+                                blank=True,
+                                null=True)
   intensidad = models.IntegerField(help_text='Número de horas requeridas para dictar la compentencia.',
-                                   blank=True)
+                                   blank=True,
+                                   null=True)
   
   def __unicode__(self):
     return self.codigo
@@ -358,10 +360,10 @@ class MatriculaPrograma(models.Model):
   fecha_vencimiento = models.DateField(blank=True, null=True)
   promedio_periodo = models.FloatField(blank=True, null=True)
   puesto = models.IntegerField(help_text='Puesto ocupado durante el periodo academico.',
-                               blank=True)
+                               blank=True,
+                               null=True)
   observaciones = models.TextField(max_length=200, blank=True)
-  def __unicode__(self):
-    return self.codigo
+  
 
 class Amonestacion(models.Model):
   estudiante = models.ForeignKey(Estudiante)
@@ -384,9 +386,11 @@ class Curso(models.Model):
   fecha_fin = models.DateField(blank=True, null=True)
   profesor = models.ForeignKey(Profesor)
   grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...',
-                              blank=True)
+                              blank=True,
+                              null=True)
   estudiantes = models.IntegerField(help_text='Número esperado de estudiantes.', 
-                                    blank=True)
+                                    blank=True,
+                                    null=True)
   
   def __unicode__(self):
     return self.codigo
