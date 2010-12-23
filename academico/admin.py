@@ -36,6 +36,9 @@ class MatriculaCursoAdmin(admin.ModelAdmin):
               'nota_habilitacion']}),
   ]
   inlines = [NotaCorteInline]
+  list_display = ('curso', 'inscripcion_estudiante', 'perdio_fallas',
+              'nota_definitiva', 'nota_habilitacion')
+  search_fields = ['curso', 'inscripcion_estudiante']
 
 class CorteAdmin(admin.ModelAdmin):
   fieldsets = [
@@ -68,7 +71,10 @@ class ProgramaAdmin(admin.ModelAdmin):
               'funciones'], 
               'classes': ['collapse']}),
   ]
-  list_display = ('codigo', 'nombre', 'jornada')
+  list_display = ('tipo_programa', 'codigo', 'nombre', 'periodicidad', 'duracion', 'jornada')
+  search_fields = ['codigo', 'nombre']
+  list_filter = ['tipo_programa', 'jornada', 'periodicidad']
+  
 
 
 class SalonAdmin(admin.ModelAdmin):
@@ -80,7 +86,8 @@ class SalonAdmin(admin.ModelAdmin):
               'tipo_salon']}),
   ]
   list_display = ('codigo', 'descripcion', 'capacidad', 'tipo_salon')
-  search_fields = ['codigo']
+  search_fields = ['codigo', 'descripcion']
+  list_filter = ['tipo_salon']
 
 
 class CompetenciaAdmin(admin.ModelAdmin):
@@ -215,10 +222,12 @@ class CursoAdmin(admin.ModelAdmin):
               'fecha_inicio', 
               'fecha_fin', 
               'profesor',
-              'estudiantes']}),
+              'estudiantes_esperados',
+              'estudiantes_inscritos']}),
   ]
   inlines = [HorarioCursoInline, SesionCursoInline]
-  list_display = ('codigo', 'profesor',)
+  list_display = (	'codigo', 'profesor', 'estudiantes_esperados', 
+  					'estudiantes_inscritos', 'fecha_inicio', 'fecha_fin')
   search_fields = ('competencia',)
 
 class AsistenciaAdmin(admin.ModelAdmin):
