@@ -101,7 +101,7 @@ class CompetenciaAdmin(admin.ModelAdmin):
               'intensidad', 
               'periodo']}),
   ]
-  list_display = ('nombre', 'programa', 'intensidad', 'modulo', 'periodo')
+  list_display = ('codigo', 'nombre', 'programa', 'intensidad', 'modulo', 'periodo')
   list_filter = ['programa', 'modulo']
   search_fields = ('nombre',)
 
@@ -219,14 +219,14 @@ class CursoAdmin(admin.ModelAdmin):
               'competencia', 
               'grupo',
               'codigo',
-              'fecha_inicio', 
-              'fecha_fin', 
               'profesor',
+              'fecha_inicio', 
+              'fecha_fin',              
               'estudiantes_esperados',
               'estudiantes_inscritos']}),
   ]
   inlines = [HorarioCursoInline, SesionCursoInline]
-  list_display = (	'codigo', 'profesor', 'estudiantes_esperados', 
+  list_display = ('codigo', 'profesor', 'estudiantes_esperados', 
   					'estudiantes_inscritos', 'fecha_inicio', 'fecha_fin')
   search_fields = ('competencia',)
 
@@ -238,6 +238,9 @@ class AsistenciaAdmin(admin.ModelAdmin):
               'asistio', 
               'observaciones']}),
   ]
+  list_display = ('sesion_curso', 'inscripcion_estudiante', 'asistio', 
+  					'observaciones')
+  search_fields = ('sesion_curso', 'inscripcion_estudiante')
 
 
 admin.site.register(Asistencia, AsistenciaAdmin)

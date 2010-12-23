@@ -385,9 +385,7 @@ class Curso(models.Model):
   fecha_inicio = models.DateField(blank=True, null=True)
   fecha_fin = models.DateField(blank=True, null=True)
   profesor = models.ForeignKey(Profesor)
-  grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...',
-                              blank=True,
-                              null=True)
+  grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...')
   estudiantes_esperados = models.IntegerField(blank=True, null=True)
   estudiantes_inscritos = models.IntegerField(blank=True, null=True)
   
@@ -442,8 +440,12 @@ class HorarioCurso(models.Model):
 class SesionCurso(models.Model):
   codigo = models.CharField(verbose_name='Código', max_length=200)
   curso = models.ForeignKey(Curso)
-  hora_inicio = models.DateTimeField(blank=True, null=True)
-  hora_fin = models.DateTimeField(blank=True, null=True)
+  fecha = models.DateField(blank=True, null=True)
+  hora_inicio = models.TimeField(blank=True, null=True)
+  hora_fin = models.TimeField(blank=True, null=True)
+  
+  def __unicode__(self):
+    return self.codigo
 
 
 class Asistencia(models.Model):
