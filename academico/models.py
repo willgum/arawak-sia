@@ -178,7 +178,7 @@ class Salon(models.Model):
   descripcion = models.TextField(verbose_name='Descripción', 
                                 max_length=200, 
                                 blank=True)
-  capacidad = models.IntegerField(blank=True)
+  capacidad = models.IntegerField(blank=True, null=True)
   tipo_salon = models.CharField(verbose_name='Tipo salón', 
                                 max_length=1, 
                                 choices=TIPO_SALON, 
@@ -343,9 +343,11 @@ class Competencia(models.Model):
                             choices=MODULO,
                             blank=True)
   periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.',
-                                blank=True)
+                                blank=True,
+                                null=True)
   intensidad = models.IntegerField(help_text='Número de horas requeridas para dictar la compentencia.',
-                                   blank=True)
+                                   blank=True,
+                                   null=True)
   
   def __unicode__(self):
     return self.codigo
@@ -358,10 +360,10 @@ class MatriculaPrograma(models.Model):
   fecha_vencimiento = models.DateField(blank=True, null=True)
   promedio_periodo = models.FloatField(blank=True, null=True)
   puesto = models.IntegerField(help_text='Puesto ocupado durante el periodo academico.',
-                               blank=True)
+                               blank=True,
+                               null=True)
   observaciones = models.TextField(max_length=200, blank=True)
-  def __unicode__(self):
-    return self.codigo
+  
 
 class Amonestacion(models.Model):
   estudiante = models.ForeignKey(Estudiante)
@@ -383,10 +385,10 @@ class Curso(models.Model):
   fecha_inicio = models.DateField(blank=True, null=True)
   fecha_fin = models.DateField(blank=True, null=True)
   profesor = models.ForeignKey(Profesor)
-  grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...',
-                              blank=True)
-  estudiantes = models.IntegerField(help_text='Número esperado de estudiantes.', 
-                                    blank=True)
+  grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...')
+  estudiantes_esperados = models.IntegerField(blank=True, null=True)
+  estudiantes_inscritos = models.IntegerField(blank=True, null=True)
+  
   
   def __unicode__(self):
     return self.codigo
@@ -395,15 +397,16 @@ class Curso(models.Model):
 class MatriculaCurso(models.Model):
   curso = models.ForeignKey(Curso)
   inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
-  nota_definitiva = models.FloatField(blank=True)
+  nota_definitiva = models.FloatField(blank=True, null=True)
   nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', 
-                                        blank=True)
+                                        blank=True,
+                                        null=True)
   perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
 
 
 class Corte(models.Model):
-  codigo = models.CharField(max_length=200)
-  porcentaje = models.IntegerField( help_text="Ingrese un número entre 1 y 100.", 
+  codigo = models.CharField(verbose_name = 'Código', max_length=200)
+  porcentaje = models.IntegerField( help_text='Ingrese un número entre 1 y 100.', 
                                     blank=True)
   fecha_inicio = models.DateField(blank=True, null=True)
   fecha_fin = models.DateField(blank=True, null=True)
@@ -417,7 +420,8 @@ class NotaCorte(models.Model):
   corte = models.ForeignKey(Corte)
   nota = models.FloatField(blank=True, null=True)
   fallas = models.IntegerField( help_text="Número de fallas durante el corte.", 
-                                blank=True)
+                                blank=True,
+                                null=True)
   comportamiento = models.CharField(max_length=1, 
                                     choices=TIPO_COMPORTAMIENTO,
                                     blank=True) 
@@ -434,14 +438,18 @@ class HorarioCurso(models.Model):
 
 
 class SesionCurso(models.Model):
+  codigo = models.CharField(verbose_name='Código', max_length=200)
   curso = models.ForeignKey(Curso)
-  hora_inicio = models.DateTimeField(blank=True, null=True)
-  hora_fin = models.DateTimeField(blank=True, null=True)
+  fecha = models.DateField(blank=True, null=True)
+  hora_inicio = models.TimeField(blank=True, null=True)
+  hora_fin = models.TimeField(blank=True, null=True)
+  
+  def __unicode__(self):
+    return self.codigo
 
 
 class Asistencia(models.Model):
   sesion_curso = models.ForeignKey(SesionCurso)
   inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
   asistio = models.BooleanField(verbose_name='Asistío', default=True)
-  observaciones = models.TextField( max_length=200, 
-                                    blank=True)
+  observaciones = models.TextField(max_length=200, blank=True)
