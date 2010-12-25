@@ -4,50 +4,47 @@ from django.contrib import admin
 
 
 class PagoInline(admin.TabularInline):
-  model = Pago
-  extra = 1
+    model = Pago
+    extra = 1
   
   
 class LetraInline(admin.TabularInline):
-  model = Letra
-  extra = 1
+    model = Letra
+    extra = 1
   
   
 class MatriculaFinancieraAdmin(admin.ModelAdmin):
-  fieldsets = [
-    (None,  {'fields': [
-              'fecha_expedicion',
-              'inscripcion_estudiante', 
-              'estado',
-              'becado',
-              'valor_inscripcion',
-              'valor_matricula',
-              'cuotas',
-              'cancelada']}),
-  ]
-  inlines = [PagoInline, LetraInline]
+    fieldsets = [
+        (None,  {'fields': [    'fecha_expedicion',
+                                'inscripcion_estudiante', 
+                                'estado',
+                                'becado',
+                                'valor_inscripcion',
+                                'valor_matricula',
+                                'cuotas',
+                                'cancelada']}),
+    ]
+    inlines = [PagoInline, LetraInline]
   
   
 class MultaAdmin(admin.ModelAdmin):
-  fieldsets = [
-    (None,  {'fields': [
-              'fecha_expedicion',
-              'matricula_financiera',
-              'valor',
-              'concepto',
-              'fecha_pago',
-              'cancelada']}),
-  ]
+    fieldsets = [
+        (None,  {'fields': [  'fecha_expedicion',
+                              'matricula_financiera',
+                              'valor',
+                              'concepto',
+                              'fecha_pago',
+                              'cancelada']}),
+        ]
   
   
 class HoraCatedraAdmin(admin.ModelAdmin):
-  fieldsets = [
-    (None,  {'fields': [
-              'profesor',
-              'curso',
-              'valor_hora',
-              'observaciones']}),
-  ]
+    fieldsets = [
+        (None,  {'fields': [    'profesor',
+                                'curso',
+                                'valor_hora',
+                                'observaciones']}),
+    ]
 
 
 admin.site.register(HoraCatedra, HoraCatedraAdmin)
