@@ -59,7 +59,8 @@ class ProgramaAdmin(admin.ModelAdmin):
               'nombre', 
               'descripcion', 
               'titulo', 
-              'resolucion']}),
+              'resolucion',
+              'snies']}),
     ('Horario', {'fields': [
               'periodicidad', 
               'duracion', 

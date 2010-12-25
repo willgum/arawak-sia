@@ -210,6 +210,10 @@ class Programa(models.Model):
                                 max_length=200, 
                                 help_text="Acto administrativo que valida este programa.", 
                                 blank=True)
+  snies = models.CharField(verbose_name='SNIES', 
+                                max_length=200, 
+                                help_text="Código Sistema Nacional de Información de la Educación Superior.", 
+                                blank=True)
   # Horario
   periodicidad = models.CharField(max_length=1, 
                                   choices=PERIODICIDAD,
