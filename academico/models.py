@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-# TODO: Leer configuracion desde un archivo externo,
-# p.e., valores de constantes.
-# http://docs.python.org/library/configparser.html
-
 TIPO_COMPORTAMIENTO = (
   ('E', 'Excelente'),
   ('B', 'Bueno'),
@@ -101,6 +97,8 @@ TIPO_PROGRAMA = (
   ('I',  'Intensivo'),
   ('P',  'Personalizado'),
 )
+
+
 
 class Profesor(models.Model):
   # Informacion personal
