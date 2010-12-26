@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import *
+from academico.models import NotaCorte, MatriculaPrograma, MatriculaCurso, Corte, Programa, Salon, Competencia, OtrosEstudiosEstudiante, Referencia, InscripcionEstudiante, Amonestacion, Estudiante, ExperienciaLaboralProfesor, OtrosEstudiosProfesor, Profesor, HorarioCurso, Curso, SesionCurso, Asistencia
 from django.contrib import admin
 
 
