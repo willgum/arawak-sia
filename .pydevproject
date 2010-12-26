@@ -10,4 +10,7 @@
 <key>DJANGO_SETTINGS_MODULE</key>
 <value>settings.py</value>
 </pydev_variables_property>
+<pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
+<path>/sia</path>
+</pydev_pathproperty>
 </pydev_project>

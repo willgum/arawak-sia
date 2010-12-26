@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from financiero.models import *
+from financiero.models import Pago, Letra, MatriculaFinanciera, Multa, HoraCatedra
 from django.contrib import admin
 
 
