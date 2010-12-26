@@ -1,3 +1,6 @@
-#Sat Dec 25 13:06:39 COT 2010
+#Sun Dec 26 08:19:06 COT 2010
 eclipse.preferences.version=1
 encoding//academico/admin.py=utf-8
+encoding//academico/models.py=utf-8
+encoding//financiero/admin.py=utf-8
+encoding//financiero/models.py=utf-8

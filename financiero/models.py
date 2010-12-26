@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from academico.models import InscripcionEstudiante, Profesor, Curso
+import ConfigParser
 
-# TODO: Leer configuracion desde un archivo externo,
-# p.e., valores de constantes.
-# http://docs.python.org/library/configparser.html
+config = ConfigParser.ConfigParser()
+config.read('../config.cfg')
 
-ESTADO_MATRICULA_FINANCIERA = (
-  ('A', 'Activo'),
-  ('E', 'Egresado'),
-  ('X', 'Expulsado'),
-  ('R', 'Retirado'),
-  ('P', 'Suspendido por pago'),
-)
 
 class MatriculaFinanciera(models.Model):
   # Informacion general
   inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
   fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
   estado = models.CharField(max_length=1, 
-                            choices=ESTADO_MATRICULA_FINANCIERA, 
+                            choices=config.get('financiero', 'ESTADO_MATRICULA_FINANCIERA'), 
                             default='A')
   becado = models.BooleanField(help_text="Indica si el estudiante recibe o no beca.")
   valor_matricula = models.FloatField(verbose_name='Valor matrícula')
