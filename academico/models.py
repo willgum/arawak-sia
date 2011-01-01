@@ -1,90 +1,102 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
-TIPO_COMPORTAMIENTO=(('E', 'Excelente'),
-                     ('B', 'Bueno'),
-                     ('A', 'Aceptable'),
-                     ('I', 'Insuficiente'),
-                     ('N', 'No aplica'),
-                     )
-
-ESTADO_INSCRIPCION=(('A', 'Activo'),
-                    ('E', 'Egresado'),
-                    ('X', 'Expulsado'),
-                    ('R', 'Retirado'),
-                    ('D', 'Suspendido disciplina'),
-                    )
-
-TIPO_DOCUMENTO=(('C', 'Cédula de ciudadania'),
-                ('T', 'Tarjeta de identidad'),
-                ('P', 'Pasaporte'),
-                )
-
-SEXO=(('M', 'Masculino'),
-      ('F', 'Femenino'),
+TIPO_COMPORTAMIENTO = (
+    ('E', 'Excelente'),
+    ('B', 'Bueno'),
+    ('A', 'Aceptable'),
+    ('I', 'Insuficiente'),
+    ('N', 'No aplica'),
 )
 
-TIPO_REFERENCIA=(('F', 'Familiar'),
-                ('P', 'Personal'),
-                ('C', 'Comercial'),
-                ('A', 'Académica'),
-                ('L', 'Laboral'),
-                )
-
-JORNADA=(('M', 'Mañana'),
-        ('T', 'Tarde'),
-        ('N', 'Noche'),
-        ('S', 'Sábado'),
-        ('D', 'Domingo'),
-        )
-
-MODULO=(('H', 'Humanidades'),
-        ('C', 'Ciencias básicas'),
-        ('T', 'Técnico'),
-        )
-
-PERIODICIDAD=(('H', 'Horas'),
-            ('D', 'Días'),
-            ('N', 'Semanas'),
-            ('M', 'Meses'),
-            ('S', 'Semestres'),
-            ('A', 'Años'),
-            )
-
-DIAS=(('L', 'Lunes'),
-        ('M', 'Martes'),
-        ('C', 'Miércoles'),
-        ('J', 'Jueves'),
-        ('V', 'Viernes'),
-        ('S', 'Sábado'),
-        ('D', 'Domingo'),
-        )
-
-TIPO_SALON=(('A', 'Aula'),
-            ('L', 'Laboratorio'),
-            ('U', 'Auditorio'),
-            ('I', 'Aire libre'),
-            ('M', 'Aula mantenimiento'),
-            ('O', 'Otro'),
+ESTADO_INSCRIPCION = (
+    ('A', 'Activo'),
+    ('E', 'Egresado'),
+    ('X', 'Expulsado'),
+    ('R', 'Retirado'),
+    ('D', 'Suspendido disciplina'),
 )
 
-TIPO_ESTUDIO=(('P', 'Primaria'),
-            ('S', 'Secundaria'),
-            ('T', 'Técnico'),
-            ('U', 'Universitario'),
-            ('E', 'Especialización'),
-            ('M', 'Maestría'),
-            ('D', 'Doctorado'),
-            ('O', 'Otros estudios'),
-            )
+TIPO_DOCUMENTO = (
+    ('C', 'Cédula de ciudadania'),
+    ('T', 'Tarjeta de identidad'),
+    ('P', 'Pasaporte'),
+)
 
-TIPO_PROGRAMA=(('T',  'Técnico'),
-                ('A',  'Auxiliar'),
-                ('D',  'Diplomado'),
-                ('S',  'Seminario'),
-                ('I',  'Intensivo'),
-                ('P',  'Personalizado'),
-                )
+SEXO = (
+    ('M', 'Masculino'),
+    ('F', 'Femenino'),
+)
+
+TIPO_REFERENCIA = (
+    ('F', 'Familiar'),
+    ('P', 'Personal'),
+    ('C', 'Comercial'),
+    ('A', 'Académica'),
+    ('L', 'Laboral'),
+)
+
+JORNADA = (
+    ('M', 'Mañana'),
+    ('T', 'Tarde'),
+    ('N', 'Noche'),
+    ('S', 'Sábado'),
+    ('D', 'Domingo'),
+)
+
+MODULO = (
+    ('H', 'Humanidades'),
+    ('C', 'Ciencias básicas'),
+    ('T', 'Técnico'),
+)
+
+PERIODICIDAD = (
+    ('H', 'Horas'),
+    ('D', 'Días'),
+    ('N', 'Semanas'),
+    ('M', 'Meses'),
+    ('S', 'Semestres'),
+    ('A', 'Años'),
+)
+
+DIAS = (
+    ('L', 'Lunes'),
+    ('M', 'Martes'),
+    ('C', 'Miércoles'),
+    ('J', 'Jueves'),
+    ('V', 'Viernes'),
+    ('S', 'Sábado'),
+    ('D', 'Domingo'),
+)
+
+TIPO_SALON = (
+    ('A', 'Aula'),
+    ('L', 'Laboratorio'),
+    ('U', 'Auditorio'),
+    ('I', 'Aire libre'),
+    ('M', 'Aula mantenimiento'),
+    ('O', 'Otro'),
+)
+
+TIPO_ESTUDIO = (
+    ('P', 'Primaria'),
+    ('S', 'Secundaria'),
+    ('T', 'Técnico'),
+    ('U', 'Universitario'),
+    ('E', 'Especialización'),
+    ('M', 'Maestría'),
+    ('D', 'Doctorado'),
+    ('O', 'Otros estudios'),
+)
+
+TIPO_PROGRAMA = (
+    ('T',  'Técnico'),
+    ('A',  'Auxiliar'),
+    ('D',  'Diplomado'),
+    ('S',  'Seminario'),
+    ('I',  'Intensivo'),
+    ('P',  'Personalizado'),
+)
 
 
 
@@ -114,12 +126,8 @@ class Profesor(models.Model):
     email = models.EmailField(unique = True, blank=True)
     web = models.URLField(blank=True)
     # Informacion de acceso
-    usuario = models.CharField(max_length=200, 
-                               unique = True,
-                               blank=True)
-    contrasena = models.CharField(verbose_name='Contraseña', 
-                                  max_length=200,
-                                  blank=True)
+    usuario = models.CharField(max_length=200, unique=True, blank=True)
+    contrasena = models.CharField(verbose_name='Contraseña', max_length=200, blank=True)
   
     def __unicode__(self):
         return self.documento
