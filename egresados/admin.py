@@ -6,13 +6,7 @@ class OfertaInline(admin.TabularInline):
     model = Oferta
     extra = 1
     raw_id_fields = ('empresa',)
-    fields = (
-              'titulo', 
-              'ciudad', 
-              'fecha_publicacion', 
-              'fecha_cierre',
-              )
-    list_display = ('vigente',)
+    fields = ('titulo', 'fecha_publicacion', 'fecha_cierre')
 
 class EmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -41,21 +35,27 @@ class EmpresaAdmin(admin.ModelAdmin):
     
 class OfertaAdmin(admin.ModelAdmin):
     fieldsets = [
-         (None, {'fields': [
-            'empresa', 
-            'titulo',
-            'descripcion',
-            'requisitos',
-            'nivel_cargo',
-            'sector',
-            'salario',
-            'ciudad',
-            'pais',
-            'fecha_publicacion',
-            'fecha_cierre']}),
+         (None, {
+            'fields': [
+                'empresa', 
+                'codigo',
+                'titulo',
+                'descripcion',
+                'requisitos',
+                'nivel_cargo',
+                'sector',
+                'salario',
+                'ciudad',
+                'pais',
+                'fecha_publicacion',
+                'fecha_cierre'
+                ]
+            }
+         ),
     ]
     
     list_display = (
+        'codigo',
         'titulo', 
         'empresa', 
         'ciudad', 
@@ -64,7 +64,7 @@ class OfertaAdmin(admin.ModelAdmin):
     )
     
     list_filter = ['empresa', 'ciudad', 'pais', 'salario',]
-    search_fields = ('titulo', 'empresa',)
+    search_fields = ('titulo', 'titulo', 'empresa',)
     
     
 class HojaVidaInline(admin.TabularInline):

@@ -128,6 +128,7 @@ class Empresa(models.Model):
     
 class Oferta(models.Model):
     empresa = models.ForeignKey(Empresa)
+    codigo = models.CharField(verbose_name='Código', max_length=200)
     titulo = models.CharField(verbose_name='Título', max_length=200)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     requisitos = models.TextField(max_length=200, blank=True)
@@ -145,4 +146,4 @@ class Oferta(models.Model):
         return self.fecha_cierre >= datetime.date.today()
     
     def __unicode__(self):
-        return self.titulo
+        return self.codigo
