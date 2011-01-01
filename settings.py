@@ -12,26 +12,27 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-#'default': {
-#        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-#        'NAME': os.path.join(PROJECT_DIR, 'sia.db'), # Or path to database file if using sqlite3.
-#        'USER': '',                      # Not used with sqlite3.
-#        'PASSWORD': '',                  # Not used with sqlite3.
-#        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-#        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-#    }
-
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'arawakte_sia', 
-        'USER': 'arawakte_sia',
-        'PASSWORD': 'nTzIp;r,m$pP',
-        'HOST': 'arawaktechnologies.com',
-        'PORT': '3306',
-    }
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': os.path.join(PROJECT_DIR, 'sia.db'), # Or path to database file if using sqlite3.
+            'USER': '',                      # Not used with sqlite3.
+            'PASSWORD': '',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+#        'NAME': 'arawakte_sia', 
+#        'USER': 'arawakte_sia',
+#        'PASSWORD': 'nTzIp;r,m$pP',
+#        'HOST': 'arawaktechnologies.com',
+#        'PORT': '3306',
+#    }
+#}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -108,5 +109,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'academico',
+    'continuada',
     'financiero',
+    'egresados',
 )
