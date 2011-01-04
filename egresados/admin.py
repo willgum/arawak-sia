@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from egresados.models import HojaVida, Egresado, Oferta, Empresa, OtrosEstudiosEgresado
+from egresados.models import HojaVida, Egresado, Oferta, Empresa, Estudio, Idioma, ExperienciaLaboral
 from django.contrib import admin
 
 class OfertaInline(admin.TabularInline):
@@ -11,7 +11,7 @@ class OfertaInline(admin.TabularInline):
 class EmpresaAdmin(admin.ModelAdmin):
     fieldsets = [
          (None, {'fields': [
-            'nombre', 
+            'nombre',
             'descripcion',
             'direccion',
             'ciudad',
@@ -19,25 +19,25 @@ class EmpresaAdmin(admin.ModelAdmin):
             'telefono',
             'fax',
             'email',
-            'web',]}),
+            'web', ]}),
     ]
     
     list_display = (
-        'nombre', 
-        'ciudad', 
-        'pais', 
+        'nombre',
+        'ciudad',
+        'pais',
         'email',
         'web',
     )
     inlines = [OfertaInline]
     list_filter = ['ciudad', 'pais']
-    search_fields = ('nombre','ciudad')
+    search_fields = ('nombre', 'ciudad')
     
 class OfertaAdmin(admin.ModelAdmin):
     fieldsets = [
          (None, {
             'fields': [
-                'empresa', 
+                'empresa',
                 'codigo',
                 'titulo',
                 'descripcion',
@@ -56,54 +56,73 @@ class OfertaAdmin(admin.ModelAdmin):
     
     list_display = (
         'codigo',
-        'titulo', 
-        'empresa', 
-        'ciudad', 
+        'titulo',
+        'empresa',
+        'ciudad',
         'pais',
-        'vigente',       
+        'vigente',
     )
     
-    list_filter = ['empresa', 'ciudad', 'pais', 'salario',]
+    list_filter = ['empresa', 'ciudad', 'pais', 'salario', ]
     search_fields = ('titulo', 'titulo', 'empresa',)
     
     
 class HojaVidaInline(admin.TabularInline):
     model = HojaVida
     extra = 1
-    
-class OtrosEstudiosEgresadoInline(admin.TabularInline):
-    model = OtrosEstudiosEgresado
-    extra = 1
 
 class EgresadoAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Informacion Personal', {'fields': [ 
-            'nombre', 
-            'apellido', 
-            'sexo', 
-            'tipo_documento', 
-            'documento', 
+            'nombre',
+            'apellido',
+            'sexo',
+            'tipo_documento',
+            'documento',
             'lugar_expedicion',
-            'fecha_nacimiento', 
-            'lugar_nacimiento'], 
-            'classes': ['collapse']}),
+            'fecha_nacimiento',
+            'lugar_nacimiento']}),
         ('Informacion de contacto', {'fields': [
-            'direccion', 
-            'lugar_residencia', 
-            'telefono', 
-            'email', 
-            'web'], 
+            'direccion',
+            'lugar_residencia',
+            'telefono',
+            'email',
+            'web'],
             'classes': ['collapse']}),
         ('Informacion de acceso', {'fields': [
-            'usuario', 
-            'contrasena'], 
+            'usuario',
+            'contrasena'],
             'classes': ['collapse']}),
     ]
-    inlines = [OtrosEstudiosEgresadoInline, HojaVidaInline]
+    inlines = [HojaVidaInline]
     list_display = ('documento', 'nombre', 'apellido', 'email',)
     search_fields = ('documento', 'nombre', 'apellido',)
+
+
+class EstudioInline(admin.TabularInline):
+    model = Estudio
+    extra = 1
+
+class IdiomaInline(admin.TabularInline):
+    model = Idioma
+    extra = 1
+
+class ExperienciaLaboralInline(admin.TabularInline):
+    model = ExperienciaLaboral
+    extra = 1
+
+class HojaVidaAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None, {'fields': [ 
+            'titulo',
+            'publica']}),
+    ]
+    inlines = [EstudioInline, IdiomaInline, ExperienciaLaboralInline]
+    list_display = ('titulo', 'publica',)
+    search_fields = ('titulo', 'egresado',)
 
 
 admin.site.register(Egresado, EgresadoAdmin)
 admin.site.register(Empresa, EmpresaAdmin)
 admin.site.register(Oferta, OfertaAdmin)
+admin.site.register(HojaVida, HojaVidaAdmin)
