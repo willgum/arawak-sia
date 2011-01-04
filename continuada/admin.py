@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from continuada.models import Curso, Estudiante, InscripcionCurso
+from continuada.models import Curso, Estudiante, MatriculaCurso
 from django.contrib import admin
 
 
-class InscripcionCursoAdmin(admin.ModelAdmin):
+class MatriculaCursoAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': [
             'fecha_inscripcion',
@@ -47,8 +47,8 @@ class CursoAdmin(admin.ModelAdmin):
 
 
 
-class InscripcionCursoInline(admin.TabularInline):
-    model = InscripcionCurso
+class MatriculaCursoInline(admin.TabularInline):
+    model = MatriculaCurso
     extra = 1
 
 class EstudianteAdmin(admin.ModelAdmin):
@@ -75,11 +75,11 @@ class EstudianteAdmin(admin.ModelAdmin):
             'contrasena'], 
             'classes': ['collapse']}),
     ]
-    inlines = [InscripcionCursoInline]
+    inlines = [MatriculaCursoInline]
     list_display = ('documento', 'nombre', 'apellido')
     search_fields = ['documento', 'nombre', 'apellido']
 
 
 admin.site.register(Estudiante, EstudianteAdmin)
 admin.site.register(Curso, CursoAdmin)
-admin.site.register(InscripcionCurso, InscripcionCursoAdmin)
+admin.site.register(MatriculaCurso, MatriculaCursoAdmin)

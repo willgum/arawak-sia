@@ -53,7 +53,7 @@ class Curso(models.Model):
     def __unicode__(self):
         return self.codigo
     
-class InscripcionCurso(models.Model):
+class MatriculaCurso(models.Model):
     fecha_inscripcion = models.DateField()
     estudiante = models.ForeignKey(Estudiante)
     curso = models.ForeignKey(Curso)

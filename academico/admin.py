@@ -151,7 +151,7 @@ class AmonestacionInline(admin.TabularInline):
 
 class EstudianteAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Informacion Personal', {'fields': [ 
+        ('Informacion Personal', { 'fields': [ 
             'nombre', 
             'apellido', 
             'sexo', 
@@ -159,8 +159,7 @@ class EstudianteAdmin(admin.ModelAdmin):
             'documento', 
             'lugar_expedicion',
             'fecha_nacimiento', 
-            'lugar_nacimiento'], 
-            'classes': ['collapse']}),
+            'lugar_nacimiento']}),
         ('Requisitos', {'fields': [
             'fotocopia_documento', 
             'fotocopia_diploma', 
@@ -184,7 +183,7 @@ class EstudianteAdmin(admin.ModelAdmin):
         InscripcionEstudianteInline,
         AmonestacionInline
     ]
-    list_display = ('documento', 'nombre', 'apellido')
+    list_display = ('documento', 'nombre', 'apellido', 'email', 'sexo', 'usuario')
     search_fields = ['documento', 'nombre', 'apellido']
   
 
@@ -209,8 +208,7 @@ class ProfesorAdmin(admin.ModelAdmin):
             'lugar_expedicion',
             'fecha_nacimiento', 
             'lugar_nacimiento', 
-            'foto'], 
-            'classes': ['collapse']}),
+            'foto']}),
         ('Informacion de contacto', {'fields': [
             'direccion', 
             'lugar_residencia', 

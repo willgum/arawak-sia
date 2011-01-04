@@ -94,6 +94,8 @@ class Egresado(models.Model):
 class HojaVida(models.Model):
     egresado = models.ForeignKey(Egresado)
     titulo = models.CharField(max_length=200)
+    publica = models.BooleanField(default=True)
+    ultima_modificacion = models.DateTimeField()
     
     def __unicode__(self):
         return self.titulo
@@ -101,15 +103,32 @@ class HojaVida(models.Model):
     class Meta:
         verbose_name = 'hoja de vida'
         verbose_name_plural = 'hojas de vida'
+    
 
-class OtrosEstudiosEgresado(models.Model):
-    egresado = models.ForeignKey(Egresado)
+class Estudio(models.Model):
+    hoja_vida = models.ForeignKey(HojaVida)
     tipo_estudio = models.CharField(max_length=1, choices=TIPO_ESTUDIO, blank=True) 
     institucion = models.CharField( verbose_name='Institución', max_length=200, blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, blank=True)
     fecha_graduacion = models.DateField(verbose_name='Fecha graduación', blank=True, null=True)
+    actualmente = models.BooleanField()
     
-    
+class Idioma(models.Model):
+    hoja_vida = models.ForeignKey(HojaVida)
+    idioma = models.CharField(max_length=50, blank=True)
+    lee = models.IntegerField()
+    escribe = models.IntegerField()
+    habla = models.IntegerField()
+
+class ExperienciaLaboral(models.Model):
+    hoja_vida = models.ForeignKey(HojaVida)
+    cargo = models.CharField(max_length=200, blank=True)
+    empresa = models.CharField(max_length=200, blank=True)
+    descripcion = models.TextField(max_length=200, blank=True)
+    fecha_inicio = models.DateField(blank=True, null=True)
+    fecha_fin = models.DateField(blank=True, null=True)
+    actualmente = models.BooleanField()
+
 class Empresa(models.Model):
     nombre = models.CharField(max_length=200)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
