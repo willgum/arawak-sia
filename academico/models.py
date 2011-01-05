@@ -51,12 +51,9 @@ MODULO = (
 )
 
 PERIODICIDAD = (
-    ('H', 'Horas'),
-    ('D', 'Días'),
-    ('N', 'Semanas'),
-    ('M', 'Meses'),
-    ('S', 'Semestres'),
-    ('A', 'Años'),
+    ('C', 'Cuatrimestral'),
+    ('S', 'Semestral'),
+    ('A', 'Anual'),
 )
 
 DIAS = (
