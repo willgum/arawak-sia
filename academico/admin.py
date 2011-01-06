@@ -151,10 +151,12 @@ class AmonestacionInline(admin.TabularInline):
 
 class EstudianteAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Informacion Personal', { 'fields': [ 
-            'nombre', 
-            'apellido', 
-            'sexo', 
+        ('Identificacion', { 'fields': [ 
+            'nombre1',
+            'nombre2', 
+            'apellido1', 
+            'apellido2', 
+            'genero', 
             'tipo_documento', 
             'documento', 
             'lugar_expedicion',
@@ -165,9 +167,10 @@ class EstudianteAdmin(admin.ModelAdmin):
             'fotocopia_diploma', 
             'foto'], 
             'classes': ['collapse']}),
-        ('Informacion de contacto', {'fields': [
+        ('Informacion de ubicacion', {'fields': [
             'direccion', 
-            'lugar_residencia', 
+            'lugar_residencia',
+            'estrato',
             'telefono', 
             'email', 
             'web'], 
@@ -176,6 +179,11 @@ class EstudianteAdmin(admin.ModelAdmin):
             'usuario', 
             'contrasena'], 
             'classes': ['collapse']}),
+        ('Informacion adicional', {'fields': [
+            'sisben',
+            'discapacidad', 
+            'etnia'], 
+            'classes': ['collapse']}),
     ]
     inlines = [
         OtrosEstudiosEstudianteInline, 
@@ -183,8 +191,8 @@ class EstudianteAdmin(admin.ModelAdmin):
         InscripcionEstudianteInline,
         AmonestacionInline
     ]
-    list_display = ('documento', 'nombre', 'apellido', 'email', 'sexo', 'usuario')
-    search_fields = ['documento', 'nombre', 'apellido']
+    list_display = ('documento', 'nombre1', 'apellido1', 'email', 'genero', 'usuario')
+    search_fields = ['documento', 'nombre1', 'apellido1']
   
 
 class ExperienciaLaboralProfesorInline(admin.TabularInline):
@@ -199,10 +207,12 @@ class OtrosEstudiosProfesorlInline(admin.TabularInline):
 
 class ProfesorAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Informacion Personal', {'fields': [
-            'nombre', 
-            'apellido', 
-            'sexo', 
+        ('Identificacion', {'fields': [
+            'nombre1',
+            'nombre2', 
+            'apellido1', 
+            'apellido2', 
+            'genero', 
             'tipo_documento', 
             'documento', 
             'lugar_expedicion',
@@ -222,8 +232,8 @@ class ProfesorAdmin(admin.ModelAdmin):
             'classes': ['collapse']}),
     ]
     inlines = [ExperienciaLaboralProfesorInline, OtrosEstudiosProfesorlInline]
-    list_display = ('documento', 'nombre', 'apellido')
-    search_fields = ['documento', 'nombre', 'apellido']
+    list_display = ('documento', 'nombre1', 'apellido1', 'email')
+    search_fields = ['documento', 'nombre1', 'apellido1']
 
 
 class HorarioCursoInline(admin.TabularInline):
