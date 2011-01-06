@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
+
+NOTA_MIN = 0.0
+NOTA_MAX = 5.0
+NOTA_APR = 3.5
 
 TIPO_COMPORTAMIENTO = (
     ('E', 'Excelente'),
@@ -278,9 +284,8 @@ class Curso(models.Model):
     fecha_fin = models.DateField(blank=True, null=True)
     profesor = models.ForeignKey(Profesor)
     grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...')
-    estudiantes_esperados = models.IntegerField(blank=True, null=True)
-    estudiantes_inscritos = models.IntegerField(blank=True, null=True)
-    
+    estudiantes_esperados = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+    estudiantes_inscritos = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
         return self.codigo
@@ -289,14 +294,18 @@ class Curso(models.Model):
 class MatriculaCurso(models.Model):
     curso = models.ForeignKey(Curso)
     inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
-    nota_definitiva = models.FloatField(blank=True, null=True)
-    nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True)
+    nota_definitiva = models.FloatField(blank=True, null=True, validators=[validar_nota])
+    nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, validators=[validar_nota])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
 
 
+def validar_porcentaje(porcentaje):
+        if porcentaje < 1 or porcentaje > 100:
+            raise ValidationError(u"%s no es una porcentaje válido" % porcentaje)
+
 class Corte(models.Model):
-    codigo = models.CharField(verbose_name='Código', max_length=200)
-    porcentaje = models.IntegerField(help_text='Ingrese un número entre 1 y 100.', blank=True)
+    codigo = models.CharField(verbose_name="Código", max_length=200)
+    porcentaje = models.IntegerField(help_text="Ingrese un número entre 1 y 100.", blank=True, validators=[validar_porcentaje])
     fecha_inicio = models.DateField(blank=True, null=True)
     fecha_fin = models.DateField(blank=True, null=True)
   
@@ -304,12 +313,19 @@ class Corte(models.Model):
         return self.codigo
 
 
+def validar_nota(nota):
+        if nota < NOTA_MIN or nota > NOTA_MAX:
+            raise ValidationError(u"%s no es una nota válida" % nota)
+
 class NotaCorte(models.Model):
     matricula_curso = models.ForeignKey(MatriculaCurso)
     corte = models.ForeignKey(Corte)
-    nota = models.FloatField(blank=True, null=True)
-    fallas = models.IntegerField( help_text="Número de fallas durante el corte.", blank=True, null=True)
-    comportamiento = models.CharField(max_length=1, choices=TIPO_COMPORTAMIENTO, blank=True) 
+    nota = models.FloatField(blank=True, null=True, validators=[validar_nota])
+    fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True)
+    comportamiento = models.CharField(max_length=1, choices=TIPO_COMPORTAMIENTO, blank=True)
+    
+    
+ 
 
   
 class HorarioCurso(models.Model):
