@@ -14,12 +14,17 @@ TIPO_ESTUDIO = (
 )
 
 TIPO_DOCUMENTO = (
-    ('C', 'Cédula de ciudadania'),
-    ('T', 'Tarjeta de identidad'),
-    ('P', 'Pasaporte'),
+    ('1', 'Cédula de Ciudadanía'), 
+    ('2', 'Tarjeta de Identidad'), 
+    ('3', 'Cédula de Extranjería ó Identificación de Extranjería'), 
+    ('5', 'Registro Civil de Nacimiento'), 
+    ('6', 'Número de Identificación Personal (NIP)'), 
+    ('7', 'Número Único de Identificación Personal (NUIP)'), 
+    ('8', 'Número de Identificación establecido por la Secretaría de  Educación'),   
+    ('9', 'Certificado Cabildo'),
 )
 
-SEXO = (
+GENERO = (
     ('M', 'Masculino'),
     ('F', 'Femenino'),
 )
@@ -69,23 +74,27 @@ SECTORES = (
 )
 
 class Egresado(models.Model):
-    # Informacion personal  
-    nombre = models.CharField(max_length=200)
-    apellido = models.CharField(max_length=200)
-    sexo = models.CharField(max_length=1, choices=SEXO, blank=True) 
+    # Identificacion  
+    nombre1 = models.CharField(max_length=50, verbose_name='Primer nombre')
+    nombre2= models.CharField(max_length=50, verbose_name='Segundo nombre', blank=True)
+    apellido1 = models.CharField(max_length=50, verbose_name='Primer apellido')
+    apellido2 = models.CharField(max_length=50, verbose_name='Segundo apellido', blank=True)
+    genero = models.CharField(verbose_name='Género', max_length=1, choices=GENERO, blank=True)  
     tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True) 
-    documento = models.CharField( max_length=200, unique = True)
+    documento = models.CharField(max_length=12, unique = True)
     lugar_expedicion = models.CharField(max_length=200, verbose_name='Lugar expedición', blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(max_length=200, blank=True)
+    
     # Informacion de contacto
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
     telefono = models.CharField(verbose_name='Teléfono', max_length=200, blank=True)
-    email = models.EmailField(unique = True, blank=True)
+    email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
+    
     # Informacion de acceso
-    usuario = models.CharField(max_length=200, unique = True, blank=True)
+    usuario = models.CharField(max_length=50, blank=True)
     contrasena = models.CharField(verbose_name='Contraseña', max_length=200, blank=True)
     
     def __unicode__(self):
