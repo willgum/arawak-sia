@@ -74,9 +74,11 @@ class HojaVidaInline(admin.TabularInline):
 class EgresadoAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Informacion Personal', {'fields': [ 
-            'nombre',
-            'apellido',
-            'sexo',
+            'nombre1',
+            'nombre2',
+            'apellido1',
+            'apellido2',
+            'genero',
             'tipo_documento',
             'documento',
             'lugar_expedicion',
@@ -95,8 +97,8 @@ class EgresadoAdmin(admin.ModelAdmin):
             'classes': ['collapse']}),
     ]
     inlines = [HojaVidaInline]
-    list_display = ('documento', 'nombre', 'apellido', 'email',)
-    search_fields = ('documento', 'nombre', 'apellido',)
+    list_display = ('documento', 'nombre1', 'apellido1', 'email',)
+    search_fields = ('documento', 'nombre1', 'apellido1',)
 
 
 class EstudioInline(admin.TabularInline):
