@@ -3,6 +3,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 
+
 NOTA_MIN = 0.0
 NOTA_MAX = 5.0
 NOTA_APR = 3.5
@@ -235,9 +236,10 @@ def validar_porcentaje(porcentaje):
 
 
 class Semestre(models.Model):
+    
     codigo = models.CharField(verbose_name='Código', max_length=12)
-    fecha_inicio = models.DateField(blank=True, null=True)
-    fecha_fin = models.DateField(blank=True, null=True)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
     
 
     def __unicode__(self):
@@ -468,11 +470,8 @@ class Curso(models.Model):
     def __unicode__(self):
         return self.codigo
     
-    def save(self, *args, **kwargs):
-        self.codigo = "%s-%s" % (self.competencia, self.grupo)
-        super(Curso, self).save(*args, **kwargs)  
-      
-
+    def codigo(self):
+        return "%s-%s" % (self.competencia, self.grupo)
 
 
 class MatriculaCurso(models.Model):
