@@ -270,9 +270,14 @@ class Profesor(models.Model):
     web = models.URLField(blank=True)
     
     # Informacion de acceso
-    usuario = models.CharField(max_length=50, blank=True)
+    usuario = models.CharField(max_length=12, unique=True)
     contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
-  
+    
+    #Sobreescribir la función guardar para crear usuario
+    def save(self, *args, **kwargs):
+        self.usuario = self.documento
+        super(Profesor, self).save(*args, **kwargs)  
+        
     def __unicode__(self):
         return "%s %s" % (self.nombre1, self.apellido1) 
     
@@ -368,13 +373,18 @@ class Estudiante(models.Model):
     web = models.URLField(blank=True)
     
     # Informacion de acceso
-    usuario = models.CharField(max_length=50, blank=True)
+    usuario = models.CharField(max_length=12, unique=True)
     contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
     
     # Informacion adicional
     sisben = models.CharField(max_length=1, choices=SISBEN, blank=True, default='9')
     discapacidad = models.CharField(max_length=2, choices=DISCAPACIDAD, blank=True, default='99')
     etnia = models.CharField(max_length=3, choices=ETNIA, blank=True, default='00')
+    
+    #Sobreescribir la función guardar para crear usuario
+    def save(self, *args, **kwargs):
+        self.usuario = self.documento
+        super(Estudiante, self).save(*args, **kwargs)  
     
     def __unicode__(self):
         return self.documento
