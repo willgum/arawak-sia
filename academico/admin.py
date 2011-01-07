@@ -177,7 +177,6 @@ class EstudianteAdmin(admin.ModelAdmin):
             'web'], 
             'classes': ['collapse']}),
         ('Informacion de acceso', {'fields': [
-            'usuario', 
             'contrasena'], 
             'classes': ['collapse']}),
         ('Informacion adicional', {'fields': [
@@ -228,12 +227,11 @@ class ProfesorAdmin(admin.ModelAdmin):
             'web'],
             'classes': ['collapse']}),
         ('Informacion de acceso', {'fields': [
-            'usuario', 
             'contrasena'],
             'classes': ['collapse']}),
     ]
     inlines = [ExperienciaLaboralProfesorInline, OtrosEstudiosProfesorlInline]
-    list_display = ('documento', 'nombre1', 'apellido1', 'email')
+    list_display = ('documento', 'nombre1', 'apellido1', 'email', 'usuario')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
 
