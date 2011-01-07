@@ -246,6 +246,7 @@ class SesionCursoInline(admin.TabularInline):
 
 
 class CursoAdmin(admin.ModelAdmin):
+    raw_id_fields = ('competencia', 'profesor', 'semestre')
     fieldsets = [
         (None, {'fields': [
             'competencia', 
@@ -255,6 +256,7 @@ class CursoAdmin(admin.ModelAdmin):
             'estudiantes_esperados',
             'estudiantes_inscritos']}),
     ]
+    
     inlines = [HorarioCursoInline, SesionCursoInline]
     list_display_links = ('codigo', 'competencia')
     list_display = (
