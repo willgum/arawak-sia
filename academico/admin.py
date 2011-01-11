@@ -143,6 +143,7 @@ class ReferenciaInline(admin.TabularInline):
 class InscripcionEstudianteInline(admin.TabularInline):
     model = InscripcionEstudiante
     extra = 1
+    exclude = ('promedio_acumulado')
   
   
 class AmonestacionInline(admin.TabularInline):
@@ -173,6 +174,7 @@ class EstudianteAdmin(admin.ModelAdmin):
             'lugar_residencia',
             'estrato',
             'telefono', 
+            'movil',
             'email', 
             'web'], 
             'classes': ['collapse']}),
@@ -193,7 +195,25 @@ class EstudianteAdmin(admin.ModelAdmin):
     ]
     list_display = ('documento', 'nombre1', 'apellido1', 'email', 'genero', 'usuario')
     search_fields = ['documento', 'nombre1', 'apellido1']
-  
+
+
+class EstudianteInscripcionAdmin(admin.ModelAdmin):
+    fieldsets = [
+                 (None, {'fields':[
+                                   'codigo',
+                                   'fecha_inscripcion',
+                                   'estado'
+                                   ]}),
+                 ]
+    
+    list_display = (
+                    'codigo',
+                    'nombre_estudiante',
+                    'fecha_inscripcion',
+                    'estado'
+                    )
+    
+    search_fields = ('codigo', 'estado')
 
 class ExperienciaLaboralProfesorInline(admin.TabularInline):
     model = ExperienciaLaboralProfesor
@@ -223,6 +243,7 @@ class ProfesorAdmin(admin.ModelAdmin):
             'direccion', 
             'lugar_residencia', 
             'telefono', 
+            'movil',
             'email', 
             'web'],
             'classes': ['collapse']}),
@@ -322,6 +343,7 @@ admin.site.register(Curso, CursoAdmin)
 admin.site.register(Estudiante, EstudianteAdmin)
 admin.site.register(MatriculaCurso, MatriculaCursoAdmin)
 admin.site.register(MatriculaPrograma, MatriculaProgramaAdmin)
+admin.site.register(InscripcionEstudiante, EstudianteInscripcionAdmin)
 admin.site.register(Salon, SalonAdmin)
 admin.site.register(Semestre, SemestreAdmin)
 admin.site.register(Programa, ProgramaAdmin)

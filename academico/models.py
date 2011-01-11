@@ -234,10 +234,12 @@ def validar_porcentaje(porcentaje):
         if porcentaje < 1 or porcentaje > 100:
             raise ValidationError(u"%s no es una porcentaje válido" % porcentaje)
 
+def validar_digito(digito):
+    if not digito.isdigit():
+        raise ValidationError(u"%s no es dígito válido " % digito)
 
 class Semestre(models.Model):
-    
-    codigo = models.CharField(verbose_name='Código', max_length=12)
+    codigo = models.CharField(verbose_name='Código', max_length=8)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     
@@ -267,7 +269,8 @@ class Profesor(models.Model):
     # Informacion de contacto
     direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
-    telefono = models.CharField(verbose_name='Teléfono', max_length=200, blank=True)
+    telefono = models.CharField(verbose_name='Teléfono', max_length=20, blank=True)
+    movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
     
@@ -326,7 +329,7 @@ class Programa(models.Model):
     
     # Informacion general
     tipo_programa = models.CharField(max_length=1, choices=TIPO_PROGRAMA, blank=True)
-    codigo = models.CharField(verbose_name='Código', max_length=12)
+    codigo = models.CharField(verbose_name='Código', max_length=2)
     nombre = models.CharField(max_length=200, blank=True)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, help_text='Título otorgado al finalizar el programa.', blank=True)
@@ -335,7 +338,7 @@ class Programa(models.Model):
     
     # Horario
     periodicidad = models.CharField(max_length=1, choices=PERIODICIDAD, blank=True) 
-    duracion = models.IntegerField(verbose_name='Duración', blank=True, null=True, validators=[MinValueValidator(0)])
+    duracion = models.SmallIntegerField(verbose_name='Duración', blank=True, null=True, validators=[MinValueValidator(0)])
     jornada = models.CharField(max_length=1, choices=JORNADA, blank=True)
     
     # Informacion adicional
@@ -370,7 +373,8 @@ class Estudiante(models.Model):
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
     estrato = models.CharField(max_length=1, choices=ESTRATO, blank=True)
-    telefono = models.CharField(verbose_name='Teléfono', max_length=200, blank=True)
+    telefono = models.CharField(verbose_name='Teléfono', max_length=20, blank=True)
+    movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
     
@@ -405,24 +409,38 @@ class Referencia(models.Model):
     tipo_referencia = models.CharField( max_length=1, choices=TIPO_REFERENCIA, blank=True) 
     nombre = models.CharField(max_length=200, blank=True)
     tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True)
-    documento = models.CharField(max_length=200, blank=True)
+    documento = models.CharField(max_length=12, blank=True)
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
-    telefono = models.CharField(verbose_name='Teléfono', max_length=200,  blank=True)
+    telefono = models.CharField(verbose_name='Teléfono', max_length=20,  blank=True)
 
 
 class InscripcionEstudiante(models.Model):
     estudiante = models.ForeignKey(Estudiante)
-    fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
+    fecha_inscripcion = models.DateField(verbose_name='Fecha inscripción')
     programa = models.ForeignKey(Programa)
-    codigo = models.CharField(verbose_name='Código', max_length=12, unique = True)
+    codigo = models.CharField(verbose_name='Código', max_length=12, unique = True, blank=True)
     estado = models.CharField(max_length=1, choices=ESTADO_INSCRIPCION, default='A')
     fecha_vencimiento = models.DateField()
     becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
     promedio_acumulado = models.FloatField(blank=True, null=True, validators=[validar_nota])
     
+    def nombre_estudiante(self):
+        return self.estudiante.nombre1 + self.estudiante.apellido1
+    
+    def save(self, *args, **kwargs):
+        tmp_codigo = "%s%s%s" %(self.programa.codigo, self.fecha_inscripcion.strftime("%y"), '0001')
+        if len(InscripcionEstudiante.objects.filter(codigo=tmp_codigo)) == 0:
+            self.codigo = tmp_codigo
+        else:
+            self.codigo = "%s%s" %(tmp_codigo, '0002')
+            
+        super(InscripcionEstudiante, self).save(*args, **kwargs)
+    
     def __unicode__(self):
         return self.codigo
-
+    
+    class Meta:
+        verbose_name_plural = 'Inscripción estudiantes' 
 
 class Competencia(models.Model):
     programa = models.ForeignKey(Programa)
@@ -463,7 +481,7 @@ class Curso(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=12)
     semestre = models.ForeignKey(Semestre)
     profesor = models.ForeignKey(Profesor)
-    grupo = models.IntegerField(help_text='Número del grupo 1, 2, 3, ...', validators=[MinValueValidator(0)])
+    grupo = models.CharField(help_text='Número del grupo 1, 2, 3, ...', max_length=2, validators=[validar_digito])
     estudiantes_esperados = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     estudiantes_inscritos = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     
