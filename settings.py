@@ -64,12 +64,12 @@ MEDIA_ROOT = os.path.join(PROJECT_DIR, 'media/')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = '/media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/media/admin/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '72s-$fo25mpw#)*7&%bqrtc-ufi1w$am*@_czu-tg*v^vkh469'
@@ -92,10 +92,10 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'sia.urls'
 
 TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'template/'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_DIR, 'plantillas/'),
+    # Don't forget to use absolute paths, not relative paths.    
 )
 
 INSTALLED_APPS = (
@@ -104,8 +104,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
+    
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'academico',
