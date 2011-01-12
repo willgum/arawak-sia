@@ -488,10 +488,14 @@ class Curso(models.Model):
     def __unicode__(self):
         return self.codigo
     
-    def codigo(self):
-        return "%s-%s" % (self.competencia, self.grupo)
+#    def codigo(self):
+#        return "%s-%s" % (self.competencia.codigo, self.grupo)
 
-
+    def save(self, *args, **kwargs):
+        self.codigo = "%s-%s" % (self.competencia.codigo, self.grupo)
+        super(Curso, self).save(*args, **kwargs)
+        
+        
 class MatriculaCurso(models.Model):
     curso = models.ForeignKey(Curso)
     inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
