@@ -4,6 +4,7 @@ import os.path
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 PROJECT_DIR = os.path.dirname(__file__)
+LOGIN_URL = '/'
 
 ADMINS = (
     ('Javier Enciso', 'j4r.e4o@gmail.com'),
@@ -87,6 +88,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.csrf.CsrfResponseMiddleware',
 )
 
 ROOT_URLCONF = 'sia.urls'
