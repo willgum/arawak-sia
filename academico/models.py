@@ -407,7 +407,7 @@ class OtrosEstudiosEstudiante(models.Model):
 class Referencia(models.Model):
     estudiante = models.ForeignKey(Estudiante)
     tipo_referencia = models.CharField( max_length=1, choices=TIPO_REFERENCIA, blank=True) 
-    nombre = models.CharField(max_length=200, blank=True)
+    nombre = models.CharField(max_length=20, blank=True)
     tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True)
     documento = models.CharField(max_length=12, blank=True)
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
@@ -427,12 +427,16 @@ class InscripcionEstudiante(models.Model):
     def nombre_estudiante(self):
         return self.estudiante.nombre1 + self.estudiante.apellido1
     
+#    Asignar automáticamente código de inscripción a estudiante
+#    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
         tmp_codigo = "%s%s%s" %(self.programa.codigo, self.fecha_inscripcion.strftime("%y"), '0001')
         if len(InscripcionEstudiante.objects.filter(codigo=tmp_codigo)) == 0:
             self.codigo = tmp_codigo
         else:
-            self.codigo = "%s%s" %(tmp_codigo, '0002')
+            tmp_codigo = tmp_codigo[0:4]
+            for c in InscripcionEstudiante.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiante where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
+                self.codigo = "%s%s" %(tmp_codigo, c.codigo)
             
         super(InscripcionEstudiante, self).save(*args, **kwargs)
     
