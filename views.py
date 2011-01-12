@@ -26,8 +26,8 @@ def login(request):
     password = request.POST['contrasena']
     user = auth.authenticate(username=username, password=password)
     if user is not None and user.is_active:
-        auth.login(request, user)
-        return HttpResponseRedirect("/")
+        auth.login(request, user)        
+        return HttpResponseRedirect(request.POST['next'])
     else:        
         return HttpResponseRedirect("/")
 
