@@ -143,7 +143,7 @@ class ReferenciaInline(admin.TabularInline):
 class InscripcionEstudianteInline(admin.TabularInline):
     model = InscripcionEstudiante
     extra = 1
-    exclude = ('promedio_acumulado')
+    exclude = ('promedio_acumulado',)
   
   
 class AmonestacionInline(admin.TabularInline):
