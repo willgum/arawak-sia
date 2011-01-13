@@ -143,7 +143,7 @@ class ReferenciaInline(admin.TabularInline):
 class InscripcionEstudianteInline(admin.TabularInline):
     model = InscripcionEstudiante
     extra = 1
-    exclude = ('promedio_acumulado',)
+    exclude = ('promedio_acumulado', 'codigo')
   
   
 class AmonestacionInline(admin.TabularInline):
@@ -178,9 +178,6 @@ class EstudianteAdmin(admin.ModelAdmin):
             'email', 
             'web'], 
             'classes': ['collapse']}),
-        ('Informacion de acceso', {'fields': [
-            'contrasena'], 
-            'classes': ['collapse']}),
         ('Informacion adicional', {'fields': [
             'sisben',
             'discapacidad', 
@@ -193,27 +190,33 @@ class EstudianteAdmin(admin.ModelAdmin):
         InscripcionEstudianteInline,
         AmonestacionInline
     ]
-    list_display = ('documento', 'nombre1', 'apellido1', 'email', 'genero', 'usuario')
+    list_display = ('documento', 'nombre1', 'apellido1', 'email', 'genero')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
 
 class EstudianteInscripcionAdmin(admin.ModelAdmin):
+    raw_id_fields = ('estudiante', 'programa')
+    
     fieldsets = [
                  (None, {'fields':[
-                                   'codigo',
+                                   'estudiante',
+                                   'programa',
                                    'fecha_inscripcion',
-                                   'estado'
+                                   'fecha_vencimiento',
+                                   'estado',
+                                   'becado',
                                    ]}),
                  ]
     
     list_display = (
                     'codigo',
                     'nombre_estudiante',
+                    'nombre_programa',
                     'fecha_inscripcion',
                     'estado'
                     )
     
-    search_fields = ('codigo', 'estado')
+    search_fields = ('codigo', 'nombre_programa', 'estado')
 
 class ExperienciaLaboralProfesorInline(admin.TabularInline):
     model = ExperienciaLaboralProfesor
@@ -247,12 +250,9 @@ class ProfesorAdmin(admin.ModelAdmin):
             'email', 
             'web'],
             'classes': ['collapse']}),
-        ('Informacion de acceso', {'fields': [
-            'contrasena'],
-            'classes': ['collapse']}),
     ]
     inlines = [ExperienciaLaboralProfesorInline, OtrosEstudiosProfesorlInline]
-    list_display = ('documento', 'nombre1', 'apellido1', 'email', 'usuario')
+    list_display = ('documento', 'nombre1', 'apellido1', 'email')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
 
