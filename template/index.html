@@ -43,8 +43,8 @@
 					   {% block titulo_seccion_verde %}{{ titulo_seccion_verde }}{% endblock %}
 				</h2>
 				<p class="date">
-				{% block mes %}{{ mes }}{% endblock %}
-				<b>{% block dia %}{{ dia }}{% endblock %}</b>
+				{% block mes %}{{ fecha|date:"M" }}{% endblock %}
+				<b>{% block dia %}{{ fecha|date:"d" }}{% endblock %}</b>
 				</p>
 				<div class="entry">		
 					{% block content  %}{% endblock %}						
@@ -57,7 +57,14 @@
 		<div id="sidebar">
 			{% if user.username %}
 				<h2><b class="text1">Bienvenido</b></h2>
-				Usuario: {{ user.username }}</br>
+				Usuario: {{ user.get_full_name }}</br>
+				{% if perfil %}
+				    {% for tipo in perfil %}
+				        Grupo: {{ tipo }} </br>
+				    {% endfor %}
+				{% else %}
+					Su usuario no tiene habilitado ningun tipo de permiso.</br>
+				{% endif %}
 				<div class="post">
 					<div class="meta">
 						<p class="links"><a href="/logout/" class="more">Cerrar Sesi&oacute;n</a></p>
