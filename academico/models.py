@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 
@@ -275,12 +276,23 @@ class Profesor(models.Model):
     web = models.URLField(blank=True)
     
     # Informacion de acceso
-    usuario = models.CharField(max_length=12, unique=True)
-    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
+#    usuario = models.CharField(max_length=12, unique=True)
+#    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
     
     #Sobreescribir la función guardar para crear usuario
     def save(self, *args, **kwargs):
-        self.usuario = self.documento
+        try:
+                user = User.objects.get(username=self.documento)
+        except User.DoesNotExist:
+                user = User.objects.create_user(self.documento, self.email, self.documento)
+                user.groups.add(3);
+                user.save()
+                
+        user.is_staff = False
+        user.first_name = self.nombre1
+        user.last_name = self.apellido1
+        user.email = self.email
+        user.save()
         super(Profesor, self).save(*args, **kwargs)  
         
     def __unicode__(self):
@@ -379,17 +391,31 @@ class Estudiante(models.Model):
     web = models.URLField(blank=True)
     
     # Informacion de acceso
-    usuario = models.CharField(max_length=12, unique=True)
-    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
+#    usuario = models.CharField(max_length=12, unique=True)
+#    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
     
     # Informacion adicional
     sisben = models.CharField(max_length=1, choices=SISBEN, blank=True, default='9')
     discapacidad = models.CharField(max_length=2, choices=DISCAPACIDAD, blank=True, default='99')
     etnia = models.CharField(max_length=3, choices=ETNIA, blank=True, default='00')
     
-    #Sobreescribir la función guardar para crear usuario
+#       Sobreescribir la función guardar para crear usuario
+#       Guardar información de acceso a la tabla de usuarios de DJANGO
+#       Grupo 4 corresponde en la base de datos con un perfil estudiante
+
     def save(self, *args, **kwargs):
-        self.usuario = self.documento
+        try:
+                user = User.objects.get(username=self.documento)
+        except User.DoesNotExist:
+                user = User.objects.create_user(self.documento, self.email, self.documento)
+                user.groups.add(4);
+                user.save()
+                
+        user.is_staff = False
+        user.first_name = self.nombre1
+        user.last_name = self.apellido1
+        user.email = self.email
+        user.save()
         super(Estudiante, self).save(*args, **kwargs)  
     
     def __unicode__(self):
@@ -426,6 +452,9 @@ class InscripcionEstudiante(models.Model):
     
     def nombre_estudiante(self):
         return self.estudiante.nombre1 + self.estudiante.apellido1
+    
+    def nombre_programa(self):
+        return self.programa.nombre
     
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
@@ -465,7 +494,7 @@ class MatriculaPrograma(models.Model):
     programa = models.ForeignKey(Programa)
     fecha_vencimiento = models.DateField(blank=True, null=True)
     promedio_periodo = models.FloatField(blank=True, null=True, validators=[validar_nota])
-    puesto = models.IntegerField(help_text='Puesto ocupado durante el periodo academico.', blank=True, null=True)
+    puesto = models.SmallIntegerField(help_text='Puesto ocupado durante el periodo academico.', blank=True, null=True)
     observaciones = models.TextField(max_length=200, blank=True)
   
 
