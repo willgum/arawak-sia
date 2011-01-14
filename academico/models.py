@@ -239,7 +239,7 @@ def validar_digito(digito):
     if not digito.isdigit():
         raise ValidationError(u"%s no es dígito válido " % digito)
 
-class Semestre(models.Model):
+class Ciclo(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=8)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
@@ -249,7 +249,7 @@ class Semestre(models.Model):
         return self.codigo
     
     def cortes(self):
-        return len(Corte.objects.filter(semestre=self))
+        return len(Corte.objects.filter(ciclo=self))
         
         
         
@@ -274,12 +274,11 @@ class Profesor(models.Model):
     movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
-    
-    # Informacion de acceso
-#    usuario = models.CharField(max_length=12, unique=True)
-#    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
-    
-    #Sobreescribir la función guardar para crear usuario
+ 
+#    Sobreescribir la función guardar para crear usuario
+#    Guardar información de acceso a la tabla de usuarios de DJANGO
+#    Grupo 3 corresponde en la base de datos con un perfil profesor
+
     def save(self, *args, **kwargs):
         try:
                 user = User.objects.get(username=self.documento)
@@ -389,12 +388,8 @@ class Estudiante(models.Model):
     movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
-    
-    # Informacion de acceso
-#    usuario = models.CharField(max_length=12, unique=True)
-#    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
-    
-    # Informacion adicional
+
+#        Informacion adicional
     sisben = models.CharField(max_length=1, choices=SISBEN, blank=True, default='9')
     discapacidad = models.CharField(max_length=2, choices=DISCAPACIDAD, blank=True, default='99')
     etnia = models.CharField(max_length=3, choices=ETNIA, blank=True, default='00')
@@ -440,7 +435,7 @@ class Referencia(models.Model):
     telefono = models.CharField(verbose_name='Teléfono', max_length=20,  blank=True)
 
 
-class InscripcionEstudiante(models.Model):
+class InscripcionEstudiantePrograma(models.Model):
     estudiante = models.ForeignKey(Estudiante)
     fecha_inscripcion = models.DateField(verbose_name='Fecha inscripción')
     programa = models.ForeignKey(Programa)
@@ -451,7 +446,7 @@ class InscripcionEstudiante(models.Model):
     promedio_acumulado = models.FloatField(blank=True, null=True, validators=[validar_nota])
     
     def nombre_estudiante(self):
-        return self.estudiante.nombre1 + self.estudiante.apellido1
+        return self.estudiante.nombre1 + ' ' + self.estudiante.apellido1
     
     def nombre_programa(self):
         return self.programa.nombre
@@ -460,20 +455,20 @@ class InscripcionEstudiante(models.Model):
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
         tmp_codigo = "%s%s%s" %(self.programa.codigo, self.fecha_inscripcion.strftime("%y"), '0001')
-        if len(InscripcionEstudiante.objects.filter(codigo=tmp_codigo)) == 0:
+        if len(InscripcionEstudiantePrograma.objects.filter(codigo=tmp_codigo)) == 0:
             self.codigo = tmp_codigo
         else:
             tmp_codigo = tmp_codigo[0:4]
-            for c in InscripcionEstudiante.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiante where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
+            for c in InscripcionEstudiantePrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiantePrograma where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
                 self.codigo = "%s%s" %(tmp_codigo, c.codigo)
             
-        super(InscripcionEstudiante, self).save(*args, **kwargs)
+        super(InscripcionEstudiantePrograma, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.codigo
     
     class Meta:
-        verbose_name_plural = 'Inscripción estudiantes' 
+        verbose_name_plural = 'Inscripción estudiante a Programa' 
 
 class Competencia(models.Model):
     programa = models.ForeignKey(Programa)
@@ -482,20 +477,28 @@ class Competencia(models.Model):
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     modulo = models.CharField(verbose_name='Módulo', max_length=1, choices=MODULO, blank=True)
     periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
-    intensidad = models.IntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
+    intensidad = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
         return self.codigo
   
   
-class MatriculaPrograma(models.Model):
-    fecha_expedicion = models.DateField()
-    inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
-    programa = models.ForeignKey(Programa)
-    fecha_vencimiento = models.DateField(blank=True, null=True)
-    promedio_periodo = models.FloatField(blank=True, null=True, validators=[validar_nota])
+class InscripcionProgramaCiclo(models.Model):
+#    fecha_vencimiento = models.DateField(blank=True, null=True)
+#    promedio_periodo = models.FloatField(blank=True, null=True, validators=[validar_nota])
+    fecha_inscripcion = models.DateField()
+    inscripcion_estudiante_programa = models.ForeignKey(InscripcionEstudiantePrograma)
+    ciclo = models.ForeignKey(Ciclo)
     puesto = models.SmallIntegerField(help_text='Puesto ocupado durante el periodo academico.', blank=True, null=True)
     observaciones = models.TextField(max_length=200, blank=True)
+    
+    def nombre_programa(self):
+        return self.inscripcion_estudiante_programa.nombre_programa()
+    
+    def nombre_estudiante(self):
+        return self.inscripcion_estudiante_programa.nombre_estudiante()
+    def promedioPeriodo(self):
+        return ""
   
 
 class Amonestacion(models.Model):
@@ -512,35 +515,35 @@ class Amonestacion(models.Model):
 class Curso(models.Model):
     competencia = models.ForeignKey(Competencia)
     codigo = models.CharField(verbose_name='Código', max_length=12)
-    semestre = models.ForeignKey(Semestre)
+    ciclo = models.ForeignKey(Ciclo)
     profesor = models.ForeignKey(Profesor)
     grupo = models.CharField(help_text='Número del grupo 1, 2, 3, ...', max_length=2, validators=[validar_digito])
-    estudiantes_esperados = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
-    estudiantes_inscritos = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+    estudiantes_esperados = models.SmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+    estudiantes_inscritos = models.SmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
         return self.codigo
     
-#    def codigo(self):
-#        return "%s-%s" % (self.competencia.codigo, self.grupo)
-
+    def competencia_nombre(self):
+        return self.competencia.nombre
+    
     def save(self, *args, **kwargs):
         self.codigo = "%s-%s" % (self.competencia.codigo, self.grupo)
         super(Curso, self).save(*args, **kwargs)
         
         
-class MatriculaCurso(models.Model):
+class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
-    inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
+    inscripcion_programa_ciclo = models.ForeignKey(InscripcionProgramaCiclo)
     nota_definitiva = models.FloatField(blank=True, null=True, validators=[validar_nota])
     nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, validators=[validar_nota])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
 
-
-
+    class Meta:
+        verbose_name_plural = 'Calificaciones'
 
 class Corte(models.Model):
-    semestre = models.ForeignKey(Semestre)
+    ciclo = models.ForeignKey(Ciclo)
     codigo = models.CharField(verbose_name="Código", max_length=12)
     porcentaje = models.IntegerField(help_text="Ingrese un número entre 1 y 100.", blank=True, validators=[validar_porcentaje])
     fecha_inicio = models.DateField(blank=True, null=True)
@@ -551,15 +554,13 @@ class Corte(models.Model):
 
 
 class NotaCorte(models.Model):
-    matricula_curso = models.ForeignKey(MatriculaCurso)
+    calificacion = models.ForeignKey(Calificacion)
     corte = models.ForeignKey(Corte)
     nota = models.FloatField(blank=True, null=True, validators=[validar_nota])
     fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True, validators=[MinValueValidator(0)])
     comportamiento = models.CharField(max_length=1, choices=TIPO_COMPORTAMIENTO, blank=True)
     
     
- 
-
   
 class HorarioCurso(models.Model):
     curso = models.ForeignKey(Curso)
@@ -580,6 +581,6 @@ class SesionCurso(models.Model):
 
 class Asistencia(models.Model):
     sesion_curso = models.ForeignKey(SesionCurso)
-    inscripcion_estudiante = models.ForeignKey(InscripcionEstudiante)
-    asistio = models.BooleanField(verbose_name='Asistío', default=True)
+    inscripcion_estudiante_programa = models.ForeignKey(InscripcionEstudiantePrograma)
+    asistio = models.BooleanField(verbose_name='Asistió', default=True)
     observaciones = models.TextField(max_length=200, blank=True)
