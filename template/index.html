@@ -58,8 +58,8 @@
 			{% if user.username %}
 				<h2><b class="text1">Bienvenido</b></h2>
 				Usuario: {{ user.get_full_name }}</br>
-				{% if perfil %}
-				    {% for tipo in perfil %}
+				{% if user.groups.all %}
+				    {% for tipo in user.groups.all %}
 				        Grupo: {{ tipo }} </br>
 				    {% endfor %}
 				{% else %}
