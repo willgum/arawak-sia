@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<title>{% block titulo_pestana %}{{ titulo_pestana }}{% endblock %}</title>
+		<meta name="keywords" content="" />
+		<meta name="description" content="" />
+	<link href="{{ path }}default.css" rel="stylesheet" type="text/css" />
+	</head>
+	
+	<body>
+	<!-- start header -->
+	<div id="header">
+		<div id="logo">
+			<h1><a href="#">{% block titulo_pagina %}{{ titulo_pagina }}{% endblock %}<sup></sup></a></h1>
+			<h2>{% block titulo_descriptivo %}{{ titulo_descriptivo }}{% endblock %}</h2>
+		</div>
+		<div id="menu">
+			<ul>
+				<li class="active"><a href="#">Inicio</a></li>
+				<li><a href="#">Quienes Somos</a></li>
+				<li><a href="#">Contactenos</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- end header -->
+	
+	<!-- start breadcrumb -->
+	<div id="breadcrumb">
+		<p id="legal">{% block ruta %} > <a href="">Inicio</a>{% endblock %}</p>
+	</div>
+	<!-- end breadcrumb -->
+	
+	<!-- start page -->
+	<div id="page">
+	
+		<!-- start content -->
+		<div id="content">
+			<div class="post">			
+				<h2 class="title">
+					<b>{% block titulo_seccion_azul %}{{ titulo_seccion_azul }}{% endblock %}</b>
+					   {% block titulo_seccion_verde %}{{ titulo_seccion_verde }}{% endblock %}
+				</h2>
+				<p class="date">
+				{% block mes %}{{ fecha|date:"M" }}{% endblock %}
+				<b>{% block dia %}{{ fecha|date:"d" }}{% endblock %}</b>
+				</p>
+				<div class="entry">		
+					{% block content  %}{% endblock %}						
+				</div>
+			</div>		
+		</div>
+		<!-- end content -->
+		
+		<!-- start sidebar -->
+		<div id="sidebar">
+			{% if user.username %}
+				<h2><b class="text1">Bienvenido</b></h2>
+				Usuario: {{ user.get_full_name }}</br>
+				{% if user.groups.all %}
+				    {% for tipo in user.groups.all %}
+				        Grupo: {{ tipo }} </br>
+				    {% endfor %}
+				{% else %}
+					Su usuario no tiene habilitado ningun tipo de permiso.</br>
+				{% endif %}
+				<div class="post">
+					<div class="meta">
+						<p class="links"><a href="/logout/" class="more">Cerrar Sesi&oacute;n</a></p>
+					</div>
+				</div>
+			<ul>
+				<li>
+					<h2><strong>Lorem</strong> Ipsum</h2>
+					<ul>
+						<li><a href="#">Fusce dui neque fringilla</a></li>
+						<li><a href="#">Eget tempor eget nonummy</a></li>
+						<li><a href="#">Magna lacus bibendum mauris</a></li>
+						<li><a href="#">Nec metus sed donec</a></li>
+						<li><a href="#">Magna lacus bibendum mauris</a></li>
+						<li><a href="#">Velit semper nisi molestie</a></li>
+						<li><a href="#">Eget tempor eget nonummy</a></li>
+					</ul>
+				</li>
+			</ul>						
+			{% else %}
+				<h2><b class="text1">Iniciar Sesi&oacute;n</b></h2>
+				<form action="/login/" method="post">
+				<table>
+					<tr>
+						<td><label for="usuario">Usuario</label></td>
+					</tr>
+					<tr>
+					    <td><input type="text" name="usuario" id="usuario" /></td>
+					</tr>
+					<tr>
+						<td><label for="contrasena">Contrase&ntilde;a</label></td>
+					</tr>
+					<tr>
+					    <td><input type="password" name="contrasena" id="contrasena"/></td>					    
+					</tr>
+				</table>							
+					<p><input type="submit" value="Iniciar Sesi&oacute;n" id="login"></p>
+					{% if next %}
+		                <input type="hidden" name="next" value="{{ next }}" />
+		            {% else %}
+		                <input type="hidden" name="next" value="/" />
+		            {% endif %}
+				</form>
+			{% endif %}	
+		</div>
+		<!-- end sidebar -->
+		
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end page -->
+	
+	<!-- start footer -->
+	<div id="footer">
+		<p id="legal">SIA 2011. Dise&ntilde;ado por <a href="http://www.arawak.com/">Arawak</a>. Todos los Derechos Reservados</p>
+	</div>
+	<!-- end footer -->
+	
+	</body>
+</html>
