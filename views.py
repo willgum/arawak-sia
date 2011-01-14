@@ -9,7 +9,6 @@ from django.contrib.auth.models import Group
 
 def indice(request):
     plantilla = "index.html",
-    perfil = request.user.groups.all(),
     variables = Context({
         'user': request.user, 
         'titulo_pestana': '.:SIA - Sistema de Información Académica:.',
@@ -18,8 +17,7 @@ def indice(request):
         'titulo_seccion_azul': 'Bienvenido ',
         'titulo_seccion_verde': 'Instituto Syspro',
         'fecha': datetime.datetime.today(),
-        'path': settings.MEDIA_URL,        
-        'perfil': perfil,
+        'path': settings.MEDIA_URL,
     })
     return render_to_response(plantilla, variables, context_instance=RequestContext(request))
 
