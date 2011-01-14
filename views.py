@@ -34,3 +34,12 @@ def login(request):
 def logout(request):
     auth.logout(request)    
     return HttpResponseRedirect("/")
+
+def update_contrasena(request):
+    password = request.POST['contrasena']
+    plantilla = "contrasena.html",
+    variables = Context({
+        'user': request.user,
+        'path': settings.MEDIA_URL,
+    })
+    return render_to_response(plantilla, variables, context_instance=RequestContext(request))
