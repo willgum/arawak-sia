@@ -9,222 +9,112 @@ NOTA_MIN = 0.0
 NOTA_MAX = 5.0
 NOTA_APR = 3.5
 
-SISBEN = (
-    ('1', '1'),  
-    ('2', '2'), 
-    ('3', '3'), 
-    ('4', '4'), 
-    ('5', '5'), 
-    ('6', '6'), 
-    ('9','No aplica'),
-)
+class Sisben (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-ETNIA = (
-    ('00', 'No Aplica'), 
-    ('01', 'Achagua'), 
-    ('02', 'Amorúa'), 
-    ('03', 'Andoque o Andoke'), 
-    ('04', 'Arhuaco (IJKA)'), 
-    ('05', 'Awa (CUAIKER)'), 
-    ('06', 'Barea'), 
-    ('07', 'Barazana'), 
-    ('08', 'Barí (Motilón)'), 
-    ('09', 'Betoye'), 
-    ('10', 'Bora'), 
-    ('11', 'Cabiyari o Kawiyarí'), 
-    ('12', 'Carapana'),
-    ('13', 'Carijona o Karijona'),
-    ('14', 'Chimila (ETTE E´ NEKA)'), 
-    ('15', 'Chiricoa'), 
-    ('16', 'Cocama'),
-    ('17', 'Coconuco'),
-    ('18', 'Cofán o Kofán'), 
-    ('19', 'Pijaos'),
-    ('20', 'Cubeo o Kubeo'),
-    ('21', 'Cuiba o Kuiba'),
-    ('22', 'Curripaco o Kurripako'), 
-    ('23', 'Desano'),
-    ('24', 'Dujos'),
-    ('26', 'Embera Catio o Embera Katío'), 
-    ('27', 'Embera Chami'),
-    ('28', 'Eperara Siapidara'), 
-    ('29', 'Guambiano'), 
-    ('30', 'Guanaca'),
-    ('31', 'Guayabero'), 
-    ('33', 'Hitnú'),
-    ('34', 'Inga'),
-    ('35', 'Kamsa o Kamëntsá'), 
-    ('36', 'Kogui'),
-    ('37', 'Koreguaje o Coreguaje'), 
-    ('38', 'Letuama'),
-    ('39', 'Macaguaje o Makaguaje'), 
-    ('40', 'Nukak (Makú)'),
-    ('41', 'Macuna o Makuna (Sara)'), 
-    ('42', 'Masiguare'), 
-    ('43', 'Matapí'),
-    ('44', 'Miraña'),
-    ('45', 'Muinane'),
-    ('46', 'Muisca'),
-    ('47', 'Nonuya'),
-    ('48', 'Ocaina'),
-    ('49', 'Nasa (Paéz)'), 
-    ('50', 'Pastos'),
-    ('51', 'Piapoco (Dzase)'), 
-    ('52', 'Piaroa'),
-    ('53', 'Piratapuyo'), 
-    ('54', 'Pisamira'),
-    ('55', 'Puinave'),
-    ('56', 'Sáliba'),
-    ('57', 'Sikuani'), 
-    ('58', 'Siona'),
-    ('59', 'Siriano'),
-    ('60 ', 'iripu o Tsiripu (Mariposo)'), 
-    ('61', 'Taiwano (Tajuano)'), 
-    ('62', 'TanimuKa'),
-    ('63', 'Tariano'),
-    ('64', 'Tatuyo'),
-    ('65', 'Tikuna'), 
-    ('66', 'Totoró'),
-    ('67', 'Tucano (Desea) o Tukano'), 
-    ('68', 'Tule (Kuna)'),
-    ('69', 'Tuyuka (Dojkapuara)'), 
-    ('70', 'U´wa (Tunebo)'), 
-    ('71', 'Wanano'),
-    ('72', 'Wayuu'),
-    ('73', 'Witoto'),
-    ('74', 'Wiwa (Arzario)'),
-    ('75', 'Waunan (Wuanana)'), 
-    ('76', 'Yagua'),
-    ('77', 'Yanacona'), 
-    ('78', 'Yauna'), 
-    ('79', 'Yukuna'),
-    ('80', 'Yuko (Yukpa)'), 
-    ('81', 'Yurí (Carabayo)'), 
-    ('82', 'Yuruti'), 
-    ('83', 'Zenú'),
-    ('84', 'Quillacingas'),
-    ('200', 'Negritudes'), 
-    ('400', 'Rom'),
-)
+class Etnia (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-TIPO_COMPORTAMIENTO = (
-    ('E', 'Excelente'),
-    ('B', 'Bueno'),
-    ('A', 'Aceptable'),
-    ('I', 'Insuficiente'),
-    ('N', 'No aplica'),
-)
+class TipoComportamiento (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-ESTRATO = (
-    ('0', 'Estrato 0'),
-    ('1', 'Estrato 1'),
-    ('2', 'Estrato 2'),
-    ('3', 'Estrato 3'),
-    ('4', 'Estrato 4'),
-    ('5', 'Estrato 5'),
-    ('6', 'Estrato 6'),
-)
+class Estrato (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-ESTADO_INSCRIPCION = (
-    ('A', 'Activo'),
-    ('E', 'Egresado'),
-    ('X', 'Expulsado'),
-    ('R', 'Retirado'),
-    ('D', 'Suspendido disciplina'),
-)
+class EstadoInscripcion (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-TIPO_DOCUMENTO = (
-    ('1', 'Cédula de Ciudadanía'), 
-    ('2', 'Tarjeta de Identidad'), 
-    ('3', 'Cédula de Extranjería ó Identificación de Extranjería'), 
-    ('5', 'Registro Civil de Nacimiento'), 
-    ('6', 'Número de Identificación Personal (NIP)'), 
-    ('7', 'Número Único de Identificación Personal (NUIP)'), 
-    ('8', 'Número de Identificación establecido por la Secretaría de  Educación'),   
-    ('9', 'Certificado Cabildo'),
-)
+class TipoDocumento (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-GENERO = (
-    ('M', 'Masculino'),
-    ('F', 'Femenino'),
-)
+class Genero (models.Model):
+    codigo = models.CharField(max_length = 1)
+    nombre = models.CharField(max_length = 20)
+    
+    def __unicode__(self):
+        return self.nombre
 
-TIPO_REFERENCIA = (
-    ('F', 'Familiar'),
-    ('P', 'Personal'),
-    ('C', 'Comercial'),
-    ('A', 'Académica'),
-    ('L', 'Laboral'),
-)
+class TipoReferencia (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-DISCAPACIDAD = (
-    ('1', 'Sordera Profunda'),  
-    ('2', 'Hipoacusia o Baja audición'), 
-    ('3', 'Baja visión diagnosticada'),
-    ('4', 'Ceguera'), 
-    ('5', 'Parálisis cerebral'),  
-    ('6', 'Lesión neuromuscular'),  
-    ('7', 'Autismo'),
-    ('8', 'Deficiencia cognitiva (Retardo Mental)'),  
-    ('9', 'Síndrome de Down'),
-    ('10', 'Múltiple'),                                                                                                                                
-    ('99', 'No aplica'),
-)
 
-JORNADA = (
-    ('1', 'Completa'),
-    ('2', 'Mañana'),
-    ('3', 'Tarde'),
-    ('4', 'Nocturna'),
-    ('5', 'Fin de semana'),
-)
+class Discapacidad (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-MODULO = (
-    ('H', 'Humanidades'),
-    ('C', 'Ciencias básicas'),
-    ('T', 'Técnico'),
-)
+class Jornada (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-PERIODICIDAD = (
-    ('C', 'Cuatrimestral'),
-    ('S', 'Semestral'),
-    ('A', 'Anual'),
-)
+class Periodicidad(models.Model):
+    codigo = models.CharField(max_length=3)
+    nombre = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-DIAS = (
-    ('L', 'Lunes'),
-    ('M', 'Martes'),
-    ('C', 'Miércoles'),
-    ('J', 'Jueves'),
-    ('V', 'Viernes'),
-    ('S', 'Sábado'),
-    ('D', 'Domingo'),
-)
+class Dia(models.Model):
+    codigo = models.CharField(max_length=3)
+    nombre = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-TIPO_SALON = (
-    ('A', 'Aula'),
-    ('L', 'Laboratorio'),
-    ('U', 'Auditorio'),
-    ('I', 'Aire libre'),
-    ('M', 'Aula mantenimiento'),
-    ('O', 'Otro'),
-)
+class TipoSalon(models.Model):
+    codigo = models.CharField(max_length=3)
+    nombre = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-TIPO_ESTUDIO = (
-    ('P', 'Primaria'),
-    ('S', 'Secundaria'),
-    ('T', 'Técnico'),
-    ('U', 'Universitario'),
-    ('E', 'Especialización'),
-    ('M', 'Maestría'),
-    ('D', 'Doctorado'),
-    ('O', 'Otros estudios'),
-)
+class TipoEstudio(models.Model):
+    codigo = models.CharField(max_length=3)
+    nombre = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.nombre
 
-TIPO_PROGRAMA = (
-    ('T',  'Técnico'),
-    ('A',  'Auxiliar'),
-)
+
+class TipoPrograma(models.Model):
+    codigo = models.CharField(max_length=3)
+    nombre = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.nombre
 
 
 def validar_nota(nota):
@@ -233,11 +123,11 @@ def validar_nota(nota):
         
 def validar_porcentaje(porcentaje):
         if porcentaje < 1 or porcentaje > 100:
-            raise ValidationError(u"%s no es una porcentaje válido" % porcentaje)
+            raise ValidationError("%s no es una porcentaje válido" % porcentaje)
 
 def validar_digito(digito):
     if not digito.isdigit():
-        raise ValidationError(u"%s no es dígito válido " % digito)
+        raise ValidationError("%s no es dígito válido" % digito)
 
 class Ciclo(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=8)
@@ -259,8 +149,8 @@ class Profesor(models.Model):
     nombre2= models.CharField(max_length=50, verbose_name='Segundo nombre', blank=True)
     apellido1 = models.CharField(max_length=50, verbose_name='Primer apellido')
     apellido2 = models.CharField(max_length=50, verbose_name='Segundo apellido', blank=True)
-    genero = models.CharField(verbose_name='Género', max_length=1, choices=GENERO, blank=True) 
-    tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True) 
+    genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
+    tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1) 
     documento = models.CharField(max_length=12, unique = True)
     lugar_expedicion = models.CharField(verbose_name='Lugar expedición', max_length=200, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
@@ -315,7 +205,7 @@ class ExperienciaLaboralProfesor(models.Model):
 
 class OtrosEstudiosProfesor(models.Model):
     profesor = models.ForeignKey(Profesor)
-    tipo_estudio = models.CharField(max_length=1, choices=TIPO_ESTUDIO, blank=True)
+    tipo_estudio = models.ForeignKey(TipoEstudio, blank=True, null=True, default=1)
     institucion = models.CharField(verbose_name='Institución', max_length=200, blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, blank=True)
     fecha_graduacion = models.DateField(verbose_name='Fecha graduación', blank=True, null=True)
@@ -327,7 +217,7 @@ class Salon(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=12)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     capacidad = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
-    tipo_salon = models.CharField(verbose_name='Tipo salón', max_length=1, choices=TIPO_SALON, blank=True)
+    tipo_salon = models.ForeignKey(TipoSalon, blank=True, default=1)
     
     def __unicode__(self):
         return self.codigo
@@ -339,18 +229,18 @@ class Salon(models.Model):
 class Programa(models.Model):
     
     # Informacion general
-    tipo_programa = models.CharField(max_length=1, choices=TIPO_PROGRAMA, blank=True)
+    tipo_programa = models.ForeignKey(TipoPrograma, blank=True, null=True, default=1)
     codigo = models.CharField(verbose_name='Código', max_length=2)
-    nombre = models.CharField(max_length=200, blank=True)
+    nombre = models.CharField(max_length=100)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, help_text='Título otorgado al finalizar el programa.', blank=True)
     resolucion = models.CharField(verbose_name='Resolución', max_length=200, help_text="Acto administrativo que valida este programa.", blank=True)
     snies = models.CharField(verbose_name='SNIES', max_length=200, help_text="Código Sistema Nacional de Información de la Educación Superior.", blank=True)
     
     # Horario
-    periodicidad = models.CharField(max_length=1, choices=PERIODICIDAD, blank=True) 
+    periodicidad = models.ForeignKey(Periodicidad, blank=True, null=True, default=2) 
     duracion = models.SmallIntegerField(verbose_name='Duración', blank=True, null=True, validators=[MinValueValidator(0)])
-    jornada = models.CharField(max_length=1, choices=JORNADA, blank=True)
+    jornada = models.ForeignKey(Jornada, blank=True, null=True, default=1)
     
     # Informacion adicional
     actitudes = models.TextField(max_length=200, help_text="Actitudes requeridas para los aspirantes.", blank=True)
@@ -368,8 +258,8 @@ class Estudiante(models.Model):
     nombre2= models.CharField(max_length=50, verbose_name='Segundo nombre', blank=True)
     apellido1 = models.CharField(max_length=50, verbose_name='Primer apellido')
     apellido2 = models.CharField(max_length=50, verbose_name='Segundo apellido', blank=True)
-    genero = models.CharField(verbose_name='Género', max_length=1, choices=GENERO, blank=True) 
-    tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True) 
+    genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
+    tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1) 
     documento = models.CharField(max_length=12, unique = True)
     lugar_expedicion = models.CharField(max_length=200, verbose_name='Lugar expedición', blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
@@ -383,16 +273,20 @@ class Estudiante(models.Model):
     # Informacion de contacto
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
-    estrato = models.CharField(max_length=1, choices=ESTRATO, blank=True)
+    estrato = models.ForeignKey(Estrato, blank=True, null=True, default=4)
     telefono = models.CharField(verbose_name='Teléfono', max_length=20, blank=True)
     movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
-
-#        Informacion adicional
-    sisben = models.CharField(max_length=1, choices=SISBEN, blank=True, default='9')
-    discapacidad = models.CharField(max_length=2, choices=DISCAPACIDAD, blank=True, default='99')
-    etnia = models.CharField(max_length=3, choices=ETNIA, blank=True, default='00')
+    
+    # Informacion de acceso
+#    usuario = models.CharField(max_length=12, unique=True)
+#    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
+    
+    # Informacion adicional
+    sisben = models.ForeignKey(Sisben, blank=True, default=1, null=True)
+    discapacidad = models.ForeignKey(Discapacidad, blank=True, default=1, null=True)
+    etnia = models.ForeignKey(Etnia, default=1, blank=True, null=True)
     
 #       Sobreescribir la función guardar para crear usuario
 #       Guardar información de acceso a la tabla de usuarios de DJANGO
@@ -419,7 +313,7 @@ class Estudiante(models.Model):
 
 class OtrosEstudiosEstudiante(models.Model):
     estudiante = models.ForeignKey(Estudiante)
-    tipo_estudio = models.CharField(max_length=1, choices=TIPO_ESTUDIO, blank=True) 
+    tipo_estudio = models.ForeignKey(TipoEstudio, blank=True, null=True, default=1) 
     institucion = models.CharField( verbose_name='Institución', max_length=200,  blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, blank=True)
     fecha_graduacion = models.DateField(verbose_name='Fecha graduación', blank=True, null=True)
@@ -427,11 +321,11 @@ class OtrosEstudiosEstudiante(models.Model):
 
 class Referencia(models.Model):
     estudiante = models.ForeignKey(Estudiante)
-    tipo_referencia = models.CharField( max_length=1, choices=TIPO_REFERENCIA, blank=True) 
+    tipo_referencia = models.ForeignKey(TipoReferencia, blank=True, null=True, default=1) 
     nombre = models.CharField(max_length=20, blank=True)
-    tipo_documento = models.CharField(max_length=1, choices=TIPO_DOCUMENTO, blank=True)
+    tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1)
     documento = models.CharField(max_length=12, blank=True)
-    direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
+    direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
     telefono = models.CharField(verbose_name='Teléfono', max_length=20,  blank=True)
 
 
@@ -440,7 +334,7 @@ class InscripcionEstudiantePrograma(models.Model):
     fecha_inscripcion = models.DateField(verbose_name='Fecha inscripción')
     programa = models.ForeignKey(Programa)
     codigo = models.CharField(verbose_name='Código', max_length=12, unique = True, blank=True)
-    estado = models.CharField(max_length=1, choices=ESTADO_INSCRIPCION, default='A')
+    estado = models.ForeignKey(EstadoInscripcion, blank=True, null=True, default=1)
     fecha_vencimiento = models.DateField()
     becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
     promedio_acumulado = models.FloatField(blank=True, null=True, validators=[validar_nota])
@@ -459,7 +353,7 @@ class InscripcionEstudiantePrograma(models.Model):
             self.codigo = tmp_codigo
         else:
             tmp_codigo = tmp_codigo[0:4]
-            for c in InscripcionEstudiantePrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiantePrograma where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
+            for c in InscripcionEstudiante.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiante where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
                 self.codigo = "%s%s" %(tmp_codigo, c.codigo)
             
         super(InscripcionEstudiantePrograma, self).save(*args, **kwargs)
@@ -475,7 +369,7 @@ class Competencia(models.Model):
     codigo = models.CharField(verbose_name='Código',  max_length=12)
     nombre = models.CharField(max_length=50, blank=True)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
-    modulo = models.CharField(verbose_name='Módulo', max_length=1, choices=MODULO, blank=True)
+
     periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
     intensidad = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
     
@@ -558,13 +452,13 @@ class NotaCorte(models.Model):
     corte = models.ForeignKey(Corte)
     nota = models.FloatField(blank=True, null=True, validators=[validar_nota])
     fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True, validators=[MinValueValidator(0)])
-    comportamiento = models.CharField(max_length=1, choices=TIPO_COMPORTAMIENTO, blank=True)
-    
-    
+    comportamiento = models.ForeignKey(TipoComportamiento, blank=True, null=True, default=1)
+     
+
   
 class HorarioCurso(models.Model):
     curso = models.ForeignKey(Curso)
-    dia = models.CharField(verbose_name='Día', max_length=1, choices=DIAS) 
+    dia = models.ForeignKey(Dia, blank=True, null=True, default=1) 
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
     salon = models.ForeignKey(Salon, verbose_name='Salón')
