@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, InscripcionProgramaCiclo, Calificacion, Corte, Programa, Salon, Competencia, OtrosEstudiosEstudiante, Referencia, InscripcionEstudiantePrograma, Amonestacion, Estudiante, ExperienciaLaboralProfesor, OtrosEstudiosProfesor, Profesor, HorarioCurso, Curso, SesionCurso, Asistencia
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, OtrosEstudiosEstudiante, Referencia, MatriculaPrograma, Amonestacion, Estudiante, ExperienciaLaboralProfesor, OtrosEstudiosProfesor, Profesor, HorarioCurso, Curso
 from django.contrib import admin
 
 class CalificacionInline(admin.TabularInline):
@@ -10,26 +10,26 @@ class CalificacionInline(admin.TabularInline):
 
 
 
-class InscripcionProgramaCicloAdmin(admin.ModelAdmin):
-    raw_id_fields = ('inscripcion_estudiante_programa',)
+class MatriculaCicloAdmin(admin.ModelAdmin):
+    raw_id_fields = ('matricula_programa',)
     fieldsets = [
         (None, {'fields': [
             'fecha_inscripcion', 
-            'inscripcion_estudiante_programa',
+            'matricula_programa',
             'ciclo',
-            'puesto',
             'observaciones']}),
     ]
     list_display = (
         'fecha_inscripcion', 
         'nombre_estudiante',
         'nombre_programa',
+        'puesto',
         'ciclo'
     )
     
     inlines = [CalificacionInline]
     list_filter = ['fecha_inscripcion', 'ciclo']
-    search_fields = ('inscripcion_estudiante_programa', 'ciclo')
+    search_fields = ('matricula_programa', 'ciclo')
     date_hierarchy = 'fecha_inscripcion'
 
 
@@ -148,13 +148,14 @@ class ReferenciaInline(admin.TabularInline):
     extra = 1
 
 
-class InscripcionEstudianteProgramaInline(admin.TabularInline):
-    model = InscripcionEstudiantePrograma
+class MatriculaProgramaInline(admin.TabularInline):
+    model = MatriculaPrograma
     extra = 1
     exclude = ('promedio_acumulado', 'codigo')
   
   
 class AmonestacionInline(admin.TabularInline):
+    raw_id_fields = ('curso',)
     model = Amonestacion
     extra = 1
 
@@ -195,14 +196,14 @@ class EstudianteAdmin(admin.ModelAdmin):
     inlines = [
         OtrosEstudiosEstudianteInline, 
         ReferenciaInline,
-        InscripcionEstudianteProgramaInline,
+        MatriculaProgramaInline,
         AmonestacionInline
     ]
     list_display = ('documento', 'nombre1', 'apellido1', 'email', 'genero')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
 
-class InscripcionEstudianteProgramaAdmin(admin.ModelAdmin):
+class MatriculaProgramaAdmin(admin.ModelAdmin):
     raw_id_fields = ('estudiante', 'programa')
     
     fieldsets = [
@@ -269,10 +270,6 @@ class HorarioCursoInline(admin.TabularInline):
     extra = 1
 
 
-class SesionCursoInline(admin.TabularInline):
-    model = SesionCurso
-    extra = 1
-
 
 class CursoAdmin(admin.ModelAdmin):
     raw_id_fields = ('competencia', 'profesor', 'ciclo')
@@ -282,45 +279,48 @@ class CursoAdmin(admin.ModelAdmin):
             'grupo',
             'profesor',
             'ciclo',
-            'estudiantes_inscritos']}),
+            'estudiantes_esperados']}),
     ]
     
-    inlines = [HorarioCursoInline, SesionCursoInline]
+    inlines = [HorarioCursoInline,]
     list_display_links = ('codigo', 'competencia_nombre')
     list_display = (
         'codigo',
         'competencia_nombre',
         'profesor',  
-        'ciclo', 
+        'ciclo',
+        'estudiantes_esperados', 
         'estudiantes_inscritos',
     )
     
     search_fields = ('competencia',)
-
-class AsistenciaAdmin(admin.ModelAdmin):
-    
-    fieldsets = [
-        (None, {'fields': [
-            'sesion_curso', 
-            'inscripcion_estudiante_programa', 
-            'asistio', 
-            'observaciones']}),
-    ]
-    
-    list_display = (
-        'sesion_curso', 
-        'inscripcion_estudiante_programa', 
-        'asistio', 
-        'observaciones'
-    )
-    
-    search_fields = ('sesion_curso', 'inscripcion_estudiante_programa')
 
 class CorteInline(admin.TabularInline):
     model = Corte
     extra = 1
     exclude = ('codigo',)
 
+class CorteAdmin(admin.ModelAdmin):
+    raw_id_fields = ('ciclo',)
+    
+    fieldsets = [
+        (None, {'fields': [
+            'ciclo',
+            'porcentaje', 
+            'fecha_inicio', 
+            'fecha_fin',]}),
+    ]
+    
+    list_display = (
+        'codigo',
+        'porcentaje',         
+        'fecha_inicio', 
+        'fecha_fin',
+        'ciclo'
+    )
+    search_fields = ('codigo',)
+    date_hierarchy = 'fecha_inicio'
+    
 class CicloAdmin(admin.ModelAdmin):
     
     fieldsets = [
@@ -331,10 +331,10 @@ class CicloAdmin(admin.ModelAdmin):
     ]
     
     list_display = (
-        'codigo',
-        'cortes', 
+        'codigo', 
         'fecha_inicio', 
         'fecha_fin',
+        'cortes'
     )
     
     inlines = [CorteInline]
@@ -345,13 +345,13 @@ class CicloAdmin(admin.ModelAdmin):
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
 #===============================================================================
-admin.site.register(Asistencia, AsistenciaAdmin)
 admin.site.register(Competencia, CompetenciaAdmin)
+admin.site.register(Corte, CorteAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(Estudiante, EstudianteAdmin)
 admin.site.register(Calificacion, CalificacionAdmin)
-admin.site.register(InscripcionProgramaCiclo, InscripcionProgramaCicloAdmin)
-admin.site.register(InscripcionEstudiantePrograma, InscripcionEstudianteProgramaAdmin)
+admin.site.register(MatriculaCiclo, MatriculaCicloAdmin)
+admin.site.register(MatriculaPrograma, MatriculaProgramaAdmin)
 admin.site.register(Salon, SalonAdmin)
 admin.site.register(Ciclo, CicloAdmin)
 admin.site.register(Programa, ProgramaAdmin)
