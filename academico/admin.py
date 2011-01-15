@@ -111,7 +111,6 @@ class CompetenciaAdmin(admin.ModelAdmin):
             'codigo', 
             'nombre', 
             'descripcion', 
-            'modulo', 
             'intensidad', 
             'periodo']}),
     ]
@@ -122,11 +121,10 @@ class CompetenciaAdmin(admin.ModelAdmin):
         'nombre', 
         'programa', 
         'intensidad', 
-        'modulo', 
         'periodo',
     )
     
-    list_filter = ['programa', 'modulo']
+    list_filter = ['programa', 'intensidad', 'periodo']
     search_fields = ('nombre',)
 
 
