@@ -129,8 +129,13 @@ def validar_digito(digito):
     if not digito.isdigit():
         raise ValidationError("%s no es dígito válido" % digito)
 
+def validar_numerico(cifra):
+    for c in cifra:
+        if not c.isdigit():
+            raise ValidationError('%s no es valor numérico válido' % cifra)
+
 class Ciclo(models.Model):
-    codigo = models.CharField(verbose_name='Código', max_length=8)
+    codigo = models.CharField(verbose_name='Código', max_length=8, unique=True)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     
@@ -151,7 +156,7 @@ class Profesor(models.Model):
     apellido2 = models.CharField(max_length=50, verbose_name='Segundo apellido', blank=True)
     genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
     tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1) 
-    documento = models.CharField(max_length=12, unique = True)
+    documento = models.CharField(max_length=12, unique = True, validators=[validar_numerico])
     lugar_expedicion = models.CharField(verbose_name='Lugar expedición', max_length=200, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(blank=True, max_length=200)
@@ -260,7 +265,7 @@ class Estudiante(models.Model):
     apellido2 = models.CharField(max_length=50, verbose_name='Segundo apellido', blank=True)
     genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
     tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1) 
-    documento = models.CharField(max_length=12, unique = True)
+    documento = models.CharField(max_length=12, unique = True, validators=[validar_numerico])
     lugar_expedicion = models.CharField(max_length=200, verbose_name='Lugar expedición', blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(max_length=200, blank=True)
@@ -329,7 +334,7 @@ class Referencia(models.Model):
     telefono = models.CharField(verbose_name='Teléfono', max_length=20,  blank=True)
 
 
-class InscripcionEstudiantePrograma(models.Model):
+class MatriculaPrograma(models.Model):
     estudiante = models.ForeignKey(Estudiante)
     fecha_inscripcion = models.DateField(verbose_name='Fecha inscripción')
     programa = models.ForeignKey(Programa)
@@ -349,20 +354,21 @@ class InscripcionEstudiantePrograma(models.Model):
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
         tmp_codigo = "%s%s%s" %(self.programa.codigo, self.fecha_inscripcion.strftime("%y"), '0001')
-        if len(InscripcionEstudiantePrograma.objects.filter(codigo=tmp_codigo)) == 0:
+        if len(MatriculaPrograma.objects.filter(codigo=tmp_codigo)) == 0:
             self.codigo = tmp_codigo
         else:
             tmp_codigo = tmp_codigo[0:4]
-            for c in InscripcionEstudiante.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiante where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
+            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiante where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
                 self.codigo = "%s%s" %(tmp_codigo, c.codigo)
             
-        super(InscripcionEstudiantePrograma, self).save(*args, **kwargs)
+        super(MatriculaPrograma, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.codigo
     
     class Meta:
-        verbose_name_plural = 'Inscripción estudiante a Programa' 
+        verbose_name = 'Matrícula programa'
+        verbose_name_plural = 'Matrícula programas' 
 
 class Competencia(models.Model):
     programa = models.ForeignKey(Programa)
@@ -377,33 +383,31 @@ class Competencia(models.Model):
         return self.codigo
   
   
-class InscripcionProgramaCiclo(models.Model):
-#    fecha_vencimiento = models.DateField(blank=True, null=True)
-#    promedio_periodo = models.FloatField(blank=True, null=True, validators=[validar_nota])
+class MatriculaCiclo(models.Model):
     fecha_inscripcion = models.DateField()
-    inscripcion_estudiante_programa = models.ForeignKey(InscripcionEstudiantePrograma)
+    matricula_programa = models.ForeignKey(MatriculaPrograma)
     ciclo = models.ForeignKey(Ciclo)
-    puesto = models.SmallIntegerField(help_text='Puesto ocupado durante el periodo academico.', blank=True, null=True)
     observaciones = models.TextField(max_length=200, blank=True)
     
     def nombre_programa(self):
-        return self.inscripcion_estudiante_programa.nombre_programa()
+        return self.matricula_programa.nombre_programa()
     
     def nombre_estudiante(self):
-        return self.inscripcion_estudiante_programa.nombre_estudiante()
-    def promedioPeriodo(self):
+        return self.matricula_programa.nombre_estudiante()
+    
+    def promedio_periodo(self):
+        # TODO: Calcular el promedio de las materias cursadas en ese ciclo
         return ""
   
-
-class Amonestacion(models.Model):
-    estudiante = models.ForeignKey(Estudiante)
-    profesor = models.ForeignKey(Profesor)
-    competencia = models.ForeignKey(Competencia)
-    fecha = models.DateField()
-    motivo = models.TextField(max_length=200, blank=True, help_text='Motivo por el cual se hace el llamado de atención.')
+    def puesto(self):
+        # TODO: Calcular el puesto que ocupa el estudiante en ese ciclo
+        return ""
     
     class Meta:
-        verbose_name_plural = 'amonestaciones'
+        verbose_name = 'Matrícula ciclo'
+        verbose_name_plural = 'Matrícula ciclos'
+
+
     
     
 class Curso(models.Model):
@@ -411,7 +415,7 @@ class Curso(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=12)
     ciclo = models.ForeignKey(Ciclo)
     profesor = models.ForeignKey(Profesor)
-    grupo = models.CharField(help_text='Número del grupo 1, 2, 3, ...', max_length=2, validators=[validar_digito])
+    grupo = models.CharField(help_text='Número del grupo 1, 2, 3, ...', max_length=2, validators=[validar_numerico])
     estudiantes_esperados = models.SmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     estudiantes_inscritos = models.SmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     
@@ -426,9 +430,19 @@ class Curso(models.Model):
         super(Curso, self).save(*args, **kwargs)
         
         
+class Amonestacion(models.Model):
+    estudiante = models.ForeignKey(Estudiante)
+    profesor = models.ForeignKey(Profesor)
+    curso = models.ForeignKey(Curso)
+    fecha = models.DateField()
+    motivo = models.TextField(max_length=200, blank=True, help_text='Motivo por el cual se hace el llamado de atención.')
+    
+    class Meta:
+        verbose_name_plural = 'amonestaciones'
+
 class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
-    inscripcion_programa_ciclo = models.ForeignKey(InscripcionProgramaCiclo)
+    inscripcion_programa_ciclo = models.ForeignKey(MatriculaCiclo)
     nota_definitiva = models.FloatField(blank=True, null=True, validators=[validar_nota])
     nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, validators=[validar_nota])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
@@ -438,10 +452,10 @@ class Calificacion(models.Model):
 
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
-    codigo = models.CharField(verbose_name="Código", max_length=12)
-    porcentaje = models.IntegerField(help_text="Ingrese un número entre 1 y 100.", blank=True, validators=[validar_porcentaje])
-    fecha_inicio = models.DateField(blank=True, null=True)
-    fecha_fin = models.DateField(blank=True, null=True)
+    codigo = models.CharField(verbose_name="Código", max_length=12, unique=True)
+    porcentaje = models.IntegerField(help_text="Ingrese un número entre 1 y 100.", validators=[validar_porcentaje])
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
   
     def __unicode__(self):
         return self.codigo
@@ -472,9 +486,3 @@ class SesionCurso(models.Model):
     def __unicode__(self):
         return self.codigo
 
-
-class Asistencia(models.Model):
-    sesion_curso = models.ForeignKey(SesionCurso)
-    inscripcion_estudiante_programa = models.ForeignKey(InscripcionEstudiantePrograma)
-    asistio = models.BooleanField(verbose_name='Asistió', default=True)
-    observaciones = models.TextField(max_length=200, blank=True)
