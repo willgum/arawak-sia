@@ -20,7 +20,7 @@
     "pk": 3,
     "fields": {
       "codigo": "02",
-      "nombre": "Amorúa"
+      "nombre": "Amor√∫a"
     }
   },
   {
@@ -68,7 +68,7 @@
     "pk": 9,
     "fields": {
       "codigo": "08",
-      "nombre": "Barí (Motilón)"
+      "nombre": "Bar√≠ (Motil√≥n)"
     }
   },
   {
@@ -92,7 +92,7 @@
     "pk": 12,
     "fields": {
       "codigo": "11",
-      "nombre": "Cabiyari o Kawiyarí"
+      "nombre": "Cabiyari o Kawiyar√≠"
     }
   },
   {
@@ -116,7 +116,7 @@
     "pk": 15,
     "fields": {
       "codigo": "14",
-      "nombre": "Chimila (ETTE E´ NEKA)"
+      "nombre": "Chimila (ETTE E¬¥ NEKA)"
     }
   },
   {
@@ -148,7 +148,7 @@
     "pk": 19,
     "fields": {
       "codigo": "18",
-      "nombre": "Cofán o Kofán"
+      "nombre": "Cof√°n o Kof√°n"
     }
   },
   {
@@ -204,7 +204,7 @@
     "pk": 26,
     "fields": {
       "codigo": "26",
-      "nombre": "Embera Catio o Embera Katío"
+      "nombre": "Embera Catio o Embera Kat√≠o"
     }
   },
   {
@@ -252,7 +252,7 @@
     "pk": 32,
     "fields": {
       "codigo": "33",
-      "nombre": "Hitnú"
+      "nombre": "Hitn√∫"
     }
   },
   {
@@ -268,7 +268,7 @@
     "pk": 34,
     "fields": {
       "codigo": "35",
-      "nombre": "Kamsa o Kamëntsá"
+      "nombre": "Kamsa o Kam√´nts√°"
     }
   },
   {
@@ -308,7 +308,7 @@
     "pk": 39,
     "fields": {
       "codigo": "40",
-      "nombre": "Nukak (Makú)"
+      "nombre": "Nukak (Mak√∫)"
     }
   },
   {
@@ -332,7 +332,7 @@
     "pk": 42,
     "fields": {
       "codigo": "43",
-      "nombre": "Matapí"
+      "nombre": "Matap√≠"
     }
   },
   {
@@ -340,7 +340,7 @@
     "pk": 43,
     "fields": {
       "codigo": "44",
-      "nombre": "Miraña"
+      "nombre": "Mira√±a"
     }
   },
   {
@@ -380,7 +380,7 @@
     "pk": 48,
     "fields": {
       "codigo": "49",
-      "nombre": "Nasa (Paéz)"
+      "nombre": "Nasa (Pa√©z)"
     }
   },
   {
@@ -436,7 +436,7 @@
     "pk": 55,
     "fields": {
       "codigo": "56",
-      "nombre": "Sáliba"
+      "nombre": "S√°liba"
     }
   },
   {
@@ -516,7 +516,7 @@
     "pk": 65,
     "fields": {
       "codigo": "66",
-      "nombre": "Totoró"
+      "nombre": "Totor√≥"
     }
   },
   {
@@ -548,7 +548,7 @@
     "pk": 69,
     "fields": {
       "codigo": "70",
-      "nombre": "U´wa (Tunebo)"
+      "nombre": "U¬¥wa (Tunebo)"
     }
   },
   {
@@ -636,7 +636,7 @@
     "pk": 80,
     "fields": {
       "codigo": "81",
-      "nombre": "Yurí (Carabayo)"
+      "nombre": "Yur√≠ (Carabayo)"
     }
   },
   {
@@ -652,7 +652,7 @@
     "pk": 82,
     "fields": {
       "codigo": "83",
-      "nombre": "Zenú"
+      "nombre": "Zen√∫"
     }
   },
   {
@@ -677,6 +677,630 @@
     "fields": {
       "codigo": "400",
       "nombre": "Rom"
+    }
+  },
+  {
+    "model": "academico.tipoprograma",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "No Aplica"
+    }
+  },  
+  {
+    "model": "academico.tipoprograma",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "T√©cnico"
+    }
+  },
+  {
+    "model": "academico.tipoprograma",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Auxiliar"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Aula"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Auditorio"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Laboratorio"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 1,
+    "fields": {
+      "codigo": "99",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sordera Profunda"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Hipoacusia o Baja audici√≥n"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Baja visi√≥n diagnosticada"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Ceguera"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Par√°lisis cerebral"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 7,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Lesi√≥n neuromuscular"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 8,
+    "fields": {
+      "codigo": "7",
+      "nombre": "Autismo"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 9,
+    "fields": {
+      "codigo": "8",
+      "nombre": "Deficiencia cognitiva (Retardo Mental)"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 10,
+    "fields": {
+      "codigo": "9",
+      "nombre": "S√≠ndrome de Down"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 11,
+    "fields": {
+      "codigo": "10",
+      "nombre": "M√∫ltiple"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 1,
+    "fields": {
+      "codigo": "9",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "1"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "2"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "3"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "4"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "5"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 7,
+    "fields": {
+      "codigo": "6",
+      "nombre": "6"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Excelente"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Bueno"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Aceptable"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Insuficiente"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Primaria"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Secundaria"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "T√©cnico"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Universitario"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Especializaci√≥n"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 7,
+    "fields": {
+      "codigo": "7",
+      "nombre": "Maestr√≠a"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 8,
+    "fields": {
+      "codigo": "8",
+      "nombre": "Doctorado"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 9,
+    "fields": {
+      "codigo": "9",
+      "nombre": "Otros estudios"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 1,
+    "fields": {
+      "codigo": "99",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Completa"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Ma√±ana"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Tarde"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Nocturna"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Fin de semana"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 1,
+    "fields": {
+      "codigo": "0",
+      "nombre": "0"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "1"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "2"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "3"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "4"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "5"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 7,
+    "fields": {
+      "codigo": "6",
+      "nombre": "6"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Activo"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Egresado"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Expulsado"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Retirado"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Suspendido"
+    }
+  },
+  {
+    "model": "academico.periodicidad",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.periodicidad",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Semestral"
+    }
+  },
+  {
+    "model": "academico.periodicidad",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Anual"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Academica"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Comercial"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Familiar"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Laboral"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Personal"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "C√©dula de Ciudadan√≠a"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Tarjeta de Identidad"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "C√©dula de Extranjer√≠a"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Registro Civil"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Lunes"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Martes"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Mi√©rcoles"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Jueves"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Viernes"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
+      "nombre": "S√°bado"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 7,
+    "fields": {
+      "codigo": "7",
+      "nombre": "Domingo"
+    }
+  },
+  {
+    "model": "academico.genero",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Femenino"
+    }
+  },
+  {
+    "model": "academico.genero",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Masculino"
     }
   }
 ]
