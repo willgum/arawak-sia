@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from academico.models import InscripcionEstudiantePrograma, Profesor, Curso
+from academico.models import MatriculaPrograma, Profesor, Curso
 
 ESTADO_MATRICULA_FINANCIERA=(
                              ('A', 'Activo'), 
@@ -12,7 +12,7 @@ ESTADO_MATRICULA_FINANCIERA=(
 
 class MatriculaFinanciera(models.Model):
     # Informacion general
-    inscripcion_estudiante = models.ForeignKey(InscripcionEstudiantePrograma)
+    inscripcion_estudiante = models.ForeignKey(MatriculaPrograma)
     fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
     estado = models.CharField(max_length=1, 
                               choices=ESTADO_MATRICULA_FINANCIERA, 
