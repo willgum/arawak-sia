@@ -684,7 +684,7 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "No Aplica"
+      "nombre": "Sin Asignar"
     }
   },  
   {
@@ -708,7 +708,7 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "No Aplica"
+      "nombre": "Sin Asignar"
     }
   },
   {
@@ -924,7 +924,7 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "No Aplica"
+      "nombre": "Sin Asignar"
     }
   },
   {
@@ -1164,7 +1164,7 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "Academica"
+      "nombre": "Sin Asignar"
     }
   },
   {
@@ -1172,7 +1172,7 @@
     "pk": 2,
     "fields": {
       "codigo": "2",
-      "nombre": "Comercial"
+      "nombre": "Academica"
     }
   },
   {
@@ -1180,7 +1180,7 @@
     "pk": 3,
     "fields": {
       "codigo": "3",
-      "nombre": "Familiar"
+      "nombre": "Comercial"
     }
   },
   {
@@ -1188,7 +1188,7 @@
     "pk": 4,
     "fields": {
       "codigo": "4",
-      "nombre": "Laboral"
+      "nombre": "Familiar"
     }
   },
   {
@@ -1196,6 +1196,14 @@
     "pk": 5,
     "fields": {
       "codigo": "5",
+      "nombre": "Laboral"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
       "nombre": "Personal"
     }
   },
@@ -1204,7 +1212,7 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "Cédula de Ciudadanía"
+      "nombre": "Sin Asignar"
     }
   },
   {
@@ -1212,7 +1220,7 @@
     "pk": 2,
     "fields": {
       "codigo": "2",
-      "nombre": "Tarjeta de Identidad"
+      "nombre": "Cédula de Ciudadanía"
     }
   },
   {
@@ -1220,7 +1228,7 @@
     "pk": 3,
     "fields": {
       "codigo": "3",
-      "nombre": "Cédula de Extranjería"
+      "nombre": "Tarjeta de Identidad"
     }
   },
   {
@@ -1228,6 +1236,14 @@
     "pk": 4,
     "fields": {
       "codigo": "4",
+      "nombre": "Cédula de Extranjería"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
       "nombre": "Registro Civil"
     }
   },
@@ -1292,7 +1308,7 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "Femenino"
+      "nombre": "Sin Asignar"
     }
   },
   {
@@ -1300,6 +1316,14 @@
     "pk": 2,
     "fields": {
       "codigo": "2",
+      "nombre": "Femenino"
+    }
+  },
+  {
+    "model": "academico.genero",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
       "nombre": "Masculino"
     }
   }
