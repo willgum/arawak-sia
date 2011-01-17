@@ -219,7 +219,7 @@ class OtrosEstudiosProfesor(models.Model):
 
 
 class Salon(models.Model):
-    codigo = models.CharField(verbose_name='Código', max_length=12)
+    codigo = models.CharField(verbose_name='Código', max_length=12, unique=True)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     capacidad = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     tipo_salon = models.ForeignKey(TipoSalon, blank=True, default=1)
@@ -235,7 +235,7 @@ class Programa(models.Model):
     
     # Informacion general
     tipo_programa = models.ForeignKey(TipoPrograma, blank=True, null=True, default=1)
-    codigo = models.CharField(verbose_name='Código', max_length=2)
+    codigo = models.CharField(verbose_name='Código', max_length=2, unique=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, help_text='Título otorgado al finalizar el programa.', blank=True)
@@ -283,10 +283,6 @@ class Estudiante(models.Model):
     movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
-    
-    # Informacion de acceso
-#    usuario = models.CharField(max_length=12, unique=True)
-#    contrasena = models.CharField(verbose_name='Contraseña', max_length=50, blank=True)
     
     # Informacion adicional
     sisben = models.ForeignKey(Sisben, blank=True, default=1, null=True)
@@ -349,7 +345,7 @@ class MatriculaPrograma(models.Model):
     
     def nombre_programa(self):
         return self.programa.nombre
-    
+     
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
@@ -358,7 +354,7 @@ class MatriculaPrograma(models.Model):
             self.codigo = tmp_codigo
         else:
             tmp_codigo = tmp_codigo[0:4]
-            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_InscripcionEstudiante where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
+            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_MatriculaPrograma where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
                 self.codigo = "%s%s" %(tmp_codigo, c.codigo)
             
         super(MatriculaPrograma, self).save(*args, **kwargs)
@@ -367,13 +363,14 @@ class MatriculaPrograma(models.Model):
         return self.codigo
     
     class Meta:
+        unique_together = ("estudiante", "programa")
         verbose_name = 'Matrícula programa'
         verbose_name_plural = 'Matrícula programas' 
 
 class Competencia(models.Model):
     programa = models.ForeignKey(Programa)
-    codigo = models.CharField(verbose_name='Código',  max_length=12)
-    nombre = models.CharField(max_length=50, blank=True)
+    codigo = models.CharField(verbose_name='Código', max_length=12, unique=True)
+    nombre = models.CharField(max_length=50)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
 
     periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
@@ -404,6 +401,7 @@ class MatriculaCiclo(models.Model):
         return ""
     
     class Meta:
+        unique_together = ("matricula_programa", "ciclo")
         verbose_name = 'Matrícula ciclo'
         verbose_name_plural = 'Matrícula ciclos'
 
@@ -412,7 +410,6 @@ class MatriculaCiclo(models.Model):
     
 class Curso(models.Model):
     competencia = models.ForeignKey(Competencia)
-    codigo = models.CharField(verbose_name='Código', max_length=12)
     ciclo = models.ForeignKey(Ciclo)
     profesor = models.ForeignKey(Profesor)
     grupo = models.CharField(help_text='Número del grupo 1, 2, 3, ...', max_length=2, validators=[validar_numerico])
@@ -420,19 +417,21 @@ class Curso(models.Model):
     estudiantes_inscritos = models.SmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
-        return self.codigo
+        return self.codigo()
     
     def competencia_nombre(self):
         return self.competencia.nombre
     
-    def save(self, *args, **kwargs):
-        self.codigo = "%s-%s" % (self.competencia.codigo, self.grupo)
-        super(Curso, self).save(*args, **kwargs)
+    def codigo(self):
+        return "%s-%s" % (self.competencia.codigo, self.grupo)
+    
+    class Meta:
+        unique_together = ("competencia", "ciclo", "profesor", "grupo")
+        
         
         
 class Amonestacion(models.Model):
     estudiante = models.ForeignKey(Estudiante)
-    profesor = models.ForeignKey(Profesor)
     curso = models.ForeignKey(Curso)
     fecha = models.DateField()
     motivo = models.TextField(max_length=200, blank=True, help_text='Motivo por el cual se hace el llamado de atención.')
@@ -442,12 +441,13 @@ class Amonestacion(models.Model):
 
 class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
-    inscripcion_programa_ciclo = models.ForeignKey(MatriculaCiclo)
+    matricula_ciclo = models.ForeignKey(MatriculaCiclo)
     nota_definitiva = models.FloatField(blank=True, null=True, validators=[validar_nota])
     nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, validators=[validar_nota])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
 
     class Meta:
+        unique_together = ("curso", "matricula_ciclo")
         verbose_name_plural = 'Calificaciones'
 
 class Corte(models.Model):
@@ -468,7 +468,9 @@ class NotaCorte(models.Model):
     fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True, validators=[MinValueValidator(0)])
     comportamiento = models.ForeignKey(TipoComportamiento, blank=True, null=True, default=1)
      
-
+    class Meta:
+        unique_together = ("calificacion", "corte")
+    
   
 class HorarioCurso(models.Model):
     curso = models.ForeignKey(Curso)
