@@ -122,6 +122,7 @@ class CompetenciaAdmin(admin.ModelAdmin):
             'nombre', 
             'descripcion', 
             'intensidad', 
+            'creditos',
             'periodo']}),
     ]
     inlines = [CursoInline]
@@ -131,6 +132,7 @@ class CompetenciaAdmin(admin.ModelAdmin):
         'nombre', 
         'programa', 
         'intensidad', 
+        'creditos',
         'periodo',
     )
     
