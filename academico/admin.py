@@ -39,12 +39,12 @@ class NotaCorteInline(admin.TabularInline):
 
 
 class CalificacionAdmin(admin.ModelAdmin):
-    raw_id_fields = ('curso', 'inscripcion_programa_ciclo')
+    raw_id_fields = ('curso', 'matricula_ciclo')
     
     fieldsets = [
         (None, {'fields': [
             'curso', 
-            'inscripcion_programa_ciclo',
+            'matricula_ciclo',
             'perdio_fallas',
             'nota_definitiva', 
             'nota_habilitacion']}),
@@ -52,12 +52,12 @@ class CalificacionAdmin(admin.ModelAdmin):
     inlines = [NotaCorteInline]
     list_display = (
         'curso', 
-        'inscripcion_programa_ciclo', 
+        'matricula_ciclo', 
         'perdio_fallas',
         'nota_definitiva', 
         'nota_habilitacion'
     )
-    search_fields = ['curso', 'inscripcion_programa_ciclo']
+    search_fields = ['curso', 'matricula_ciclo']
 
 
 class ProgramaAdmin(admin.ModelAdmin):
@@ -306,6 +306,7 @@ class CorteAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': [
             'ciclo',
+            'codigo',
             'porcentaje', 
             'fecha_inicio', 
             'fecha_fin',]}),
