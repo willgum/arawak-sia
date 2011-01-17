@@ -15,7 +15,6 @@ urlpatterns = patterns('',
     # login/logout
     (r'^login/$', login),
     (r'^logout/$', logout),
-    (r'^contrasena/$', update_contrasena),
     
     
     # definicion de urls para la aplicacion academico     
