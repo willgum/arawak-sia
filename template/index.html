@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+	<script src="{{ path }}js/jquery-latest.js"></script>
+  	<script type="text/javascript" src="{{ path }}js/jquery.validate.js"></script>
+  	
+  	<script>
+		$(document).ready(function()
+		{
+			$("#login").validate();				
+		});
+	</script>
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="../">Inicio</a></li>
+	</ul>
+{% endblock %}
+
+{% block columna_derecha %}		
+	{% if not user.username %}				
+		<div id="sidebar_left">
+			<form id="login" action="/login/" method="post">
+				<table>
+					<tr>
+						<td><label for="usuario">Usuario</label></td>
+					</tr>
+					<tr>
+					    <td><input type="text" name="usuario" id="usuario" class="required"/></td>
+					</tr>
+					<tr>
+						<td><label for="contrasena">Contraseña</label></td>
+					</tr>
+					<tr>
+					    <td><input type="password" name="contrasena" id="contrasena" class="required"/></td>					    
+					</tr>
+				</table>							
+				<p><input type="submit" value="Iniciar Sesión" id="login"></p>
+				{% if msg_error %}
+					<label class="error">{{ msg_error }}</label>
+				{% endif %}
+			</form>
+		</div>
+	{% endif %}		
+{% endblock %}
+			
+{% block notificaciones %}
+	{% if user.username %}
+		<div id="sidebar_right">
+			<h2>Bienvenido</h2>
+			<p>
+			Usuario: {{ user.get_full_name }}</br>
+			{% if user.groups.all %}
+			    {% for tipo in user.groups.all %}
+			        Grupo: {{ tipo }} </br>
+			    {% endfor %}
+			{% else %}
+				No tiene permisos habilitados.</br>
+			{% endif %}
+			</p>			
+			<h2>Mi Cuenta</h2>
+			<ul>
+				<li><a href="#">Mi perfil</a></li>
+				<li><a href="#">Cambiar Contraseña</a></li>
+				<li><a href="/logout/">Cerrar Sesión</a></li>
+			</ul>
+		</div>	
+	{% endif %}	
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Inicio</h2>
+	</div>			
+{% endblock %}
