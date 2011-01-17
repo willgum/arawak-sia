@@ -82,5 +82,189 @@
       "fecha_inicio": "2011-11-01",
       "fecha_fin": "2011-12-31"
     }
-  }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 1,
+    "fields": {
+      "codigo": "101",
+      "nombre": "Administración Ambiental"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 2,
+    "fields": {
+      "codigo": "102",
+      "nombre": "Administración Bancaria"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 3,
+    "fields": {
+      "codigo": "103",
+      "nombre": "Administración Financiera y Auditoría"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 4,
+    "fields": {
+      "codigo": "104",
+      "nombre": "Administración Pública y Gobierno"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 5,
+    "fields": {
+      "codigo": "105",
+      "nombre": "Administración Tributaría y Gestión Pública"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 6,
+    "fields": {
+      "codigo": "106",
+      "nombre": "Comercio Exterior"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 7,
+    "fields": {
+      "codigo": "107",
+      "nombre": "Contabilidad Sistematizada"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 8,
+    "fields": {
+      "codigo": "108",
+      "nombre": "Diseño de Envases, Embalajes, Gestión de Marcas y Logística en Comercio Exterior"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 9,
+    "fields": {
+      "codigo": "109",
+      "nombre": "Gerencia Financiera y de Seguros"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 10,
+    "fields": {
+      "codigo": "110 ",
+      "nombre": "Hotelería y Turismo"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 11,
+    "fields": {
+      "codigo": "111",
+      "nombre": "Ingeniería de Negocios y Ubicación Sectorial"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 12,
+    "fields": {
+      "codigo": "112",
+      "nombre": "Secretariado Contable Sistematizado"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 13,
+    "fields": {
+      "codigo": "113",
+      "nombre": "Secretariado Ejecutivo Bilingüe y Secretario Contable Sistematizado"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 14,
+    "fields": {
+      "codigo": "201",
+      "nombre": "Diseño y Obras Civiles"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 15,
+    "fields": {
+      "codigo": "202",
+      "nombre": "Electricidad, Electrónica y Telecomunicaciones"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 16,
+    "fields": {
+      "codigo": "203",
+      "nombre": "Ingeniería de Sistemas"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 17,
+    "fields": {
+      "codigo": "204",
+      "nombre": "Seguridad Industrial para la Industria Petrolera"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 18,
+    "fields": {
+      "codigo": "205",
+      "nombre": "Seminario Taller de Electrónica Práctica"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 19,
+    "fields": {
+      "codigo": "206",
+      "nombre": "Sistemas, Redes y Circuitos Eléctricos"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 20,
+    "fields": {
+      "codigo": "301",
+      "nombre": "Comunicación Social y Extensión Periodistica"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 21,
+    "fields": {
+      "codigo": "302",
+      "nombre": "Gestión y Trabajo Social"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 22,
+    "fields": {
+      "codigo": "303",
+      "nombre": "Pedagogía y Psicología Infantil"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 23,
+    "fields": {
+      "codigo": "401",
+      "nombre": "Diseño Gráfico y Dibujo"
+    }
+  } 
 ]
