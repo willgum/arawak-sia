@@ -372,7 +372,7 @@ class Competencia(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=12, unique=True)
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
-
+    creditos = models.IntegerField(help_text='Número de créditos de la competencia.', blank=True, null=True)
     periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
     intensidad = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
     
@@ -386,6 +386,9 @@ class MatriculaCiclo(models.Model):
     ciclo = models.ForeignKey(Ciclo)
     observaciones = models.TextField(max_length=200, blank=True)
     
+    def __unicode__(self):
+        return self.matricula_programa.codigo + " " + self.ciclo.codigo
+  
     def nombre_programa(self):
         return self.matricula_programa.nombre_programa()
     
