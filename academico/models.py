@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -271,9 +272,9 @@ class Estudiante(models.Model):
     lugar_nacimiento = models.CharField(max_length=200, blank=True)
     
     # Requisitos
-    fotocopia_documento = models.FileField(upload_to='/', blank=True)
-    fotocopia_diploma = models.FileField(upload_to='/', blank=True)
-    foto = models.FileField(upload_to='/', blank=True)
+    fotocopia_documento = models.FileField(upload_to='imagenes/original/', blank=True)
+    fotocopia_diploma = models.FileField(upload_to='imagenes/original/', blank=True)
+    foto = models.FileField(upload_to='imagenes/original/', blank=True)
     
     # Informacion de contacto
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
@@ -294,6 +295,13 @@ class Estudiante(models.Model):
 #       Grupo 4 corresponde en la base de datos con un perfil estudiante
 
     def save(self, *args, **kwargs):
+        if self.fotocopia_documento.name != "":
+            self.fotocopia_documento.name = self.documento + "a.jpg"
+        if self.fotocopia_diploma.name != "":
+            self.fotocopia_diploma.name = self.documento + "b.jpg"
+        if self.foto.name != "":
+            self.foto.name = self.documento + "c.jpg"
+        
         try:
                 user = User.objects.get(username=self.documento)
         except User.DoesNotExist:
