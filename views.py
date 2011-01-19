@@ -48,7 +48,7 @@ def perfil(request):
             })
     return render_to_response(plantilla, variables, context_instance=RequestContext(request))
 
-def actulizarperfil(request):
+def actulizarPerfil(request):
     grupos = request.user.groups.all()    
     if grupos is not None:
         for grupo in grupos:
@@ -69,19 +69,39 @@ def actulizarperfil(request):
             request.user.message_set.create(message="Los datos fueron guardados exitosamente.")
     return HttpResponseRedirect("/perfil/")
 
+def contrasena(request):
+    plantilla = "contrasena.html",
+    variables = Context({
+        'user': request.user, 
+        'titulo': '.: SIA - Sistema de Información Académica :.',
+        'titulo_pagina': '.: SIA - Sistema de Información Académica :.',
+        'path': settings.MEDIA_URL,
+    })
+    return render_to_response(plantilla, variables, context_instance=RequestContext(request))
+
+def actulizarContrasena(request):
+    if request.user.check_password(request.POST['actualPass']):
+        request.user.set_password(request.POST['nuevoPass'])
+        request.user.save()
+        request.user.message_set.create(message="La contraseña fue cambiada.")
+        return HttpResponseRedirect("/contrasena/")
+    else:        
+        request.user.message_set.create(message="Por favor digite nuevamente su contraseña")
+        return HttpResponseRedirect("/contrasena/")
+
 def login(request):
     username = request.POST['usuario']
     password = request.POST['contrasena']
     user = auth.authenticate(username=username, password=password)
     if user is None:
-        request.user.message_set.create(message="Lo sentimos, no se encuentra registrado en nuestro sistema")
+        #request.user.message_set.create(message="Lo sentimos, no se encuentra registrado en nuestro sistema")
         return HttpResponseRedirect("/")
     else:
         if user.is_active:
             auth.login(request, user)   
             return HttpResponseRedirect("/")
         else:        
-            request.user.message_set.create(message="Lo sentimos, usted se encuentra temporalmente desabilitado")
+            #request.user.message_set.create(message="Lo sentimos, usted se encuentra temporalmente desabilitado")
             return HttpResponseRedirect("/")
 
 def logout(request):

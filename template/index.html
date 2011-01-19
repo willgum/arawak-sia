@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 
-{% block javascript %}
-	<script src="{{ path }}js/jquery-latest.js"></script>
-  	<script type="text/javascript" src="{{ path }}js/jquery.validate.js"></script>
-  	
+{% block javascript %}  	
   	<script>
 		$(document).ready(function()
 		{
-			$("#login").validate();				
+			$.tools.validator.localize("es", {'[required]':'Este campo es obligatorio'});
+			
+			$("#login").validator({lang: 'es'});		
 		});
 	</script>
 {% endblock %}

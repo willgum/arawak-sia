@@ -1,35 +1,87 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-	<head>
-		<title>{% block titulo_pestana %}{{ titulo_pestana }}{% endblock %}</title>
-		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" href="{{ path }}css/estilo.css" type="text/css" media="screen,projection" />
-		{% block javascript %}{% endblock %}
-	</head>
- 
-	<body>
-		<div id="wrapper" class="fixed">
-			<div id="header">		
-					<h1><strong>{{ titulo_pagina }}</strong></h1>				
-					<ul id="nav">
-						{% block ruta %}{% endblock %}		
-					</ul>
+{% extends 'base.html' %}
+
+{% block javascript %}
+	<script>
+		$(document).ready(function()
+		{
+			$("#formulario :input").tooltip
+			(
+				{
+					position: "top left",
+					offset: [-5, 170],
+					effect: "fade",
+					opacity: 1.0
+				}
+			);
 			
-			</div>
+			$.tools.validator.localize
+			(
+				"es", 
+				{
+					'*'				: 'Ingrese un valor valido',
+					'[required]' 	: 'Este campo es obligatorio'
+				}
+			);
 			
-			{% block columna_derecha %}			
-			{% endblock %}
+			$.tools.validator.fn
+			(
+				"[minlength]", function(input, value) 
+				{
+					var min = input.attr("minlength");
+					return value.length>=min?true:{es: "La contraseña ingresada no concuerda con " + min + " caracteres"};
+				}
+			);
 			
-			{% block notificaciones %}			
-			{% endblock %}
+			$.tools.validator.fn
+			(
+				"[data-equals]", function(input, value) 
+				{
+					var name = input.attr("data-equals"),
+		 			field = this.getInputs().filter("[name=" + name + "]"); 
+					return input.val()==field.val()?true:{es: "Este campo debe concordar con la nueva contraseña"}; 
+				}
+			);	
 			
-			{% block contenido %}			
-			{% endblock %}
-			
-			<div id="footer">
-				<p style="float:right;">Valid <a href="http://validator.w3.org/check?uri=referer">HTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/">CSS</a></p>
-				<p>SIA 2011. Diseñado por: <a href="http://arawak.com.co/">Arawak</a>. Todos los Derechos Reservados</p>
-			</div>
-		</div>
-	</body>
-</html>
+			$("#formulario").validator({lang: 'es'});				
+		});
+	</script>
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li><a href="/contrasena/">Cambiar Contraseña</a></li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Cambiar Contraseña</h2>
+		<form id="formulario" action="/actulizarcontrasena/" method="post">
+			<table class="formulario" style="width: 100%;">
+				<tr>
+					<td style="padding: 3px; width: 130px;">Contraseña Actual: </td>				
+				    <td style="padding: 3px;"><input type="password" name="actualPass" id="actualPass" size="30" required="required" minlength="6" title="Digite su contraseña actual"/></td>
+				</tr>	
+				<tr>
+					<td style="padding: 3px;">Nueva Contraseña: </td>				
+				    <td style="padding: 3px;"><input type="password" name="nuevoPass" id="nuevoPass" size="30" required="required" minlength="6" title="Su nueva contraseña debe tener minimo 6 caracteres"/></td>
+				</tr>					
+				<tr>
+					<td style="padding: 3px;">Confirmar Contraseña: </td>				
+				    <td style="padding: 3px;"><input type="password" name="confirPass" id="confirPass" size="30" data-equals="nuevoPass" title="Confirme la contraseña"/></td>
+				</tr>					
+				<tr>
+					<td style="padding: 3px;" colspan="2"><input type="submit" value="ACTUALIZAR CONTRASEÑA" id="guardar" style="width: 100%"></td>
+				</tr>	
+				<tr>
+					<td style="padding: 3px;" colspan="2">
+						{% for msg in messages %} 
+						    {{ msg }} 
+						{% endfor %}
+					</td>
+				</tr>		
+			</table>
+		</form>	
+	</div>			
+{% endblock %}
