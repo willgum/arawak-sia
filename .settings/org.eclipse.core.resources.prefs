@@ -1,7 +1,8 @@
-#Mon Jan 17 08:21:48 COT 2011
+#Tue Jan 18 16:04:01 COT 2011
 eclipse.preferences.version=1
 encoding//academico/admin.py=utf-8
-encoding//academico/fixtures/initial_data.json=UTF-8
+encoding//academico/fixtures/initial_data.json=utf-8
+encoding//academico/fixtures/poliagro.json=utf-8
 encoding//academico/models.py=utf-8
 encoding//academico/views.py=utf-8
 encoding//continuada/admin.py=utf-8
@@ -10,3 +11,4 @@ encoding//egresados/admin.py=utf-8
 encoding//egresados/models.py=utf-8
 encoding//financiero/admin.py=utf-8
 encoding//financiero/models.py=utf-8
+encoding/views.py=utf-8
