@@ -4,7 +4,7 @@
  * http://bassistance.de/jquery-plugins/jquery-plugin-validation/
  * http://docs.jquery.com/Plugins/Validation
  *
- * Copyright (c) 2006 - 2008 Jörn Zaefferer
+ * Copyright (c) 2006 - 2008 Jï¿½rn Zaefferer
  *
  * $Id: jquery.validate.js 6243 2009-02-19 11:40:49Z joern.zaefferer $
  *
@@ -237,18 +237,18 @@ $.extend($.validator, {
 	messages: {
 		required: "Este campo es obligatorio",
 		remote: "Por favor, corrija este campo",
-		email: "Por favor, introduzca una dirección de correo electrónico válida",
-		url: "Por favor, introduzca una URL válida",
-		date: "Por favor, introduzca una fecha válida.",
-		dateISO: "Por favor, introduzca una fecha válida(ISO)",
-		dateDE: "Bitte geben Sie ein gültiges Datum ein",
-		number: "Por favor, introduzca un número válido",
+		email: "Por favor, introduzca una direcciÃ³n de correo electrÃ³nico vÃ¡lida",
+		url: "Por favor, introduzca una URL vÃ¡lida",
+		date: "Por favor, introduzca una fecha vÃ¡lida.",
+		dateISO: "Por favor, introduzca una fecha vÃ¡lida(ISO)",
+		dateDE: "Bitte geben Sie ein goltiges Datum ein",
+		number: "Por favor, introduzca un nÃºmero vÃ¡lido",
 		numberDE: "Bitte geben Sie eine Nummer ein.",
-		digits: "Por favor, introduzca sólo números",
-		creditcard: "Por favor, introduzca un número de tarjeta de crédito válida",
+		digits: "Por favor, introduzca sÃ³lo nÃºmeros",
+		creditcard: "Por favor, introduzca un nÃºmero de tarjeta de crÃ©dito vÃ¡lida",
 		equalTo: "Por favor, introduzca el mismo valor de nuevo",
-		accept: "Por favor, introduzca un valor con una extensión válida",
-		maxlength: $.format("Introduzca un máximo de {0} caracteres"),
+		accept: "Por favor, introduzca un valor con una extensiÃ³n vÃ¡lida",
+		maxlength: $.format("Introduzca un mÃ¡ximo de {0} caracteres"),
 		minlength: $.format("Por favor, introduzca al menos {0} caracteres"),
 		rangelength: $.format("Por favor, introduzca un valor entre {0} y {1} caracteres."),
 		range: $.format("Por favor, introduzca un valor entre {0} y {1 }"),
