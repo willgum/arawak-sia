@@ -266,5 +266,284 @@
       "codigo": "401",
       "nombre": "Diseño Gráfico y Dibujo"
     }
-  } 
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 1,
+    "fields": {
+      "programa": "1",
+      "codigo": "10111",
+      "sufijo": "11",
+      "nombre": "Cálculo Diferencial",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 2,
+    "fields": {
+      "programa": "1",
+      "codigo": "10112",
+      "sufijo": "12",
+      "nombre": "Administración General",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 3,
+    "fields": {
+      "programa": "1",
+      "codigo": "10113",
+      "sufijo": "13",
+      "nombre": "Introducción a la Administración Ambiental",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 4,
+    "fields": {
+      "programa": "1",
+      "sufijo": "14",
+      "codigo": "10114",
+      "nombre": "Física",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 5,
+    "fields": {
+      "programa": "1",
+      "codigo": "10115",
+      "sufijo": "15",
+      "nombre": "Introducción a la Química",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 6,
+    "fields": {
+      "programa": "1",
+      "codigo": "10116",
+      "sufijo": "16",
+      "nombre": "Cátedra Institucional",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 7,
+    "fields": {
+      "programa": "1",
+      "codigo": "10121",
+      "sufijo": "21",
+      "nombre": "Cálculo Integral",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 8,
+    "fields": {
+      "programa": "1",
+      "codigo": "10122",
+      "sufijo": "22",
+      "nombre": "Contabilidad",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 9,
+    "fields": {
+      "programa": "1",
+      "sufijo": "23",
+      "codigo": "10123",
+      "nombre": "Ecología",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 10,
+    "fields": {
+      "programa": "1",
+      "codigo": "10124",
+      "sufijo": "24",
+      "nombre": "Química Ambiental",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 11,
+    "fields": {
+      "programa": "1",
+      "codigo": "10125",
+      "sufijo": "25",
+      "nombre": "Sociedad y Ambiente",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.competencia",
+    "pk": 12,
+    "fields": {
+      "programa": "1",
+      "codigo": "10126",
+      "sufijo": "26",
+      "nombre": "Técnicas de Expresión Oral y Escrita",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.profesor",
+    "pk": 1,
+    "fields": {
+      "nombre1": "Javier",
+      "apellido1": "Enciso",
+      "documento": "80097702"
+    }
+  },
+  {
+    "model": "academico.profesor",
+    "pk": 2,
+    "fields": {
+      "nombre1": "Roger",
+      "apellido1": "Herrera",
+      "documento": "86079213"
+    }
+  },
+  {
+    "model": "academico.profesor",
+    "pk": 3,
+    "fields": {
+      "nombre1": "Edwar",
+      "apellido1": "Carranza",
+      "documento": "86088352"
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 1,
+    "fields": {
+      "competencia": 1,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 2,
+    "fields": {
+      "competencia": 2,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 3,
+    "fields": {
+      "competencia": 3,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  },
+    {
+    "model": "academico.curso",
+    "pk": 4,
+    "fields": {
+      "competencia": 4,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 5,
+    "fields": {
+      "competencia": 5,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 6,
+    "fields": {
+      "competencia": 6,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 7,
+    "fields": {
+      "competencia": 7,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 8,
+    "fields": {
+      "competencia": 8,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 9,
+    "fields": {
+      "competencia": 9,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  },
+    {
+    "model": "academico.curso",
+    "pk": 10,
+    "fields": {
+      "competencia": 10,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 11,
+    "fields": {
+      "competencia": 11,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 12,
+    "fields": {
+      "competencia": 12,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  }
 ]
