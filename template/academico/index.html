@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+<!-- este bloque re-escribe la ruta -->
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="../">Inicio</a></li>
+		<li><a href="../academico">Académico</a></li>
+	</ul>
+{% endblock %}
+
+{% block notificaciones %}
+	{% if user.username %}
+		<div id="sidebar_right">
+			<h2>Bienvenido</h2>
+			<p>
+			Usuario: {{ user.get_full_name }}</br>
+			{% if user.groups.all %}
+			    {% for tipo in user.groups.all %}
+			        Grupo: {{ tipo }} </br>
+			    {% endfor %}
+			{% else %}
+				No tiene permisos habilitados.</br>
+			{% endif %}
+			</p>			
+			<h2>Mi Cuenta</h2>
+			<ul>
+				<li><a href="#">Mi perfil</a></li>
+				<li><a href="#">Cambiar Contraseña</a></li>
+				<li><a href="/logout/">Cerrar Sesión</a></li>
+			</ul>
+		</div>	
+	{% endif %}	
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Modulo Académico</h2>
+	</div>			
+{% endblock %}
