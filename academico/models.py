@@ -161,7 +161,7 @@ class Profesor(models.Model):
     lugar_expedicion = models.CharField(verbose_name='Lugar expedición', max_length=200, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(blank=True, max_length=200)
-    foto = models.FileField(upload_to='/', blank=True)
+    foto = models.ImageField(upload_to='imagenes/original/', blank=True)
     
     # Informacion de contacto
     direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
@@ -176,6 +176,9 @@ class Profesor(models.Model):
 #    Grupo 3 corresponde en la base de datos con un perfil profesor
 
     def save(self, *args, **kwargs):
+        if self.foto.name != "":
+            self.foto.name = self.documento + "c.jpg"
+            
         try:
                 user = User.objects.get(username=self.documento)
         except User.DoesNotExist:
@@ -253,10 +256,10 @@ class Estudiante(models.Model):
     lugar_nacimiento = models.CharField(max_length=200, blank=True)
     
     # Requisitos
-    fotocopia_documento = models.FileField(upload_to='imagenes/original/', blank=True)
-    fotocopia_diploma = models.FileField(upload_to='imagenes/original/', blank=True)
-    foto = models.FileField(upload_to='imagenes/original/', blank=True)
-    
+    fotocopia_documento = models.ImageField(upload_to='imagenes/original/', blank=True)
+    fotocopia_diploma = models.ImageField(upload_to='imagenes/original/', blank=True)
+    foto = models.ImageField(upload_to='imagenes/original/', blank=True)
+   
     # Informacion de contacto
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
