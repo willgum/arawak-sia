@@ -4,6 +4,7 @@
 		<title>{% block titulo_pestana %}{{ titulo_pestana }}{% endblock %}</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="{{ path }}css/estilo.css" type="text/css" media="screen,projection" />
+		<script src="{{ path }}js/jquery.tools.min.js"></script>
 		{% block javascript %}{% endblock %}
 	</head>
  
@@ -27,13 +28,13 @@
 											<td><strong>Usuario</strong></td>
 										</tr>
 										<tr>
-										    <td><input type="text" name="usuario" id="usuario" size="37" class="required"/></td>
+										    <td><input type="text" name="usuario" id="usuario" size="37" required="required"/></td>
 										</tr>
 										<tr>
 											<td><strong>Contraseña</strong></td>
 										</tr>
 										<tr>
-										    <td><input type="password" name="contrasena" id="contrasena" size="37" class="required"/></td>					    
+										    <td><input type="password" name="contrasena" id="contrasena" size="37" required="required"/></td>					    
 										</tr>
 									</table>							
 									<p><input type="submit" value="INICIAR SESIÓN" id="login" style="width: 175px"></p>
@@ -62,7 +63,7 @@
 								Usuario: {{ user.get_full_name }}</br>
 								{% if user.groups.all %}
 								    {% for tipo in user.groups.all %}
-								        Grupo: {{ tipo }} </br>
+								        Perfil: {{ tipo }} </br>
 								    {% endfor %}
 								{% else %}
 									No tiene permisos habilitados.</br>
@@ -71,7 +72,7 @@
 								<h2>Mi Cuenta</h2>
 								<ul>
 									<li><a href="/perfil/">Mi perfil</a></li>
-									<li><a href="#">Cambiar Contraseña</a></li>
+									<li><a href="/contrasena/">Cambiar Contraseña</a></li>
 									<li><a href="/logout/">Cerrar Sesión</a></li>
 								</ul>
 								{% block notificaciones %}			
