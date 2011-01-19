@@ -15,6 +15,8 @@ urlpatterns = patterns('',
     # login/logout
     (r'^login/$', login),
     (r'^logout/$', logout),
+    (r'^perfil/$', perfil),
+    (r'^actulizarperfil/$', actulizarperfil),
     
     
     # definicion de urls para la aplicacion academico     

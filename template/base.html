@@ -16,15 +16,71 @@
 					</ul>
 			
 			</div>
-			
-			{% block columna_derecha %}			
-			{% endblock %}
-			
-			{% block notificaciones %}			
-			{% endblock %}
-			
-			{% block contenido %}			
-			{% endblock %}
+			<table cellspacing="0" cellpadding="0">	
+				<tr>
+					<td style="background: #f6f6f6;" valign="top">									
+						<div id="sidebar_left">
+							{% if not user.username %}
+								<form id="login" action="/login/" method="post">
+									<table>
+										<tr>
+											<td><strong>Usuario</strong></td>
+										</tr>
+										<tr>
+										    <td><input type="text" name="usuario" id="usuario" size="37" class="required"/></td>
+										</tr>
+										<tr>
+											<td><strong>Contraseña</strong></td>
+										</tr>
+										<tr>
+										    <td><input type="password" name="contrasena" id="contrasena" size="37" class="required"/></td>					    
+										</tr>
+									</table>							
+									<p><input type="submit" value="INICIAR SESIÓN" id="login" style="width: 175px"></p>
+									{% if messages %}
+										<label class="error">
+											{% for msg in messages %} 
+							    				{{ msg }} 
+											{% endfor %}
+										</label>
+									{% endif %}
+								</form>
+							{% else %}
+								<h2>Menu Principal</h2>
+							{% endif %}
+						</div>				
+					</td>
+					<td valign="top">
+						{% block contenido %}			
+						{% endblock %}
+					</td>
+					<td valign="top">
+						{% if user.username %}
+							<div id="sidebar_right">
+								<h2>Bienvenido</h2>
+								<p>
+								Usuario: {{ user.get_full_name }}</br>
+								{% if user.groups.all %}
+								    {% for tipo in user.groups.all %}
+								        Grupo: {{ tipo }} </br>
+								    {% endfor %}
+								{% else %}
+									No tiene permisos habilitados.</br>
+								{% endif %}
+								</p>			
+								<h2>Mi Cuenta</h2>
+								<ul>
+									<li><a href="/perfil/">Mi perfil</a></li>
+									<li><a href="#">Cambiar Contraseña</a></li>
+									<li><a href="/logout/">Cerrar Sesión</a></li>
+								</ul>
+								{% block notificaciones %}			
+								{% endblock %}
+							</div>	
+						{% endif %}
+					</td>
+				</tr>
+			</table>		
 			
 			<div id="footer">
 				<p style="float:right;">Valid <a href="http://validator.w3.org/check?uri=referer">HTML</a> &amp; <a href="http://jigsaw.w3.org/css-validator/">CSS</a></p>
