@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, OtrosEstudiosEstudiante, Referencia, MatriculaPrograma, Amonestacion, Estudiante, ExperienciaLaboralProfesor, OtrosEstudiosProfesor, Profesor, HorarioCurso, Curso
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, OtrosEstudiosEstudiante, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso
 from django.contrib import admin
 
 class CalificacionInline(admin.TabularInline):
@@ -87,7 +87,9 @@ class ProgramaAdmin(admin.ModelAdmin):
         'tipo_programa',  
         'periodicidad', 
         'duracion', 
-        'jornada')
+        'jornada',
+        'competencias'
+    )
     list_display_links = ('codigo', 'nombre')
     search_fields = ['codigo', 'nombre']
     list_filter = ['tipo_programa', 'jornada', 'periodicidad']
@@ -110,7 +112,7 @@ class SalonAdmin(admin.ModelAdmin):
 class CursoInline(admin.TabularInline):
     model = Curso
     extra = 1
-    raw_id_fields = ('competencia',)
+    raw_id_fields = ('ciclo', 'profesor')
     fields = ('grupo', 'profesor', 'ciclo')
 
 
@@ -118,7 +120,7 @@ class CompetenciaAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': [
             'programa', 
-            'codigo', 
+            'sufijo', 
             'nombre', 
             'descripcion', 
             'intensidad', 
@@ -134,6 +136,7 @@ class CompetenciaAdmin(admin.ModelAdmin):
         'intensidad', 
         'creditos',
         'periodo',
+        'grupos',
     )
     
     list_filter = ['programa', 'intensidad', 'periodo']
@@ -229,15 +232,6 @@ class MatriculaProgramaAdmin(admin.ModelAdmin):
     
     search_fields = ('codigo', 'nombre_programa', 'estado')
 
-class ExperienciaLaboralProfesorInline(admin.TabularInline):
-    model = ExperienciaLaboralProfesor
-    extra = 1
-
-
-class OtrosEstudiosProfesorlInline(admin.TabularInline):
-    model = OtrosEstudiosProfesor
-    extra = 1
-
 
 class ProfesorAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -262,7 +256,7 @@ class ProfesorAdmin(admin.ModelAdmin):
             'web'],
             'classes': ['collapse']}),
     ]
-    inlines = [ExperienciaLaboralProfesorInline, OtrosEstudiosProfesorlInline]
+    inlines = [CursoInline]
     list_display = ('documento', 'nombre1', 'apellido1', 'email')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
