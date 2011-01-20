@@ -160,7 +160,7 @@ class Profesor(models.Model):
     lugar_expedicion = models.CharField(verbose_name='Lugar expedición', max_length=200, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(blank=True, max_length=200)
-    foto = models.FileField(upload_to='/', blank=True)
+    foto = models.ImageField(upload_to='imagenes/original/', blank=True)
     
     # Informacion de contacto
     direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
