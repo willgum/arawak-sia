@@ -545,5 +545,229 @@
       "profesor": 3,
       "ciclo": 1
     }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 1,
+    "fields": {
+      "codigo": "A101"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 2,
+    "fields": {
+      "codigo": "A102"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 3,
+    "fields": {
+      "codigo": "A103"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 4,
+    "fields": {
+      "codigo": "A201"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 5,
+    "fields": {
+      "codigo": "A202"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 6,
+    "fields": {
+      "codigo": "A203"
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 1,
+    "fields": {
+      "curso": 1,
+      "dia": 2,
+      "hora_inicio": "07:30",
+      "hora_fin": "09:00",
+      "salon": 1
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 2,
+    "fields": {
+      "curso": 1,
+      "dia": 4,
+      "hora_inicio": "07:30",
+      "hora_fin": "09:00",
+      "salon": 1
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 3,
+    "fields": {
+      "curso": 2,
+      "dia": 2,
+      "hora_inicio": "09:30",
+      "hora_fin": "11:00",
+      "salon": 2
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 4,
+    "fields": {
+      "curso": 2,
+      "dia": 4,
+      "hora_inicio": "09:30",
+      "hora_fin": "11:00",
+      "salon": 3
+    }
+  },
+    {
+    "model": "academico.horariocurso",
+    "pk": 5,
+    "fields": {
+      "curso": 3,
+      "dia": 2,
+      "hora_inicio": "13:00",
+      "hora_fin": "14:30",
+      "salon": 3
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 6,
+    "fields": {
+      "curso": 3,
+      "dia": 4,
+      "hora_inicio": "13:00",
+      "hora_fin": "14:30",
+      "salon": 3
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 7,
+    "fields": {
+      "curso": 4,
+      "dia": 5,
+      "hora_inicio": "13:00",
+      "hora_fin": "14:30",
+      "salon": 5
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 8,
+    "fields": {
+      "curso": 5,
+      "dia": 5,
+      "hora_inicio": "15:00",
+      "hora_fin": "16:30",
+      "salon": 5
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 9,
+    "fields": {
+      "curso": 6,
+      "dia": 5,
+      "hora_inicio": "17:00",
+      "hora_fin": "18:00",
+      "salon": 2
+    }
+  },
+  {
+    "model": "academico.estudiante",
+    "pk": 1,
+    "fields": {
+      "nombre1": "Jerson",
+      "apellido1": "Pabón",
+      "documento": "86273452"
+    }
+  },
+  {
+    "model": "academico.matriculaprograma",
+    "pk": 1,
+    "fields": {
+      "estudiante": 1,
+      "codigo": "10111001",
+      "programa": 1,
+      "fecha_inscripcion": "2011-01-30",
+      "fecha_vencimiento": "2013-01-30"
+    }
+  },
+  {
+    "model": "academico.matriculaciclo",
+    "pk": 1,
+    "fields": {
+      "matricula_programa": 1,
+      "ciclo": 1,
+      "fecha_inscripcion": "2011-01-31"
+    }
+  },
+  {
+    "model": "academico.calificacion",
+    "pk": 1,
+    "fields": {
+      "matricula_ciclo": 1,
+      "curso": 1,
+      "nota_definitiva": 3.6
+    }
+  },
+  {
+    "model": "academico.calificacion",
+    "pk": 2,
+    "fields": {
+      "matricula_ciclo": 1,
+      "curso": 2,
+      "nota_definitiva": 4.6
+    }
+  },
+  {
+    "model": "academico.calificacion",
+    "pk": 3,
+    "fields": {
+      "matricula_ciclo": 1,
+      "curso": 3,
+      "nota_definitiva": 4.1
+    }
+  },
+  {
+    "model": "academico.calificacion",
+    "pk": 4,
+    "fields": {
+      "matricula_ciclo": 1,
+      "curso": 4,
+      "nota_definitiva": 3.0
+    }
+  },
+  {
+    "model": "academico.calificacion",
+    "pk": 5,
+    "fields": {
+      "matricula_ciclo": 1,
+      "curso": 5,
+      "nota_definitiva": 3.6
+    }
+  },
+  {
+    "model": "academico.calificacion",
+    "pk": 6,
+    "fields": {
+      "matricula_ciclo": 1,
+      "curso": 6,
+      "nota_definitiva": 3.2
+    }
   }
 ]

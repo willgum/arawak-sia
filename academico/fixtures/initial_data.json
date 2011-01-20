@@ -1252,7 +1252,7 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "Lunes"
+      "nombre": "Sin Asignar"
     }
   },
   {
@@ -1260,7 +1260,7 @@
     "pk": 2,
     "fields": {
       "codigo": "2",
-      "nombre": "Martes"
+      "nombre": "Lunes"
     }
   },
   {
@@ -1268,7 +1268,7 @@
     "pk": 3,
     "fields": {
       "codigo": "3",
-      "nombre": "Miércoles"
+      "nombre": "Martes"
     }
   },
   {
@@ -1276,7 +1276,7 @@
     "pk": 4,
     "fields": {
       "codigo": "4",
-      "nombre": "Jueves"
+      "nombre": "Miércoles"
     }
   },
   {
@@ -1284,7 +1284,7 @@
     "pk": 5,
     "fields": {
       "codigo": "5",
-      "nombre": "Viernes"
+      "nombre": "Jueves"
     }
   },
   {
@@ -1292,7 +1292,7 @@
     "pk": 6,
     "fields": {
       "codigo": "6",
-      "nombre": "Sábado"
+      "nombre": "Viernes"
     }
   },
   {
@@ -1300,6 +1300,14 @@
     "pk": 7,
     "fields": {
       "codigo": "7",
+      "nombre": "Sábado"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 8,
+    "fields": {
+      "codigo": "8",
       "nombre": "Domingo"
     }
   },
