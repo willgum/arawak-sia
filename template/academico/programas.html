@@ -52,31 +52,34 @@
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h2>Mis Programas </h2>
-		<table class="grilla" width="100%">
-			<thead>
-				<tr>
-					<th>Código</th>
-					<th>Nombre</th>
-					<th>Tipo programa</th>
-				</tr>
-			</thead>
-			
-			<tbody>
-				{% for programa in programas %}
-					<tr class="{% cycle '' 'odd' %}">
-						<th scope="row"><a href="#">{{ programa.codigo }}</a></th>
-						<td>{{ programa.nombre }}</td>
-						<td>{{ programa.tipo_programa }}</td>
-					</tr>					
-				{% endfor %}
-			</tbody>
-			
-			<tfoot>
-				<tr>
-					<th scope="row" colspan="3">Total Programas: {{cantidad}}</td>
-				</tr>
-			</tfoot>
-		</table>
-		
+		{% if msg_error %} 
+		    {{ msg_error }} 
+		{% else %}
+			<table class="grilla" width="100%">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nombre</th>
+						<th>Tipo programa</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for programa in programas %}
+						<tr class="{% cycle '' 'odd' %}">
+							<th scope="row"><a href="#">{{ programa.codigo }}</a></th>
+							<td>{{ programa.nombre }}</td>
+							<td>{{ programa.tipo_programa }}</td>
+						</tr>					
+					{% endfor %}
+				</tbody>
+				
+				<tfoot>
+					<tr>
+						<th scope="row" colspan="3">Total Programas: {{cantidad}}</td>
+					</tr>
+				</tfoot>
+			</table>
+		{% endif %}
 	</div>			
 {% endblock %}
