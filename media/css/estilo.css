@@ -3,6 +3,7 @@ body {
 	color:#555;
 	margin:20px;
 	background:url(../images/body.jpg) top repeat-x #333;
+	height:100%;
 }
 
 * {
@@ -18,7 +19,7 @@ body {
 }
 
 .fixed {
-	width:960px;
+	width:970px;
 }
 
 #header {
@@ -55,14 +56,12 @@ body {
 }
 
 #sidebar_left {
-	float:left;
 	width:180px;
-	padding:0 10px;
-	background:#f6f6f6;
+	height:100%;
+	padding:0 10px;	
 	font:100% Verdana;
 	line-height:20px;
 	border-right:1px solid #eee;
-	margin:0 15px 0 0;
 }
 
 #sidebar_left h2 {
@@ -80,9 +79,7 @@ body {
 #sidebar_right {	
 	width:160px;
 	padding:10px;
-	float:right;
 	background:#C8E4EE;
-	margin:0 0 10px 10px;
 	border-left:1px solid #97CBDF;
 	border-right:1px solid #97CBDF;
 	border-bottom:1px solid #97CBDF;
@@ -104,6 +101,7 @@ body {
 #content {
 	padding:0 15px;
 	font-size:120%;
+	width:557px;
 }
 
 #content h2 {
@@ -121,7 +119,7 @@ body {
 }
 
 .with_sidebar {
-	margin:0 0 0 200px;
+	margin:0 0 0 0;
 }
 
 #content h1,h2,h3,h4,p,ul,ol,blockquote {
@@ -143,16 +141,74 @@ body {
 }
 
 #footer {
-	margin:30px 0 0 0;
+	margin:5px 0 0 0;
 	padding:15px;
 	background:#f6f6f6;
 	border-top:2px solid #eee;
 	clear:both;
 }
 
+input[type=text], input[type=password], input[type=email], input[type=url] {
+	padding: 3px;
+	border: none;
+	color: #4F4F4F;
+	font: 100% "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
+}
+
+input[type=submit] {
+	margin-right: 5px;
+	padding: 3px;
+	border: 1px solid #F0F0F0;
+	font: 100% "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
+}
+
+table.formulario {
+	background:#f6f6f6;	
+}
+
 label.error { 
-	float: left; 
+	float: none; 
 	color: red; 
 	padding-left: .5em; 
 	vertical-align: top; 
+}
+
+/* mensajes de error jquery */
+
+.error {
+	height:20px;
+	background-color:#ea1919;
+	padding:0 10px;
+	color:#ffffff;
+	display:none;	
+	
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px; 
+	-moz-border-radius-bottomleft:0;
+	-moz-border-radius-topleft:0;	
+	-webkit-border-bottom-left-radius:0; 
+	-webkit-border-top-left-radius:0;
+}
+
+.error p {
+	margin:0;
+	line-height: 190%;
+}
+
+/* tooltips jquery */
+
+.tooltip {
+	background-color:#000;
+	padding:0 10px;
+	width:150px;
+	display:none;
+	color:#fff;
+	text-align:left;
+	
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px; 
+	-moz-border-radius-bottomleft:0;
+	-moz-border-radius-topleft:0;	
+	-webkit-border-bottom-left-radius:5px; 
+	-webkit-border-top-left-radius:5px;
 }

@@ -16,6 +16,14 @@ urlpatterns = patterns('',
     (r'^login/$', login),
     (r'^logout/$', logout),
     
+    # perfil y actualizar perfil
+    (r'^perfil/$', perfil),
+    (r'^actulizarperfil/$', actulizarPerfil),
+    
+    # contrasena y actualizar contrasena
+    (r'^contrasena/$', contrasena),
+    (r'^actulizarcontrasena/$', actulizarContrasena),
+    
     
     # definicion de urls para la aplicacion academico     
     (r'^academico/', include('academico.urls')),

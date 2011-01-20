@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+	<script>
+		$(document).ready(function()
+		{
+			$("#formulario :input").tooltip
+			(
+				{
+					position: "top left",
+					offset: [-5, 170],
+					effect: "fade",
+					opacity: 1.0
+				}
+			);
+			
+			$.tools.validator.localize
+			(
+				"es", 
+				{
+					'*'				: 'Ingrese un valor valido',
+					'[required]' 	: 'Este campo es obligatorio'
+				}
+			);
+			
+			$.tools.validator.fn
+			(
+				"[minlength]", function(input, value) 
+				{
+					var min = input.attr("minlength");
+					return value.length>=min?true:{es: "La contraseña ingresada no concuerda con " + min + " caracteres"};
+				}
+			);
+			
+			$.tools.validator.fn
+			(
+				"[data-equals]", function(input, value) 
+				{
+					var name = input.attr("data-equals"),
+		 			field = this.getInputs().filter("[name=" + name + "]"); 
+					return input.val()==field.val()?true:{es: "Este campo debe concordar con la nueva contraseña"}; 
+				}
+			);	
+			
+			$("#formulario").validator({lang: 'es'});				
+		});
+	</script>
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li><a href="/contrasena/">Cambiar Contraseña</a></li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Cambiar Contraseña</h2>
+		<form id="formulario" action="/actulizarcontrasena/" method="post">
+			<table class="formulario" style="width: 100%;">
+				<tr>
+					<td style="padding: 3px; width: 130px;">Contraseña Actual: </td>				
+				    <td style="padding: 3px;"><input type="password" name="actualPass" id="actualPass" size="30" required="required" minlength="6" title="Digite su contraseña actual"/></td>
+				</tr>	
+				<tr>
+					<td style="padding: 3px;">Nueva Contraseña: </td>				
+				    <td style="padding: 3px;"><input type="password" name="nuevoPass" id="nuevoPass" size="30" required="required" minlength="6" title="Su nueva contraseña debe tener minimo 6 caracteres"/></td>
+				</tr>					
+				<tr>
+					<td style="padding: 3px;">Confirmar Contraseña: </td>				
+				    <td style="padding: 3px;"><input type="password" name="confirPass" id="confirPass" size="30" data-equals="nuevoPass" title="Confirme la contraseña"/></td>
+				</tr>					
+				<tr>
+					<td style="padding: 3px;" colspan="2"><input type="submit" value="ACTUALIZAR CONTRASEÑA" id="guardar" style="width: 100%"></td>
+				</tr>	
+				<tr>
+					<td style="padding: 3px;" colspan="2">
+						{% for msg in messages %} 
+						    {{ msg }} 
+						{% endfor %}
+					</td>
+				</tr>		
+			</table>
+		</form>	
+	</div>			
+{% endblock %}
