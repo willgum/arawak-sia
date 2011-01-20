@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+	$("#formulario :input").tooltip
+	(
+		{
+			position: "top left",
+			offset: [-5, 170],
+			effect: "fade",
+			opacity: 1.0
+		}
+	);
+	
+	$.tools.validator.localize
+	(
+		"es", 
+		{
+			'*'				: 'Ingrese un valor valido',
+			'[required]' 	: 'Este campo es obligatorio'
+		}
+	);
+	
+	$.tools.validator.fn
+	(
+		"[minlength]", function(input, value) 
+		{
+			var min = input.attr("minlength");
+			return value.length>=min?true:{es: "La contraseña ingresada no concuerda con " + min + " caracteres"};
+		}
+	);
+	
+	$.tools.validator.fn
+	(
+		"[data-equals]", function(input, value) 
+		{
+			var name = input.attr("data-equals"),
+ 			field = this.getInputs().filter("[name=" + name + "]"); 
+			return input.val()==field.val()?true:{es: "Este campo debe concordar con la nueva contraseña"}; 
+		}
+	);	
+	
+	$("#formulario").validator({lang: 'es'});
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li><a href="/contrasena/">Cambiar Contraseña</a></li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Mis Programas </h2>
+		<table class="grilla" width="100%">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Nombre</th>
+					<th>Tipo programa</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				{% for programa in programas %}
+					<tr class="{% cycle '' 'odd' %}">
+						<th scope="row"><a href="#">{{ programa.codigo }}</a></th>
+						<td>{{ programa.nombre }}</td>
+						<td>{{ programa.tipo_programa }}</td>
+					</tr>					
+				{% endfor %}
+			</tbody>
+			
+			<tfoot>
+				<tr>
+					<th scope="row" colspan="3">Total Programas: {{cantidad}}</td>
+				</tr>
+			</tfoot>
+		</table>
+		
+	</div>			
+{% endblock %}

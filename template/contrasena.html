@@ -1,50 +1,45 @@
 {% extends 'base.html' %}
 
 {% block javascript %}
-	<script>
-		$(document).ready(function()
+	$("#formulario :input").tooltip
+	(
 		{
-			$("#formulario :input").tooltip
-			(
-				{
-					position: "top left",
-					offset: [-5, 170],
-					effect: "fade",
-					opacity: 1.0
-				}
-			);
-			
-			$.tools.validator.localize
-			(
-				"es", 
-				{
-					'*'				: 'Ingrese un valor valido',
-					'[required]' 	: 'Este campo es obligatorio'
-				}
-			);
-			
-			$.tools.validator.fn
-			(
-				"[minlength]", function(input, value) 
-				{
-					var min = input.attr("minlength");
-					return value.length>=min?true:{es: "La contraseña ingresada no concuerda con " + min + " caracteres"};
-				}
-			);
-			
-			$.tools.validator.fn
-			(
-				"[data-equals]", function(input, value) 
-				{
-					var name = input.attr("data-equals"),
-		 			field = this.getInputs().filter("[name=" + name + "]"); 
-					return input.val()==field.val()?true:{es: "Este campo debe concordar con la nueva contraseña"}; 
-				}
-			);	
-			
-			$("#formulario").validator({lang: 'es'});				
-		});
-	</script>
+			position: "top left",
+			offset: [-5, 170],
+			effect: "fade",
+			opacity: 1.0
+		}
+	);
+	
+	$.tools.validator.localize
+	(
+		"es", 
+		{
+			'*'				: 'Ingrese un valor valido',
+			'[required]' 	: 'Este campo es obligatorio'
+		}
+	);
+	
+	$.tools.validator.fn
+	(
+		"[minlength]", function(input, value) 
+		{
+			var min = input.attr("minlength");
+			return value.length>=min?true:{es: "La contraseña ingresada no concuerda con " + min + " caracteres"};
+		}
+	);
+	
+	$.tools.validator.fn
+	(
+		"[data-equals]", function(input, value) 
+		{
+			var name = input.attr("data-equals"),
+ 			field = this.getInputs().filter("[name=" + name + "]"); 
+			return input.val()==field.val()?true:{es: "Este campo debe concordar con la nueva contraseña"}; 
+		}
+	);	
+	
+	$("#formulario").validator({lang: 'es'});
 {% endblock %}
 
 {% block ruta %} 
