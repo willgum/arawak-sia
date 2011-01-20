@@ -162,9 +162,59 @@ input[type=submit] {
 	font: 100% "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
 }
 
+/* tabla usada para los formularios*/
+
 table.formulario {
 	background:#f6f6f6;	
 }
+/* tabla usada para los formularios*/
+
+table.grilla {
+	color: #666;
+	border-collapse: collapse
+}
+
+table.grilla thead th,table.grilla tfoot th, table.grilla tfoot td {
+	background-color: #549200;
+	color: #FFF;
+}
+
+table.grilla tbody th {
+	padding: 10px 10px
+}
+
+table.grilla tbody tr.odd {
+	background-color: #F7F7F7;
+}
+
+table.grilla tbody a {
+	padding: 1px 2px;
+	color: #73ca01;
+	text-decoration: none;
+}
+
+table.grilla tbody a:active,table.grilla tbody a:hover,table.grilla tbody a:focus,table.grilla tbody a:visited {
+	color: #666
+}
+
+table.grilla tbody tr:hover {
+	background-color: #EEE;
+	color: #333
+}
+
+table.grilla tbody td a[href="http://www.rodcast.com.br/"] {
+	margin: 0 auto;
+	display: block;
+	width: 15px;
+	height: 15px;
+	text-indent: -999em;
+	border-bottom: 0
+}
+
+table.grilla tbody a:visited:after {
+}
+
+/* label de error*/
 
 label.error { 
 	float: none; 
@@ -211,4 +261,21 @@ label.error {
 	-moz-border-radius-topleft:0;	
 	-webkit-border-bottom-left-radius:5px; 
 	-webkit-border-top-left-radius:5px;
+}
+
+.accordion {
+	margin: 15px 0 0 0;
+	width: 100%;
+}
+
+.accordion  h2{
+	font-size: 14px;
+	font-weight: normal;
+	padding: 5px;
+	margin:0;
+}
+
+.accordion div.pane {
+	border-width: 0px 2px;
+	padding: 5px;
 }

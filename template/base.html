@@ -5,7 +5,20 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="{{ path }}css/estilo.css" type="text/css" media="screen,projection" />
 		<script src="{{ path }}js/jquery.tools.min.js"></script>
-		{% block javascript %}{% endblock %}
+		
+		<script>
+			$(document).ready(function()
+			{
+				$.tools.validator.localize("es", {'[required]':'Este campo es obligatorio'});
+			
+				$("#login").validator({lang: 'es'});
+				
+				$(".accordion").tabs(".pane", {tabs: 'h2', effect: 'slide'});
+				
+				{% block javascript %}{% endblock %}
+			});
+		</script>
+		
 	</head>
  
 	<body>
@@ -47,7 +60,14 @@
 									{% endif %}
 								</form>
 							{% else %}
-								<h2>Menu Principal</h2>
+								<div class="accordion">
+									<h2>Modulo Académico</h2>								
+									<div class="pane">
+										<ul>
+											<li><a href="/academico/programas/">Programas</a></li>
+										</ul>
+									</div>							
+								</div>
 							{% endif %}
 						</div>				
 					</td>
