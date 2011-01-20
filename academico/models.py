@@ -386,10 +386,13 @@ class MatriculaCiclo(models.Model):
     observaciones = models.TextField(max_length=200, blank=True)
     
     def __unicode__(self):
-        return self.matricula_programa.codigo + " " + self.ciclo.codigo
+        return self.matricula_programa.codigo
   
     def nombre_programa(self):
         return self.matricula_programa.nombre_programa()
+    
+    def codigo_estudiante(self):
+        return self.matricula_programa.codigo
     
     def nombre_estudiante(self):
         return self.matricula_programa.nombre_estudiante()
@@ -421,11 +424,14 @@ class Curso(models.Model):
     def __unicode__(self):
         return self.codigo()
     
-    def competencia_nombre(self):
+    def nombre(self):
         return self.competencia.nombre
     
     def codigo(self):
         return "%s-%s" % (self.competencia.codigo, self.grupo)
+    
+    def sesiones(self):
+        return len(HorarioCurso.objects.filter(curso=self))
     
     class Meta:
         unique_together = ("competencia", "ciclo", "profesor", "grupo")
@@ -451,6 +457,12 @@ class Calificacion(models.Model):
     class Meta:
         unique_together = ("curso", "matricula_ciclo")
         verbose_name_plural = 'Calificaciones'
+    
+    def codigo_estudiante(self): # Metodo para mejorar la lectura en la GUI
+        return "%s" % (self.matricula_ciclo)
+        
+    def __unicode__(self):
+        return "%s" % (self.curso)
 
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
@@ -480,6 +492,9 @@ class HorarioCurso(models.Model):
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
     salon = models.ForeignKey(Salon, verbose_name='Salón')
+    
+    def __unicode__(self):
+        return "%s %s - %s %s" % (self.dia.nombre, self.hora_inicio, self.hora_fin, self.salon)
 
 
 class SesionCurso(models.Model):

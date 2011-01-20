@@ -20,16 +20,17 @@ class MatriculaCicloAdmin(admin.ModelAdmin):
             'observaciones']}),
     ]
     list_display = (
-        'fecha_inscripcion', 
+        'codigo_estudiante',
         'nombre_estudiante',
         'nombre_programa',
         'puesto',
-        'ciclo'
+        'ciclo',
+        'fecha_inscripcion',
     )
     
     inlines = [CalificacionInline]
     list_filter = ['fecha_inscripcion', 'ciclo']
-    search_fields = ('matricula_programa', 'ciclo')
+    search_fields = ('codigo_estudiante', 'ciclo')
     date_hierarchy = 'fecha_inscripcion'
 
 
@@ -52,12 +53,12 @@ class CalificacionAdmin(admin.ModelAdmin):
     inlines = [NotaCorteInline]
     list_display = (
         'curso', 
-        'matricula_ciclo', 
+        'codigo_estudiante', 
         'perdio_fallas',
         'nota_definitiva', 
         'nota_habilitacion'
     )
-    search_fields = ['curso', 'matricula_ciclo']
+    search_fields = ['curso', 'codigo_estudiante']
 
 
 class ProgramaAdmin(admin.ModelAdmin):
@@ -279,16 +280,16 @@ class CursoAdmin(admin.ModelAdmin):
     ]
     
     inlines = [HorarioCursoInline,]
-    list_display_links = ('codigo', 'competencia_nombre')
     list_display = (
         'codigo',
-        'competencia_nombre',
+        'nombre',
         'profesor',  
         'ciclo',
         'estudiantes_esperados', 
         'estudiantes_inscritos',
+        'sesiones',
     )
-    
+    list_filter = ['ciclo']
     search_fields = ('competencia',)
 
 class CorteInline(admin.TabularInline):
