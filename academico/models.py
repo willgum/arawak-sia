@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os.path
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -177,7 +178,7 @@ class Profesor(models.Model):
     def save(self, *args, **kwargs):
         if self.foto.name != "":
             self.foto.name = self.documento + "c.jpg"
-        
+            
         try:
                 user = User.objects.get(username=self.documento)
         except User.DoesNotExist:
@@ -197,28 +198,6 @@ class Profesor(models.Model):
     
     class Meta:
         verbose_name_plural = 'profesores'
-
-
-class ExperienciaLaboralProfesor(models.Model):
-    profesor = models.ForeignKey(Profesor)
-    cargo = models.CharField(max_length=200, blank=True)
-    empresa = models.CharField(max_length=200, blank=True)
-    fecha_inicio = models.DateField(blank=True, null=True)
-    fecha_fin = models.DateField(blank=True, null=True)
-    actualmente = models.BooleanField()
-  
-    class Meta:
-        verbose_name_plural = 'experiencia laboral profesores'
-
-
-class OtrosEstudiosProfesor(models.Model):
-    profesor = models.ForeignKey(Profesor)
-    tipo_estudio = models.ForeignKey(TipoEstudio, blank=True, null=True, default=1)
-    institucion = models.CharField(verbose_name='Institución', max_length=200, blank=True)
-    titulo = models.CharField(verbose_name='Título', max_length=200, blank=True)
-    fecha_graduacion = models.DateField(verbose_name='Fecha graduación', blank=True, null=True)
-    class Meta:
-        verbose_name_plural = 'otros estudios profesores'
 
 
 class Salon(models.Model):
@@ -255,6 +234,9 @@ class Programa(models.Model):
     perfil_profesional = models.TextField(max_length=200, help_text="Perfil profesional del egresado.", blank=True)
     funciones = models.TextField(max_length=200,help_text="Funciones en las que se puede desempeñar el egresado.", blank=True)
     
+    def competencias(self):
+        return len(Competencia.objects.filter(programa=self))
+    
     def __unicode__(self):
         return "%s - %s" % (self.codigo, self.nombre)
 
@@ -277,7 +259,7 @@ class Estudiante(models.Model):
     fotocopia_documento = models.ImageField(upload_to='imagenes/original/', blank=True)
     fotocopia_diploma = models.ImageField(upload_to='imagenes/original/', blank=True)
     foto = models.ImageField(upload_to='imagenes/original/', blank=True)
-    
+   
     # Informacion de contacto
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
@@ -379,15 +361,23 @@ class MatriculaPrograma(models.Model):
 
 class Competencia(models.Model):
     programa = models.ForeignKey(Programa)
-    codigo = models.CharField(verbose_name='Código', max_length=12, unique=True)
+    codigo = models.CharField(max_length=10)
+    sufijo = models.CharField(max_length=3, help_text='El sufijo se añade al código del programa y forma el código')
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     creditos = models.IntegerField(help_text='Número de créditos de la competencia.', blank=True, null=True)
-    periodo = models.IntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
+    periodo = models.SmallIntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
     intensidad = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
+    
+    def save(self, *args, **kwargs):
+        self.codigo = "%s%s" % (self.programa.codigo, self.sufijo)
+        super(Competencia, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.codigo
+    
+    def grupos(self):
+        return len(Curso.objects.filter(competencia=self))
   
   
 class MatriculaCiclo(models.Model):
