@@ -1,16 +1,5 @@
 {% extends 'base.html' %}
 
-{% block javascript %}  	
-  	<script>
-		$(document).ready(function()
-		{
-			$.tools.validator.localize("es", {'[required]':'Este campo es obligatorio'});
-			
-			$("#login").validator({lang: 'es'});		
-		});
-	</script>
-{% endblock %}
-
 {% block ruta %} 
 	<ul id="nav">
 		<li><a href="../">Inicio</a></li>
