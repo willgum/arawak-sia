@@ -4,13 +4,13 @@
 	<ul id="nav">
 		<li><a href="/">Inicio</a></li>
 		<li>>></li>
-		<li>Programas</li>
+		<li>Competencias</li>
 	</ul>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h2>Mis Programas </h2>
+		<h2>Mis Competencias </h2>
 		{% if msg_error %} 
 		    {{ msg_error }} 
 		{% else %}
@@ -19,16 +19,16 @@
 					<tr>
 						<th>Código</th>
 						<th>Nombre</th>
-						<th>Tipo programa</th>
+						<th>Programa</th>
 					</tr>
 				</thead>
 				
 				<tbody>
-					{% for programa in programas %}
+					{% for competencia in competencias %}
 						<tr class="{% cycle '' 'odd' %}">
-							<th scope="row"><a href="{{programa.id}}/">{{ programa.codigo }}</a></th>
-							<td>{{ programa.nombre }}</td>
-							<td>{{ programa.tipo_programa }}</td>
+							<th scope="row"><a href="{{competencia.id}}/">{{ competencia.codigo }}</a></th>
+							<td>{{ competencia.nombre }}</td>
+							<td>{{ competencia.programa }}</td>
 						</tr>					
 					{% endfor %}
 				</tbody>

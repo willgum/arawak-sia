@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+	$(".accordion").tabs(".pane", {tabs: 'h3', effect: 'slide'});
+{% endblock %}
+		
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li><a href="/academico/programas/">Programas</a></li>
+		<li>>></li>
+		<li>{{ programa.nombre }}</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Detalle Programa</h2>
+		{% if msg_error %} 
+		    {{ msg_error }} 
+		{% else %}
+			<div class="accordion">
+				<h3>Informacion Basica</h3>
+				<div class="pane">
+					<table>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Codigo: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.codigo }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Nombre Completo: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.nombre }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Tipo de Programa: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.tipo_programa }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Descripción: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.descripcion }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Título: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.titulo }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Resolución: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.resolucion }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>SNIES: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.snies }}</td>
+						</tr>
+					</table>
+				</div>
+				<h3>Horarios</h3>
+				<div class="pane">
+					<table>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Periodicidad: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.periodicidad }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Duración: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.duracion }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Jornada: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.jornada }}</td>
+						</tr>						
+					</table>
+				</div>
+				<h3>Informacion Adicional</h3>
+				<div class="pane">
+					<table>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Actitudes: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.actitudes }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Perfil profesional: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.perfil_profesional }}</td>
+						</tr>
+						<tr>
+							<td valign="top" style="text-align:left"><strong>Funciones: </strong></td>				
+						    <td valign="top" style="text-align:justify">{{ programa.funciones }}</td>
+						</tr>						
+					</table>
+				</div>
+			</div>
+		{% endif %}
+	</div>			
+{% endblock %}

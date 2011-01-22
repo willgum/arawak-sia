@@ -13,8 +13,6 @@
 			
 				$("#login").validator({lang: 'es'});
 				
-				$(".accordion").tabs(".pane", {tabs: 'h2', effect: 'slide'});
-				
 				{% block javascript %}{% endblock %}
 			});
 		</script>
@@ -60,14 +58,11 @@
 									{% endif %}
 								</form>
 							{% else %}
-								<div class="accordion">
-									<h2>Modulo Académico</h2>								
-									<div class="pane">
-										<ul>
-											<li><a href="/academico/programas/">Programas</a></li>
-										</ul>
-									</div>							
-								</div>
+								<h2>Modulo Académico</h2>								
+								<ul>
+									<li><a href="/academico/programas/">Programas</a></li>
+									<li><a href="/academico/competencias/">competencias</a></li>
+								</ul>
 							{% endif %}
 						</div>				
 					</td>

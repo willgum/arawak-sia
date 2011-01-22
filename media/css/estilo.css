@@ -41,11 +41,12 @@ body {
 #nav li {
 	list-style:none;
 	display:inline;
-	padding:7px 0;
+	padding:7px 3px;
+	color:#eee;
 }
 
 #nav li a {
-	padding:7px;
+	padding:7px 3px;
 	color:#eee;
 	text-decoration:none;
 }
@@ -194,7 +195,7 @@ table.grilla tbody a {
 }
 
 table.grilla tbody a:active,table.grilla tbody a:hover,table.grilla tbody a:focus,table.grilla tbody a:visited {
-	color: #666
+	color: #73CA01;
 }
 
 table.grilla tbody tr:hover {
@@ -208,7 +209,7 @@ table.grilla tbody td a[href="http://www.rodcast.com.br/"] {
 	width: 15px;
 	height: 15px;
 	text-indent: -999em;
-	border-bottom: 0
+	border-bottom: 0;
 }
 
 table.grilla tbody a:visited:after {
