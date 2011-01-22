@@ -159,7 +159,7 @@
     "model": "academico.programa",
     "pk": 10,
     "fields": {
-      "codigo": "110 ",
+      "codigo": "110",
       "nombre": "Hotelería y Turismo"
     }
   },
