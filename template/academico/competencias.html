@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li>Competencias</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Mis Competencias </h2>
+		{% if msg_error %} 
+		    {{ msg_error }} 
+		{% else %}
+			<table class="grilla" width="100%">
+				<thead>
+					<tr>
+						<th>Código</th>
+						<th>Nombre</th>
+						<th>Programa</th>
+					</tr>
+				</thead>
+				
+				<tbody>
+					{% for competencia in competencias %}
+						<tr class="{% cycle '' 'odd' %}">
+							<th scope="row"><a href="{{competencia.id}}/">{{ competencia.codigo }}</a></th>
+							<td>{{ competencia.nombre }}</td>
+							<td>{{ competencia.programa }}</td>
+						</tr>					
+					{% endfor %}
+				</tbody>
+				
+				<tfoot>
+					<tr>
+						<th scope="row" colspan="3">Total Programas: {{cantidad}}</td>
+					</tr>
+				</tfoot>
+			</table>
+		{% endif %}
+	</div>			
+{% endblock %}
