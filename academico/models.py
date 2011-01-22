@@ -216,7 +216,7 @@ class Programa(models.Model):
     
     # Informacion general
     tipo_programa = models.ForeignKey(TipoPrograma, blank=True, null=True, default=1)
-    codigo = models.CharField(verbose_name='Código', max_length=2, unique=True)
+    codigo = models.CharField(verbose_name='Código', max_length=4, unique=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, help_text='Título otorgado al finalizar el programa.', blank=True)
