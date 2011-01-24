@@ -1328,11 +1328,31 @@
     }
   },
   {
-    "model": "academico.genero",
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "Superadmin"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "Administrador"
+    }
+  },
+  {
+    "model": "auth.group",
     "pk": 3,
     "fields": {
-      "codigo": "3",
-      "nombre": "Masculino"
+      "name": "Docente"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 4,
+    "fields": {
+      "name": "Estudiante"
     }
   }
 ]

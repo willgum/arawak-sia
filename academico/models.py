@@ -377,6 +377,9 @@ class Competencia(models.Model):
     
     def grupos(self):
         return len(Curso.objects.filter(competencia=self))
+    
+    def nombrePrograma(self):
+        return "%s" % (self.programa.nombre)
   
   
 class MatriculaCiclo(models.Model):
@@ -430,6 +433,15 @@ class Curso(models.Model):
     def codigo(self):
         return "%s-%s" % (self.competencia.codigo, self.grupo)
     
+    def idCompetencia(self):
+        return "%s" % (self.competencia.id)
+    
+    def codigoCompetencia(self):
+        return "%s" % (self.competencia.codigo)
+    
+    def nombrePrograma(self):
+        return "%s" % (self.competencia.nombrePrograma())
+    
     def sesiones(self):
         return len(HorarioCurso.objects.filter(curso=self))
     
@@ -463,6 +475,18 @@ class Calificacion(models.Model):
         
     def __unicode__(self):
         return "%s" % (self.curso)
+    
+    def idCompetencia(self):
+        return "%s" % (self.curso.idCompetencia())
+    
+    def codigoCompetencia(self):
+        return "%s" % (self.curso.codigoCompetencia())
+    
+    def nombreCompetencia(self):
+        return "%s" % (self.curso.nombre())
+    
+    def nombrePrograma(self):
+        return "%s" % (self.curso.nombrePrograma())
 
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
