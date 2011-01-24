@@ -15,29 +15,62 @@
 		    {{ msg_error }} 
 		{% else %}
 			<table class="grilla" width="100%">
-				<thead>
-					<tr>
-						<th>Código</th>
-						<th>Nombre</th>
-						<th>Programa</th>
-					</tr>
-				</thead>
-				
-				<tbody>
-					{% for competencia in competencias %}
-						<tr class="{% cycle '' 'odd' %}">
-							<th scope="row"><a href="{{competencia.id}}/">{{ competencia.codigo }}</a></th>
-							<td>{{ competencia.nombre }}</td>
-							<td>{{ competencia.programa }}</td>
-						</tr>					
-					{% endfor %}
-				</tbody>
-				
-				<tfoot>
-					<tr>
-						<th scope="row" colspan="3">Total Programas: {{cantidad}}</td>
-					</tr>
-				</tfoot>
+				{% if grupoUsuario == 3 %}
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Nombre</th>
+							<th>Programa</th>
+						</tr>
+					</thead>
+					
+					<tbody>				
+						{% for competencia in competencias %}
+							<tr class="{% cycle '' 'odd' %}">
+								<th scope="row"><a href="{{competencia.id}}/">{{ competencia.codigo }}</a></th>
+								<td>{{ competencia.nombre }}</td>
+								<td>{{ competencia.programa }}</td>
+							</tr>					
+						{% endfor %}
+					</tbody>
+					
+					<tfoot>
+						<tr>
+							<th scope="row" colspan="3">Total Programas: {{cantidad}}</td>
+						</tr>
+					</tfoot>
+				{% else %}
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Nombre</th>
+							<th>Programa</th>
+							<th>Nota</th>
+							<th>Nota Hab.</th>
+						</tr>
+					</thead>
+					
+					<tbody>	
+						{% for calificacion in calificaciones %}
+							<tr class="{% cycle '' 'odd' %}">
+								<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+								<td>{{ calificacion.nombreCompetencia }}</td>
+								<td>{{ calificacion.nombrePrograma }}</td>
+								<td>{{ calificacion.nota_definitiva }}</td>
+								<td>
+									{% if calificacion.nota_habilitacion %}
+										{{ calificacion.nota_habilitacion }}</td>
+									{% endif %}
+							</tr>					
+						{% endfor %}
+					</tbody>
+					
+					<tfoot>
+						<tr>
+							<th scope="row" colspan="5">Total Programas: {{cantidad}}</td>
+						</tr>
+					</tfoot>
+				{% endif %}				
 			</table>
 		{% endif %}
 	</div>			
