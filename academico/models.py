@@ -497,6 +497,9 @@ class Curso(models.Model):
     def nombrePrograma(self):
         return "%s" % (self.competencia.nombrePrograma())
     
+    def horarios(self):
+        return HorarioCurso.objects.filter(curso=self)
+    
     def sesiones(self):
         return len(HorarioCurso.objects.filter(curso=self))
     
@@ -542,6 +545,9 @@ class Calificacion(models.Model):
     
     def nombrePrograma(self):
         return "%s" % (self.curso.nombrePrograma())
+    
+    def horarios(self):
+        return self.curso.horarios()
 
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
@@ -573,7 +579,7 @@ class HorarioCurso(models.Model):
     salon = models.ForeignKey(Salon, verbose_name='Salón')
     
     def __unicode__(self):
-        return "%s %s - %s %s" % (self.dia.nombre, self.hora_inicio, self.hora_fin, self.salon)
+        return "%s %s - %s %s" % (self.dia.nombre, self.hora_inicio.strftime("%H:%M"), self.hora_fin.strftime("%H:%M"), self.salon)
 
 
 class SesionCurso(models.Model):

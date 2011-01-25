@@ -52,7 +52,7 @@ def programas(solicitud):
         resultado = buscarPerfil(resultado[0]['grupos'])
         if resultado[0]['resultado'] == True:
             if resultado[0]['grupoUsuarioid'] == 3:
-                usuario = Profesor.objects.get(documento = solicitud.user)
+                usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
                 competencias = Competencia.objects.filter(curso__profesor = usuario.id).distinct()
                 programas = []
                 for competencia in competencias:
@@ -69,7 +69,7 @@ def programas(solicitud):
                 datos = {'programas': listaProgramas,
                          'cantidad': len(listaProgramas)}
             else:
-                usuario = Estudiante.objects.get(documento = solicitud.user)
+                usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
                 matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id)
                 programas = []
                 for matricula in matriculas:
@@ -113,13 +113,13 @@ def competencias(solicitud):
         resultado = buscarPerfil(resultado[0]['grupos'])
         if resultado[0]['resultado'] == True:
             if resultado[0]['grupoUsuarioid'] == 3:
-                usuario = Profesor.objects.get(documento = solicitud.user)
+                usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
                 competencias = Competencia.objects.filter(curso__profesor = usuario.id).distinct()
                 datos = {'competencias': competencias,
                          'cantidad': len(competencias),
                          'grupoUsuario': 3}
             else:
-                usuario = Estudiante.objects.get(documento = solicitud.user)
+                usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
                 matPrograma = MatriculaPrograma.objects.filter(estudiante = usuario.id)                
                 matCiclo = []
                 for mat in matPrograma:
@@ -173,13 +173,13 @@ def horarios(solicitud):
         resultado = buscarPerfil(resultado[0]['grupos'])
         if resultado[0]['resultado'] == True:
             if resultado[0]['grupoUsuarioid'] == 3:
-                usuario = Profesor.objects.get(documento = solicitud.user)
+                usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
                 cursos = Curso.objects.filter(profesor = usuario.id).distinct()
                 datos = {'cursos': cursos,
                          'cantidad': len(cursos),
                          'grupoUsuario': 3}
             else:
-                usuario = Estudiante.objects.get(documento = solicitud.user)
+                usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
                 matPrograma = MatriculaPrograma.objects.filter(estudiante = usuario.id)                
                 matCiclo = []
                 for mat in matPrograma:

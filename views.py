@@ -51,9 +51,9 @@ def perfil(solicitud):
         resultado = buscarPerfil(resultado[0]['grupos'])
         if resultado[0]['resultado'] == True:
             if resultado[0]['grupoUsuarioid'] == 3:
-                usuario = Profesor.objects.get(documento = solicitud.user)
+                usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
             else:
-                usuario = Estudiante.objects.get(documento = solicitud.user)            
+                usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)            
             datos = {'usuario': usuario,
                      'tipoDocumento': TipoDocumento.objects.get(codigo = usuario.tipo_documento_id),
                      'genero': Genero.objects.get(codigo = usuario.genero_id),
@@ -71,9 +71,9 @@ def actulizarPerfil(solicitud):
         resultado = buscarPerfil(resultado[0]['grupos'])        
         if resultado[0]['resultado'] == True:            
             if resultado[0]['grupoUsuarioid'] == 3:
-                usuario = Profesor.objects.get(documento = solicitud.user)
+                usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
             else:
-                usuario = Estudiante.objects.get(documento = solicitud.user)
+                usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
     usuario.direccion = solicitud.POST['direccion']
     usuario.lugar_residencia = solicitud.POST['lugar']
     usuario.telefono = solicitud.POST['fijo']

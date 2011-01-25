@@ -696,28 +696,7 @@
       "apellido1": "Pabón",
       "apellido2": "Mora",
       "documento": "86273452",
-      "usuario": "jepabonm",
-      "contrasena": "sha1$c4cb4$7431fd607ce5b24efdc10839ea30cd14ae986370",
       "email": "jpabon@mail.com"
-    }
-  },
-  {
-    "model": "auth.user",
-    "pk": 2,
-    "fields": {
-      "first_name": "Jerson",
-      "last_name": "Pabón",
-      "username": "jepabonm",
-      "password": "sha1$c4cb4$7431fd607ce5b24efdc10839ea30cd14ae986370",
-      "email": "jpabon@mail.com"
-    }
-  },
-  {
-    "model": "auth.user_groups",
-    "pk": 1,
-    "fields": {
-      "user_id": 2,
-      "group_id": 4
     }
   },
   {
