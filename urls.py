@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.views import login, logout
-from views import *                         # maneja la vista para el index de la aplicacion
-from django.views.static import *           # se incorporo para poder acceder a archivos estaticos
-from django.conf import settings            # se incopora para poder acceder a los valores creados en el settings
+from views import *                                     # maneja la vista para el index de la aplicacion
+from django.views.static import *                        # se incorporo para poder acceder a archivos estaticos
+from django.conf import settings                        # se incopora para poder acceder a los valores creados en el settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -13,7 +13,7 @@ urlpatterns = patterns('',
     (r'^$', indice),
     
     # login/logout
-    (r'^login/$', login),
+    (r'^login/$', login), #url(r'^login/$', login, name='')
     (r'^logout/$', logout),
     
     # perfil y actualizar perfil
