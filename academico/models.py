@@ -9,6 +9,34 @@ NOTA_MIN = 0.0
 NOTA_MAX = 5.0
 NOTA_APR = 3.5
 
+def crear_usuario(nombre1, nombre2, apellido1, apellido2):
+    # TODO: Verificar si el nombre de usuario es unico
+        tmp_nombre2 = ""
+        tmp_apellido2 = ""
+        repetido = True
+        total_usuarios = 0
+        num_usuario = ""
+        
+        if len(nombre2) > 0:
+            tmp_nombre2 = nombre2[0]
+            
+        if len(apellido2.strip()) > 0:
+            tmp_apellido2 = apellido2[0]
+            
+        tmp = "%s%s%s%s" % (nombre1[0], tmp_nombre2, apellido1, tmp_apellido2)
+        usuario = normalizar_usuario(tmp)
+        
+        while repetido == True:
+            tmp_usuario = "%s%s" % (usuario, num_usuario)
+            if len(User.objects.filter(username=tmp_usuario)) > 0:
+                total_usuarios = total_usuarios + 1
+                num_usuario = total_usuarios
+            else:
+                repetido = False
+                usuario = tmp_usuario
+                
+        return usuario
+
 def normalizar_usuario(cadena):
     # Remueve caracteres especiales y espacios de los nombres de usuario.
     cadena = cadena.lower()
@@ -182,7 +210,8 @@ class Profesor(models.Model):
     movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
- 
+    id_usuario = models.IntegerField(blank=True)
+    
 #    Sobreescribir la función guardar para crear usuario
 #    Guardar información de acceso a la tabla de usuarios de DJANGO
 #    Grupo 3 corresponde en la base de datos con un perfil profesor
@@ -192,9 +221,10 @@ class Profesor(models.Model):
             self.foto.name = self.documento + "c.jpg"
         
         try:
-                user = User.objects.get(username=self.documento)
+                user = User.objects.get(id=self.id_usuario)
         except User.DoesNotExist:
-                user = User.objects.create_user(self.documento, self.email, self.documento)
+                usuario = crear_usuario(self.nombre1, self.nombre2, self.apellido1, self.apellido2)
+                user = User.objects.create_user(usuario, self.email, self.documento)
                 user.groups.add(3);
                 user.save()
                 
@@ -203,7 +233,12 @@ class Profesor(models.Model):
         user.last_name = self.apellido1
         user.email = self.email
         user.save()
+        self.id_usuario = user.id
         super(Profesor, self).save(*args, **kwargs)  
+    
+    def usuario(self):
+        user = User.objects.get(id=self.id_usuario)
+        return user
         
     def __unicode__(self):
         return "%s %s" % (self.nombre1, self.apellido1) 
@@ -280,9 +315,7 @@ class Estudiante(models.Model):
     movil = models.CharField(verbose_name='Móvil', max_length=20, blank=True)
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
-    
-    usuario = models.CharField(max_length=30, blank=True)
-    contrasena = models.CharField(max_length=128, verbose_name="Contraseña", blank=True)
+    id_usuario = models.IntegerField(blank=True)
     
     # Informacion adicional
     sisben = models.ForeignKey(Sisben, blank=True, default=1, null=True)
@@ -301,14 +334,11 @@ class Estudiante(models.Model):
         if self.foto.name != "":
             self.foto.name = self.documento + "c.jpg"
         
-        # TODO: Verificar si el nombre de usuario es unico
-        tmp = "%s%s%s%s" % (self.nombre1[0], self.nombre2[0], self.apellido1, self.apellido2[0])
-        self.usuario = normalizar_usuario(tmp)
-        
         try:
-            user = User.objects.get(username=self.usuario)
+            user = User.objects.get(id=self.id_usuario)
         except User.DoesNotExist:
-            user = User.objects.create_user(self.usuario, self.email, self.contrasena)
+            usuario = crear_usuario(self.nombre1, self.nombre2, self.apellido1, self.apellido2)
+            user = User.objects.create_user(usuario, self.email, self.documento)
             user.groups.add(4);
             user.save()
                 
@@ -317,7 +347,12 @@ class Estudiante(models.Model):
         user.last_name = self.apellido1
         user.email = self.email
         user.save()
+        self.id_usuario = user.id
         super(Estudiante, self).save(*args, **kwargs)  
+    
+    def usuario(self):
+        user = User.objects.get(id=self.id_usuario)
+        return user
     
     def __unicode__(self):
         return self.documento
