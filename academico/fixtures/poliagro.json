@@ -400,12 +400,56 @@
     }
   },
   {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "jenciso",
+      "first_name": "Javier",
+      "last_name": "Enciso",
+      "email": "jenciso@mail.com",
+      "password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+      "is_staff": 0, 
+      "is_active": 1, 
+      "is_superuser": 0
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "username": "rherrera",
+      "first_name": "Roger",
+      "last_name": "Herrera",
+      "email": "rherrera@mail.com",
+      "password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+      "is_staff": 0, 
+      "is_active": 1, 
+      "is_superuser": 0
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "username": "ecarranza",
+      "first_name": "Edwar",
+      "last_name": "Carranza",
+      "email": "ecarranza@mail.com",
+      "password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+      "is_staff": 0, 
+      "is_active": 1, 
+      "is_superuser": 0
+    }
+  },
+  {
     "model": "academico.profesor",
     "pk": 1,
     "fields": {
       "nombre1": "Javier",
       "apellido1": "Enciso",
-      "documento": "80097702"
+      "documento": "80097702",
+      "email": "jenciso@mail.com",
+      "id_usuario": 2      
     }
   },
   {
@@ -414,7 +458,9 @@
     "fields": {
       "nombre1": "Roger",
       "apellido1": "Herrera",
-      "documento": "86079213"
+      "documento": "86079213",
+      "email": "rherrera@mail.com",
+      "id_usuario": 3     
     }
   },
   {
@@ -423,7 +469,33 @@
     "fields": {
       "nombre1": "Edwar",
       "apellido1": "Carranza",
-      "documento": "86088352"
+      "documento": "86088352",
+      "email": "ecarranza@mail.com",
+      "id_usuario": 4     
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "group": 3 
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 2,
+    "fields": {
+      "user": 3,
+      "group": 3 
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 3,
+    "fields": {
+      "user": 4,
+      "group": 3 
     }
   },
   {
@@ -688,6 +760,20 @@
     }
   },
   {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "username": "jpabon",
+      "first_name": "Jerson",
+      "last_name": "Pabon",
+      "email": "jpabon@mail.com",
+      "password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+      "is_staff": 0, 
+      "is_active": 1, 
+      "is_superuser": 0
+    }
+  },
+  {
     "model": "academico.estudiante",
     "pk": 1,
     "fields": {
@@ -696,7 +782,17 @@
       "apellido1": "Pabón",
       "apellido2": "Mora",
       "documento": "86273452",
-      "email": "jpabon@mail.com"
+      "email": "jpabon@mail.com",
+      "id_usuario": 5 
+      
+    }
+  },
+  {
+    "model": "auth.user_groups",
+    "pk": 4,
+    "fields": {
+      "user": 5,
+      "group": 4 
     }
   },
   {
