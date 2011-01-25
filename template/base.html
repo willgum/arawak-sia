@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 	<head>
-		<title>{% block titulo_pestana %}{{ titulo_pestana }}{% endblock %}</title>
+		<title>{{ titulo_pagina }}</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="{{ path }}css/estilo.css" type="text/css" media="screen,projection" />
 		<script src="{{ path }}js/jquery.tools.min.js"></script>
@@ -49,12 +49,8 @@
 										</tr>
 									</table>							
 									<p><input type="submit" value="INICIAR SESIÓN" id="login" style="width: 175px"></p>
-									{% if messages %}
-										<label class="error">
-											{% for msg in messages %} 
-							    				{{ msg }} 
-											{% endfor %}
-										</label>
+									{% if msg_error %}
+										{{ msg_error }}
 									{% endif %}
 								</form>
 							{% else %}
