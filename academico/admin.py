@@ -193,10 +193,6 @@ class EstudianteAdmin(admin.ModelAdmin):
             'email', 
             'web'], 
             'classes': ['collapse']}),
-         ('Informacion de acceso', {'fields': [
-            'usuario', 
-            'contrasena'], 
-            'classes': ['collapse']}),
         ('Informacion adicional', {'fields': [
             'sisben',
             'discapacidad', 
@@ -209,7 +205,7 @@ class EstudianteAdmin(admin.ModelAdmin):
         MatriculaProgramaInline,
         AmonestacionInline
     ]
-    list_display = ('documento', 'nombre1', 'apellido1', 'email', 'genero')
+    list_display = ('documento', 'nombre1', 'apellido1', 'usuario', 'email', 'genero')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
 
@@ -262,7 +258,7 @@ class ProfesorAdmin(admin.ModelAdmin):
             'classes': ['collapse']}),
     ]
     inlines = [CursoInline]
-    list_display = ('documento', 'nombre1', 'apellido1', 'email')
+    list_display = ('documento', 'nombre1', 'apellido1', 'usuario', 'email')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
 
