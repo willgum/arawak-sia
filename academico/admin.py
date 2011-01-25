@@ -193,6 +193,10 @@ class EstudianteAdmin(admin.ModelAdmin):
             'email', 
             'web'], 
             'classes': ['collapse']}),
+         ('Informacion de acceso', {'fields': [
+            'usuario', 
+            'contrasena'], 
+            'classes': ['collapse']}),
         ('Informacion adicional', {'fields': [
             'sisben',
             'discapacidad', 

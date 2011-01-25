@@ -9,6 +9,19 @@ NOTA_MIN = 0.0
 NOTA_MAX = 5.0
 NOTA_APR = 3.5
 
+def normalizar_usuario(cadena):
+    # Remueve caracteres especiales y espacios de los nombres de usuario.
+    cadena = cadena.lower()
+    cadena = cadena.replace("á", "a")
+    cadena = cadena.replace("é", "e")
+    cadena = cadena.replace("í", "i")
+    cadena = cadena.replace("ó", "o")
+    cadena = cadena.replace("ú", "u")
+    cadena = cadena.replace("ü", "u")
+    cadena = cadena.replace("ñ", "n")
+    cadena = cadena.replace(" ", "_")
+    return cadena
+
 class Sisben (models.Model):
     codigo = models.CharField(max_length = 3)
     nombre = models.CharField(max_length = 50)
@@ -268,6 +281,9 @@ class Estudiante(models.Model):
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
     
+    usuario = models.CharField(max_length=30, blank=True)
+    contrasena = models.CharField(max_length=128, verbose_name="Contraseña", blank=True)
+    
     # Informacion adicional
     sisben = models.ForeignKey(Sisben, blank=True, default=1, null=True)
     discapacidad = models.ForeignKey(Discapacidad, blank=True, default=1, null=True)
@@ -285,12 +301,16 @@ class Estudiante(models.Model):
         if self.foto.name != "":
             self.foto.name = self.documento + "c.jpg"
         
+        # TODO: Verificar si el nombre de usuario es unico
+        tmp = "%s%s%s%s" % (self.nombre1[0], self.nombre2[0], self.apellido1, self.apellido2[0])
+        self.usuario = normalizar_usuario(tmp)
+        
         try:
-                user = User.objects.get(username=self.documento)
+            user = User.objects.get(username=self.usuario)
         except User.DoesNotExist:
-                user = User.objects.create_user(self.documento, self.email, self.documento)
-                user.groups.add(4);
-                user.save()
+            user = User.objects.create_user(self.usuario, self.email, self.contrasena)
+            user.groups.add(4);
+            user.save()
                 
         user.is_staff = False
         user.first_name = self.nombre1
