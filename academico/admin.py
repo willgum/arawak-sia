@@ -314,7 +314,8 @@ class CorteAdmin(admin.ModelAdmin):
         'porcentaje',         
         'fecha_inicio', 
         'fecha_fin',
-        'ciclo'
+        'ciclo',
+        'corteActual'        
     )
     search_fields = ('codigo',)
     date_hierarchy = 'fecha_inicio'
