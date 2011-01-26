@@ -15,7 +15,7 @@
 		    {{ msg_error }} 
 		{% else %}
 			<table class="grilla" width="100%">
-				{% if grupoUsuario == 3 %}
+				{% if request.session.grupoUsuarioid == 3 %}
 					<thead>
 						<tr>
 							<th>Código</th>
