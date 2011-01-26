@@ -40,13 +40,13 @@ def crear_usuario(nombre1, nombre2, apellido1, apellido2):
 def normalizar_usuario(cadena):
     # Remueve caracteres especiales y espacios de los nombres de usuario.
     cadena = cadena.lower()
-    cadena = cadena.replace("á", "a")
-    cadena = cadena.replace("é", "e")
-    cadena = cadena.replace("í", "i")
-    cadena = cadena.replace("ó", "o")
-    cadena = cadena.replace("ú", "u")
-    cadena = cadena.replace("ü", "u")
-    cadena = cadena.replace("ñ", "n")
+    cadena = cadena.replace(u"á", "a")
+    cadena = cadena.replace(u"é", "e")
+    cadena = cadena.replace(u"í", "i")
+    cadena = cadena.replace(u"ó", "o")
+    cadena = cadena.replace(u"ú", "u")
+    cadena = cadena.replace(u"ü", "u")
+    cadena = cadena.replace(u"ñ", "n")
     cadena = cadena.replace(" ", "_")
     return cadena
 
