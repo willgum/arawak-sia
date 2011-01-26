@@ -49,11 +49,9 @@
 										</tr>
 									</table>							
 									<p><input type="submit" value="INICIAR SESIÓN" id="login" style="width: 175px"></p>
-									{% if msg_error %}
-										{{ msg_error }}
-									{% endif %}
+									{{ request.session.msg_error }}
 								</form>
-							{% else %}
+							{% else %}								
 								<h2>Modulo Académico</h2>								
 								<ul>
 									<li><a href="/academico/programas/">Programas</a></li>
