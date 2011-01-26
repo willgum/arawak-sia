@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -558,6 +559,10 @@ class Corte(models.Model):
   
     def __unicode__(self):
         return self.codigo
+    
+    def corteActual(self):
+        hoy = datetime.date.today() 
+        return self.fecha_inicio >= hoy and self.fecha_fin <= hoy
 
 
 class NotaCorte(models.Model):
