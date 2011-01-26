@@ -55,8 +55,10 @@
 								<h2>Modulo Académico</h2>								
 								<ul>
 									<li><a href="/academico/programas/">Programas</a></li>
-									<li><a href="/academico/competencias/">competencias</a></li>
+									<li><a href="/academico/competencias/">Competencias</a></li>
 									<li><a href="/academico/horarios/">Horarios</a></li>
+									{% if request.session.grupoUsuarioid == 3 %}<li>Docente</li>{% endif %}
+									{% if request.session.grupoUsuarioid == 4 %}<li>Estudiante</li>{% endif %}
 								</ul>
 							{% endif %}
 						</div>				
@@ -70,13 +72,13 @@
 							<div id="sidebar_right">
 								<h2>Bienvenido</h2>
 								<p>
-								Usuario: {{ user.get_full_name }}</br>
+								Usuario: {{ user.get_full_name }}<br/>
 								{% if user.groups.all %}
 								    {% for tipo in user.groups.all %}
-								        Perfil: {{ tipo }} </br>
+								        Perfil: {{ tipo }} <br/>
 								    {% endfor %}
 								{% else %}
-									No tiene permisos habilitados.</br>
+									No tiene permisos habilitados.<br/>
 								{% endif %}
 								</p>			
 								<h2>Mi Cuenta</h2>
