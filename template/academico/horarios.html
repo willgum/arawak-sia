@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li>Competencias</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h2>Mis Competencias </h2>
+		{% if msg_error %} 
+		    {{ msg_error }} 
+		{% else %}
+			<table class="grilla" width="100%">
+				{% if request.session.grupoUsuarioid == 3 %}
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Nombre</th>
+							<th>Programa</th>
+							<th>Horario</th>
+						</tr>
+					</thead>
+					
+					<tbody>				
+						{% for curso in cursos %}
+							<tr class="{% cycle '' 'odd' %}">
+								<th scope="row"><a href="{{curso.idCompetencia}}/">{{ curso.codigoCompetencia }}</a></th>
+								<td>{{ curso.nombre }}</td>
+								<td>{{ curso.nombrePrograma }}</td>
+								<td>
+									{% for horario in curso.horarios %}
+										{{ horario }}</br>
+									{% endfor %}
+								</td>
+							</tr>					
+						{% endfor %}
+					</tbody>
+					
+					<tfoot>
+						<tr>
+							<th scope="row" colspan="4">Total Programas: {{cantidad}}</td>
+						</tr>
+					</tfoot>
+				{% else %}
+					<thead>
+						<tr>
+							<th>Código</th>
+							<th>Nombre</th>
+							<th>Programa</th>
+							<th>Horario</th>
+						</tr>
+					</thead>
+					
+					<tbody>	
+						{% for calificacion in calificaciones %}
+							<tr class="{% cycle '' 'odd' %}">
+								<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+								<td>{{ calificacion.nombreCompetencia }}</td>
+								<td>{{ calificacion.nombrePrograma }}</td>
+								<td>
+									{% for horario in calificacion.horarios %}
+										{{ horario }}</br>
+									{% endfor %}
+								</td>								
+							</tr>					
+						{% endfor %}
+					</tbody>
+					
+					<tfoot>
+						<tr>
+							<th scope="row" colspan="4">Total Programas: {{cantidad}}</td>
+						</tr>
+					</tfoot>
+				{% endif %}				
+			</table>
+		{% endif %}
+	</div>			
+{% endblock %}
