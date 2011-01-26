@@ -395,12 +395,12 @@ class MatriculaPrograma(models.Model):
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
-        tmp_codigo = "%s%s%s" %(self.programa.codigo, self.fecha_inscripcion.strftime("%y"), '0001')
+        tmp_codigo = "%s%s" %(self.programa.codigo, '00001')
         if len(MatriculaPrograma.objects.filter(codigo=tmp_codigo)) == 0:
             self.codigo = tmp_codigo
         else:
-            tmp_codigo = tmp_codigo[0:4]
-            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 4) as signed)+1, 4, 0) AS codigo FROM academico_matriculaprograma where left(codigo, 4) = %s limit 0, 1', [tmp_codigo]):
+            tmp_codigo = tmp_codigo[0:3]
+            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 5) as signed)+1, 5, 0) AS codigo FROM academico_matriculaprograma where left(codigo, 3) = %s limit 0, 1', [tmp_codigo]):
                 self.codigo = "%s%s" %(tmp_codigo, c.codigo)
             
         super(MatriculaPrograma, self).save(*args, **kwargs)
