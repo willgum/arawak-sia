@@ -82,8 +82,7 @@ def competencias(solicitud):
             usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
             competencias = Competencia.objects.filter(curso__profesor = usuario.id).distinct()
             datos = {'competencias': competencias,
-                     'cantidad': len(competencias),
-                     'grupoUsuario': 3}
+                     'cantidad': len(competencias)}
         else:
             usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
             matPrograma = MatriculaPrograma.objects.filter(estudiante = usuario.id)                
@@ -154,12 +153,23 @@ def horarios(solicitud):
                     for indice in range(0, len(resultado)):
                         calificaciones.append(resultado[indice])                                
             datos = {'calificaciones': calificaciones,
-                     'cantidad': len(calificaciones),
-                     'grupoUsuario': 4}
+                     'cantidad': len(calificaciones)}
         return redireccionar('academico/horarios.html', solicitud, datos)
     else:
         logout(solicitud)
 
+@login_required
+def cortes(solicitud):
+    if 'grupoUsuarioid' in solicitud.session:
+        if solicitud.session['grupoUsuarioid'] == 3:
+            usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
+            competencias = Competencia.objects.filter(curso__profesor = usuario.id).distinct()
+            datos = {'competencias': competencias,
+                     'cantidad': len(competencias)}
+        return redireccionar('academico/competencias.html', solicitud, datos)
+    else:
+        logout(solicitud)
+            
 def logout(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
         del solicitud.session['grupoUsuarioid']
