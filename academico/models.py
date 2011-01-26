@@ -30,7 +30,7 @@ def crear_usuario(nombre1, nombre2, apellido1, apellido2):
             tmp_usuario = "%s%s" % (usuario, num_usuario)
             if len(User.objects.filter(username=tmp_usuario)) > 0:
                 total_usuarios = total_usuarios + 1
-                num_usuario = total_usuarios
+                num_usuario = chr(96 + total_usuarios)
             else:
                 repetido = False
                 usuario = tmp_usuario
