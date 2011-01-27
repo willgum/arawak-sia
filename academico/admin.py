@@ -46,17 +46,19 @@ class CalificacionAdmin(admin.ModelAdmin):
         (None, {'fields': [
             'curso', 
             'matricula_ciclo',
-            'perdio_fallas',
             'nota_definitiva', 
-            'nota_habilitacion']}),
+            'nota_habilitacion',
+            'perdio_fallas',
+            ]}),
     ]
     inlines = [NotaCorteInline]
     list_display = (
         'curso', 
         'codigo_estudiante', 
-        'perdio_fallas',
         'nota_definitiva', 
-        'nota_habilitacion'
+        'nota_habilitacion',
+        'fallas',
+        'perdio_fallas',
     )
     search_fields = ['curso', 'codigo_estudiante']
 
@@ -276,7 +278,7 @@ class CursoAdmin(admin.ModelAdmin):
             'grupo',
             'profesor',
             'ciclo',
-            'estudiantes_esperados']}),
+            'esperados']}),
     ]
     
     inlines = [HorarioCursoInline,]
@@ -285,8 +287,8 @@ class CursoAdmin(admin.ModelAdmin):
         'nombre',
         'profesor',  
         'ciclo',
-        'estudiantes_esperados', 
-        'estudiantes_inscritos',
+        'esperados', 
+        'inscritos',
         'sesiones',
     )
     list_filter = ['ciclo']
