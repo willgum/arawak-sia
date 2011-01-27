@@ -524,9 +524,11 @@ class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
     matricula_ciclo = models.ForeignKey(MatriculaCiclo)
     nota_definitiva = models.FloatField(blank=True, null=True, validators=[validar_nota])
+#    nota_definitiva.editable = False
     nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, validators=[validar_nota])
+    fallas = models.IntegerField(help_text="Número de total de fallas en el ciclo.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
-
+    
     class Meta:
         unique_together = ("curso", "matricula_ciclo")
         verbose_name_plural = 'Calificaciones'
@@ -552,6 +554,20 @@ class Calificacion(models.Model):
     def horarios(self):
         return self.curso.horarios()
     
+    def calculaDefinitiva(self, calificacion_id):
+        tmp_notas = NotaCorte.objects.filter(calificacion = calificacion_id)
+        tmp_calificacion = 0.0
+        tmp_fallas = 0
+        
+        for tmp_nota in tmp_notas:
+            tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
+            tmp_calificacion = tmp_calificacion + (tmp_nota.nota * (tmp_corte.porcentaje * 0.01))
+            tmp_fallas = tmp_fallas + tmp_nota.fallas
+              
+        self.nota_definitiva = tmp_calificacion
+        self.fallas = tmp_fallas
+        Calificacion.save(self)
+    
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
     codigo = models.CharField(verbose_name="Código", max_length=12, unique=True)
@@ -571,11 +587,16 @@ class NotaCorte(models.Model):
     calificacion = models.ForeignKey(Calificacion)
     corte = models.ForeignKey(Corte)
     nota = models.FloatField(blank=True, null=True, validators=[validar_nota])
-    fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True, validators=[MinValueValidator(0)])
+    fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     comportamiento = models.ForeignKey(TipoComportamiento, blank=True, null=True, default=1)
      
+    def save(self, *args, **kwargs):
+        super(NotaCorte, self).save(*args, **kwargs)
+        self.calificacion.calculaDefinitiva(self.calificacion.id)
+                
     class Meta:
         unique_together = ("calificacion", "corte")
+    
     
   
 class HorarioCurso(models.Model):

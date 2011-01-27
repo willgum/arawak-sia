@@ -46,17 +46,19 @@ class CalificacionAdmin(admin.ModelAdmin):
         (None, {'fields': [
             'curso', 
             'matricula_ciclo',
-            'perdio_fallas',
             'nota_definitiva', 
-            'nota_habilitacion']}),
+            'nota_habilitacion',
+            'perdio_fallas',
+            ]}),
     ]
     inlines = [NotaCorteInline]
     list_display = (
         'curso', 
         'codigo_estudiante', 
-        'perdio_fallas',
         'nota_definitiva', 
-        'nota_habilitacion'
+        'nota_habilitacion',
+        'fallas',
+        'perdio_fallas',
     )
     search_fields = ['curso', 'codigo_estudiante']
 
