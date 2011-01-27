@@ -34,11 +34,11 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h2>Mi Perfil</h2>
+		<h1>Mi Perfil</h1>
 		{% if msg_error %}
 			{{ msg_error }}
 		{% else %}
-			<h3>Informacion Basica</h3>
+			<h2>Informacion Basica</h2>
 			<table>
 				<tr>
 					<td><strong>{{ tipoDocumento.nombre }}: </strong></td>				
@@ -65,7 +65,7 @@
 					<td>{{usuario.lugar_nacimiento}}</td>
 				</tr>
 			</table>
-			<h3>Información de Residencia</h3>
+			<h2>Información de Residencia</h2>
 			<form id="formulario" action="/actulizarperfil/" method="post">
 				<table class="formulario" style="width: 100%;">
 					<tr>

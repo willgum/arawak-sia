@@ -39,20 +39,20 @@
 											<td><strong>Usuario</strong></td>
 										</tr>
 										<tr>
-										    <td><input type="text" name="usuario" id="usuario" size="37" required="required"/></td>
+										    <td><input type="text" name="usuario" id="usuario" required="required"/></td>
 										</tr>
 										<tr>
 											<td><strong>Contraseña</strong></td>
 										</tr>
 										<tr>
-										    <td><input type="password" name="contrasena" id="contrasena" size="37" required="required"/></td>					    
+										    <td><input type="password" name="contrasena" id="contrasena" required="required"/></td>					    
 										</tr>
 									</table>							
-									<p><input type="submit" value="INICIAR SESIÓN" id="login" style="width: 175px"></p>
+									<p><input type="submit" value="INICIAR SESIÓN" id="login"></p>
 									{{ request.session.msg_error }}
 								</form>
 							{% else %}								
-								<h2>Modulo Académico</h2>								
+								<h2>Académico</h2>								
 								<ul>
 									<li><a href="/academico/programas/">Programas</a></li>
 									<li><a href="/academico/competencias/">Competencias</a></li>
@@ -72,10 +72,10 @@
 							<div id="sidebar_right">
 								<h2>Bienvenido</h2>
 								<p>
-								Usuario: {{ user.get_full_name }}<br/>
+								<strong>Usuario:</strong> {{ user.get_full_name }}<br/>
 								{% if user.groups.all %}
 								    {% for tipo in user.groups.all %}
-								        Perfil: {{ tipo }} <br/>
+								        <strong>Perfil:</strong> {{ tipo }} <br/>
 								    {% endfor %}
 								{% else %}
 									No tiene permisos habilitados.<br/>

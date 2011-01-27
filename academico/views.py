@@ -44,8 +44,7 @@ def programas(solicitud):
                         contador += 1
                 if contador <= 1:
                     listaProgramas.append(programas[indice1]);
-            datos = {'programas': listaProgramas,
-                     'cantidad': len(listaProgramas)}
+            datos = {'programas': listaProgramas}
         else:
             usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
             matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id)
@@ -60,18 +59,8 @@ def programas(solicitud):
                         contador += 1
                 if contador <= 1:
                     listaProgramas.append(programas[indice1]);
-            datos = {'programas': listaProgramas,
-                     'cantidad': len(listaProgramas)}
+            datos = {'programas': listaProgramas}
         return redireccionar('academico/programas.html', solicitud, datos)
-    else:
-        logout(solicitud)
-
-@login_required
-def programasDetalle(solicitud, programa_id):
-    if 'grupoUsuarioid' in solicitud.session:
-        programa = Programa.objects.get(id = programa_id)
-        datos = {'programa': programa} 
-        return redireccionar('academico/programaDetalle.html', solicitud, datos) 
     else:
         logout(solicitud)
 

@@ -1,5 +1,5 @@
 body {
-	font: 62.5%/1.6em "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
+	font: Arial;
 	color:#555;
 	margin:20px;
 	background:url(../images/body.jpg) top repeat-x #333;
@@ -22,6 +22,8 @@ body {
 	width:970px;
 }
 
+/* cabecera */
+
 #header {
 	height:110px;
 	background:url(../images/header.jpg) top repeat-x;
@@ -29,13 +31,17 @@ body {
 
 #header h1 {
 	height:45px;
-	font:250% Trebuchet MS;
+	font:28px Arial;
 	padding:30px 20px 10px 20px;
 	color:#fff;
 }
 
+/* Barra de navegacion */
+
 #nav {
-	margin:0 0 0 0;
+	margin:0 0 0 0;	
+	font:10px Arial;
+	line-height:22px;
 }
 
 #nav li {
@@ -52,29 +58,18 @@ body {
 }
 
 #nav li a:hover {
-	background:#222;
-	color:#fff;
+	text-decoration: underline;
 }
+
+/* Columna Izquierdas, Columna Derecha */
 
 #sidebar_left {
-	width:180px;
+	width:140px;
 	height:100%;
-	padding:0 10px;	
-	font:100% Verdana;
+	padding:10px;
+	font:10px Arial;
 	line-height:20px;
 	border-right:1px solid #eee;
-}
-
-#sidebar_left h2 {
-	font:140% Arial;
-	color:#222;
-	border-top:1px solid #eee;
-	border-bottom:1px solid #eee;
-	padding:5px;
-}
-
-#sidebar_left p {
-	line-height:20px;
 }
 
 #sidebar_right {	
@@ -84,90 +79,112 @@ body {
 	border-left:1px solid #97CBDF;
 	border-right:1px solid #97CBDF;
 	border-bottom:1px solid #97CBDF;
-	color:#1F5063;
+	color:#555;
 }
 
-#sidebar_right h2 {
-	font:110% Verdana;
+#sidebar_left h1, #sidebar_right h1 {
+}
+
+#sidebar_left h2, #sidebar_right h2 {
+	font:14px Arial;
 	font-weight:bold;
 	text-transform:uppercase;
-	color:#13313C;
-}
-
-#sidebar_right p {
-	font:100% Arial;
-	line-height:20px;
-}
-
-#content {
-	padding:0 15px;
-	font-size:120%;
-	width:557px;
-}
-
-#content h2 {
-	font:150% Trebuchet MS;
-	color:#222;
-	border-bottom:1px solid #eee;
-}
-
-#content h3 {
-	font:140% Arial;
-	color:#222;
-	border-top:1px solid #f6f6f6;
-	border-bottom:1px solid #f6f6f6;
-	padding:5px;
-}
-
-.with_sidebar {
-	margin:0 0 0 0;
-}
-
-#content h1,h2,h3,h4,p,ul,ol,blockquote {
 	margin:15px 0;
-	line-height:25px;
+	color:#555;
 }
 
-#sidebar_left h1,h2,h3,h4,p,ul,ol,blockquote {
+#sidebar_left h3, #sidebar_right h3 {
 	margin:15px 0;
 }
 
-#sidebar_right h1,h2,h3,h4,p,ul,ol,blockquote {
+#sidebar_left h4, #sidebar_right h4 {
 	margin:15px 0;
 }
 
-#sidebar_right ul {
+#sidebar_left p, #sidebar_right p {
+	font:11px Arial;
+	line-height:15px;
+	color:#555;
+}
+
+#sidebar_left ul, #sidebar_left ol, #sidebar_left blockquote,
+#sidebar_right ul, #sidebar_right ol, #sidebar_right blockquote{
+	margin:15px 0;
 	list-style:none;
-	padding:0 0 0 10px;	
+	padding:0 0 0 10px;
+	font:11px Arial;
+	line-height:15px;
+	color:#555;
 }
 
-#footer {
-	margin:5px 0 0 0;
-	padding:15px;
-	background:#f6f6f6;
-	border-top:2px solid #eee;
-	clear:both;
+#sidebar_left a, #sidebar_right a {
+	color:#555;
+	text-decoration:none;
 }
 
-input[type=text], input[type=password], input[type=email], input[type=url] {
+#sidebar_left a:hover, #sidebar_right a:hover {
+	color:#222;
+}
+
+#sidebar_left input[type=text], #sidebar_left input[type=password], #sidebar_left input[type=email], #sidebar_left input[type=url] {
 	padding: 3px;
 	border: none;
 	color: #4F4F4F;
-	font: 100% "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
+	font: 11px Arial;
+	width: 100%;
 }
 
-input[type=submit] {
+#sidebar_left input[type=submit] {
 	margin-right: 5px;
 	padding: 3px;
 	border: 1px solid #F0F0F0;
-	font: 100% "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
+	font: 10px Arial;
+	width: 100%;
+}
+
+/* Contenidos */
+
+#content {
+	padding:10px 15px;
+	font:11px Arial;
+	width:597px;
+}
+
+#content h1 {
+	margin:15px 0;
+	line-height:25px;
+	font:14px Arial;
+	font-weight:bold;
+	text-transform:uppercase;
+	border-bottom:1px solid #eee;
+}
+
+#content h2 {
+	font:13px Arial;
+	margin:10px 0;
+	font-weight:bold;
+}
+
+#content input[type=text], #content input[type=password], #content input[type=email], #content input[type=url] {
+	padding: 3px;
+	border: none;
+	color: #4F4F4F;
+	font: 11px Arial;
+}
+
+#content input[type=submit] {
+	margin-right: 5px;
+	padding: 3px;
+	border: 1px solid #F0F0F0;
+	font: 10px Arial;
 }
 
 /* tabla usada para los formularios*/
 
-table.formulario {
+.formulario {
 	background:#f6f6f6;	
 }
+
 /* tabla usada para los formularios*/
 
 table.grilla {
@@ -178,6 +195,7 @@ table.grilla {
 table.grilla thead th,table.grilla tfoot th, table.grilla tfoot td {
 	background-color: #549200;
 	color: #FFF;
+	padding: 10px 10px
 }
 
 table.grilla tbody th {
@@ -215,6 +233,124 @@ table.grilla tbody td a[href="http://www.rodcast.com.br/"] {
 table.grilla tbody a:visited:after {
 }
 
+/* tabs */
+
+#content .tabs { 
+	list-style:none; 
+	margin:0 !important; 
+	padding:0;
+	height:30px;
+	border-bottom:1px solid #666;	
+}
+
+#content .tabs li { 
+	float:left;	 
+	text-indent:0;
+	padding:0;
+	margin:0 !important;
+	list-style-image:none !important; 
+	font:11px Arial;
+	font-weight:bold;
+}
+
+#content .tabs a { 
+	background: url(../images/tabs.png);
+	background-position: -634px 0;
+	display:block;
+	height: 30px;  
+	line-height:30px;
+	text-align:center;
+	text-decoration:none;
+	color:#555;
+	padding:0px;
+	margin:0px;
+	width: 248px;
+	position:relative;
+	top:1px;
+}
+
+#content .tabs a:active {
+	outline:none;		
+}
+
+#content .tabs a:hover {
+	background-position: -634px -31px;	
+	color:#fff;	
+}
+
+#content .tabs .current,#content  .tabs .current:hover,#content  .tabs li.current a {
+	background-position: -634px -62px;		
+	background-position: -634px -62px;		
+	cursor:default !important; 
+	color:#555 !important;
+}
+#content .panes .pane {
+	display:none;		
+}
+
+#content .panesDiv {
+	padding:1px 10px;
+	border:1px solid #999;
+	border-top:0;
+	background-color:#fff;
+}
+
+/* accordion */
+
+#content .panesDiv .accordion {
+	margin: 5px 0 0 0;
+	width: 100%;
+}
+
+#content .panesDiv h2{
+	cursor: pointer;
+	background: url(../images/sidenav.png);
+	color:#555;
+	display: block;
+	height: 16px;
+	letter-spacing: 0px;
+	line-height: 16px;
+	margin: 0px;
+	padding: 6px 10px;
+	text-decoration: none;
+}
+
+.accordion div.pane {
+	background: url(../images/sidenav_strip.png);
+	padding: 5px;
+}
+
+.base {
+	background: url(../images/sidenav.png) repeat-x 0px -353px;
+	height:10px;
+}
+
+/* Pie de Pagina */
+
+#footer {
+	margin:5px 0 0 0;
+	padding:15px;
+	background:#f6f6f6;
+	border-top:2px solid #eee;
+	clear:both;
+}
+
+#footer p {
+	font:11px Arial;
+	line-height:15px;
+	color:#555;
+}
+
+#footer a {
+	color:#555;
+	font-weight: bold;
+}
+
+#footer a:hover {
+	color:#222;
+	text-decoration: underline;
+}
+
 /* mensajes de error jquery */
 
 .error {
@@ -222,7 +358,9 @@ table.grilla tbody a:visited:after {
 	background-color:#ea1919;
 	padding:0 10px;
 	color:#ffffff;
-	display:none;	
+	display:none;
+	font:10px Arial;
+	line-height:20px;
 	
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px; 
@@ -230,11 +368,6 @@ table.grilla tbody a:visited:after {
 	-moz-border-radius-topleft:0;	
 	-webkit-border-bottom-left-radius:0; 
 	-webkit-border-top-left-radius:0;
-}
-
-.error p {
-	margin:0;
-	line-height: 190%;
 }
 
 /* tooltips jquery */
@@ -246,6 +379,8 @@ table.grilla tbody a:visited:after {
 	display:none;
 	color:#fff;
 	text-align:left;
+	font:10px Arial;
+	line-height:15px;
 	
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px; 
@@ -253,21 +388,4 @@ table.grilla tbody a:visited:after {
 	-moz-border-radius-topleft:0;	
 	-webkit-border-bottom-left-radius:5px; 
 	-webkit-border-top-left-radius:5px;
-}
-
-.accordion {
-	margin: 15px 0 0 0;
-	width: 100%;
-}
-
-.accordion  h2{
-	font-size: 14px;
-	font-weight: normal;
-	padding: 5px;
-	margin:0;
-}
-
-.accordion div.pane {
-	border-width: 0px 2px;
-	padding: 5px;
 }

@@ -5,7 +5,6 @@ urlpatterns = patterns('',
     (r'^$', indice),
     
     (r'^programas/$', programas),
-    (r'^programas/(?P<programa_id>\d+)/$', programasDetalle), 
     
     (r'^competencias/$', competencias), 
     (r'^competencias/(?P<competencia_id>\d+)/$', competenciasDetalle),

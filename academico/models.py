@@ -562,7 +562,7 @@ class Corte(models.Model):
     
     def corteActual(self):
         hoy = datetime.date.today() 
-        return self.fecha_inicio >= hoy and self.fecha_fin <= hoy
+        return self.fecha_inicio <= hoy <= self.fecha_fin 
 
 
 class NotaCorte(models.Model):
