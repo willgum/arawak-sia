@@ -276,7 +276,7 @@ class CursoAdmin(admin.ModelAdmin):
             'grupo',
             'profesor',
             'ciclo',
-            'estudiantes_esperados']}),
+            'esperados']}),
     ]
     
     inlines = [HorarioCursoInline,]
@@ -285,8 +285,8 @@ class CursoAdmin(admin.ModelAdmin):
         'nombre',
         'profesor',  
         'ciclo',
-        'estudiantes_esperados', 
-        'estudiantes_inscritos',
+        'esperados', 
+        'inscritos',
         'sesiones',
     )
     list_filter = ['ciclo']

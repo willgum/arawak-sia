@@ -477,8 +477,7 @@ class Curso(models.Model):
     ciclo = models.ForeignKey(Ciclo)
     profesor = models.ForeignKey(Profesor)
     grupo = models.CharField(help_text='Número del grupo 1, 2, 3, ...', max_length=2, validators=[validar_numerico])
-    estudiantes_esperados = models.SmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
-    estudiantes_inscritos = models.SmallIntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
+    esperados = models.SmallIntegerField(help_text='Número esperado de estudiantes.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
         return self.codigo()
@@ -503,6 +502,9 @@ class Curso(models.Model):
     
     def sesiones(self):
         return len(HorarioCurso.objects.filter(curso=self))
+    
+    def inscritos(self):
+        return len(Calificacion.objects.filter(curso=self))
     
     class Meta:
         unique_together = ("competencia", "ciclo", "profesor", "grupo")
@@ -549,7 +551,7 @@ class Calificacion(models.Model):
     
     def horarios(self):
         return self.curso.horarios()
-
+    
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
     codigo = models.CharField(verbose_name="Código", max_length=12, unique=True)
