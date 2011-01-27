@@ -1,0 +1,1358 @@
+[
+  {
+    "model": "academico.etnia",
+    "pk": 1,
+    "fields": {
+      "codigo": "00",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 2,
+    "fields": {
+      "codigo": "01",
+      "nombre": "Achagua"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 3,
+    "fields": {
+      "codigo": "02",
+      "nombre": "Amorúa"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 4,
+    "fields": {
+      "codigo": "03",
+      "nombre": "Andoque o Andoke"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 5,
+    "fields": {
+      "codigo": "04",
+      "nombre": "Arhuaco (IJKA)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 6,
+    "fields": {
+      "codigo": "05",
+      "nombre": "Awa (CUAIKER)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 7,
+    "fields": {
+      "codigo": "06",
+      "nombre": "Barea"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 8,
+    "fields": {
+      "codigo": "07",
+      "nombre": "Barazana"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 9,
+    "fields": {
+      "codigo": "08",
+      "nombre": "Barí (Motilón)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 10,
+    "fields": {
+      "codigo": "09",
+      "nombre": "Betoye"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 11,
+    "fields": {
+      "codigo": "10",
+      "nombre": "Bora"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 12,
+    "fields": {
+      "codigo": "11",
+      "nombre": "Cabiyari o Kawiyarí"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 13,
+    "fields": {
+      "codigo": "12",
+      "nombre": "Carapana"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 14,
+    "fields": {
+      "codigo": "13",
+      "nombre": "Carijona o Karijona"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 15,
+    "fields": {
+      "codigo": "14",
+      "nombre": "Chimila (ETTE E´ NEKA)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 16,
+    "fields": {
+      "codigo": "15",
+      "nombre": "Chiricoa"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 17,
+    "fields": {
+      "codigo": "16",
+      "nombre": "Cocama"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 18,
+    "fields": {
+      "codigo": "17",
+      "nombre": "Coconuco"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 19,
+    "fields": {
+      "codigo": "18",
+      "nombre": "Cofán o Kofán"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 20,
+    "fields": {
+      "codigo": "19",
+      "nombre": "Pijaos"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 21,
+    "fields": {
+      "codigo": "20",
+      "nombre": "Cubeo o Kubeo"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 22,
+    "fields": {
+      "codigo": "21",
+      "nombre": "Cuiba o Kuiba"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 23,
+    "fields": {
+      "codigo": "22",
+      "nombre": "Curripaco o Kurripako"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 24,
+    "fields": {
+      "codigo": "23",
+      "nombre": "Desano"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 25,
+    "fields": {
+      "codigo": "24",
+      "nombre": "Dujos"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 26,
+    "fields": {
+      "codigo": "26",
+      "nombre": "Embera Catio o Embera Katío"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 27,
+    "fields": {
+      "codigo": "27",
+      "nombre": "Embera Chami"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 28,
+    "fields": {
+      "codigo": "28",
+      "nombre": "Eperara Siapidara"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 29,
+    "fields": {
+      "codigo": "29",
+      "nombre": "Guambiano"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 30,
+    "fields": {
+      "codigo": "30",
+      "nombre": "Guanaca"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 31,
+    "fields": {
+      "codigo": "31",
+      "nombre": "Guayabero"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 32,
+    "fields": {
+      "codigo": "33",
+      "nombre": "Hitnú"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 33,
+    "fields": {
+      "codigo": "34",
+      "nombre": "Inga"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 34,
+    "fields": {
+      "codigo": "35",
+      "nombre": "Kamsa o Kamëntsá"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 35,
+    "fields": {
+      "codigo": "36",
+      "nombre": "Kogui"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 36,
+    "fields": {
+      "codigo": "37",
+      "nombre": "Koreguaje o Coreguaje"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 37,
+    "fields": {
+      "codigo": "38",
+      "nombre": "Letuama"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 38,
+    "fields": {
+      "codigo": "39",
+      "nombre": "Macaguaje o Makaguaje"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 39,
+    "fields": {
+      "codigo": "40",
+      "nombre": "Nukak (Makú)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 40,
+    "fields": {
+      "codigo": "41",
+      "nombre": "Macuna o Makuna (Sara)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 41,
+    "fields": {
+      "codigo": "42",
+      "nombre": "Masiguare"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 42,
+    "fields": {
+      "codigo": "43",
+      "nombre": "Matapí"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 43,
+    "fields": {
+      "codigo": "44",
+      "nombre": "Miraña"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 44,
+    "fields": {
+      "codigo": "45",
+      "nombre": "Muinane"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 45,
+    "fields": {
+      "codigo": "46",
+      "nombre": "Muisca"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 46,
+    "fields": {
+      "codigo": "47",
+      "nombre": "Nonuya"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 47,
+    "fields": {
+      "codigo": "48",
+      "nombre": "Ocaina"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 48,
+    "fields": {
+      "codigo": "49",
+      "nombre": "Nasa (Paéz)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 49,
+    "fields": {
+      "codigo": "50",
+      "nombre": "Pastos"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 50,
+    "fields": {
+      "codigo": "51",
+      "nombre": "Piapoco (Dzase)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 51,
+    "fields": {
+      "codigo": "52",
+      "nombre": "Piaroa"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 52,
+    "fields": {
+      "codigo": "53",
+      "nombre": "Piratapuyo"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 53,
+    "fields": {
+      "codigo": "54",
+      "nombre": "Pisamira"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 54,
+    "fields": {
+      "codigo": "55",
+      "nombre": "Puinave"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 55,
+    "fields": {
+      "codigo": "56",
+      "nombre": "Sáliba"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 56,
+    "fields": {
+      "codigo": "57",
+      "nombre": "Sikuani"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 57,
+    "fields": {
+      "codigo": "58",
+      "nombre": "Siona"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 58,
+    "fields": {
+      "codigo": "59",
+      "nombre": "Siriano"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 59,
+    "fields": {
+      "codigo": "60",
+      "nombre": "iripu o Tsiripu (Mariposo)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 60,
+    "fields": {
+      "codigo": "61",
+      "nombre": "Taiwano (Tajuano)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 61,
+    "fields": {
+      "codigo": "62",
+      "nombre": "TanimuKa"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 62,
+    "fields": {
+      "codigo": "63",
+      "nombre": "Tariano"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 63,
+    "fields": {
+      "codigo": "64",
+      "nombre": "Tatuyo"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 64,
+    "fields": {
+      "codigo": "65",
+      "nombre": "Tikuna"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 65,
+    "fields": {
+      "codigo": "66",
+      "nombre": "Totoró"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 66,
+    "fields": {
+      "codigo": "67",
+      "nombre": "Tucano (Desea) o Tukano"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 67,
+    "fields": {
+      "codigo": "68",
+      "nombre": "Tule (Kuna)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 68,
+    "fields": {
+      "codigo": "69",
+      "nombre": "Tuyuka (Dojkapuara)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 69,
+    "fields": {
+      "codigo": "70",
+      "nombre": "U´wa (Tunebo)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 70,
+    "fields": {
+      "codigo": "71",
+      "nombre": "Wanano"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 71,
+    "fields": {
+      "codigo": "72",
+      "nombre": "Wayuu"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 72,
+    "fields": {
+      "codigo": "73",
+      "nombre": "Witoto"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 73,
+    "fields": {
+      "codigo": "74",
+      "nombre": "Wiwa (Arzario)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 74,
+    "fields": {
+      "codigo": "75",
+      "nombre": "Waunan (Wuanana)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 75,
+    "fields": {
+      "codigo": "76",
+      "nombre": "Yagua"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 76,
+    "fields": {
+      "codigo": "77",
+      "nombre": "Yanacona"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 77,
+    "fields": {
+      "codigo": "78",
+      "nombre": "Yauna"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 78,
+    "fields": {
+      "codigo": "79",
+      "nombre": "Yukuna"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 79,
+    "fields": {
+      "codigo": "80",
+      "nombre": "Yuko (Yukpa)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 80,
+    "fields": {
+      "codigo": "81",
+      "nombre": "Yurí (Carabayo)"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 81,
+    "fields": {
+      "codigo": "82",
+      "nombre": "Yuruti"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 82,
+    "fields": {
+      "codigo": "83",
+      "nombre": "Zenú"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 83,
+    "fields": {
+      "codigo": "84",
+      "nombre": "Quillacingas"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 84,
+    "fields": {
+      "codigo": "200",
+      "nombre": "Negritudes"
+    }
+  },
+  {
+    "model": "academico.etnia",
+    "pk": 85,
+    "fields": {
+      "codigo": "400",
+      "nombre": "Rom"
+    }
+  },
+  {
+    "model": "academico.tipoprograma",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },  
+  {
+    "model": "academico.tipoprograma",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Técnico"
+    }
+  },
+  {
+    "model": "academico.tipoprograma",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Auxiliar"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Aula"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Auditorio"
+    }
+  },
+  {
+    "model": "academico.tiposalon",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Laboratorio"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 1,
+    "fields": {
+      "codigo": "99",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sordera Profunda"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Hipoacusia o Baja audición"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Baja visión diagnosticada"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Ceguera"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Parálisis cerebral"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 7,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Lesión neuromuscular"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 8,
+    "fields": {
+      "codigo": "7",
+      "nombre": "Autismo"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 9,
+    "fields": {
+      "codigo": "8",
+      "nombre": "Deficiencia cognitiva (Retardo Mental)"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 10,
+    "fields": {
+      "codigo": "9",
+      "nombre": "Síndrome de Down"
+    }
+  },
+  {
+    "model": "academico.discapacidad",
+    "pk": 11,
+    "fields": {
+      "codigo": "10",
+      "nombre": "Múltiple"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 1,
+    "fields": {
+      "codigo": "9",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "1"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "2"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "3"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "4"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "5"
+    }
+  },
+  {
+    "model": "academico.sisben",
+    "pk": 7,
+    "fields": {
+      "codigo": "6",
+      "nombre": "6"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Excelente"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Bueno"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Aceptable"
+    }
+  },
+  {
+    "model": "academico.tipocomportamiento",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Insuficiente"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Primaria"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Secundaria"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Técnico"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Universitario"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Especialización"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 7,
+    "fields": {
+      "codigo": "7",
+      "nombre": "Maestría"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 8,
+    "fields": {
+      "codigo": "8",
+      "nombre": "Doctorado"
+    }
+  },
+  {
+    "model": "academico.tipoestudio",
+    "pk": 9,
+    "fields": {
+      "codigo": "9",
+      "nombre": "Otros estudios"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 1,
+    "fields": {
+      "codigo": "99",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Completa"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Mañana"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Tarde"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Nocturna"
+    }
+  },
+  {
+    "model": "academico.jornada",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Fin de semana"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 1,
+    "fields": {
+      "codigo": "0",
+      "nombre": "0"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 2,
+    "fields": {
+      "codigo": "1",
+      "nombre": "1"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 3,
+    "fields": {
+      "codigo": "2",
+      "nombre": "2"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 4,
+    "fields": {
+      "codigo": "3",
+      "nombre": "3"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 5,
+    "fields": {
+      "codigo": "4",
+      "nombre": "4"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 6,
+    "fields": {
+      "codigo": "5",
+      "nombre": "5"
+    }
+  },
+  {
+    "model": "academico.estrato",
+    "pk": 7,
+    "fields": {
+      "codigo": "6",
+      "nombre": "6"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Activo"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Egresado"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Expulsado"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Retirado"
+    }
+  },
+  {
+    "model": "academico.estadoinscripcion",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Suspendido"
+    }
+  },
+  {
+    "model": "academico.periodicidad",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "No Aplica"
+    }
+  },
+  {
+    "model": "academico.periodicidad",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Semestral"
+    }
+  },
+  {
+    "model": "academico.periodicidad",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Anual"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Academica"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Comercial"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Familiar"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Laboral"
+    }
+  },
+  {
+    "model": "academico.tiporeferencia",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Personal"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Cédula de Ciudadanía"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Tarjeta de Identidad"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Cédula de Extranjería"
+    }
+  },
+  {
+    "model": "academico.tipodocumento",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Registro Civil"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Lunes"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Martes"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Miércoles"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Jueves"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Viernes"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 7,
+    "fields": {
+      "codigo": "7",
+      "nombre": "Sábado"
+    }
+  },
+  {
+    "model": "academico.dia",
+    "pk": 8,
+    "fields": {
+      "codigo": "8",
+      "nombre": "Domingo"
+    }
+  },
+  {
+    "model": "academico.genero",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.genero",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Femenino"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "Superadmin"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "Administrador"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 3,
+    "fields": {
+      "name": "Docente"
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 4,
+    "fields": {
+      "name": "Estudiante"
+    }
+  }
+]
