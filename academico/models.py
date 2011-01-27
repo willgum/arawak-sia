@@ -401,7 +401,7 @@ class MatriculaPrograma(models.Model):
             self.codigo = tmp_codigo
         else:
             tmp_codigo = tmp_codigo[0:3]
-            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(cast(right(codigo, 5) as signed)+1, 5, 0) AS codigo FROM academico_matriculaprograma where left(codigo, 3) = %s limit 0, 1', [tmp_codigo]):
+            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(max(cast(right(codigo, 5) as signed))+1, 5, 0) AS codigo FROM academico_matriculaprograma where left(codigo, 3) = %s limit 0, 1', [tmp_codigo]):
                 self.codigo = "%s%s" %(tmp_codigo, c.codigo)
             
         super(MatriculaPrograma, self).save(*args, **kwargs)
@@ -562,7 +562,7 @@ class Corte(models.Model):
     
     def corteActual(self):
         hoy = datetime.date.today() 
-        return self.fecha_inicio <= hoy <= self.fecha_fin 
+        return self.fecha_inicio >= hoy and self.fecha_fin <= hoy
 
 
 class NotaCorte(models.Model):
