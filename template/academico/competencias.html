@@ -1,10 +1,5 @@
 {% extends 'base.html' %}
 
-{% block javascript %}
-	$(function() {$("ul.tabs").tabs("div.panes > div");});
-	$(".accordion").tabs(".pane", {tabs: 'h2', effect: 'slide'});
-{% endblock %}
-
 {% block ruta %} 
 	<ul id="nav">
 		<li><a href="/">Inicio</a></li>
@@ -16,22 +11,6 @@
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Mis Competencias </h1>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		<table class="grilla" width="100%">
 			{% if request.session.grupoUsuarioid == 3 %}
 				<thead>
@@ -47,7 +26,7 @@
 						<tr class="{% cycle '' 'odd' %}">
 							<th scope="row"><a href="{{competencia.id}}/">{{ competencia.codigo }}</a></th>
 							<td>{{ competencia.nombre }}</td>
-							<td>{{ competencia.programa }}</td>
+							<td>{{ competencia.nombrePrograma }}</td>
 						</tr>					
 					{% endfor %}
 				</tbody>

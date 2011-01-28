@@ -30,39 +30,40 @@ def indice(solicitud):
 @login_required
 def programas(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
-        if solicitud.session['grupoUsuarioid'] == 3:
-            usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-            competencias = Competencia.objects.filter(curso__profesor = usuario.id).distinct()
-            programas = []
-            for competencia in competencias:
-                programas.append(Programa.objects.get(id = competencia.programa_id))
-            listaProgramas = []
-            for indice1 in range(0, len(programas)):
-                contador = 0
-                for indice2 in range(indice1, len(programas)):
-                    if programas[indice1].codigo == programas[indice2].codigo:
-                        contador += 1
-                if contador <= 1:
-                    listaProgramas.append(programas[indice1]);
-            datos = {'programas': listaProgramas}
-        else:
-            usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
-            matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id)
-            programas = []
-            for matricula in matriculas:
-                programas.append(Programa.objects.get(id = matricula.programa_id))
-            listaProgramas = []
-            for indice1 in range(0, len(programas)):
-                contador = 0
-                for indice2 in range(indice1, len(programas)):
-                    if programas[indice1].codigo == programas[indice2].codigo:
-                        contador += 1
-                if contador <= 1:
-                    listaProgramas.append(programas[indice1]);
-            datos = {'programas': listaProgramas}
+        datos = {'programas': buscarProgramas(solicitud)}
         return redireccionar('academico/programas.html', solicitud, datos)
     else:
         logout(solicitud)
+
+def buscarProgramas(solicitud):
+    listaProgramas = []
+    if solicitud.session['grupoUsuarioid'] == 3:
+        usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
+        competencias = Competencia.objects.filter(curso__profesor = usuario.id).distinct()
+        programas = []
+        for competencia in competencias:
+            programas.append(Programa.objects.get(id = competencia.programa_id))
+        for indice1 in range(0, len(programas)):
+            contador = 0
+            for indice2 in range(indice1, len(programas)):
+                if programas[indice1].codigo == programas[indice2].codigo:
+                    contador += 1
+            if contador <= 1:
+                listaProgramas.append(programas[indice1]);
+    else:
+        usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+        matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id)
+        programas = []
+        for matricula in matriculas:
+            programas.append(Programa.objects.get(id = matricula.programa_id))
+        for indice1 in range(0, len(programas)):
+            contador = 0
+            for indice2 in range(indice1, len(programas)):
+                if programas[indice1].codigo == programas[indice2].codigo:
+                    contador += 1
+            if contador <= 1:
+                listaProgramas.append(programas[indice1]);
+    return listaProgramas
 
 @login_required
 def competencias(solicitud):
@@ -100,7 +101,7 @@ def competencias(solicitud):
         return redireccionar('academico/competencias.html', solicitud, datos)
     else:
         logout(solicitud)
-
+    
 @login_required
 def competenciasDetalle(solicitud, competencia_id):
     if 'grupoUsuarioid' in solicitud.session:

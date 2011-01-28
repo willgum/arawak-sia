@@ -20,46 +20,43 @@
 			{% for programa in programas %}
 				<li><a href="#">{{ programa.nombre }}</a></li>
 			{% endfor %}
-		</ul>
-		
+		</ul>		
 		<div class="panes">
 			{% for programa in programas %}
 				<div class="panesDiv">
 					<div class="accordion">
 						<h2>Informacion Basica</h2>
 						<div class="pane">
-							<div>
-								<table>
-									<tr>
-										<td valign="top" style="text-align:left; width: 130px;"><strong>Codigo: </strong></td>				
-									    <td valign="top" style="text-align:justify">{{ programa.codigo }}</td>
-									</tr>
-									<tr>
-										<td valign="top" style="text-align:left"><strong>Nombre Completo: </strong></td>				
-									    <td valign="top" style="text-align:justify">{{ programa.nombre }}</td>
-									</tr>
-									<tr>
-										<td valign="top" style="text-align:left"><strong>Tipo de Programa: </strong></td>				
-									    <td valign="top" style="text-align:justify">{{ programa.tipo_programa }}</td>
-									</tr>
-									<tr>
-										<td valign="top" style="text-align:left"><strong>Descripción: </strong></td>				
-									    <td valign="top" style="text-align:justify">{{ programa.descripcion }}</td>
-									</tr>
-									<tr>
-										<td valign="top" style="text-align:left"><strong>Título: </strong></td>				
-									    <td valign="top" style="text-align:justify">{{ programa.titulo }}</td>
-									</tr>
-									<tr>
-										<td valign="top" style="text-align:left"><strong>Resolución: </strong></td>				
-									    <td valign="top" style="text-align:justify">{{ programa.resolucion }}</td>
-									</tr>
-									<tr>
-										<td valign="top" style="text-align:left"><strong>SNIES: </strong></td>				
-									    <td valign="top" style="text-align:justify">{{ programa.snies }}</td>
-									</tr>
-								</table>
-							</div>
+							<table>
+								<tr>
+									<td valign="top" style="text-align:left; width: 130px;"><strong>Codigo: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.codigo }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Nombre Completo: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.nombre }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Tipo de Programa: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.tipo_programa }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Descripción: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.descripcion }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Título: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.titulo }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Resolución: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.resolucion }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>SNIES: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.snies }}</td>
+								</tr>
+							</table>
 						</div>
 						<div class="base"></div>
 						<h2>Horarios</h2>
