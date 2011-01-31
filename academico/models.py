@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
-
+from django.conf import settings 
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 
@@ -293,9 +293,9 @@ class Profesor(models.Model):
          
 #        OPCIÓN PARA CARGAR FOTO EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
         if existe_foto == True:
-            foto_org = "media/imagenes/original/" + tmp_foto
-            foto_min = "media/imagenes/mini/" + tmp_foto
-            foto_thu = "media/imagenes/thumbnail/" + tmp_foto
+            foto_org = settings.MEDIA_ROOT + "imagenes/original/" + tmp_foto
+            foto_min = settings.MEDIA_ROOT + "imagenes/mini/" + tmp_foto
+            foto_thu = settings.MEDIA_ROOT + "imagenes/thumbnail/" + tmp_foto
             scale(foto_org, THUMB_WIDTH, THUMB_HEIGHT, foto_thu)
             scale(foto_org, MINI_WIDTH, MINI_HEIGHT, foto_min)
  
@@ -427,25 +427,25 @@ class Estudiante(models.Model):
         
 #        OPCIÓN PARA CARGAR FOTO EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
         if existe_foto == True:
-            foto_org = "media/imagenes/original/" + tmp_foto
-            foto_min = "media/imagenes/mini/" + tmp_foto
-            foto_thu = "media/imagenes/thumbnail/" + tmp_foto
+            foto_org = settings.MEDIA_ROOT + "imagenes/original/" + tmp_foto
+            foto_min = settings.MEDIA_ROOT + "imagenes/mini/" + tmp_foto
+            foto_thu = settings.MEDIA_ROOT + "imagenes/thumbnail/" + tmp_foto
             scale(foto_org, THUMB_WIDTH, THUMB_HEIGHT, foto_thu)
             scale(foto_org, MINI_WIDTH, MINI_HEIGHT, foto_min)
         
 #        OPCIÓN PARA CARGAR DIPLOMA EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
         if existe_diploma == True:
-            diploma_org = "media/imagenes/original/" + tmp_diploma
-            diploma_min = "media/imagenes/mini/" + tmp_diploma
-            diploma_thu = "media/imagenes/thumbnail/" + tmp_diploma
+            diploma_org = settings.MEDIA_ROOT + "imagenes/original/" + tmp_diploma
+            diploma_min = settings.MEDIA_ROOT + "imagenes/mini/" + tmp_diploma
+            diploma_thu = settings.MEDIA_ROOT + "imagenes/thumbnail/" + tmp_diploma
             scale(diploma_org, THUMB_WIDTH, THUMB_HEIGHT, diploma_thu)
             scale(diploma_org, MINI_WIDTH, MINI_HEIGHT, diploma_min)
 
 #        OPCIÓN PARA CARGAR DOCUMENTO EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
         if existe_documento == True:
-            documento_org = "media/imagenes/original/" + tmp_documento
-            documento_min = "media/imagenes/mini/" + tmp_documento
-            documento_thu = "media/imagenes/thumbnail/" + tmp_documento
+            documento_org = settings.MEDIA_ROOT + "imagenes/original/" + tmp_documento
+            documento_min = settings.MEDIA_ROOT + "imagenes/mini/" + tmp_documento
+            documento_thu = settings.MEDIA_ROOT + "imagenes/thumbnail/" + tmp_documento
             scale(documento_org, THUMB_WIDTH, THUMB_HEIGHT, documento_thu)
             scale(documento_org, MINI_WIDTH, MINI_HEIGHT, documento_min)
     
