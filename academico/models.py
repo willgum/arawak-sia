@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 import datetime
 import Image
+#import os
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from django.core.files.storage import FileSystemStorage
+from django.core.files import File
 
 NOTA_MIN = 0.0
 NOTA_MAX = 5.0
@@ -56,6 +59,7 @@ def normalizar_usuario(cadena):
     cadena = cadena.replace(u"ñ", "n")
     cadena = cadena.replace(" ", "_")
     return cadena
+
 
 class Sisben (models.Model):
     codigo = models.CharField(max_length = 3)
@@ -199,7 +203,25 @@ def scale(fname, width, height, fname_scaled):
     out = img.resize((new_width, new_height))
     box = ((new_width/2 - width/2), (new_height/2 - height/2), (new_width/2 + width/2), (new_height/2 + height/2))
     out = out.crop(box)
+#    if os.path.exists(fname_scaled):
+#        os.remove(fname_scaled)
     out.save(fname_scaled, "JPEG")
+
+class CustomStorage(FileSystemStorage):
+    def _open(self, name, mode='rb'):
+        return File(open(self.path(name), mode))
+
+    def _save(self, name, content):
+        # here, you should implement how the file is to be saved
+        # like on other machines or something, and return the name of the file.
+        fs = FileSystemStorage()
+        name = fs._save(name, content)
+        return name
+
+    def get_available_name(self, name):
+        if self.exists(name):
+            self.delete(name)
+        return name
 
 class Ciclo(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=8, unique=True)
@@ -217,6 +239,8 @@ class Ciclo(models.Model):
         
 class Profesor(models.Model):
     # Informacion personal
+#    custom_store = CustomStorage()
+    
     nombre1 = models.CharField(max_length=50, verbose_name='Primer nombre')
     nombre2= models.CharField(max_length=50, verbose_name='Segundo nombre', blank=True)
     apellido1 = models.CharField(max_length=50, verbose_name='Primer apellido')
@@ -227,7 +251,7 @@ class Profesor(models.Model):
     lugar_expedicion = models.CharField(verbose_name='Lugar expedición', max_length=200, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(blank=True, max_length=200)
-    foto = models.ImageField(upload_to='imagenes/original/', blank=True)
+    foto = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
     
     # Informacion de contacto
     direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
@@ -241,10 +265,14 @@ class Profesor(models.Model):
 #    Sobreescribir la función guardar para crear usuario
 #    Guardar información de acceso a la tabla de usuarios de DJANGO
 #    Grupo 3 corresponde en la base de datos con un perfil profesor
-
+    
     def save(self, *args, **kwargs):
+        existe_foto = False
+        
         if self.foto.name != "":
-            self.foto.name = self.documento + "c.jpg"
+            tmp_foto = self.documento + "c.jpg"
+            self.foto.name = "imagenes/original/" + self.documento + "c.jpg"
+            existe_foto = True
         
         try:
                 user = User.objects.get(id=self.id_usuario)
@@ -261,15 +289,15 @@ class Profesor(models.Model):
         user.save()
         self.id_usuario = user.id
         
-        tmp_foto = self.foto.name
         super(Profesor, self).save(*args, **kwargs)
          
 #        OPCIÓN PARA CARGAR FOTO EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
-        foto_org = "media/imagenes/original/" + tmp_foto
-        foto_min = "media/imagenes/mini/" + tmp_foto
-        foto_thu = "media/imagenes/thumbnail/" + tmp_foto
-        scale(foto_org, THUMB_WIDTH, THUMB_HEIGHT, foto_thu)
-        scale(foto_org, MINI_WIDTH, MINI_HEIGHT, foto_min)
+        if existe_foto == True:
+            foto_org = "media/imagenes/original/" + tmp_foto
+            foto_min = "media/imagenes/mini/" + tmp_foto
+            foto_thu = "media/imagenes/thumbnail/" + tmp_foto
+            scale(foto_org, THUMB_WIDTH, THUMB_HEIGHT, foto_thu)
+            scale(foto_org, MINI_WIDTH, MINI_HEIGHT, foto_min)
  
     
     def usuario(self):
@@ -339,9 +367,9 @@ class Estudiante(models.Model):
     lugar_nacimiento = models.CharField(max_length=200, blank=True)
     
     # Requisitos
-    fotocopia_documento = models.ImageField(upload_to='imagenes/original/', blank=True)
-    fotocopia_diploma = models.ImageField(upload_to='imagenes/original/', blank=True)
-    foto = models.ImageField(upload_to='imagenes/original/', blank=True)
+    fotocopia_documento = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
+    fotocopia_diploma = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
+    foto = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
     
     # Informacion de contacto
     direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
@@ -363,12 +391,22 @@ class Estudiante(models.Model):
 #       Grupo 4 corresponde en la base de datos con un perfil estudiante
 
     def save(self, *args, **kwargs):
+        existe_foto = False
+        existe_diploma = False
+        existe_documento = False
+        
         if self.fotocopia_documento.name != "":
-            self.fotocopia_documento.name = self.documento + "a.jpg"
+            existe_documento = True
+            tmp_documento = self.documento + "a.jpg"
+            self.fotocopia_documento.name = "imagenes/original/" + self.documento + "a.jpg"
         if self.fotocopia_diploma.name != "":
-            self.fotocopia_diploma.name = self.documento + "b.jpg"
+            existe_diploma = True
+            tmp_diploma = self.documento + "b.jpg"
+            self.fotocopia_diploma.name = "imagenes/original/" + self.documento + "b.jpg"
         if self.foto.name != "":
-            self.foto.name = self.documento + "c.jpg"
+            existe_foto = True
+            tmp_foto = self.documento + "c.jpg"
+            self.foto.name = "imagenes/original/" + self.documento + "c.jpg"
             
         try:
             user = User.objects.get(id=self.id_usuario)
@@ -385,32 +423,31 @@ class Estudiante(models.Model):
         user.save()
         self.id_usuario = user.id
         
-        tmp_foto = self.foto.name
-        tmp_diploma = self.fotocopia_diploma.name
-        tmp_documento = self.fotocopia_documento.name
-        
         super(Estudiante, self).save(*args, **kwargs)
         
 #        OPCIÓN PARA CARGAR FOTO EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
-        foto_org = "media/imagenes/original/" + tmp_foto
-        foto_min = "media/imagenes/mini/" + tmp_foto
-        foto_thu = "media/imagenes/thumbnail/" + tmp_foto
-        scale(foto_org, THUMB_WIDTH, THUMB_HEIGHT, foto_thu)
-        scale(foto_org, MINI_WIDTH, MINI_HEIGHT, foto_min)
-
+        if existe_foto == True:
+            foto_org = "media/imagenes/original/" + tmp_foto
+            foto_min = "media/imagenes/mini/" + tmp_foto
+            foto_thu = "media/imagenes/thumbnail/" + tmp_foto
+            scale(foto_org, THUMB_WIDTH, THUMB_HEIGHT, foto_thu)
+            scale(foto_org, MINI_WIDTH, MINI_HEIGHT, foto_min)
+        
 #        OPCIÓN PARA CARGAR DIPLOMA EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
-        diploma_org = "media/imagenes/original/" + tmp_diploma
-        diploma_min = "media/imagenes/mini/" + tmp_diploma
-        diploma_thu = "media/imagenes/thumbnail/" + tmp_diploma
-        scale(diploma_org, THUMB_WIDTH, THUMB_HEIGHT, diploma_thu)
-        scale(diploma_org, MINI_WIDTH, MINI_HEIGHT, diploma_min)
+        if existe_diploma == True:
+            diploma_org = "media/imagenes/original/" + tmp_diploma
+            diploma_min = "media/imagenes/mini/" + tmp_diploma
+            diploma_thu = "media/imagenes/thumbnail/" + tmp_diploma
+            scale(diploma_org, THUMB_WIDTH, THUMB_HEIGHT, diploma_thu)
+            scale(diploma_org, MINI_WIDTH, MINI_HEIGHT, diploma_min)
 
 #        OPCIÓN PARA CARGAR DOCUMENTO EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
-        documento_org = "media/imagenes/original/" + tmp_documento
-        documento_min = "media/imagenes/mini/" + tmp_documento
-        documento_thu = "media/imagenes/thumbnail/" + tmp_documento
-        scale(documento_org, THUMB_WIDTH, THUMB_HEIGHT, documento_thu)
-        scale(documento_org, MINI_WIDTH, MINI_HEIGHT, documento_min)
+        if existe_documento == True:
+            documento_org = "media/imagenes/original/" + tmp_documento
+            documento_min = "media/imagenes/mini/" + tmp_documento
+            documento_thu = "media/imagenes/thumbnail/" + tmp_documento
+            scale(documento_org, THUMB_WIDTH, THUMB_HEIGHT, documento_thu)
+            scale(documento_org, MINI_WIDTH, MINI_HEIGHT, documento_min)
     
     def usuario(self):
         user = User.objects.get(id=self.id_usuario)
