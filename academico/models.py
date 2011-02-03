@@ -235,6 +235,11 @@ class Ciclo(models.Model):
     
     def cortes(self):
         return len(Corte.objects.filter(ciclo=self))
+    
+    def cicloActual(self):
+        hoy = datetime.date.today() 
+        return self.fecha_inicio <= hoy <= self.fecha_fin
+         
         
 class CicloForm(ModelForm):
     class Meta:
@@ -556,6 +561,12 @@ class MatriculaCiclo(models.Model):
     def codigo_estudiante(self):
         return self.matricula_programa.codigo
     
+    def codigo_ciclo(self):
+        return self.ciclo.id
+    
+    def cicloActual(self):
+        return self.ciclo.cicloActual()
+    
     def nombre_estudiante(self):
         return self.matricula_programa.nombre_estudiante()
     
@@ -638,6 +649,15 @@ class Calificacion(models.Model):
     
     def codigo_estudiante(self): # Metodo para mejorar la lectura en la GUI
         return "%s" % (self.matricula_ciclo)
+    
+    def nombre_estudiante(self):
+        return "%s" % (self.matricula_ciclo.nombre_estudiante())
+    
+    def codigo_ciclo(self):
+        return self.matricula_ciclo.codigo_ciclo()
+    
+    def cicloActual(self):
+        return self.matricula_ciclo.cicloActual()
         
     def __unicode__(self):
         return "%s" % (self.curso)
@@ -679,7 +699,7 @@ class Corte(models.Model):
     fecha_fin = models.DateField()
     
     def __unicode__(self):
-        return self.ciclo.codigo + "-" + self.sufijo
+        return self.codigo
     
     def corteActual(self):
         hoy = datetime.date.today() 
