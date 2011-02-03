@@ -1,0 +1,13 @@
+@node Instalación
+@chapter Instalación
+
+La instalación de ....
+
+@section Requerimientos del sistema
+
+@itemize
+@item Python 2.7
+@item Django
+@item MySQL
+@item Apache
+@end itemize

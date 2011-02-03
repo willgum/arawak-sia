@@ -1,0 +1,61 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename manual.info
+@documentencoding UTF-8
+@documentlanguage es
+@settitle Manual de usuario Arawak Claro 1.0
+@c %**end of header
+
+
+
+@copying
+Manual de usuario Arawak Claro, versión 1.0.
+
+Todos los derechos reservados @copyright{} 2011 Arawak Soluciones Tecnológicas.
+
+@quotation
+Este material puede ser distribuido, copiado y exhibido por terceros si se muestra en los créditos. No se puede obtener ningún beneficio comercial. No se pueden realizar obras derivadas.
+@end quotation
+@end copying
+
+@titlepage
+@title Arawak Claro
+@subtitle Sistema de información académica
+@subtitle Manual de usuario, versión 1.0
+@author Javier Enciso
+
+@c  The following two commands
+@c  start the copyright page.
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+
+Publicado por Arawak Soluciones Tecnológicas @*
+Calle 32 No. 38 – 15 @*
+Villavicencio, Meta @*
+Colombia @*
+ISBN Pend.
+@end titlepage
+
+@c Aqui aparece la tabla de contenido
+@contents
+
+@ifnottex
+@node Top
+@top Inicio
+
+This manual is for program, version version.
+@end ifnottex
+
+@menu
+* Instalación::    			Requerimientos básicos e inslación.
+* Módulos::					Descripción funcional de los módulos del sistema.
+* Opciones avanzadas::		Máxima personalización del sistema.
+* Índice::					Índice general.
+@end menu
+
+@include instalacion.texi
+@include modulos.texi
+@include avanzadas.texi
+
+@bye
