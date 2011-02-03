@@ -171,7 +171,7 @@ def ingresarNota(solicitud, curso_id):
             curso = Curso.objects.get(id = curso_id)
             cicloActual = Ciclo.objects.get(fecha_inicio__lt = hoy, fecha_fin__gt = hoy)
             cortes = Corte.objects.filter(ciclo = cicloActual.id).order_by('fecha_inicio')         
-            calificaciones = Calificacion.objects.filter(curso = curso_id) # buscar como filtrar con un metodo definido en la clase
+            calificaciones = Calificacion.objects.filter(curso = curso_id)
             calificacionesCiclo = []
             for indice in calificaciones:                
                 if Calificacion.cicloActual(indice):

@@ -90,7 +90,7 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1> {{curso.nombre}} </h1>
+		<h1> {{curso.nombre}} </h1>		
 		<form id="formulario" action="/actulizarperfil/" method="post">
 			<table class="grilla" width="100%">
 				<thead>
@@ -119,6 +119,7 @@
 							<td>{{ calificacion.nombre_estudiante }}</td>
 							{% for corte in cortes %} 
 								<td style="text-align:center">
+									{{ corte.corteActual }}
 									{% if corte.corteActual %}
 										<input type="text" name="lugar_{{corte}}" id="lugar_{{corte}}" onchange="guardarNotas(this, {{calificacion.id}}, {{corte.id}});"
 										{% for llave, valor in calificacion.items %}
