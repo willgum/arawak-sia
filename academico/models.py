@@ -699,11 +699,11 @@ class Corte(models.Model):
     fecha_fin = models.DateField()
     
     def __unicode__(self):
-        return self.codigo
+        return self.ciclo.codigo + "-" + self.sufijo
     
     def corteActual(self):
         hoy = datetime.date.today() 
-        return self.fecha_inicio >= hoy and self.fecha_fin <= hoy
+        return self.fecha_inicio <= hoy <= self.fecha_fin
     
     def codigo_corte(self):
         return self.ciclo.codigo + "-" + self.sufijo
@@ -724,9 +724,7 @@ class NotaCorte(models.Model):
                 
     class Meta:
         unique_together = ("calificacion", "corte")
-    
-    
-  
+ 
 class HorarioCurso(models.Model):
     curso = models.ForeignKey(Curso)
     dia = models.ForeignKey(Dia, blank=True, null=True, default=1) 
