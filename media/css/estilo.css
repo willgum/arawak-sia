@@ -221,16 +221,17 @@ table.grilla tbody tr:hover {
 	color: #333
 }
 
-table.grilla tbody td a[href="http://www.rodcast.com.br/"] {
-	margin: 0 auto;
-	display: block;
-	width: 15px;
-	height: 15px;
-	text-indent: -999em;
-	border-bottom: 0;
+table.grilla tbody a:visited:after {
 }
 
-table.grilla tbody a:visited:after {
+#content table.grilla input[type=text]{
+	padding: 3px;
+	border: solid;
+	border-width: 1px;
+	color: #549200;
+	font: 10px Arial;
+	width: 30px;
+	text-align:right;
 }
 
 /* tabs */

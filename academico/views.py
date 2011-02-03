@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
+import datetime
+from django.core import serializers
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.static import Context, HttpResponseRedirect                                             # se incorporo para poder acceder a archivos estaticos
+from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
-from django.contrib import auth                                                     # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Competencia, Programa, MatriculaPrograma, Calificacion, Ciclo, Corte, Curso, MatriculaCiclo, CicloForm
-from django.contrib.auth.decorators import login_required                           # me permite usar eö @login_requerid
+from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
+from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm
+from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 def redireccionar(plantilla, solicitud, datos):
     variables = {
@@ -149,17 +152,88 @@ def horarios(solicitud):
         logout(solicitud)
 
 @login_required
-def cortes(solicitud):
+def notas(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
         if solicitud.session['grupoUsuarioid'] == 3:
             usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-            competencias = Competencia.objects.filter(curso__profesor = usuario.id).distinct()
-            datos = {'competencias': competencias,
-                     'cantidad': len(competencias)}
-        return redireccionar('academico/competencias.html', solicitud, datos)
+            cursos = Curso.objects.filter(profesor = usuario.id).distinct()
+            datos = {'cursos': cursos,
+                     'cantidad': len(cursos)}
+        return redireccionar('academico/notas.html', solicitud, datos)
     else:
         logout(solicitud)
-            
+
+@login_required
+def ingresarNota(solicitud, curso_id):
+    if 'grupoUsuarioid' in solicitud.session:
+        if solicitud.session['grupoUsuarioid'] == 3:
+            hoy = datetime.date.today() 
+            curso = Curso.objects.get(id = curso_id)
+            cicloActual = Ciclo.objects.get(fecha_inicio__lt = hoy, fecha_fin__gt = hoy)
+            cortes = Corte.objects.filter(ciclo = cicloActual.id).order_by('fecha_inicio')         
+            calificaciones = Calificacion.objects.filter(curso = curso_id) # buscar como filtrar con un metodo definido en la clase
+            calificacionesCiclo = []
+            for indice in calificaciones:                
+                if Calificacion.cicloActual(indice):
+                    notas = {}
+                    notas['id'] =                   indice.id
+                    notas['matricula_ciclo'] =      indice.matricula_ciclo
+                    notas['nota_definitiva'] =      indice.nota_definitiva
+                    notas['nota_habilitacion'] =    indice.nota_habilitacion
+                    notas['fallas'] =               indice.fallas
+                    notas['codigo_estudiante'] =    Calificacion.codigo_estudiante(indice)
+                    notas['nombre_estudiante'] =    Calificacion.nombre_estudiante(indice)
+                    notas['codigo_ciclo'] =         Calificacion.codigo_ciclo(indice)
+                    for corte in cortes:
+                        try:
+                            resultado = NotaCorte.objects.get(calificacion = indice.id, corte = corte.id)
+                            notas[corte.id] = {'nota': resultado.nota, 'fallas': resultado.fallas}
+                        except:
+                            notas[corte.id] = {'nota': 0, 'fallas': 0}
+                    calificacionesCiclo.append(notas)               
+            datos = {'curso': curso,
+                     'cortes': cortes,
+                     'calificaciones': calificacionesCiclo,
+                     'cantidad': len(calificacionesCiclo),
+                     'cantidadCortes': 5+(len(cortes)*2)}
+        return redireccionar('academico/ingresarNotas.html', solicitud, datos)
+    else:
+        logout(solicitud)
+    
+def guardarNota(request):
+    if request.POST:
+        idCalificacion = request.POST.get('idCalificacion')
+        idCorte = request.POST.get('idCorte')
+        valor = request.POST.get('valor')            
+        notascorte = []
+        try:
+            notascorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
+            notascorte.nota = valor
+        except:
+            notascorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = valor, fallas = 0, comportamiento_id = 1)
+        notascorte.save()
+        calificacion = Calificacion.objects.get(id = idCalificacion) 
+        diccionario = {calificacion: calificacion}
+        datos = serializers.serialize("json", diccionario)
+        return HttpResponse(datos) 
+
+def guardarFallas(request):
+    if request.POST:
+        idCalificacion = request.POST.get('idCalificacion')
+        idCorte = request.POST.get('idCorte')
+        valor = request.POST.get('valor')            
+        notascorte = []
+        try:
+            notascorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
+            notascorte.fallas = valor
+        except:
+            notascorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = 0, fallas = valor, comportamiento_id = 1)
+        notascorte.save()
+        calificacion = Calificacion.objects.get(id = idCalificacion) 
+        diccionario = {calificacion: calificacion}
+        datos = serializers.serialize("json", diccionario)
+        return HttpResponse(datos)
+          
 def logout(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
         del solicitud.session['grupoUsuarioid']
@@ -167,40 +241,3 @@ def logout(solicitud):
         solicitud.session['msg_error']
     auth.logout(solicitud)    
     return HttpResponseRedirect("/")
-
-@login_required
-def promocion_ciclo(solicitud, ciclo_id):
-    if solicitud.method == 'POST':
-        formset = CicloForm(solicitud.POST)
-        if formset.is_valid():
-            formset.save()
-            
-            tmp_ciclo = Ciclo.objects.get(codigo = solicitud.POST['codigo'])
-            tmp_fecha = solicitud.POST['fecha_inicio']
-            tmp_fecha_ini = tmp_fecha[6:10] + "-" + tmp_fecha[3:5] + "-" + tmp_fecha[0:2]
-    
-            #Duplicar los cortes de un ciclo anterior a un ciclo nuevo
-            cortes = Corte.objects.filter(ciclo = ciclo_id)
-            for corte in cortes:
-                tmp_corte = Corte(ciclo_id=tmp_ciclo.id, sufijo = corte.sufijo, porcentaje=corte.porcentaje, fecha_inicio=corte.fecha_inicio, fecha_fin=corte.fecha_fin)
-                tmp_corte.save()
-            
-            #Duplicar los cursos de un ciclo anterior a un ciclo nuevo
-            cursos = Curso.objects.filter(ciclo = ciclo_id)
-            for curso in cursos:
-                tmp_curso = Curso(competencia_id=curso.competencia_id, ciclo_id=tmp_ciclo.id, profesor_id = curso.profesor_id, grupo=curso.grupo, esperados=curso.esperados)
-                tmp_curso.save()
-            
-            #Duplicar las matrículas de estudiante a ciclo de un ciclo anterior a un ciclo nuevo
-            matriculas = MatriculaCiclo.objects.filter(ciclo = ciclo_id)
-            for matricula in matriculas:
-                tmp_matricula = MatriculaCiclo(fecha_inscripcion=tmp_fecha_ini, matricula_programa_id=matricula.matricula_programa_id, ciclo_id=tmp_ciclo.id, observaciones=matricula.observaciones)
-                tmp_matricula.save()
-        
-            solicitud.user.message_set.create(message="El ciclo fué promovido correctamente a " + tmp_ciclo.codigo + ".")
-            return HttpResponseRedirect("/admin/academico/ciclo")
-    else:
-        formset = CicloForm()
-    datos = {'formset': formset,
-             'ciclo': Ciclo.objects.get(id = ciclo_id)} 
-    return redireccionar('admin/promocionCiclo.html', solicitud, datos)

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block javascript %}
+{% block jquerycript %}
 	$(function() {$("ul.tabs").tabs("div.panes > div");});
 	$(".accordion").tabs(".pane", {tabs: 'h2', effect: 'slide'});
 {% endblock %}

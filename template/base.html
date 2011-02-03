@@ -13,8 +13,12 @@
 			
 				$("#login").validator({lang: 'es'});
 				
-				{% block javascript %}{% endblock %}
+				{% block jquerycript %}
+				
+				{% endblock %}
 			});
+			
+			{% block javascript %}{% endblock %}
 		</script>
 		
 	</head>
@@ -57,7 +61,7 @@
 									<li><a href="/academico/programas/">Programas</a></li>
 									<li><a href="/academico/competencias/">Competencias</a></li>
 									<li><a href="/academico/horarios/">Horarios</a></li>
-									{% if request.session.grupoUsuarioid == 3 %}<li>Docente</li>{% endif %}
+									{% if request.session.grupoUsuarioid == 3 %}<li><a href="/academico/notas/">Ingresar Notas</a></li>{% endif %}
 									{% if request.session.grupoUsuarioid == 4 %}<li>Estudiante</li>{% endif %}
 								</ul>
 							{% endif %}

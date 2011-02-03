@@ -10,4 +10,11 @@ urlpatterns = patterns('',
     
     (r'^horarios/$', horarios),
     (r'^horarios/(?P<competencia_id>\d+)/$', competenciasDetalle), 
+    
+    (r'^notas/$', notas),
+    (r'^notas/(?P<competencia_id>\d+)/$', competenciasDetalle),
+    (r'^notas/ingresar/(?P<curso_id>\d+)/$', ingresarNota),
+    
+    (r'^notas/ingresar/\d+/guardarNota/$', guardarNota),
+    (r'^notas/ingresar/\d+/guardarFallas/$', guardarFallas),
 )
