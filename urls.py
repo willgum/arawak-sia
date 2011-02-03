@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.views import login, logout
-from views import *                                     # maneja la vista para el index de la aplicacion
+from views import *                 # maneja la vista para el index de la aplicacion
 from django.views.static import *                        # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings                        # se incopora para poder acceder a los valores creados en el settings
 
@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     (r'^academico/', include('academico.urls')),
     
     # administrador de la aplicacion
+    (r'^admin/academico/ciclo/(?P<ciclo_id>\d+)/promocion/$', 'academico.views.promocion_ciclo'),
     (r'^admin/', include(admin.site.urls)),
     
     # esta linea es necesaria para poder acceder a documentos archivos estaticos como css e imagenes    

@@ -3,7 +3,6 @@ from academico.views import *
 
 urlpatterns = patterns('',
     (r'^$', indice),
-    
     (r'^programas/$', programas),
     
     (r'^competencias/$', competencias), 

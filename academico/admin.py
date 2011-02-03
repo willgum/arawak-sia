@@ -2,6 +2,9 @@
 from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, OtrosEstudiosEstudiante, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso
 from django.contrib import admin
 
+from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponseRedirect
+
 class CalificacionInline(admin.TabularInline):
     model = Calificacion
     extra = 1
@@ -297,7 +300,6 @@ class CursoAdmin(admin.ModelAdmin):
 class CorteInline(admin.TabularInline):
     model = Corte
     extra = 1
-    exclude = ('codigo',)
 
 class CorteAdmin(admin.ModelAdmin):
     raw_id_fields = ('ciclo',)
@@ -305,25 +307,49 @@ class CorteAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': [
             'ciclo',
-            'codigo',
+            'sufijo',
             'porcentaje', 
             'fecha_inicio', 
             'fecha_fin',]}),
     ]
     
     list_display = (
-        'codigo',
+        'codigo_corte',
         'porcentaje',         
         'fecha_inicio', 
         'fecha_fin',
         'ciclo',
         'corteActual'        
     )
-    search_fields = ('codigo',)
+    search_fields = ('codigo_corte',)
     date_hierarchy = 'fecha_inicio'
     
-class CicloAdmin(admin.ModelAdmin):
-    
+
+class ButtonableModelAdmin(admin.ModelAdmin):
+    """
+   A subclass of this admin will let you add buttons (like history) in the
+   change view of an entry.
+   http://www.theotherblog.com/Articles/2009/06/02/extending-the-django-admin-interface/
+    """
+    buttons=[]
+
+    def change_view(self, request, object_id, extra_context={}):
+        extra_context['buttons']=self.buttons
+        return super(ButtonableModelAdmin, self).change_view(request, object_id, extra_context)
+
+    def __call__(self, request, url):
+        if url is not None:
+            import re
+            res=re.match('(.*/)?(?P<id>\d+)/(?P<command>.*)', url)
+            if res:
+                if res.group('command') in [b.func_name for b in self.buttons]:
+                    obj = self.model._default_manager.get(pk=res.group('id'))
+                    getattr(self, res.group('command'))(obj)
+                    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+        return super(ButtonableModelAdmin, self).__call__(request, url)
+
+class CicloAdmin(ButtonableModelAdmin):
     fieldsets = [
         (None, {'fields': [
             'codigo', 
@@ -342,6 +368,13 @@ class CicloAdmin(admin.ModelAdmin):
     search_fields = ('codigo',)
     date_hierarchy = 'fecha_inicio'
 
+    def promocion(self, obj):
+#        url = "/admin" + "/".join(str( obj._meta ).split(".")) + "/" + str(obj.id) + "/"
+        url = "/admin/academico/ciclo/promocion"
+        return HttpResponseRedirect( url )
+    promocion.url = "/admin/academico/ciclo/promocion"    #puts this on the end of the admin URL.
+    promocion.short_description='Promoción ciclo'
+    buttons = [ promocion,]
 
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
