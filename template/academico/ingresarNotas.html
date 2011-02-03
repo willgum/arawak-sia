@@ -119,7 +119,6 @@
 							<td>{{ calificacion.nombre_estudiante }}</td>
 							{% for corte in cortes %} 
 								<td style="text-align:center">
-									{{ corte.corteActual }}
 									{% if corte.corteActual %}
 										<input type="text" name="lugar_{{corte}}" id="lugar_{{corte}}" onchange="guardarNotas(this, {{calificacion.id}}, {{corte.id}});"
 										{% for llave, valor in calificacion.items %}
