@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                       # incorporo para poder acceder a archivos estaticos
@@ -37,7 +38,8 @@ def redireccionar(plantilla, solicitud, datos):
 
 def indice(solicitud):
     datos = {}
-    return redireccionar('index.html', solicitud, datos)
+    return redireccionar('index.html', solicitud, datos)
+
 @login_required
 def perfil(solicitud):
     if 'grupoUsuarioid' in solicitud.session:

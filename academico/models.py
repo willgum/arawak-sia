@@ -10,6 +10,8 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 
+from django.forms import ModelForm, TextInput
+
 NOTA_MIN = 0.0
 NOTA_MAX = 5.0
 NOTA_APR = 3.5
@@ -228,14 +230,17 @@ class Ciclo(models.Model):
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
     
-
     def __unicode__(self):
         return self.codigo
     
     def cortes(self):
         return len(Corte.objects.filter(ciclo=self))
         
-        
+class CicloForm(ModelForm):
+    class Meta:
+        model = Ciclo
+        widgets = {'fecha_inicio': TextInput(attrs={'class':'vDateField'}),
+                   'fecha_fin': TextInput(attrs={'class':'vDateField'})}
         
 class Profesor(models.Model):
     # Informacion personal
@@ -668,19 +673,24 @@ class Calificacion(models.Model):
     
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
-    codigo = models.CharField(verbose_name="Código", max_length=12, unique=True)
+    sufijo = models.CharField(max_length=2, help_text="Ingrese el identificador del corte en el ciclo. Debe ser numérico.", validators=[validar_numerico])
     porcentaje = models.IntegerField(help_text="Ingrese un número entre 1 y 100.", validators=[validar_porcentaje])
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
-  
+    
     def __unicode__(self):
-        return self.codigo
+        return self.ciclo.codigo + "-" + self.sufijo
     
     def corteActual(self):
         hoy = datetime.date.today() 
         return self.fecha_inicio >= hoy and self.fecha_fin <= hoy
-
-
+    
+    def codigo_corte(self):
+        return self.ciclo.codigo + "-" + self.sufijo
+        
+    class Meta:
+        unique_together = ("ciclo", "sufijo")
+        
 class NotaCorte(models.Model):
     calificacion = models.ForeignKey(Calificacion)
     corte = models.ForeignKey(Corte)

@@ -1,0 +1,66 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n admin_modify adminmedia %}
+
+{% block extrahead %}{{ block.super }}
+{% url admin:jsi18n as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+
+<script type="text/javascript" src="/media/admin/js/core.js"></script> 
+<script type="text/javascript" src="/media/admin/js/calendar.js"></script> 
+<script type="text/javascript" src="/media/admin/js/admin/DateTimeShortcuts.js"></script> 
+
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+	 <a href="../../../../">{% trans "Inicio" %}</a> &rsaquo;
+     <a href="../../../">{% trans "Academico" %}</a> &rsaquo;
+     <a href="../../">{% trans "Ciclos" %}</a> &rsaquo; 
+     <a href="../">{{ ciclo.codigo }}</a> &rsaquo; 
+     {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+</div>
+<div id="content" class="colM">
+	<h1>Promocionar a nuevo ciclo</h1>
+	<div>
+		Se creará un nuevo ciclo a partir del ciclo actual: {{ ciclo.codigo }}
+	</div>
+	<div id="content-main">
+		<form id="formulario" action="." method="post">
+			<input type="hidden" name="_id_ciclo" value="{{ ciclo.codigo }}" />
+			<div>
+				<fieldset class="module aligned ">
+						<div class="form-row codigo">
+					  		<div>
+					  			{{ formset.codigo.errors }}
+									<label for="id_codigo" class="required">Código: </label>				
+					    	    {{ formset.codigo }}
+							 </div>
+						</div>
+						<div class="form-row fecha_inicio">
+							<div>
+								{{ formset.fecha_inicio.errors }}
+									<label for="id_fecha_inicio" class="required">Fecha inicio: </label>				
+							    {{ formset.fecha_inicio }}
+							</div>					
+						</div>
+						<div class="form-row fecha_fin">
+							<div>
+								{{ formset.fecha_fin.errors }}
+									<label for="id_fecha_fin" class="required">Fecha fin: </label>				
+							    {{ formset.fecha_fin }}
+							</div>
+						</div>
+				</fieldset>
+			</div>
+			<div class="submit-row" > 
+		    	<input type="submit" value="Grabar" />
+		    </div>
+		</form>
+	</div>	
+</div>
+
+{% endif %}{% endblock %}
