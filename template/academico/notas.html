@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li>Competencias</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1>Ingresar Notas </h1>
+		<table class="grilla" width="100%">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Nombre</th>
+					<th>Programa</th>
+					<th></th>
+				</tr>
+			</thead>			
+			<tbody>				
+				{% for curso in cursos %}
+					<tr class="{% cycle '' 'odd' %}">
+						<th scope="row"><a href="{{curso.idCompetencia}}/">{{ curso.codigoCompetencia }}</a></th>
+						<td>{{ curso.nombre }}</td>
+						<td>{{ curso.nombrePrograma }}</td>
+						<td><a href="ingresar/{{curso.id}}/">Notas</a></td>
+					</tr>					
+				{% endfor %}
+			</tbody>			
+			<tfoot>
+				<tr>
+					<th scope="row" colspan="4">Total Programas: {{cantidad}}</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>			
+{% endblock %}
