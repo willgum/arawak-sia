@@ -1,0 +1,5 @@
+@node Opciones avanzadas
+@chapter Opciones avanzadas
+
+@section Administración de usuarios
+@section Copias de respaldo

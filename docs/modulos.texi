@@ -1,0 +1,16 @@
+@node Módulos
+@chapter Módulos
+
+@section Módulo académico
+
+@subsection Calificaciones
+@subsection Ciclos
+@subsection Competencias
+@subsection Cortes
+@subsection Cursos
+@subsection Estudiantes
+@subsection Matrícula ciclos
+@subsection Matrícula programas
+@subsection Profesores
+@subsection Programas
+@subsection Salones
