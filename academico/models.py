@@ -190,7 +190,7 @@ def validar_numerico(cifra):
 
 #    scale: Función para escalar una imágen a un with y height dados
 def scale(fname, width, height, fname_scaled):
-    img = Image.open (fname)
+    img = Image.open(fname)
 
     new_height = width * img.size[1] / img.size[0]
     new_width = height * img.size[0] / img.size[1]
