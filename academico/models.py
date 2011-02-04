@@ -210,6 +210,9 @@ def scale(fname, width, height, fname_scaled):
     out.save(fname_scaled, "JPEG")
 
 class CustomStorage(FileSystemStorage):
+#    En caso de que la imagen exista, la borra para ingresarla de nuevo
+#    Django por defecto no sobreescribe la original, 
+#    sino que agrega un _# al final del nombre del archivo.
     def _open(self, name, mode='rb'):
         return File(open(self.path(name), mode))
 
@@ -467,7 +470,7 @@ class Estudiante(models.Model):
         return self.documento
 
 
-class OtrosEstudiosEstudiante(models.Model):
+class EstudioComplementario(models.Model):
     estudiante = models.ForeignKey(Estudiante)
     tipo_estudio = models.ForeignKey(TipoEstudio, blank=True, null=True, default=1) 
     institucion = models.CharField( verbose_name='Institución', max_length=200,  blank=True)

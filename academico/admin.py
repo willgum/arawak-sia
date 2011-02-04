@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, OtrosEstudiosEstudiante, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso
 from django.contrib import admin
 
 from django.contrib.contenttypes.models import ContentType
@@ -149,8 +149,8 @@ class CompetenciaAdmin(admin.ModelAdmin):
     search_fields = ('nombre',)
 
 
-class OtrosEstudiosEstudianteInline(admin.TabularInline):
-    model = OtrosEstudiosEstudiante
+class EstudioComplementarioInline(admin.TabularInline):
+    model = EstudioComplementario
     extra = 1
 
 
@@ -205,7 +205,7 @@ class EstudianteAdmin(admin.ModelAdmin):
             'classes': ['collapse']}),
     ]
     inlines = [
-        OtrosEstudiosEstudianteInline, 
+        EstudioComplementarioInline, 
         ReferenciaInline,
         MatriculaProgramaInline,
         AmonestacionInline
