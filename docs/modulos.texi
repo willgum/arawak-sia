@@ -3,14 +3,330 @@
 
 @section Módulo académico
 
-@subsection Calificaciones
+@subsection Programas
+	Desde este módulo se crean los programas académicos ofrecidos por la Institución Educativa.
+	@subsubsection Información básica
+		@table @dfn
+		@item Código
+			Es un campo de texto obligatorio. Almacena el código que identifica el Programa Académico en el sistema. Permite un máximo de 4 caracteres.
+		@item Nombre
+			Es un campo de texto de carácter obligatorio. Almacena el nombre del Programa Académico ofrecido por la Institución Educativa. Permite un máximo de 100 caracteres.
+		@item Tipo de programa
+			es un campo seleccionable de carácter opcional. Almacena el tipo de programa al que pertenece el nuevo Programa Académico. Tiene las opciones Técnico, Auxiliar.
+		@item Descripción
+			Es un campo de texto de carácter opcional. Almacena una breve descripción del nuevo Programa Académico. 
+		@item Título
+			Es un campo de texto de carácter opcional. Almacena el nombre del título que será otorgado a los estudiantes que aprueben satisfactoriamente el programa cursado. Permite un máximo de 200 caracteres.
+		@item Resolución
+			Es un campo de texto de carácter opcional. Almacena la resolución o acto administrativo que valida este programa. Permite un máximo de 200 caracteres.
+		@item SINES
+			Es un campo de texto de carácter opcional. Almacena el código de la institución educativa ante el Sistema Nacional de Información de la Educación Superior. Permite un máximo de 200 caracteres.
+		@end table
+	
+	@subsubsection Horario
+		@table @dfn
+		@item Periodicidad
+			Es un campo seleccionable de carácter opcional. Almacena el tipo de periodicidad sobre el que se ofrece el programa. Tiene las opciones Semestral, Anual.
+		@item Duración
+			Es un campo de texto opcional que almacena la cantidad de periodos que tiene el programa para su aprobación. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
+		@item Jornada
+			Es un campo seleccionable de carácter opcional. Almacena la jornada en la que ofrece el nuevo Programa Académico. Contiene las opciones Completa, Mañana, Tarde, Nocturna, Fin de semana.
+		@end table
+		
+	@subsubsection Información Adicional
+		@table @dfn
+		@item Actitudes
+			Es un campo de texto opcional que almacena las actitudes requeridas para los aspirantes. 
+		@item Perfil Profesional
+			Es un campo de texto opcional que almacena el perfil profesional del estudiante egresado.
+		@item Funciones
+			Es un campo de texto opcional que almacena las funciones en las que se puede desempeñar el egresado.
+		@end table
+	
+	Finalmente se tiene las opciones para eliminar un programa existente. Grabar el programa actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el programa actual y dejar la ventana activa para seguir editando el registro. Grabar el programa actual y volver a la ventana de programa.
+
 @subsection Ciclos
+	@subsubsection Información básica
+		@table @dfn
+		@item Código
+			Es un campo de texto de carácter obligatorio que almacena el código que identifica el ciclo. Usualmente está compuesto por el año, un guión y el identificador del periodo en el año. Permite una longitud máxima de 12 caracteres.
+		@item Fecha inicio
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio al nuevo ciclo. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Fecha fin
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará fin al nuevo ciclo. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@end table
+		
+	@subsubsection Cortes
+		La sección cortes almacena la cantidad de cortes de evaluación con los que contará el ciclo. Es una sección de carácter opcional. Si se desea añadir más de un corte, dé clic en el hipervínculo “Agregar otro Corte”. Para que el sistema agregue el nuevo corte, deberá diligenciar todos los campos disponibles. Contiene los siguientes campos:  
+		@table @dfn
+		@item Sufijo
+			Es un campo de texto de carácter obligatorio. Almacena el identificador del nuevo corte en el ciclo y junto con el código de ciclo forma el código de corte. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Porcentaje
+			Es un campo de texto de carácter obligatorio. Almacena el porcentaje del corte en el ciclo. El campo es de tipo numérico.
+		@item Fecha inicio
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Fecha fin
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará fin al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@end table
+	
+	Finalmente se tiene las opciones para eliminar un ciclo existente. Grabar el ciclo  actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el ciclo  actual y dejar la ventana activa para seguir editando el registro. Grabar el ciclo actual y volver a la ventana de ciclos.
+	
 @subsection Competencias
-@subsection Cortes
-@subsection Cursos
+	Son las asignaturas o competencias que conforman el Programa Académico ofrecido por la institución educativa y que deberán ser cursadas para su aprobación.
+	@subsubsection Información básica
+		@table @dfn
+		@item Programa
+			Es un campo seleccionable de carácter obligatorio. Contiene los programas académicos ofrecidos por la institución educativa. Dé clic en el botón “Mas” para agregar un nuevo programa. 
+		@item Sufijo
+			Es un campo de texto de carácter obligatorio que identifica la competencia. El sufijo de la competencia junto con el código de programa forma el código de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 3 caracteres.
+		@item Nombre
+			Es un campo de texto de carácter obligatorio. Es el nombre de la competencia. Permite un máximo de 	50 caracteres.
+		@item Descripción
+			Es un campo de texto de carácter opcional. Almacena una breve descripción de la competencia.
+		@item Intensidad
+			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas para impartir el contenido de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Créditos
+			Es un campo de texto de carácter opcional. Almacena el número de créditos que ofrece la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Periodo
+			Es un campo de texto de carácter opcional. Almacena el ciclo o nivel en el cual debe verse esta competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@end table
+		
+	@subsubsection Cursos
+		Es la sección que permite asignar la competencia a un ciclo y profesor seleccionado. Si se desea agregar la competencia a un nuevo curso, dé clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
+		@table @dfn
+		@item Grupo
+			Es un campo de texto que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
+		@item Profesor
+			Es un campo de texto que almacena el docente que impartirá el curso. Para buscar algún docente dé clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
+		@item Ciclo
+			Es un campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
+		@end table
+	
+	Finalmente se tiene las opciones para eliminar una competencia existente. Grabar la competencia actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar la competencia actual y dejar la ventana activa para seguir editando el registro. Grabar la competencia actual y volver a la ventana de competencias.
+	
 @subsection Estudiantes
+	@subsubsection Identificación
+		Es la sección que almacena la información básica del estudiante. Contiene los siguientes campos: 
+		@table @dfn
+		@item Primer nombre 
+			Es un campo de texto obligatorio. Almacena el primer nombre del estudiante. Permite un máximo 50 caracteres.
+		@item Segundo nombre
+			Es un campo de texto opcional. Almacena el segundo nombre del estudiante. Permite un máximo de 50 caracteres.
+		@item Primer apellido
+			Es un campo de texto obligatorio. Almacena el primer apellido del estudiante. Permite un máximo de 50 caracteres.
+		@item Segundo apellido
+			Es un campo de texto opcional. Almacena el segundo nombre del estudiante. Permite un máximo de 50 caracteres.
+		@item Género
+			Es un campo seleccionable de carácter opcional, donde el usuario elige el género del estudiante. Las opciones son: Femenino, Masculino.
+		@item Tipo documento
+			Es un campo seleccionable de carácter opcional, donde el usuario elige el tipo de documento de identidad del estudiante. Las opciones son: Cédula de Ciudadanía, Tarjeta de Identidad, Cédula de Extranjería, Registro Civil.
+		@item Documento
+			Es un campo de texto obligatorio que almacena el número de identificación del estudiante. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
+		@item Lugar expedición
+			Es un campo de texto opcional. Almacena el lugar en que fue expedido el documento de identificación del estudiante (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+		@item Fecha nacimiento
+			Es un campo de fecha opcional. Almacena la fecha de nacimiento del estudiante. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo. La fecha de nacimiento puede ser digitada en el campo de texto. Además cuenta con las opciones “Hoy”, que tomará la fecha de hoy como fecha de nacimiento, o la opción “Calendario” que mostrará un calendario en pantalla y permite seleccionar una fecha.
+		@item Lugar de nacimiento
+			Es un campo de texto opcional. Almacena el lugar en donde nació el estudiante (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+		@end table
+		
+	@subsubsection Requisitos
+			Es la sección que almacena los datos de los requisitos de matrícula. Contiene los siguientes campos:
+		@table @dfn
+		@item Fotocopia documento
+			Es la opción que permite subir la imagen del documento de identificación del estudiante. Esta opción es de carácter opcional y solamente sube formatos de imagen válidos.
+		@item Fotocopia diploma
+			Es la opción que permite subir la imagen del diploma del estudiante. Esta opción es de carácter opcional y solamente sube formatos de imagen válidos.
+		@item Foto
+			Es la opción que permite subir la foto que identifica al estudiante. Es de carácter opcional y solamente sube formatos de imagen válidos.
+		@end table
+		
+	@subsubsection Información de ubicación
+			Es la sección que almacena la información de ubicación del estudiante. Contiene los siguientes campos: 
+		@table @dfn
+		@item Dirección
+			Es un campo de texto de carácter opcional. Almacena la dirección de residencia del estudiante. Permite un máximo de 200 caracteres.
+		@item Lugar residencia
+			Es un campo de texto de carácter opcional. Almacena el lugar de residencia del estudiante  (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+		@item Estrato
+			Es un campo seleccionable de carácter opcional. Almacena el estrato al que pertenece el lugar de residencia del estudiante. El estrato puede ser de 0 a 6.
+		@item Teléfono
+			Es un campo de texto opcional. Almacena el teléfono fijo del estudiante. Admite un máximo de 20 caracteres.
+		@item Móvil
+			Es un campo de texto opcional. Almacena el teléfono móvil o celular del estudiante. Admite un máximo de 20 caracteres.
+		@item Email
+			Es un campo de texto opcional. Almacena el correo electrónico del estudiante. Admite un máximo de 75 caracteres. El sistema hace la validación de que el correo debe esté en el formato correcto.
+		@item Web
+			Es un campo de texto opcional. Almacena la url de la web que referencie el estudiante. Admite un máximo de 200 caracteres.
+		@item Sisben
+			Es un campo seleccionable de carácter opcional. Permite elegir entre las opciones NO APLICA, o las categorías de 1 a 6 de sisbén.
+		@item Discapacidad
+			Es un campo seleccionable de carácter opcional. Permite elegir entre una serie de discapacidad.
+		@item Etnia
+			Es un campo seleccionable de carácter opcional. Permite elegir entre una serie de etnias existentes. 
+		@end table
+		
+	@subsubsection Estudio Complementario
+			En esta sección el sistema permite ingresar los estudios complementarios cursados por el estudiante. Es una sección de carácter opcional. Si se desea añadir más de un estudio, dé clic en el hipervínculo “Agregar otro Estudio Complementario”. Para que el sistema agregue el estudio complementario, deberá diligenciar por lo menos uno de los campos disponible. Contiene los siguientes campos:
+		@table @dfn
+		@item Tipo estudio
+			Es un campo seleccionable. Contiene las opciones Primaria, Secundaria, Técnico, Universitario, Especialización, Maestría, Doctorado.
+		@item Institución
+			Es un campo de texto de máximo 200 caracteres. Almacena el nombre de la institución en la que se cursó el tipo de estudio seleccionado.
+		@item Titulo
+			Es un campo de texto de máximo 200 caracteres. Almacena el título obtenido por el estudiante en el tipo de estudio seleccionado.
+		@item Fecha de graduación
+			Es un campo de texto que almacena la fecha en la que fue obtenido el estudio seleccionado. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@end table
+		
+	@subsubsection Referencias
+			Es la sección que permite agregar referencias de tipo personal, comercial, laboral, familiar entre otras. Es una sección de carácter opcional. Si se desea agregar una nueva referencia, dé clic en el hipervínculo “Agregar otra Referencia”. Para que el sistema agregue la referencia, deberá diligenciar por lo menos uno de los campos disponible. Contiene los siguientes campos: 
+		@table @dfn
+		@item Tipo referencia
+			Es un campo seleccionable. Contiene las opciones Académica, Comercial, Familiar, Laboral, Personal.
+		@item Nombre
+			es un campo de texto de máximo 200 caracteres. Almacena el nombre de la referencia.
+		@item Tipo documento
+			Es un campo seleccionable, donde el usuario elige el tipo de documento de identificación de la referencia. Las opciones son: Cédula de Ciudadanía, Tarjeta de Identidad, Cédula de Extranjería, Registro Civil.
+		@item Documento
+			Es un campo de texto almacena el número de identificación de la referencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
+		@item Dirección
+			Es un campo de texto que permite un máximo de 200 caracteres. Almacena la dirección de residencia de la referencia ingresada. 
+		@item Teléfono
+			Es un campo de texto que permite un máximo de 20 caracteres. Almacena el teléfono al cual se puede contactar la referencia ingresada. 
+		@end table
+		
+	@subsubsection Matrícula programas
+			Es la sección en la que se hace la matrícula de un estudiante a uno o más programas ofrecidos por la Institución Educativa. Si se desea agregar una nueva matrícula a un programa, dé clic en el hipervínculo “Agregar otra Matrícula Programa”. Esta sección es de carácter opcional, pero si se desea ingresar una matrícula deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
+		@table @dfn
+		@item Fecha inscripción
+			Es un campo de texto que almacena la fecha en la que el estudiante se inscribe a un programa. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Programa
+			Es un campo seleccionable que muestra los programas ofrecidos por la Institución Educativa. Si se desea elegir un programa que aún no existe, dé clic en el botón “Mas” para agregar un nuevo programa. 
+		@item Estado
+			Es un campo seleccionable que muestra los posibles estados del estudiante con respecto al programa. Contiene las opciones Activo, Egresado, Expulsado, Retirado, Suspendido.
+		@item Fecha vencimiento
+			Es un campo de texto que almacena la fecha en la que vence la inscripción del estudiante al programa. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@end table
+		
+	@subsubsection Amonestaciones
+			Es la sección donde se agregan las amonestaciones del estudiante sobre un curso. Esta sección es de carácter opcional, pero si se desea ingresar una amonestación deberá diligenciarse todos los campos de la sección. . Si se desea agregar una nueva amonestación, dé clic en el hipervínculo “Agregar otra Amonestación”. Contiene los siguientes campos: 
+		@table @dfn
+		@item Curso
+			Es un campo seleccionable que permite elegir el curso sobre el que se desea hacer la amonestación. Para buscar un curso dé clic en el botón “Lupa” que está junto al campo. 
+		@item Fecha
+			Es un campo de texto que almacena la fecha en la que se hace la amonestación. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Motivo
+			Es un campo de texto de máximo 200 caracteres que permite ingresar el motivo de la amonestación. 
+		@end table
+		
+		Finalmente se tiene las opciones para eliminar un registro de estudiante existente. Grabar el estudiante actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el estudiante actual y dejar la ventana activa para seguir editando el registro. Grabar el estudiante actual y volver a la ventana de estudiantes.
+
+
+@subsection Profesores
+	@subsubsection Identificación
+	Es la sección que almacena la información básica del profesor. Contiene los siguientes campos: 
+	@table @dfn
+	@item Primer nombre
+		Es un campo de texto obligatorio. Almacena el primer nombre del profesor. Permite un máximo 50 caracteres.
+	@item Segundo nombre
+		Es un campo de texto opcional. Almacena el segundo nombre del profesor. Permite un máximo de 50 caracteres.
+	@item Primer apellido
+		Es un campo de texto obligatorio. Almacena el primer apellido del profesor. Permite un máximo de 50 caracteres.
+	@item Segundo apellido
+		Es un campo de texto opcional. Almacena el segundo nombre del profesor. Permite un máximo de 50 caracteres.
+	@item Género
+		Es un campo seleccionable de carácter opcional, donde el usuario elige el género del profesor. Las opciones son: Femenino, Masculino.
+	@item Tipo documento
+		Es un campo seleccionable de carácter opcional, donde el usuario elige el tipo de documento de identidad del profesor. Las opciones son: Cédula de Ciudadanía, Tarjeta de Identidad, Cédula de Extranjería, Registro Civil.
+	@item Documento
+		Es un campo de texto obligatorio que almacena el número de identificación del profesor. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
+	@item Lugar expedición
+		Es un campo de texto opcional. Almacena el lugar en que fue expedido el documento de identificación del profesor (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+	@item Fecha nacimiento
+		Es un campo de fecha opcional. Almacena la fecha de nacimiento del profesor. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo. La fecha de nacimiento puede ser digitada en el campo de texto. Además cuenta con las opciones “Hoy”, que tomará la fecha de hoy como fecha de nacimiento, o la opción “Calendario” que mostrará un calendario en pantalla y permite seleccionar una fecha.
+	@item Lugar de nacimiento
+		Es un campo de texto opcional. Almacena el lugar en donde nació el profesor (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+	@item Foto
+		Es la opción que permite subir la foto que identifica al profesor. Es de carácter opcional y solamente sube formatos de imagen válidos.
+	@end table
+	
+	@subsubsection Información de contacto
+		Es la sección que almacena la información de ubicación del profesor. Contiene los siguientes campos: 
+	@table @dfn
+	@item Dirección
+		Es un campo de texto de carácter opcional. Almacena la dirección de residencia del profesor. Permite un máximo de 200 caracteres.
+	@item Lugar residencia
+		Es un campo de texto de carácter opcional. Almacena el lugar de residencia del profesor (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+	@item Teléfono
+		Es un campo de texto opcional. Almacena el número de teléfono fijo del profesor. Admite un máximo de 20 caracteres.
+	@item Móvil
+		Es un campo de texto opcional. Almacena el número de teléfono móvil del profesor. Admite un máximo de 20 caracteres.
+	@item Email
+		Es un campo de texto opcional. Almacena el correo electrónico del profesor. Admite un máximo de 75 caracteres. El correo debe estar en el formato correcto.
+	@item Web
+		Es un campo de texto opcional. Almacena la url de la web que referencie el profesor. Admite un máximo de 200 caracteres.
+	@end table
+	
+	@subsubsection Cursos
+		Es la sección que permite asignar el docente a un ciclo y una competencia seleccionada. Si se desea agregar el docente a un nuevo curso, dé clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
+	@table @dfn
+	@item Grupo
+		Es un campo de texto que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
+	@item Competencia
+		Es un campo de texto que almacena la competencia que dictará el profesor. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes.
+	@item Ciclo
+		Es un campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
+	@end table
+	
+	Finalmente se tiene las opciones para eliminar una competencia existente. Grabar el profesor actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el profesor  actual y dejar la ventana activa para seguir editando el registro. Grabar el profesor actual y volver a la ventana de profesores
+
+	
+@subsection Calificaciones
+@subsection Cortes
+	Almacena la cantidad de cortes de evaluación con los que contará el ciclo. Contiene los siguientes campos:
+	@table @dfn
+	@item Ciclo
+		Es un campo de texto de texto de carácter obligatorio que almacena el ciclo académico al que sobre el que se creará el nuevo corte.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes. 
+	@item Sufijo
+		Es un campo de texto de carácter obligatorio. Almacena el identificador del nuevo corte en el ciclo y junto con el código de ciclo forma el código de corte. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+	@item Porcentaje
+		Es un campo de texto de carácter obligatorio. Almacena el porcentaje del corte en el ciclo. El campo es de tipo numérico.
+	@item Fecha inicio
+		Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@item Fecha fin
+		Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará fin al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@end table
+	Finalmente se tiene las opciones para eliminar un corte existente. Grabar el corte actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el corte actual y dejar la ventana activa para seguir editando el registro. Grabar el corte actual y volver a la ventana de corte.
+	
+@subsection Cursos
+	Es la sección que permite crear un curso asignando la competencia a un ciclo y profesor seleccionado. Contiene los siguientes campos: 
+	@table @dfn
+	@item Competencia
+		Es un campo de texto de texto de carácter obligatorio que almacena la competencia que se asignará al curso. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes. 
+	@item Grupo
+		Es un campo de texto de texto de carácter obligatorio que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
+	@item Profesor
+		Es un campo de texto de texto de carácter obligatorio que almacena el docente que impartirá el curso. Para buscar algún docente dé clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
+	@item Ciclo
+		Es un campo de texto de carácter obligatorio que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
+	@item Esperados
+		Es un campo de texto de texto de carácter opcional que almacena el número esperado de estudiantes en el curso.  El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+	@end table
+	
+	Finalmente se tiene las opciones para eliminar una competencia existente. Grabar el curso actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el curso actual y dejar la ventana activa para seguir editando el registro. Grabar el curso actual y volver a la ventana de cursos.
+
 @subsection Matrícula ciclos
 @subsection Matrícula programas
-@subsection Profesores
-@subsection Programas
 @subsection Salones
+	@table @dfn
+	@item Código
+	Es un campo de texto que almacena el código que identifica el salón. Permite una longitud máxima de 2 caracteres. 
+	@item Descripcion
+		Es un campo de texto que almacena una breve descrición del salón.
+	@item Capacidad
+		Es un campo de texto de carácter opcional que almacena la capacidad de estudiantes que admite el salón. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
+	@item Tipo salón
+		Es un campo seleccionable de carácter opcional. Almacena el tipo de salón y tiene las opciones Aula, Auditorio, Laboratorio.
+	@end table
+	Finalmente se tiene las opciones para eliminar un salón existente. Grabar el salón actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el salón actual y dejar la ventana activa para seguir editando el registro. Grabar el salón actual y volver a la ventana de salones.
