@@ -16,7 +16,7 @@ class CalificacionInline(admin.TabularInline):
 class MatriculaCicloAdmin(admin.ModelAdmin):
     raw_id_fields = ('matricula_programa',)
     fieldsets = [
-        (None, {'fields': [
+        ('Información básica', {'fields': [
             'fecha_inscripcion', 
             'matricula_programa',
             'ciclo',
@@ -46,7 +46,7 @@ class CalificacionAdmin(admin.ModelAdmin):
     raw_id_fields = ('curso', 'matricula_ciclo')
     
     fieldsets = [
-        (None, {'fields': [
+        ('Información básica', {'fields': [
             'curso', 
             'matricula_ciclo',
             'nota_definitiva', 
@@ -68,7 +68,7 @@ class CalificacionAdmin(admin.ModelAdmin):
 
 class ProgramaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': [     
+        ('Información básica', {'fields': [     
             'codigo',             
             'nombre',
             'tipo_programa', 
@@ -104,7 +104,7 @@ class ProgramaAdmin(admin.ModelAdmin):
 
 class SalonAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': [
+        ('Información básica', {'fields': [
             'codigo', 
             'descripcion', 
             'capacidad', 
@@ -124,7 +124,7 @@ class CursoInline(admin.TabularInline):
 
 class CompetenciaAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': [
+        ('Información básica', {'fields': [
             'programa', 
             'sufijo', 
             'nombre', 
@@ -218,7 +218,7 @@ class MatriculaProgramaAdmin(admin.ModelAdmin):
     raw_id_fields = ('estudiante', 'programa')
     
     fieldsets = [
-                 (None, {'fields':[
+                 ('Información básica', {'fields':[
                                    'estudiante',
                                    'programa',
                                    'fecha_inscripcion',
@@ -276,7 +276,7 @@ class HorarioCursoInline(admin.TabularInline):
 class CursoAdmin(admin.ModelAdmin):
     raw_id_fields = ('competencia', 'profesor', 'ciclo')
     fieldsets = [
-        (None, {'fields': [
+        ('Información básica', {'fields': [
             'competencia', 
             'grupo',
             'profesor',
@@ -305,7 +305,7 @@ class CorteAdmin(admin.ModelAdmin):
     raw_id_fields = ('ciclo',)
     
     fieldsets = [
-        (None, {'fields': [
+        ('Información básica', {'fields': [
             'ciclo',
             'sufijo',
             'porcentaje', 
@@ -319,7 +319,7 @@ class CorteAdmin(admin.ModelAdmin):
         'fecha_inicio', 
         'fecha_fin',
         'ciclo',
-        'corteActual'        
+        'corte_actual'        
     )
     search_fields = ('codigo_corte',)
     date_hierarchy = 'fecha_inicio'
@@ -351,7 +351,7 @@ class ButtonableModelAdmin(admin.ModelAdmin):
 
 class CicloAdmin(ButtonableModelAdmin):
     fieldsets = [
-        (None, {'fields': [
+        ('Información básica', {'fields': [
             'codigo', 
             'fecha_inicio', 
             'fecha_fin',]}),
