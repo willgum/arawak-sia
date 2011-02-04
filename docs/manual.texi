@@ -51,7 +51,6 @@ This manual is for program, version version.
 * Instalación::    			Requerimientos básicos e inslación.
 * Módulos::					Descripción funcional de los módulos del sistema.
 * Opciones avanzadas::		Máxima personalización del sistema.
-* Índice::					Índice general.
 @end menu
 
 @include instalacion.texi
