@@ -481,7 +481,7 @@ class EstudioComplementario(models.Model):
 class Referencia(models.Model):
     estudiante = models.ForeignKey(Estudiante)
     tipo_referencia = models.ForeignKey(TipoReferencia, blank=True, null=True, default=1) 
-    nombre = models.CharField(max_length=20, blank=True)
+    nombre = models.CharField(max_length=200, blank=True)
     tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1)
     documento = models.CharField(max_length=12, blank=True)
     direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
@@ -704,7 +704,7 @@ class Corte(models.Model):
     def __unicode__(self):
         return self.ciclo.codigo + "-" + self.sufijo
     
-    def corteActual(self):
+    def corte_actual(self):
         hoy = datetime.date.today() 
         return self.fecha_inicio <= hoy <= self.fecha_fin
     
