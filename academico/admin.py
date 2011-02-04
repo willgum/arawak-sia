@@ -118,7 +118,14 @@ class SalonAdmin(admin.ModelAdmin):
 class CursoInline(admin.TabularInline):
     model = Curso
     extra = 1
-    raw_id_fields = ('ciclo', 'profesor')
+    raw_id_fields = ('ciclo', 'competencia', 'profesor')
+    fields = ('grupo', 'competencia', 'profesor', 'ciclo')
+
+
+class CompetenciaInline(admin.TabularInline):
+    model = Competencia
+    extra = 1
+    raw_id_fields = ('codigo', 'programa', 'nombre')
     fields = ('grupo', 'profesor', 'ciclo')
 
 
