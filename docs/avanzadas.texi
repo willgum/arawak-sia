@@ -70,3 +70,7 @@
 	@end table
 
 @section Copias de respaldo
+	Para hacer copias de respaldo de la información, deberá abrir una consola de comandos. Ubíquese en la carpeta del proyecto y digite la siguiente línea: 
+	@code{> python manage.py dumpdata academico > salida.json}, donde academico es el nombre de la aplicación y salida.json es el nombre del archivo de salida que contendrá los datos de la aplicación. 
+	En caso de presentarse error en el proceso de exportación con alguno de los modelos, verifique que el modelo no tiene campos tipo @code{null} donde no debería tenerlos. 
+	 
