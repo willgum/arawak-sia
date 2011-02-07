@@ -722,7 +722,7 @@ class Corte(models.Model):
     def __unicode__(self):
         return self.ciclo.codigo + "-" + self.sufijo
     
-    def corteActual(self):
+    def corte_actual(self):
         hoy = datetime.date.today() 
         return self.fecha_inicio <= hoy <= self.fecha_fin
     
