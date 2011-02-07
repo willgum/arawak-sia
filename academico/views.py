@@ -32,7 +32,7 @@ def indice(solicitud):
 
 def cicloActual():
     hoy = datetime.date.today()
-    cicloActual = Ciclo.objects.get(fecha_inicio__lt = hoy, fecha_fin__gt = hoy)
+    cicloActual = Ciclo.objects.get(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
     return cicloActual.id
         
 def logout(solicitud):
@@ -182,7 +182,7 @@ def buscarProgramasEstudiante(solicitud):
     listaProgramas = []
     hoy = datetime.date.today()
     usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
-    matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lt = hoy, fecha_vencimiento__gt = hoy)
+    matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
     programas = []
     for matricula in matriculas:
         programas.append(Programa.objects.get(id = matricula.programa_id))
@@ -195,11 +195,40 @@ def buscarProgramasEstudiante(solicitud):
             listaProgramas.append(programas[indice1]);
     return listaProgramas
 
+def buscarMatriculaProgramasEstudiante(solicitud):
+    hoy = datetime.date.today()
+    usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+    return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
+
 def buscarCompetenciasEstudiante(solicitud):
-    matPrograma = buscarProgramasEstudiante(solicitud)                
+    matPrograma = buscarMatriculaProgramasEstudiante(solicitud)                
     matCiclo = []
     for mat in matPrograma:
         resultado = MatriculaCiclo.objects.filter(matricula_programa = mat.id, ciclo = cicloActual())
+        if len(resultado) > 0:
+            for indice1 in range(0, len(resultado)):
+                contador = 0
+                if len(matCiclo) > 0:
+                    for indice2 in range(0, len(matCiclo)):
+                        if resultado[indice1] == matCiclo[indice2]:
+                            contador += 1
+                        if contador == 0:
+                            matCiclo.append(resultado[indice1])
+                else:
+                    matCiclo.append(resultado[indice1])                
+    calificaciones = []
+    for mat in matCiclo:
+        resultado = Calificacion.objects.filter(matricula_ciclo = mat.id)                    
+        if len(resultado) > 0:
+            for indice in range(0, len(resultado)):
+                calificaciones.append(resultado[indice])
+    return calificaciones
+
+def buscarCompetenciasHistorialEstudiante(solicitud):
+    matPrograma = buscarMatriculaProgramasEstudiante(solicitud)                
+    matCiclo = []
+    for mat in matPrograma:
+        resultado = MatriculaCiclo.objects.filter(matricula_programa = mat.id)
         if len(resultado) > 0:
             for indice1 in range(0, len(resultado)):
                 contador = 0
@@ -226,23 +255,32 @@ def programasEstudiante(solicitud):
         return redireccionar('academico/estudiante/programas.html', solicitud, datos)
     else:
         logout(solicitud)
-        
-@login_required
-def competenciasEstudiante(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
-        calificaciones = buscarCompetenciasEstudiante(solicitud)                                
-        datos = {'calificaciones': calificaciones,
-                 'cantidad': len(calificaciones)}
-        return redireccionar('academico/estudiante/competencias.html', solicitud, datos)
-    else:
-        logout(solicitud)
                
 @login_required
 def horariosEstudiante(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
-        calificaciones = buscarCompetenciasEstudiante(solicitud)                                
-        datos = {'calificaciones': calificaciones,
-                 'cantidad': len(calificaciones)}
+        programas = buscarProgramasEstudiante(solicitud)
+        matriculas = buscarMatriculaProgramasEstudiante(solicitud)
+        for matricula in matriculas:
+            MatriculasCiclo = MatriculaCiclo.objects.filter(matricula_programa = matricula.id)
+        calificaciones = buscarCompetenciasHistorialEstudiante(solicitud)
+        calificacionesCiclo = []
+        for indice in calificaciones:            
+            notas = {}
+            notas['id'] =                   indice.id
+            notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
+            notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
+            notas['nombreCompetencia'] =    Calificacion.nombreCompetencia(indice)
+            notas['matricula_ciclo'] =      indice.matricula_ciclo_id
+            notas['nota_definitiva'] =      indice.nota_definitiva
+            notas['nota_habilitacion'] =    indice.nota_habilitacion
+            notas['horarios'] =             Calificacion.horarios(indice)
+            calificacionesCiclo.append(notas)
+        datos = {'programas': programas,
+                 'matriculas': MatriculasCiclo,
+                 'calificaciones': calificacionesCiclo,
+                 'cantidad': len(calificacionesCiclo)
+                 }           
         return redireccionar('academico/estudiante/horarios.html', solicitud, datos)
     else:
         logout(solicitud)
@@ -283,11 +321,39 @@ def notasEstudiante(solicitud):
         logout(solicitud)
 
 @login_required
+def historialEstudiante(solicitud):
+    if 'grupoUsuarioid' in solicitud.session:
+        programas = buscarProgramasEstudiante(solicitud)
+        matriculas = buscarMatriculaProgramasEstudiante(solicitud)
+        for matricula in matriculas:
+            MatriculasCiclo = MatriculaCiclo.objects.filter(matricula_programa = matricula.id)
+        calificaciones = buscarCompetenciasHistorialEstudiante(solicitud)
+        calificacionesCiclo = []
+        for indice in calificaciones:            
+            notas = {}
+            notas['id'] =                   indice.id
+            notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
+            notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
+            notas['nombreCompetencia'] =    Calificacion.nombreCompetencia(indice)
+            notas['matricula_ciclo'] =      indice.matricula_ciclo_id
+            notas['nota_definitiva'] =      indice.nota_definitiva
+            notas['nota_habilitacion'] =    indice.nota_habilitacion
+            calificacionesCiclo.append(notas)
+        datos = {'programas': programas,
+                 'matriculas': MatriculasCiclo,
+                 'calificaciones': calificacionesCiclo,
+                 'cantidad': len(calificacionesCiclo)
+                 }           
+        return redireccionar('academico/estudiante/historial.html', solicitud, datos)
+    else:
+        logout(solicitud)
+
+@login_required
 def competenciasDetalleEstudiante(solicitud, competencia_id):
     if 'grupoUsuarioid' in solicitud.session:
         competencia = Competencia.objects.get(id = competencia_id)
         datos = {'competencia': competencia}  
-        return redireccionar('academico/estudiante/competenciaDetalle.html', solicitud, datos)
+        return redireccionar('academico/estudiante/competencia.html', solicitud, datos)
     else:
         logout(solicitud)
         

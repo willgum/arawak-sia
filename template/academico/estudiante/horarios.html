@@ -10,37 +10,46 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1>Mis Competencias </h1>
-		<table class="grilla" width="100%">
-			<thead>
-				<tr>
-					<th>Código</th>
-					<th>Nombre</th>
-					<th>Programa</th>
-					<th>Horario</th>
-				</tr>
-			</thead>
-			
-			<tbody>	
-				{% for calificacion in calificaciones %}
-					<tr class="{% cycle '' 'odd' %}">
-						<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-						<td>{{ calificacion.nombreCompetencia }}</td>
-						<td style="text-align:center">{{ calificacion.nombrePrograma }}</td>
-						<td style="text-align:center">
-							{% for horario in calificacion.horarios %}
-								{{ horario }}<br/>
-							{% endfor %}
-						</td>								
-					</tr>					
-				{% endfor %}
-			</tbody>
-			
-			<tfoot>
-				<tr>
-					<th scope="row" colspan="4">Total Programas: {{cantidad}}</td>
-				</tr>
-			</tfoot>			
-		</table>
+		<h1>Mis Notas </h1>
+		<ul class="tabs"">
+			{% for programa in programas %}
+				<li><a href="#">{{ programa.nombre }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for programa in programas %}
+				<div class="panesDiv">
+					{% for matricula in matriculas %}
+						<table id="estudiantes" class="grilla" width="100%">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Nombre</th>
+									<th>Horario</th>				
+								</tr>
+							</thead>
+							<tbody>				
+								{% for calificacion in calificaciones %}
+									<tr class="{% cycle '' 'odd' %}">
+										<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+	                        			<td>{{ calificacion.nombreCompetencia }}</td>
+	                        			<td style="text-align:center">
+	                        				{% for horario in calificacion.horarios %}
+												{{ horario }}<br/>
+											{% endfor %}
+										</td>
+									</tr>		
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<th scope="row" colspan="4">Total Competencia: {{ cantidad }}</td>
+								</tr>
+							</tfoot>
+						</table>
+					{% endfor %}								
+				</div>
+			{% endfor %}
+		</div>
 	</div>			
 {% endblock %}

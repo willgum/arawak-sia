@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li>Competencias</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1>Mis Notas </h1>
+		<ul class="tabs"">
+			{% for programa in programas %}
+				<li><a href="#">{{ programa.nombre }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for programa in programas %}
+				<div class="panesDiv">
+					{% for matricula in matriculas %}
+						<table id="estudiantes" class="grilla" width="100%">
+							<thead>
+								<tr>
+									<th>Código</th>
+									<th>Competencia</th>					
+									<th style="width: 20px;">Hab.</th>
+									<th style="width: 20px;">Def.</th>					
+								</tr>
+							</thead>
+							<tbody>				
+								{% for calificacion in calificaciones %}
+									{% ifequal calificacion.matricula_ciclo matricula.id %}
+										<tr class="{% cycle '' 'odd' %}">
+											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+		                        			<td>{{ calificacion.nombreCompetencia }}</td>
+		                        			<td style="text-align:center">{{ calificacion.nota_habilitacion }}</td>
+											<td style="text-align:center">{{ calificacion.nota_definitiva }}</td>
+										</tr>					
+									{% endifequal %}
+								{% endfor %}
+							</tbody>
+							<tfoot>
+								<tr>
+									<th scope="row" colspan="2">Total Competencia: {{ cantidad }}</td>
+									<th>Promedio: </td>
+									<th>{{ matricula.promedio_ciclo }} </td>
+								</tr>
+							</tfoot>
+						</table>
+					{% endfor %}								
+				</div>
+			{% endfor %}
+		</div>
+	</div>			
+{% endblock %}
