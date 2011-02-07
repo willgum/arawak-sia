@@ -14,7 +14,7 @@ class CalificacionInline(admin.TabularInline):
 
 
 class MatriculaCicloAdmin(admin.ModelAdmin):
-    raw_id_fields = ('matricula_programa',)
+    raw_id_fields = ('matricula_programa', 'ciclo')
     fieldsets = [
         ('Información básica', {'fields': [
             'fecha_inscripcion', 
@@ -38,6 +38,7 @@ class MatriculaCicloAdmin(admin.ModelAdmin):
 
 
 class NotaCorteInline(admin.TabularInline):
+    raw_id_fields = ('corte',)
     model = NotaCorte
     extra = 1
 
