@@ -22,32 +22,31 @@ THUMB_WIDTH = 120
 THUMB_HEIGHT = 150
 
 def crear_usuario(nombre1, nombre2, apellido1, apellido2):
-    # TODO: Verificar si el nombre de usuario es unico
-        tmp_nombre2 = ""
-        tmp_apellido2 = ""
-        repetido = True
-        total_usuarios = 0
-        num_usuario = ""
+    tmp_nombre2 = ""
+    tmp_apellido2 = ""
+    repetido = True
+    total_usuarios = 0
+    num_usuario = ""
+    
+    if len(nombre2) > 0:
+        tmp_nombre2 = nombre2[0]
         
-        if len(nombre2) > 0:
-            tmp_nombre2 = nombre2[0]
-            
-        if len(apellido2.strip()) > 0:
-            tmp_apellido2 = apellido2[0]
-            
-        tmp = "%s%s%s%s" % (nombre1[0], tmp_nombre2, apellido1, tmp_apellido2)
-        usuario = normalizar_usuario(tmp)
+    if len(apellido2.strip()) > 0:
+        tmp_apellido2 = apellido2[0]
         
-        while repetido == True:
-            tmp_usuario = "%s%s" % (usuario, num_usuario)
-            if len(User.objects.filter(username=tmp_usuario)) > 0:
-                total_usuarios = total_usuarios + 1
-                num_usuario = chr(96 + total_usuarios)
-            else:
-                repetido = False
-                usuario = tmp_usuario
-                
-        return usuario
+    tmp = "%s%s%s%s" % (nombre1[0], tmp_nombre2, apellido1, tmp_apellido2)
+    usuario = normalizar_usuario(tmp)
+    
+    while repetido == True:
+        tmp_usuario = "%s%s" % (usuario, num_usuario)
+        if len(User.objects.filter(username=tmp_usuario)) > 0:
+            total_usuarios = total_usuarios + 1
+            num_usuario = chr(96 + total_usuarios)
+        else:
+            repetido = False
+            usuario = tmp_usuario
+            
+    return usuario
 
 def normalizar_usuario(cadena):
     # Remueve caracteres especiales y espacios de los nombres de usuario.
@@ -515,13 +514,8 @@ class MatriculaPrograma(models.Model):
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
-        tmp_codigo = "%s%s" %(self.programa.codigo, '00001')
-        if len(MatriculaPrograma.objects.filter(codigo=tmp_codigo)) == 0:
-            self.codigo = tmp_codigo
-        else:
-            tmp_codigo = tmp_codigo[0:3]
-            for c in MatriculaPrograma.objects.raw('SELECT id, lpad(max(cast(right(codigo, 5) as signed))+1, 5, 0) AS codigo FROM academico_matriculaprograma where left(codigo, 3) = %s limit 0, 1', [tmp_codigo]):
-                self.codigo = "%s%s" %(tmp_codigo, c.codigo)
+        tmp_codigo = "%s" %(MatriculaPrograma.objects.filter(codigo__startswith=self.programa.codigo).count() + 1)
+        self.codigo = "%s%s" %(self.programa.codigo, tmp_codigo.zfill(5))
             
         super(MatriculaPrograma, self).save(*args, **kwargs)
     
