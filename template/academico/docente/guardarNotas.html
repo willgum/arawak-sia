@@ -118,7 +118,7 @@
 						<td>{{ calificacion.nombre_estudiante }}</td>
 						{% for corte in cortes %} 
 							<td style="text-align:center">
-								{% if corte.corteActual %}
+								{% if corte.corte_actual %}
 									<input type="text" name="nota_{{calificacion.id}}_{{corte.id}}" id="nota_{{calificacion.id}}_{{corte.id}}" 
 									{% for llave, valor in calificacion.items %}
 									    {% ifequal llave corte.id %}
@@ -135,7 +135,7 @@
 								{% endif %}
 							</td>
 							<td style="text-align:center">
-								{% if corte.corteActual %}
+								{% if corte.corte_actual %}
 									<input type="text" name="falla_{{calificacion.id}}_{{corte.id}}" id="falla_{{calificacion.id}}_{{corte.id}}"
 									{% for llave, valor in calificacion.items %}
 									    {% ifequal llave corte.id %}

@@ -24,12 +24,12 @@ urlpatterns = patterns('',
     (r'^$', indice),
     (r'^$estudiante/', indice),
     (r'^estudiante/programas/$', programasEstudiante),
-    
-    (r'^estudiante/competencias/$', competenciasEstudiante), 
+
     (r'^estudiante/competencias/(?P<competencia_id>\d+)/$', competenciasDetalleEstudiante),
     
     (r'^estudiante/horarios/$', horariosEstudiante),
     (r'^estudiante/horarios/(?P<competencia_id>\d+)/$', competenciasDetalleEstudiante), 
     
     (r'^estudiante/notas/$', notasEstudiante),
+    (r'^estudiante/historial/$', historialEstudiante),
 )
