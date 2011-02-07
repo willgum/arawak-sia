@@ -26,11 +26,7 @@
 		{
 			var min = input.attr("minlength");
 			return value.length>=min?true:{es: "La contraseña ingresada no concuerda con " + min + " caracteres"};
-		}
-	);
-	
-	$.tools.validator.fn
-	(
+		},
 		"[data-equals]", function(input, value) 
 		{
 			var name = input.attr("data-equals"),

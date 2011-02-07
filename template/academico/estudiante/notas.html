@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li>Competencias</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1>Mis Notas </h1>
+		<ul class="tabs"">
+			{% for programa in programas %}
+				<li><a href="#">{{ programa.nombre }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for programa in programas %}
+				<div class="panesDiv">
+					<table id="estudiantes" class="grilla" width="100%">
+						<thead>
+							<tr>
+								<th>Código</th>
+								<th>Competencia</th>					
+								{% for corte in cortes %} 
+									<th>{{corte.porcentaje}}%</th>
+									<th>F.</th>
+								{% endfor %}
+								<th style="width: 20px;">Hab.</th>
+								<th style="width: 20px;">Def.</th>	
+								<th style="width: 20px;">F.T.</th>					
+							</tr>
+						</thead>
+						<tbody>				
+							{% for calificacion in calificaciones %}
+								<tr class="{% cycle '' 'odd' %}">
+									<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+                        			<td>{{ calificacion.nombreCompetencia }}</td>
+                        			{% for corte in cortes %} 
+										<td style="text-align:center">
+											{% for llave, valor in calificacion.items %}
+												{% ifequal llave corte.id %}
+											    	{{ valor.nota }}
+											    {% endifequal %}
+											{% endfor %}
+										</td>
+										<td style="text-align:center">
+											{% for llave, valor in calificacion.items %}
+											    {% ifequal llave corte.id %}
+											    	{{ valor.fallas }}
+											    {% endifequal %}
+											{% endfor %}
+										</td>
+									{% endfor %}
+									<td style="text-align:center"><div id="{{calificacion.id}}_notaHab">{{ calificacion.nota_habilitacion }}</div></td>
+									<td style="text-align:center"><div id="{{calificacion.id}}_notaDef">{{ calificacion.nota_definitiva }}</div></td>					
+									<th style="text-align:center"><div id="{{calificacion.id}}_totalFallas">{{ calificacion.fallas }}</div></th>	
+								</tr>					
+							{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="row" colspan="{{ cantidadCortes }}">Total Competencia: {{ cantidad }}</td>
+							</tr>
+						</tfoot>
+					</table>								
+				</div>
+			{% endfor %}
+		</div>
+	</div>			
+{% endblock %}

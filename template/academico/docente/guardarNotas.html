@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+	function guardarNotas(input, idCal, idCor)
+	{
+   		numero = input.value;		
+    	numero = numero.toString().replace(",", ".");
+    	numero = parseFloat(numero);
+    	numero = numero.toFixed(1);
+    	this.value = numero;
+    	
+    	if (isNaN(numero))	
+    	{
+    		input.value = "";
+    	}
+    	else
+    	{				
+	    	input.value = numero.toString().replace(".", ",");
+		    $.post
+	        (
+	        	"nota/",
+	        	{
+	        		idCalificacion: idCal,
+	        		idCorte: idCor,
+	        		valor: numero
+	        	}, 	        	
+	        	function(data) 
+	        	{
+	        		$("#" + idCal + "_notaHab").html(data[0]["fields"]["nota_habilitacion"]);
+	        		$("#" + idCal + "_notaDef").html(data[0]["fields"]["nota_definitiva"]);
+	        		$("#" + idCal + "_totalFallas").html(data[0]["fields"]["fallas"]);       		
+	        	},
+	        	"json"      	
+	        );
+		}
+	}
+	
+	function guardarFallas(input, idCal, idCor)
+	{
+        numero = input.value;		
+    	numero = numero.toString().replace(",", ".");
+    	numero = parseInt(numero);
+    	this.value = numero;
+    	
+    	if (isNaN(numero))	
+    	{
+    		input.value = "";
+    	}
+    	else
+    	{				
+	    	input.value = numero.toString()
+	    	$.post
+	        (
+	        	"falla/",
+	        	{
+	        		idCalificacion: idCal,
+	        		idCorte: idCor,
+	        		valor: input.value
+	        	}, 	        	
+	        	function(data) 
+	        	{
+	        		$("#" + idCal + "_notaHab").html(data[0]["fields"]["nota_habilitacion"]);
+	        		$("#" + idCal + "_notaDef").html(data[0]["fields"]["nota_definitiva"]);
+	        		$("#" + idCal + "_totalFallas").html(data[0]["fields"]["fallas"]);       		
+	        	},
+	        	"json" 
+	        );
+		}	        
+	}
+{% endblock %}
+
+{% block jquerycript %} 
+	$("#estudiantes :input").change
+	(
+		function() 
+		{
+			var validar = $("#estudiantes :input").validator({lang: 'es'});
+			if (!validar.data("validator").checkValidity())
+				this.focus();
+		}
+	);
+	
+	$.tools.validator.localize
+	(
+		"es", {'[required]' 	: 'Digite un valor adecuado'}
+	);	
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li>Competencias</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1> {{curso.nombre}} </h1>		
+		<table id="estudiantes" class="grilla" width="100%">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Nombre</th>					
+					{% for corte in cortes %} 
+						<th>{{corte.porcentaje}}%</th>
+						<th>F.</th>
+					{% endfor %}
+					<th style="width: 20px;">Hab.</th>
+					<th style="width: 20px;">Def.</th>	
+					<th style="width: 20px;">F.T.</th>					
+				</tr>
+			</thead>
+			<tbody>				
+				{% for calificacion in calificaciones %}
+					<tr class="{% cycle '' 'odd' %}">
+						<th scope="row"><a href="#">{{ calificacion.codigo_estudiante }}</a></th>
+						<td>{{ calificacion.nombre_estudiante }}</td>
+						{% for corte in cortes %} 
+							<td style="text-align:center">
+								{% if corte.corteActual %}
+									<input type="text" name="nota_{{calificacion.id}}_{{corte.id}}" id="nota_{{calificacion.id}}_{{corte.id}}" 
+									{% for llave, valor in calificacion.items %}
+									    {% ifequal llave corte.id %}
+									    	value="{{ valor.nota }}"
+									    {% endifequal %}
+									{% endfor %}
+									onchange="guardarNotas(this, {{calificacion.id}}, {{corte.id}});" required="required"/>
+								{% else %}
+									{% for llave, valor in calificacion.items %}
+									    {% ifequal llave corte.id %}
+									    	{{ valor.nota }}
+									    {% endifequal %}
+									{% endfor %}
+								{% endif %}
+							</td>
+							<td style="text-align:center">
+								{% if corte.corteActual %}
+									<input type="text" name="falla_{{calificacion.id}}_{{corte.id}}" id="falla_{{calificacion.id}}_{{corte.id}}"
+									{% for llave, valor in calificacion.items %}
+									    {% ifequal llave corte.id %}
+									    	value="{{ valor.fallas }}"
+									    {% endifequal %}
+									{% endfor %}
+									 onchange="guardarFallas(this, {{calificacion.id}}, {{corte.id}});" required="required"/>
+								{% else %}
+									{% for llave, valor in calificacion.items %}
+									    {% ifequal llave corte.id %}
+									    	{{ valor.fallas }}
+									    {% endifequal %}
+									{% endfor %}
+								{% endif %}
+							</td>
+						{% endfor %}
+						<td style="text-align:center"><div id="{{calificacion.id}}_notaHab">{{ calificacion.nota_habilitacion }}</div></td>
+						<td style="text-align:center"><div id="{{calificacion.id}}_notaDef">{{ calificacion.nota_definitiva }}</div></td>					
+						<th style="text-align:center"><div id="{{calificacion.id}}_totalFallas">{{ calificacion.fallas }}</div></th>	
+					</tr>					
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th scope="row" colspan="{{ cantidadCortes }}">Total Estudiantes: {{ cantidad }}</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>			
+{% endblock %}
