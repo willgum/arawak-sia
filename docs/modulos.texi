@@ -3,48 +3,36 @@
 
 @section Módulo académico
 
-@subsection Programas
-	Desde este módulo se crean los programas académicos ofrecidos por la Institución Educativa.
+@subsection Calificaciones
 	@subsubsection Información básica
 		@table @dfn
-		@item Código
-			Es un campo de texto obligatorio. Almacena el código que identifica el Programa Académico en el sistema. Permite un máximo de 4 caracteres.
-		@item Nombre
-			Es un campo de texto de carácter obligatorio. Almacena el nombre del Programa Académico ofrecido por la Institución Educativa. Permite un máximo de 100 caracteres.
-		@item Tipo de programa
-			es un campo seleccionable de carácter opcional. Almacena el tipo de programa al que pertenece el nuevo Programa Académico. Tiene las opciones Técnico, Auxiliar.
-		@item Descripción
-			Es un campo de texto de carácter opcional. Almacena una breve descripción del nuevo Programa Académico. 
-		@item Título
-			Es un campo de texto de carácter opcional. Almacena el nombre del título que será otorgado a los estudiantes que aprueben satisfactoriamente el programa cursado. Permite un máximo de 200 caracteres.
-		@item Resolución
-			Es un campo de texto de carácter opcional. Almacena la resolución o acto administrativo que valida este programa. Permite un máximo de 200 caracteres.
-		@item SINES
-			Es un campo de texto de carácter opcional. Almacena el código de la institución educativa ante el Sistema Nacional de Información de la Educación Superior. Permite un máximo de 200 caracteres.
-		@end table
-	
-	@subsubsection Horario
-		@table @dfn
-		@item Periodicidad
-			Es un campo seleccionable de carácter opcional. Almacena el tipo de periodicidad sobre el que se ofrece el programa. Tiene las opciones Semestral, Anual.
-		@item Duración
-			Es un campo de texto opcional que almacena la cantidad de periodos que tiene el programa para su aprobación. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
-		@item Jornada
-			Es un campo seleccionable de carácter opcional. Almacena la jornada en la que ofrece el nuevo Programa Académico. Contiene las opciones Completa, Mañana, Tarde, Nocturna, Fin de semana.
+		@item Curso
+			Es un campo seleccionable que permite elegir el curso sobre el que se desea ingresar la calificación. Para buscar un curso dé clic en el botón “Lupa” que está junto al campo. 
+		@item Matrícula ciclo
+			Es un campo de texto seleccionable de carácter obligatorio que permite elegir el estudiante matriculado en determinado ciclo académico de un programa. Para buscar la matrícula de ciclo dé clic en el botón “Lupa” que está junto al campo.
+		@item Nota definitiva
+			Es un campo de texto de tipo numérico que refleja la nota definitiva del curso. La nota definitiva debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
+		@item Nota habilitación
+			Es un campo de texto de tipo numérico que refleja la nota de habilitación del curso. La nota de habilitación debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
+		@item Perdió por fallas
+			Es un campo de texto seleccionable que indica si el estudiante perdió o no por fallas el curso seleccionado.
 		@end table
 		
-	@subsubsection Información Adicional
+	@subsubsection Nota cortes
 		@table @dfn
-		@item Actitudes
-			Es un campo de texto opcional que almacena las actitudes requeridas para los aspirantes. 
-		@item Perfil Profesional
-			Es un campo de texto opcional que almacena el perfil profesional del estudiante egresado.
-		@item Funciones
-			Es un campo de texto opcional que almacena las funciones en las que se puede desempeñar el egresado.
+		@item NotaCorte
+			Es un campo seleccionable que permite elegir el corte sobre el que se registrará la nota parcial. Para buscar un corte dé clic en el botón “Lupa” que está junto al campo. 
+		@item Nota definitiva
+			Es un campo de texto de tipo numérico que refleja la nota parcial del curso para el corte seleccionado. La nota parcial debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
+		@item Fallas
+			Es un campo de texto de tipo numérico que refleja las fallas parciales del estudiante en el curso.  El campo solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Comportamiento
+			Es un campo seleccionable que permite elegir una descripción para el comportamiento del estudiante en el corte seleccionado.
 		@end table
-	
-	Finalmente se tiene las opciones para eliminar un programa existente. Grabar el programa actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el programa actual y dejar la ventana activa para seguir editando el registro. Grabar el programa actual y volver a la ventana de programa.
-
+		
+		Finalmente se tiene las opciones para eliminar una calificación existente. Grabar la calificación actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar la calificación actual y dejar la ventana activa para seguir editando el registro. Grabar la calificación actual y volver a la ventana de cursos.
+		
+		
 @subsection Ciclos
 	@subsubsection Información básica
 		@table @dfn
@@ -70,6 +58,7 @@
 		@end table
 	
 	Finalmente se tiene las opciones para eliminar un ciclo existente. Grabar el ciclo  actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el ciclo  actual y dejar la ventana activa para seguir editando el registro. Grabar el ciclo actual y volver a la ventana de ciclos.
+
 	
 @subsection Competencias
 	Son las asignaturas o competencias que conforman el Programa Académico ofrecido por la institución educativa y que deberán ser cursadas para su aprobación.
@@ -103,7 +92,44 @@
 		@end table
 	
 	Finalmente se tiene las opciones para eliminar una competencia existente. Grabar la competencia actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar la competencia actual y dejar la ventana activa para seguir editando el registro. Grabar la competencia actual y volver a la ventana de competencias.
+
+
+@subsection Cortes
+	Almacena la cantidad de cortes de evaluación con los que contará el ciclo. Contiene los siguientes campos:
+	@table @dfn
+	@item Ciclo
+		Es un campo de texto de texto de carácter obligatorio que almacena el ciclo académico al que sobre el que se creará el nuevo corte.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes. 
+	@item Sufijo
+		Es un campo de texto de carácter obligatorio. Almacena el identificador del nuevo corte en el ciclo y junto con el código de ciclo forma el código de corte. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+	@item Porcentaje
+		Es un campo de texto de carácter obligatorio. Almacena el porcentaje del corte en el ciclo. El campo es de tipo numérico.
+	@item Fecha inicio
+		Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@item Fecha fin
+		Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará fin al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@end table
 	
+	Finalmente se tiene las opciones para eliminar un corte existente. Grabar el corte actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el corte actual y dejar la ventana activa para seguir editando el registro. Grabar el corte actual y volver a la ventana de corte.
+	
+	
+@subsection Cursos
+	Es la sección que permite crear un curso asignando la competencia a un ciclo y profesor seleccionado. Contiene los siguientes campos: 
+	@table @dfn
+	@item Competencia
+		Es un campo de texto de texto de carácter obligatorio que almacena la competencia que se asignará al curso. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes. 
+	@item Grupo
+		Es un campo de texto de texto de carácter obligatorio que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
+	@item Profesor
+		Es un campo de texto de texto de carácter obligatorio que almacena el docente que impartirá el curso. Para buscar algún docente dé clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
+	@item Ciclo
+		Es un campo de texto de carácter obligatorio que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
+	@item Esperados
+		Es un campo de texto de texto de carácter opcional que almacena el número esperado de estudiantes en el curso.  El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+	@end table
+	
+	Finalmente se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de Matrícula programas.
+
+
 @subsection Estudiantes
 	@subsubsection Identificación
 		Es la sección que almacena la información básica del estudiante. Contiene los siguientes campos: 
@@ -223,6 +249,54 @@
 		Finalmente se tiene las opciones para eliminar un registro de estudiante existente. Grabar el estudiante actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el estudiante actual y dejar la ventana activa para seguir editando el registro. Grabar el estudiante actual y volver a la ventana de estudiantes.
 
 
+@subsection Matrícula ciclos
+	@subsubsection Información básica:
+	@table @dfn
+	@item Fecha inscripción
+		Es un campo de texto que almacena la fecha en la que el estudiante se inscribe a un ciclo. Es de carácter obligatorio. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@item Matrícula programa
+		Es un campo de texto seleccionable de carácter obligatorio que permite elegir el estudiante matriculado en determinado programa que se inscribirá al nuevo ciclo académico. Para buscar la matrícula de programa dé clic en el botón “Lupa” que está junto al campo.
+	@item Ciclo
+		Es un campo seleccionable de carácter obligatorio que permite elegir el ciclo académico al que se matriculará el estudiante.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
+	@item Observaciones
+		Es un campo de texto de carácter opcional que permite ingresar observaciones sobre la matrícula de un estudiante a un ciclo que el usuario considere relevantes para ser almacenadas en el sistema.
+	@end table
+	
+	@subsubsection Calificaciones:
+		La sección calificaciones es de carácter opcional. Permite visualizar los cursos a los que está inscrito el estudiante, con la valoración definitiva y de habilitación de cada curso. Si desea añadir más de un curso con sus calificaciones, dé clic en el hipervínculo “Agregar otra Calificación”. Contiene los siguientes campos: 
+	@table @dfn
+		@item Curso
+			Es un campo seleccionable que permite elegir el curso sobre el que visualizará la calificación del estudiante. Para buscar un curso dé clic en el botón “Lupa” que está junto al campo. 
+		@item Definitiva
+			Es un campo de texto de tipo numérico que refleja la nota definitiva del curso. La nota definitiva debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
+		@item Habilitación
+			Es un campo de texto de tipo numérico que refleja la nota de habilitación del curso. La nota de habilitación debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
+		@item Perdió por fallas
+			Es un campo de texto seleccionable que indica si el estudiante perdió o no por fallas el curso seleccionado.
+	@end table
+	
+Finalmente se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de matrícula ciclo.
+	
+		
+@subsection Matrícula programas
+	@table @dfn
+	@item Estudiante
+		Es un campo de texto seleccionable de carácter obligatorio que permite elegir el estudiante que será matriculado en el programa. Para buscar un estudiante dé clic en el botón “Lupa” que está junto al campo.
+	@item Programa
+		Es un campo seleccionable de carácter obligatorio que permite elegir el programa al que se desea matricular al estudiante. Para buscar un programa dé clic en el botón “Lupa” que está junto al campo. 
+	@item Fecha inscripción
+		Es un campo de texto que almacena la fecha en la que el estudiante se inscribe a un programa. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@item Fecha vencimiento
+		Es un campo de texto que almacena la fecha en la que vence la inscripción del estudiante al programa. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@item Estado
+		Es un campo seleccionable de carácter opcional que muestra los posibles estados del estudiante con respecto al programa. Contiene las opciones Activo, Egresado, Expulsado, Retirado, Suspendido.
+	@item Becado
+		Es un campo opcional de tipo seleccionable. Indica si el estudiante está o no becado. 
+	@end table
+	
+Finalmente se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de Matrícula programas.		
+
+
 @subsection Profesores
 	@subsubsection Identificación
 	Es la sección que almacena la información básica del profesor. Contiene los siguientes campos: 
@@ -279,45 +353,52 @@
 		Es un campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
 	@end table
 	
-	Finalmente se tiene las opciones para eliminar una competencia existente. Grabar el profesor actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el profesor  actual y dejar la ventana activa para seguir editando el registro. Grabar el profesor actual y volver a la ventana de profesores
+	Finalmente se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de Profesores.
+	
 
+@subsection Programas
+	Desde este módulo se crean los programas académicos ofrecidos por la Institución Educativa.
+	@subsubsection Información básica
+		@table @dfn
+		@item Código
+			Es un campo de texto obligatorio. Almacena el código que identifica el Programa Académico en el sistema. Permite un máximo de 4 caracteres.
+		@item Nombre
+			Es un campo de texto de carácter obligatorio. Almacena el nombre del Programa Académico ofrecido por la Institución Educativa. Permite un máximo de 100 caracteres.
+		@item Tipo de programa
+			es un campo seleccionable de carácter opcional. Almacena el tipo de programa al que pertenece el nuevo Programa Académico. Tiene las opciones Técnico, Auxiliar.
+		@item Descripción
+			Es un campo de texto de carácter opcional. Almacena una breve descripción del nuevo Programa Académico. 
+		@item Título
+			Es un campo de texto de carácter opcional. Almacena el nombre del título que será otorgado a los estudiantes que aprueben satisfactoriamente el programa cursado. Permite un máximo de 200 caracteres.
+		@item Resolución
+			Es un campo de texto de carácter opcional. Almacena la resolución o acto administrativo que valida este programa. Permite un máximo de 200 caracteres.
+		@item SNIES
+			Es un campo de texto de carácter opcional. Almacena el código de la institución educativa ante el Sistema Nacional de Información de la Educación Superior. Permite un máximo de 200 caracteres.
+		@end table
 	
-@subsection Calificaciones
-@subsection Cortes
-	Almacena la cantidad de cortes de evaluación con los que contará el ciclo. Contiene los siguientes campos:
-	@table @dfn
-	@item Ciclo
-		Es un campo de texto de texto de carácter obligatorio que almacena el ciclo académico al que sobre el que se creará el nuevo corte.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes. 
-	@item Sufijo
-		Es un campo de texto de carácter obligatorio. Almacena el identificador del nuevo corte en el ciclo y junto con el código de ciclo forma el código de corte. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
-	@item Porcentaje
-		Es un campo de texto de carácter obligatorio. Almacena el porcentaje del corte en el ciclo. El campo es de tipo numérico.
-	@item Fecha inicio
-		Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
-	@item Fecha fin
-		Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará fin al nuevo corte. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
-	@end table
-	Finalmente se tiene las opciones para eliminar un corte existente. Grabar el corte actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el corte actual y dejar la ventana activa para seguir editando el registro. Grabar el corte actual y volver a la ventana de corte.
+	@subsubsection Horario
+		@table @dfn
+		@item Periodicidad
+			Es un campo seleccionable de carácter opcional. Almacena el tipo de periodicidad sobre el que se ofrece el programa. Tiene las opciones Semestral, Anual.
+		@item Duración
+			Es un campo de texto opcional que almacena la cantidad de periodos que tiene el programa para su aprobación. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
+		@item Jornada
+			Es un campo seleccionable de carácter opcional. Almacena la jornada en la que ofrece el nuevo Programa Académico. Contiene las opciones Completa, Mañana, Tarde, Nocturna, Fin de semana.
+		@end table
+		
+	@subsubsection Información Adicional
+		@table @dfn
+		@item Actitudes
+			Es un campo de texto opcional que almacena las actitudes requeridas para los aspirantes. 
+		@item Perfil Profesional
+			Es un campo de texto opcional que almacena el perfil profesional del estudiante egresado.
+		@item Funciones
+			Es un campo de texto opcional que almacena las funciones en las que se puede desempeñar el egresado.
+		@end table
 	
-@subsection Cursos
-	Es la sección que permite crear un curso asignando la competencia a un ciclo y profesor seleccionado. Contiene los siguientes campos: 
-	@table @dfn
-	@item Competencia
-		Es un campo de texto de texto de carácter obligatorio que almacena la competencia que se asignará al curso. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes. 
-	@item Grupo
-		Es un campo de texto de texto de carácter obligatorio que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
-	@item Profesor
-		Es un campo de texto de texto de carácter obligatorio que almacena el docente que impartirá el curso. Para buscar algún docente dé clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
-	@item Ciclo
-		Es un campo de texto de carácter obligatorio que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
-	@item Esperados
-		Es un campo de texto de texto de carácter opcional que almacena el número esperado de estudiantes en el curso.  El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
-	@end table
-	
-	Finalmente se tiene las opciones para eliminar una competencia existente. Grabar el curso actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el curso actual y dejar la ventana activa para seguir editando el registro. Grabar el curso actual y volver a la ventana de cursos.
+	Finalmente se tiene las opciones para eliminar un programa existente. Grabar el programa actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el programa actual y dejar la ventana activa para seguir editando el registro. Grabar el programa actual y volver a la ventana de programa.
 
-@subsection Matrícula ciclos
-@subsection Matrícula programas
+
 @subsection Salones
 	@table @dfn
 	@item Código
@@ -329,4 +410,5 @@
 	@item Tipo salón
 		Es un campo seleccionable de carácter opcional. Almacena el tipo de salón y tiene las opciones Aula, Auditorio, Laboratorio.
 	@end table
+	
 	Finalmente se tiene las opciones para eliminar un salón existente. Grabar el salón actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el salón actual y dejar la ventana activa para seguir editando el registro. Grabar el salón actual y volver a la ventana de salones.

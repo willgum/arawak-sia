@@ -10,7 +10,7 @@ class CalificacionInline(admin.TabularInline):
     extra = 1
     raw_id_fields = ('curso',)
     fields = ('curso', 'nota_definitiva', 'nota_habilitacion', 'perdio_fallas')
-
+    readonly_fields = ('nota_definitiva', 'nota_habilitacion')
 
 
 class MatriculaCicloAdmin(admin.ModelAdmin):
@@ -20,16 +20,19 @@ class MatriculaCicloAdmin(admin.ModelAdmin):
             'fecha_inscripcion', 
             'matricula_programa',
             'ciclo',
+            'promedio_ciclo',
             'observaciones']}),
     ]
     list_display = (
         'codigo_estudiante',
         'nombre_estudiante',
         'nombre_programa',
+        'promedio_ciclo',
         'puesto',
         'ciclo',
         'fecha_inscripcion',
     )
+    readonly_fields = ('promedio_ciclo',)
     
     inlines = [CalificacionInline]
     list_filter = ['fecha_inscripcion', 'ciclo']
@@ -64,6 +67,7 @@ class CalificacionAdmin(admin.ModelAdmin):
         'fallas',
         'perdio_fallas',
     )
+    readonly_fields = ('nota_definitiva',)
     search_fields = ['curso', 'codigo_estudiante']
 
 
@@ -232,6 +236,7 @@ class MatriculaProgramaAdmin(admin.ModelAdmin):
                                    'fecha_inscripcion',
                                    'fecha_vencimiento',
                                    'estado',
+                                   'promedio_acumulado',
                                    'becado',
                                    ]}),
                  ]
@@ -240,9 +245,11 @@ class MatriculaProgramaAdmin(admin.ModelAdmin):
                     'codigo',
                     'nombre_estudiante',
                     'nombre_programa',
+                    'promedio_acumulado',
                     'fecha_inscripcion',
                     'estado'
                     )
+    readonly_fields = ('promedio_acumulado',)
     
     search_fields = ('codigo', 'nombre_programa', 'estado')
 

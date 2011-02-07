@@ -2,4 +2,71 @@
 @chapter Opciones avanzadas
 
 @section Administración de usuarios
+@subsection Grupos
+	@table @dfn
+	@item Nombre
+		Es un campo de texto obligatorio. Almacena el nombre del grupo de permisos a crear. Permite un máximo 80 caracteres.
+	@item Permisos disponibles
+		Es el listado que muestra los permisos que están disponibles en el sistema. Debe seleccionarse los permisos que serán asignados al grupo que está siendo creado y dar clic en la flecha azul que apunta hacia la derecha.
+	@item Permisos elegidos
+		Es un listado que muestra los permisos que se han elegido del listado de permisos disponibles y que serán asignados a los usuarios que hagan parte del grupo que está siendo creado.
+	@end table
+	
+	Finalmente se tiene las opciones para eliminar el grupo de permisos actual. Grabar el grupo de permisos actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el grupo de permisos actual y dejar la ventana activa para seguir editando la información. Grabar el grupo de permisos actual y volver a la ventana de grupos.
+	
+	
+@subsection Usuarios
+	@table @dfn
+	@item Nombre de usuario
+		Es un campo de texto de carácter obligatorio. Almacena el nombre de usuario a crear. Permite un máximo de 30 caracteres. Admite letras, dígitos y @/./+/-/_ solamente.
+	@item Contraseña
+		Es un campo de texto de carácter obligatorio. Almacena la contraseña de acceso del usuario que está siendo creado. Admite un máximo de 30 caracteres de cualquier tipo.
+	@item Contraseña (Confirmación)
+		Es un campo de texto de carácter obligatorio. Registra nuevamente la contraseña para confrontarla contra el anterior campo y confirmar que fue ingresada correctamente.
+	@end table
+	
+	Luego se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de grupos.
+
+	Si se elige la opción Grabar y continuar editando, el sistema habilitará una nueva interfaz para editar y complementar la información del usuario. Se habilitarán los siguientes campos: 
+	
+	@subsubsection Información personal
+		Esta sección es opcional. Contiene los siguientes campos:
+	@table @dfn
+	@item Nombre propio
+		Es un campo de texto que almacena el nombre del usuario que está siendo editado.  Permite un máximo de 30 caracteres.
+	@item Apellidos
+		Es un campo que almacena los apellidos del usuario que está siendo editado. Permite un máximo de 30 caracteres.
+	@item Dirección de correo
+		Es el campo de texto que almacena el correo electrónico del usuario. Admite un máximo de 75 caracteres. El sistema hace la validación de que el correo debe esté en el formato correcto.
+	@end table
+	
+	@subsubsection Permisos: 
+		Esta sección es opcional. Contiene los siguientes campos:
+	@table @dfn
+	@item Activo
+		Es un campo seleccionable que indica si el usuario puede ser tratado como activo. Desmarque esta opción en lugar de borrar la cuenta.
+	@item Es staff
+		Indica si el usuario puede entrar en este sitio de administración.
+	@item Es superusuario
+		Indica que este usuario tiene todos los permisos sin asignárselos explícitamente.
+	@item Permisos
+		Desde esta opción se puede determinar manualmente los permisos que serán asignados al usuario que está siendo editado. Contiene dos listados. El primero es el listado con los permisos de usuario disponibles. El segundo es el listado de permisos de usuario que han sido elegidos para el usuario. 
+	@end table
+	
+	@subsubsection Fechas importantes
+		Esta sección es opcional. Contiene los siguientes campos:
+	@table @dfn
+	@item Último inicio de sesión
+		Es un campo informativo que muestra la fecha y hora del último acceso de este usuario al sistema.
+	@item Fecha de alta
+		Permite visualizar la fecha y hora de creación del usuario.
+	@end table
+	
+	@subsubsection Sección Grupos
+		Esta sección es opcional. Contiene los siguientes campos:
+	@table @dfn
+	@item Grupos
+		Es un listado que muestra los grupos de permisos de usuario que han sido creados. Además de los permisos asignados manualmente, este usuario también tendrá todos los permisos de los grupos en los que esté. Mantenga presionado "Control", o "Command" en un Mac, para seleccionar más de una opción. 
+	@end table
+
 @section Copias de respaldo

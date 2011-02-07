@@ -205,8 +205,6 @@ def scale(fname, width, height, fname_scaled):
     out = img.resize((new_width, new_height))
     box = ((new_width/2 - width/2), (new_height/2 - height/2), (new_width/2 + width/2), (new_height/2 + height/2))
     out = out.crop(box)
-#    if os.path.exists(fname_scaled):
-#        os.remove(fname_scaled)
     out.save(fname_scaled, "JPEG")
 
 class CustomStorage(FileSystemStorage):
@@ -503,6 +501,16 @@ class MatriculaPrograma(models.Model):
     
     def nombre_programa(self):
         return self.programa.nombre
+    
+    def calculaPromedioAcumulado(self, matricula_programa_id):
+        tmp_promedio_ciclo = MatriculaCiclo.objects.filter(matricula_programa = matricula_programa_id)
+        tmp_promedio_acumulado = 0.0
+        
+        for tmp_nota in tmp_promedio_ciclo:
+            tmp_promedio_acumulado = tmp_promedio_acumulado + tmp_nota.promedio_ciclo
+              
+        self.promedio_acumulado = round(tmp_promedio_acumulado/len(tmp_promedio_ciclo), 2)
+        MatriculaPrograma.save(self)
      
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
@@ -560,6 +568,7 @@ class MatriculaCiclo(models.Model):
     matricula_programa = models.ForeignKey(MatriculaPrograma)
     ciclo = models.ForeignKey(Ciclo)
     observaciones = models.TextField(max_length=200, blank=True)
+    promedio_ciclo = models.FloatField(blank=True, null=True, validators=[validar_nota])
     
     def __unicode__(self):
         return self.matricula_programa.codigo
@@ -579,10 +588,20 @@ class MatriculaCiclo(models.Model):
     def nombre_estudiante(self):
         return self.matricula_programa.nombre_estudiante()
     
-    def promedio_periodo(self):
-        # TODO: Calcular el promedio de las materias cursadas en ese ciclo
-        return ""
-  
+    def promedioCiclo(self, matricula_ciclo_id):
+        tmp_calificacion = Calificacion.objects.filter(matricula_ciclo = matricula_ciclo_id)
+        tmp_promedio_ciclo = 0.0
+        
+        for tmp_nota in tmp_calificacion:
+            if tmp_nota.nota_definitiva >= tmp_nota.nota_habilitacion:
+                tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_definitiva
+            else: 
+                tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_habilitacion
+              
+        self.promedio_ciclo = round(tmp_promedio_ciclo/len(tmp_calificacion), 2)
+        MatriculaCiclo.save(self)
+        self.matricula_programa.calculaPromedioAcumulado(self.matricula_programa.id)
+    
     def puesto(self):
         # TODO: Calcular el puesto que ocupa el estudiante en ese ciclo
         return ""
@@ -653,7 +672,6 @@ class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
     matricula_ciclo = models.ForeignKey(MatriculaCiclo)
     nota_definitiva = models.FloatField(blank=True, null=True, validators=[validar_nota])
-#    nota_definitiva.editable = False
     nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, validators=[validar_nota])
     fallas = models.IntegerField(help_text="Número de total de fallas en el ciclo.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
@@ -708,9 +726,11 @@ class Calificacion(models.Model):
             tmp_calificacion = tmp_calificacion + (tmp_nota.nota * (tmp_corte.porcentaje * 0.01))
             tmp_fallas = tmp_fallas + tmp_nota.fallas
               
-        self.nota_definitiva = tmp_calificacion
+        self.nota_definitiva = round(tmp_calificacion, 2)
         self.fallas = tmp_fallas
         Calificacion.save(self)
+        self.matricula_ciclo.promedioCiclo(self.matricula_ciclo.id)
+        
     
 class Corte(models.Model):
     ciclo = models.ForeignKey(Ciclo)
