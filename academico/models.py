@@ -545,6 +545,12 @@ class Competencia(models.Model):
     def grupos(self):
         return len(Curso.objects.filter(competencia=self))
     
+    def idPrograma(self):
+        return "%s" % (self.programa.id)
+    
+    def codigoPrograma(self):
+        return "%s" % (self.programa.codigo)
+    
     def nombrePrograma(self):
         return "%s" % (self.programa.nombre)
   
@@ -611,6 +617,12 @@ class Curso(models.Model):
     def codigoCompetencia(self):
         return "%s" % (self.competencia.codigo)
     
+    def idPrograma(self):
+        return "%s" % (self.competencia.idPrograma())
+    
+    def codigoPrograma(self):
+        return "%s" % (self.competencia.codigoPrograma())
+    
     def nombrePrograma(self):
         return "%s" % (self.competencia.nombrePrograma())
     
@@ -674,6 +686,12 @@ class Calificacion(models.Model):
     def nombreCompetencia(self):
         return "%s" % (self.curso.nombre())
     
+    def idPrograma(self):
+        return "%s" % (self.curso.idPrograma())
+    
+    def codigoPrograma(self):
+        return "%s" % (self.curso.codigoPrograma())
+    
     def nombrePrograma(self):
         return "%s" % (self.curso.nombrePrograma())
     
@@ -704,7 +722,7 @@ class Corte(models.Model):
     def __unicode__(self):
         return self.ciclo.codigo + "-" + self.sufijo
     
-    def corte_actual(self):
+    def corteActual(self):
         hoy = datetime.date.today() 
         return self.fecha_inicio <= hoy <= self.fecha_fin
     

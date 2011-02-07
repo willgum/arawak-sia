@@ -58,11 +58,18 @@
 							{% else %}								
 								<h2>Académico</h2>								
 								<ul>
-									<li><a href="/academico/programas/">Programas</a></li>
-									<li><a href="/academico/competencias/">Competencias</a></li>
-									<li><a href="/academico/horarios/">Horarios</a></li>
-									{% if request.session.grupoUsuarioid == 3 %}<li><a href="/academico/notas/">Ingresar Notas</a></li>{% endif %}
-									{% if request.session.grupoUsuarioid == 4 %}<li>Estudiante</li>{% endif %}
+									{% if request.session.grupoUsuarioid == 3 %}
+										<li><a href="/academico/docente/programas/">Programas</a></li>
+										<li><a href="/academico/docente/competencias/">Competencias</a></li>
+										<li><a href="/academico/docente/horarios/">Horarios</a></li>
+										<li><a href="/academico/docente/notas/">Ingresar Notas</a></li>
+									{% endif %}
+									{% if request.session.grupoUsuarioid == 4 %}
+										<li><a href="/academico/estudiante/programas/">Programas</a></li>
+										<li><a href="/academico/estudiante/competencias/">Competencias</a></li>
+										<li><a href="/academico/estudiante/horarios/">Horarios</a></li>
+										<li><a href="/academico/estudiante/notas/">Ver Notas</a></li>
+									{% endif %}
 								</ul>
 							{% endif %}
 						</div>				

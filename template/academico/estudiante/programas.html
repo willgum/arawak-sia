@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+	$(".accordion").tabs(".pane", {tabs: 'h2', effect: 'slide'});
+{% endblock %}
+
+{% block ruta %} 
+	<ul id="nav">
+		<li><a href="/">Inicio</a></li>
+		<li>>></li>
+		<li>Programas</li>
+	</ul>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1>Mis Programas </h1>
+		<ul class="tabs"">
+			{% for programa in programas %}
+				<li><a href="#">{{ programa.nombre }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for programa in programas %}
+				<div class="panesDiv">
+					<div class="accordion">
+						<h2>Informacion Basica</h2>
+						<div class="pane">
+							<table>
+								<tr>
+									<td valign="top" style="text-align:left; width: 130px;"><strong>Codigo: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.codigo }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Nombre Completo: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.nombre }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Tipo de Programa: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.tipo_programa }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Descripción: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.descripcion }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Título: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.titulo }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Resolución: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.resolucion }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>SNIES: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.snies }}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="base"></div>
+						<h2>Horarios</h2>
+						<div class="pane">
+							<table>
+								<tr>
+									<td valign="top" style="text-align:left; width: 130px;"><strong>Periodicidad: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.periodicidad }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Duración: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.duracion }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Jornada: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.jornada }}</td>
+								</tr>						
+							</table>
+						</div>
+						<div class="base"></div>
+						<h2>Informacion Adicional</h2>
+						<div class="pane">
+							<table>
+								<tr>
+									<td valign="top" style="text-align:left; width: 130px;"><strong>Actitudes: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.actitudes }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Perfil profesional: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.perfil_profesional }}</td>
+								</tr>
+								<tr>
+									<td valign="top" style="text-align:left"><strong>Funciones: </strong></td>				
+								    <td valign="top" style="text-align:justify">{{ programa.funciones }}</td>
+								</tr>						
+							</table>
+						</div>
+						<div class="base"></div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>			
+{% endblock %}
