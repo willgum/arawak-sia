@@ -49,8 +49,7 @@ def redireccionar(plantilla, solicitud, datos):
     return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
         
 def indice(solicitud):
-    datos = {}
-    return redireccionar('index.html', solicitud, datos)
+    return redireccionar('index.html', solicitud, {})
 
 @login_required
 def perfil(solicitud):
@@ -126,7 +125,7 @@ def login(solicitud):
                 solicitud.session['msg_error'] = 'Lo sentimos, el sistema es de uso exclusivo de docente y estudiantes.'                    
         else:
             solicitud.session['msg_error'] = 'Lo sentimos, usted se encuentra temporalmente inabilitado para acceder a nuestro sistema'
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect(settings.PROJECT_DIR)
 
 def logout(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
@@ -134,4 +133,4 @@ def logout(solicitud):
     if 'msg_error' in solicitud.session:
         solicitud.session['msg_error']
     auth.logout(solicitud)    
-    return HttpResponseRedirect("/")
+    return HttpResponseRedirect(settings.PROJECT_DIR)

@@ -36,7 +36,7 @@
 				<tr>
 					<td style="background: #f6f6f6;" valign="top">									
 						<div id="sidebar_left">
-							{% if not user.username %}
+							{% if not request.session.grupoUsuarioid %}
 								<form id="login" action="/login/" method="post">
 									<table>
 										<tr>
@@ -79,7 +79,7 @@
 						{% endblock %}
 					</td>
 					<td valign="top">
-						{% if user.username %}
+						{% if request.session.grupoUsuarioid %}
 							<div id="sidebar_right">
 								<h2>Bienvenido</h2>
 								<p>
