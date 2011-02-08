@@ -380,12 +380,29 @@ def promocion_ciclo(solicitud, ciclo_id):
             
             tmp_ciclo = Ciclo.objects.get(codigo = solicitud.POST['codigo'])
             tmp_fecha = solicitud.POST['fecha_inicio']
-            tmp_fecha_ini = tmp_fecha[6:10] + "-" + tmp_fecha[3:5] + "-" + tmp_fecha[0:2]
+            tmp_fecha_ini = datetime.date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
+            
+            tmp_fecha = solicitud.POST['fecha_fin']
+            tmp_fecha_fin = datetime.date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
     
             #Duplicar los cortes de un ciclo anterior a un ciclo nuevo
             cortes = Corte.objects.filter(ciclo = ciclo_id)
+            i=0
+            nva_fecha_ini = tmp_fecha_ini
+            tmp_suma_fecha = 0
+            #TODO: este ciclo puede optimizarse. El objetivo es que la fecha inicio de ciclo 
+            #        sea la misma del primer corte y la fecha fin de ciclo sea la misma fecha fin del último corte
             for corte in cortes:
-                tmp_corte = Corte(ciclo_id=tmp_ciclo.id, sufijo = corte.sufijo, porcentaje=corte.porcentaje, fecha_inicio=corte.fecha_inicio, fecha_fin=corte.fecha_fin)
+                if tmp_suma_fecha == 0:
+                    tmp_suma_fecha = tmp_fecha_ini - corte.fecha_inicio
+
+                nva_fecha_ini = corte.fecha_inicio + datetime.timedelta(days=tmp_suma_fecha.days)
+                nva_fecha_fin = corte.fecha_fin + datetime.timedelta(days=tmp_suma_fecha.days)
+                
+                i = i+1
+                if i==len(cortes):
+                    nva_fecha_fin = tmp_fecha_fin
+                tmp_corte = Corte(ciclo_id=tmp_ciclo.id, sufijo = corte.sufijo, porcentaje=corte.porcentaje, fecha_inicio=nva_fecha_ini, fecha_fin=nva_fecha_fin)
                 tmp_corte.save()
             
             #Duplicar los cursos de un ciclo anterior a un ciclo nuevo
