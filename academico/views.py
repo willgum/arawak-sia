@@ -53,7 +53,7 @@ def logout(solicitud):
     if 'msg_error' in solicitud.session:
         solicitud.session['msg_error']
     auth.logout(solicitud)    
-    return HttpResponseRedirect(settings.PROJECT_DIR)
+    return HttpResponseRedirect("/")
 
 #----------------------------------------------vistas docente---------------------------------------------------------
 
