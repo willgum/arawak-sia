@@ -3,6 +3,8 @@ import os.path
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True      #se indica a la aplicacion que la sesion xpira cuando se cierra el navegador
+SESSION_COOKIE_AGE = 600                     # indica el tiempo de duracion en segundos que tiene la sesions
 PROJECT_DIR = os.path.dirname(__file__)
 LOGIN_URL = '/'
 
