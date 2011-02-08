@@ -47,9 +47,9 @@ def perfil(solicitud):
             usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         else:
             usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
-        cadena = str(usuario.foto).replace('original','thumbnail')
+        foto = str(usuario.foto).replace('original','thumbnail')
         datos = {'usuario': usuario,
-                 'foto': cadena,
+                 'foto': foto,
                  'tipoDocumento': TipoDocumento.objects.get(codigo = usuario.tipo_documento_id),
                  'genero': Genero.objects.get(codigo = usuario.genero_id),
                  'estratos': Estrato.objects} 
