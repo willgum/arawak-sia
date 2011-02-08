@@ -23,6 +23,18 @@ def buscarPerfil(solicitud):
         respuesta.append({'resultado':False})    
     return respuesta
 
+def comprobarPermisos(solicitud):
+    if 'grupoUsuarioid' in solicitud.session: 
+        if solicitud.session['grupoUsuarioid'] == 3:
+            return True
+        else:
+            if solicitud.session['grupoUsuarioid'] == 4:
+                return True
+            else:
+                return False
+    else:
+        return False
+
 def redireccionar(plantilla, solicitud, datos):
     variables = {
         'user': solicitud.user, 
@@ -35,14 +47,14 @@ def redireccionar(plantilla, solicitud, datos):
         variables[llaves[indice]] = datos[llaves[indice]]
     variables =  Context(variables)
     return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
-
+        
 def indice(solicitud):
     datos = {}
     return redireccionar('index.html', solicitud, datos)
 
 @login_required
 def perfil(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         if solicitud.session['grupoUsuarioid'] == 3:
             usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         else:
@@ -55,11 +67,11 @@ def perfil(solicitud):
                  'estratos': Estrato.objects} 
         return redireccionar('perfil.html', solicitud, datos)
     else:
-        logout(solicitud)    
+        return logout(solicitud)    
 
 @login_required
 def actulizarPerfil(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         if solicitud.session['grupoUsuarioid'] == 3:
             usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         else:
@@ -74,18 +86,18 @@ def actulizarPerfil(solicitud):
         solicitud.user.message_set.create(message="Los datos fueron guardados exitosamente.")    
         return HttpResponseRedirect("/perfil/")
     else:
-        logout(solicitud) 
+        return logout(solicitud) 
 
 @login_required
 def contrasena(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         return redireccionar('contrasena.html', solicitud, {})
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 @login_required
 def actulizarContrasena(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         if solicitud.user.check_password(solicitud.POST['actualPass']):
             solicitud.user.set_password(solicitud.POST['nuevoPass'])
             solicitud.user.save()
@@ -95,7 +107,7 @@ def actulizarContrasena(solicitud):
             solicitud.user.message_set.create(message="Por favor digite nuevamente su contraseña")
             return HttpResponseRedirect("/contrasena/")
     else:
-        logout(solicitud) 
+        return logout(solicitud) 
 
 def login(solicitud):
     username = solicitud.POST['usuario']
