@@ -388,7 +388,7 @@ class CicloAdmin(ButtonableModelAdmin):
         url = "/admin/academico/ciclo/promocion"
         return HttpResponseRedirect( url )
     promocion.url = "/admin/academico/ciclo/promocion"    #puts this on the end of the admin URL.
-    promocion.short_description='Promoción ciclo'
+    promocion.short_description='Promover ciclo'
     buttons = [ promocion,]
 
 #===============================================================================

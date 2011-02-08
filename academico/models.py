@@ -769,13 +769,6 @@ class HorarioCurso(models.Model):
     
     def __unicode__(self):
         return "%s %s - %s %s" % (self.dia.nombre, self.hora_inicio.strftime("%H:%M"), self.hora_fin.strftime("%H:%M"), self.salon)
-
-
-class SesionCurso(models.Model):
-    codigo = models.CharField(verbose_name='Código', max_length=12)
-    curso = models.ForeignKey(Curso)
-    fecha = models.DateField(blank=True, null=True)
-  
-    def __unicode__(self):
-        return self.codigo
-
+    
+    class Meta:
+        unique_together = ("dia", "hora_inicio","hora_fin", "salon")

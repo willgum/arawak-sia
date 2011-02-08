@@ -6,9 +6,9 @@
 {% url admin:jsi18n as jsi18nurl %}
 <script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
 
-<script type="text/javascript" src="/media/admin/js/core.js"></script> 
-<script type="text/javascript" src="/media/admin/js/calendar.js"></script> 
-<script type="text/javascript" src="/media/admin/js/admin/DateTimeShortcuts.js"></script> 
+<script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script> 
+<script type="text/javascript" src="{% admin_media_prefix %}js/calendar.js"></script> 
+<script type="text/javascript" src="{% admin_media_prefix %}js/admin/DateTimeShortcuts.js"></script> 
 
 {{ media }}
 {% endblock %}
