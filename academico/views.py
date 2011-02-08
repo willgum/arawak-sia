@@ -10,6 +10,18 @@ from django.contrib import auth                                                 
 from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
+def comprobarPermisos(solicitud):
+    if 'grupoUsuarioid' in solicitud.session: 
+        if solicitud.session['grupoUsuarioid'] == 3:
+            return True
+        else:
+            if solicitud.session['grupoUsuarioid'] == 4:
+                return True
+            else:
+                return False
+    else:
+        return False
+
 def redireccionar(plantilla, solicitud, datos):
     variables = {
         'user': solicitud.user, 
@@ -25,10 +37,10 @@ def redireccionar(plantilla, solicitud, datos):
 
 @login_required
 def indice(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         return redireccionar('index.html', solicitud, {})
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 def cicloActual():
     hoy = datetime.date.today()
@@ -47,7 +59,7 @@ def logout(solicitud):
 
 @login_required
 def programasDocente(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         listaProgramas = []
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         competencias = Competencia.objects.filter(curso__profesor = usuario.id, curso__ciclo = cicloActual()).distinct()
@@ -64,44 +76,44 @@ def programasDocente(solicitud):
         datos = {'programas': listaProgramas}
         return redireccionar('academico/docente/programas.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 @login_required
 def competenciasDocente(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         competencias = Competencia.objects.filter(curso__profesor = usuario.id, curso__ciclo = cicloActual()).distinct()
         datos = {'competencias': competencias,
                  'cantidad': len(competencias)}        
         return redireccionar('academico/docente/competencias.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 @login_required
 def horariosDocente(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         cursos = Curso.objects.filter(profesor = usuario.id, ciclo = cicloActual())
         datos = {'cursos': cursos,
                  'cantidad': len(cursos)}
         return redireccionar('academico/docente/horarios.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 @login_required
 def notasDocente(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         cursos = Curso.objects.filter(profesor = usuario.id, ciclo = cicloActual())
         datos = {'cursos': cursos,
                  'cantidad': len(cursos)}
         return redireccionar('academico/docente/notas.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 @login_required
 def guardarNotasDocente(solicitud, curso_id):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         curso = Curso.objects.get(id = curso_id)
         cortes = Corte.objects.filter(ciclo = cicloActual()).order_by('fecha_inicio')         
         calificaciones = Calificacion.objects.filter(curso = curso_id)
@@ -131,7 +143,7 @@ def guardarNotasDocente(solicitud, curso_id):
                  'cantidadCortes': 5+(len(cortes)*2)}
         return redireccionar('academico/docente/guardarNotas.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
         
 def guardarNotaDocente(request):
     if request.POST:
@@ -169,12 +181,12 @@ def guardarFallasDocente(request):
 
 @login_required
 def competenciasDetalleDocente(solicitud, competencia_id):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         competencia = Competencia.objects.get(id = competencia_id)
         datos = {'competencia': competencia}  
         return redireccionar('academico/docente/competenciaDetalle.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
         
 #----------------------------------------------vistas estudiante---------------------------------------------------------
 
@@ -250,15 +262,15 @@ def buscarCompetenciasHistorialEstudiante(solicitud):
 
 @login_required
 def programasEstudiante(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         datos = {'programas': buscarProgramasEstudiante(solicitud)}
         return redireccionar('academico/estudiante/programas.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
                
 @login_required
 def horariosEstudiante(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         programas = buscarProgramasEstudiante(solicitud)
         matriculas = buscarMatriculaProgramasEstudiante(solicitud)
         for matricula in matriculas:
@@ -283,11 +295,11 @@ def horariosEstudiante(solicitud):
                  }           
         return redireccionar('academico/estudiante/horarios.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
     
 @login_required
 def notasEstudiante(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         programas = buscarProgramasEstudiante(solicitud)
         calificaciones = buscarCompetenciasEstudiante(solicitud)
         cortes = Corte.objects.filter(ciclo = cicloActual()).order_by('fecha_inicio')
@@ -318,11 +330,11 @@ def notasEstudiante(solicitud):
                  }           
         return redireccionar('academico/estudiante/notas.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 @login_required
 def historialEstudiante(solicitud):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         programas = buscarProgramasEstudiante(solicitud)
         matriculas = buscarMatriculaProgramasEstudiante(solicitud)
         for matricula in matriculas:
@@ -346,16 +358,16 @@ def historialEstudiante(solicitud):
                  }           
         return redireccionar('academico/estudiante/historial.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
 
 @login_required
 def competenciasDetalleEstudiante(solicitud, competencia_id):
-    if 'grupoUsuarioid' in solicitud.session:
+    if comprobarPermisos(solicitud):
         competencia = Competencia.objects.get(id = competencia_id)
         datos = {'competencia': competencia}  
         return redireccionar('academico/estudiante/competencia.html', solicitud, datos)
     else:
-        logout(solicitud)
+        return logout(solicitud)
         
 #----------------------------------------------vistas administrativas---------------------------------------------------------
 
