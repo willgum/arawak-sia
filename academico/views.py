@@ -388,7 +388,7 @@ def promocion_ciclo(solicitud, ciclo_id):
                 tmp_matricula = MatriculaCiclo(fecha_inscripcion=tmp_fecha_ini, matricula_programa_id=matricula.matricula_programa_id, ciclo_id=tmp_ciclo.id, observaciones=matricula.observaciones)
                 tmp_matricula.save()
         
-            solicitud.user.message_set.create(message="El ciclo fué promovido correctamente a " + tmp_ciclo.codigo + ".")
+            solicitud.user.message_set.create(message="El ciclo fue promovido correctamente.")
             return HttpResponseRedirect("/admin/academico/ciclo")
     else:
         formset = CicloForm()
