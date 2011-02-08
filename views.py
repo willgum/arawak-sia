@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+from datetime import datetime, timedelta
+from django.contrib.sessions.models import Session
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                       # incorporo para poder acceder a archivos estaticos
@@ -25,6 +26,10 @@ def buscarPerfil(solicitud):
 
 def comprobarPermisos(solicitud):
     if 'grupoUsuarioid' in solicitud.session: 
+        sesion = Session.objects.get(session_key = solicitud.session.session_key)
+        if  datetime.now() <= sesion.expire_date:
+            sesion.expire_date = datetime.now() + timedelta(minutes=10)
+            sesion.save()
         if solicitud.session['grupoUsuarioid'] == 3:
             return True
         else:
