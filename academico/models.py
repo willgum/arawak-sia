@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 
+from django.contrib import admin
 from django.forms import ModelForm, TextInput
 
 NOTA_MIN = 0.0
