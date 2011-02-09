@@ -11,3 +11,49 @@ La instalación de ....
 @item MySQL
 @item Apache
 @end itemize
+
+@section Flujo de trabajo
+En la gráfica se muestra el flujo de trabajo recomendado para facilitar el uso de la plataforma y ofrecer una experiencia de usuario
+satisfactoria.
+
+@float Figure, fig:diagrama
+    @image{img/diagrama_procesos, , , 'Diagrama de procesos', png}
+@end float
+
+@subsection Configuración general
+Es el primer proceso en el flujo de trabajo. Agrupa los subprocesos que hacen parte de la configuración general.
+@itemize 
+@item @emph{Administrar Programas}: es el subproceso que se encarga de administrar la información de los programas académicos ofrecidos por la Institución Educativa.
+@item @emph{Administrar Ciclos}: es el subproceso en donde se establece cada ciclo académico con el rango de fechas inicial y final. Por ejemplo, los ciclos pueden ser establecidos en periodos de tiempo bimestral, trimestral, semestral, entre otros.
+@item @emph{Administrar Salones}: es el subproceso que permite gestionar los salones que están habilitados para tomar las diferentes clases.
+@end itemize
+
+ 
+@subsection Configuración institucional
+Es el segundo proceso en el flujo de trabajo. Agrupa subprocesos más específicos de configuración de la Institución Educativa.
+@itemize 
+@item @emph{Administrar Competencias}: es el subproceso que facilita la administración de competencias que pertenecen a determinado programa.
+@item @emph{Administrar Cortes}: es el subproceso en donde se establece los cortes en los que está dividido el ciclo académico. Contiene un porcentaje de corte y un rango de fechas inicial y final del corte.
+@item @emph{Administrar Estudiantes}: es el subproceso en donde se gestiona la información de los estudiantes de la Institución Educativa.
+@item @emph{Administrar Profesores}: A través de este subproceso se gestiona la información básica y de contacto de los profesores de la Institución Educativa.
+@end itemize
+
+
+@subsection Configuración periódica
+Es el tercer proceso en el flujo de trabajo. Agrupa los subprocesos que deberán ejecutarse con cada cambio de periodo académico.  
+@itemize
+@item @emph{Administrar Cursos}: Es el subproceso en donde se determina las competencias que estarán a cargo de cada docente en cada ciclo académico.  Opcionalmente, se puede establecer el horario de clases para el curso.
+@item @emph{Administrar Matrícula de Programas}: En este subproceso se matricula al estudiante en el programa académico correspondiente.
+@item @emph{Administrar Matrícula de Ciclos}: Desde este subproceso se matricula al estudiante de determinado programa académico, en un nuevo ciclo.
+@item @emph{Administrar Calificaciones}: Este subproceso tiene como función principal establecer los cursos en los que está inscrito el estudiante en el ciclo. 
+@end itemize
+
+
+@subsection Calificaciones
+Es el cuarto proceso en el flujo de trabajo. Agrupa los subprocesos que se encargan de las calificaciones del estudiante en cada uno de los cursos.  
+@itemize
+@item @emph{Notas de Corte}: Es el subproceso en donde se almacena las notas de los cortes que conforman el curso en el ciclo académico. 
+                            Como resultado se tiene una calificación definitiva de ciclo. En caso que la nota definitiva sea reprobatoria, el sistema admite
+                            una nota de habilitación y de esta forma obtener la nota final del estudiante en el curso. 
+@end itemize
+
