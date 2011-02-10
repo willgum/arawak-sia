@@ -500,7 +500,7 @@ class MatriculaPrograma(models.Model):
     estado = models.ForeignKey(EstadoInscripcion, blank=True, null=True, default=1)
     fecha_vencimiento = models.DateField()
     becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
-    promedio_acumulado = models.FloatField(blank=True, null=True, validators=[validar_nota])
+    promedio_acumulado = models.FloatField(blank=True, null=True, default=0, validators=[validar_nota])
     
     def nombre_estudiante(self):
         return self.estudiante.nombre1 + ' ' + self.estudiante.apellido1
@@ -569,7 +569,7 @@ class MatriculaCiclo(models.Model):
     matricula_programa = models.ForeignKey(MatriculaPrograma)
     ciclo = models.ForeignKey(Ciclo)
     observaciones = models.TextField(max_length=200, blank=True)
-    promedio_ciclo = models.FloatField(blank=True, null=True, validators=[validar_nota])
+    promedio_ciclo = models.FloatField(blank=True, null=True, default=0, validators=[validar_nota])
     
     def __unicode__(self):
         return self.matricula_programa.codigo
@@ -672,8 +672,8 @@ class Amonestacion(models.Model):
 class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
     matricula_ciclo = models.ForeignKey(MatriculaCiclo)
-    nota_definitiva = models.FloatField(blank=True, null=True, validators=[validar_nota])
-    nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, validators=[validar_nota])
+    nota_definitiva = models.FloatField(blank=True, null=True, default=0, validators=[validar_nota])
+    nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, default=0, validators=[validar_nota])
     fallas = models.IntegerField(help_text="Número de total de fallas en el ciclo.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
     
