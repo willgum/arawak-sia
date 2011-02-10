@@ -52,6 +52,7 @@ class CalificacionAdmin(admin.ModelAdmin):
         ('Información básica', {'fields': [
             'curso', 
             'matricula_ciclo',
+            'codigo_ciclo',
             'nota_definitiva', 
             'nota_habilitacion',
             'perdio_fallas',
@@ -61,12 +62,13 @@ class CalificacionAdmin(admin.ModelAdmin):
     list_display = (
         'curso', 
         'codigo_estudiante', 
+        'codigo_ciclo',
         'nota_definitiva', 
         'nota_habilitacion',
         'fallas',
         'perdio_fallas',
     )
-    readonly_fields = ('nota_definitiva',)
+    readonly_fields = ('nota_definitiva', 'codigo_ciclo')
     search_fields = ['curso', 'codigo_estudiante']
 
 
@@ -414,12 +416,18 @@ class CicloAdmin(ButtonableModelAdmin):
     date_hierarchy = 'fecha_inicio'
 
     def promocion(self, obj):
-#        url = "/admin" + "/".join(str( obj._meta ).split(".")) + "/" + str(obj.id) + "/"
         url = "/admin/academico/ciclo/promocion"
         return HttpResponseRedirect( url )
     promocion.url = "/admin/academico/ciclo/promocion"    #puts this on the end of the admin URL.
     promocion.short_description='Promover ciclo'
-    buttons = [ promocion,]
+    
+    def reporte(self, obj):
+        url = "/admin/academico/ciclo/reporte"
+        return HttpResponseRedirect( url )
+    reporte.url = "/admin/academico/ciclo/reporte"    #puts this on the end of the admin URL.
+    reporte.short_description='Reporte'
+    
+    buttons = [ promocion, reporte]
 
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
