@@ -14,62 +14,71 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1>Mis Notas </h1>
+		<h1>Notas </h1>
 		<ul class="tabs"">
-			{% for programa in programas %}
-				<li><a href="#">{{ programa.nombre }}</a></li>
+			{% for llave, valor in programas.items %}
+				<li><a href="#">{{ valor.programas.nombre_programa }}</a></li>
 			{% endfor %}
 		</ul>		
 		<div class="panes">
-			{% for programa in programas %}
+			{% for llave, valor in programas.items %}
 				<div class="panesDiv">
-					<table id="estudiantes" class="grilla" width="100%">
-						<thead>
-							<tr>
-								<th>Código</th>
-								<th>Competencia</th>					
-								{% for corte in cortes %} 
-									<th>{{corte.porcentaje}}%</th>
-									<th>F.</th>
-								{% endfor %}
-								<th style="width: 20px;">Hab.</th>
-								<th style="width: 20px;">Def.</th>	
-								<th style="width: 20px;">F.T.</th>					
-							</tr>
-						</thead>
-						<tbody>				
-							{% for calificacion in calificaciones %}
-								<tr class="{% cycle '' 'odd' %}">
-									<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-                        			<td>{{ calificacion.nombreCompetencia }}</td>
-                        			{% for corte in cortes %} 
-										<td style="text-align:center">
-											{% for llave, valor in calificacion.items %}
-												{% ifequal llave corte.id %}
-											    	{{ valor.nota }}
-											    {% endifequal %}
+					{% if valor.ciclo %}
+						{% if valor.cantCalificaciones > 0 %}
+							<h3>Ciclo: {{ ciclo.codigo}} </h3>
+							<table id="estudiantes" class="grilla" width="100%">
+								<thead>
+									<tr>
+										<th style="width: 40px;">Código</th>
+										<th>Competencia</th>					
+										{% for corte in cortes %} 
+											<th>F.</th>
+											<th>{{corte.porcentaje}}%</th>
+										{% endfor %}
+										<th style="width: 20px;">F.T.</th>
+										<th style="width: 20px;">Hab.</th>
+										<th style="width: 20px;">Def.</th>
+									</tr>
+								</thead>
+								<tbody>				
+									{% for calificacion in valor.calificaciones %}
+										<tr class="{% cycle '' 'odd' %}">
+											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+		                        			<td>{{ calificacion.nombreCompetencia }}</td>
+		                        			{% for corte in cortes %} 
+												<td style="text-align:center">
+													{% for llave, valor in calificacion.items %}
+													    {% ifequal llave corte.id %}
+													    	{{ valor.fallas }}
+													    {% endifequal %}
+													{% endfor %}
+												</td>
+												<td style="text-align:center">
+													{% for llave, valor in calificacion.items %}
+														{% ifequal llave corte.id %}
+													    	{{ valor.nota }}
+													    {% endifequal %}
+													{% endfor %}
+												</td>
 											{% endfor %}
-										</td>
-										<td style="text-align:center">
-											{% for llave, valor in calificacion.items %}
-											    {% ifequal llave corte.id %}
-											    	{{ valor.fallas }}
-											    {% endifequal %}
-											{% endfor %}
-										</td>
+											<td style="text-align:center">{{ calificacion.fallas }}</th>
+											<td style="text-align:center">{{ calificacion.nota_habilitacion }}</td>
+											<td style="text-align:center">{{ calificacion.nota_definitiva }}</td>
+										</tr>
 									{% endfor %}
-									<td style="text-align:center"><div id="{{calificacion.id}}_notaHab">{{ calificacion.nota_habilitacion }}</div></td>
-									<td style="text-align:center"><div id="{{calificacion.id}}_notaDef">{{ calificacion.nota_definitiva }}</div></td>					
-									<th style="text-align:center"><div id="{{calificacion.id}}_totalFallas">{{ calificacion.fallas }}</div></th>	
-								</tr>					
-							{% endfor %}
-						</tbody>
-						<tfoot>
-							<tr>
-								<th scope="row" colspan="{{ cantidadCortes }}">Total Competencia: {{ cantidad }}</td>
-							</tr>
-						</tfoot>
-					</table>								
+								</tbody>
+								<tfoot>
+									<tr>
+										<th scope="row" colspan="{{ cantCortes }}">Total Competencia: {{ valor.cantCalificaciones }}</td>
+									</tr>
+								</tfoot>
+							</table>
+						{% else %}
+							<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
+						{% endif %}
+					{% else %}
+						<h4>Lo sentimos, al parecer usted no se ha matriculado en este ciclo.</h4>
+					{% endif %}							
 				</div>
 			{% endfor %}
 		</div>

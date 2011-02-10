@@ -217,28 +217,12 @@ def buscarMatriculaProgramasEstudiante(solicitud):
     usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
     return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
 
-def buscarCompetenciasEstudiante(solicitud):
-    matPrograma = buscarMatriculaProgramasEstudiante(solicitud)                
-    matCiclo = []
-    for mat in matPrograma:
-        resultado = MatriculaCiclo.objects.filter(matricula_programa = mat.id, ciclo = cicloActual())
-        if len(resultado) > 0:
-            for indice1 in range(0, len(resultado)):
-                contador = 0
-                if len(matCiclo) > 0:
-                    for indice2 in range(0, len(matCiclo)):
-                        if resultado[indice1] == matCiclo[indice2]:
-                            contador += 1
-                        if contador == 0:
-                            matCiclo.append(resultado[indice1])
-                else:
-                    matCiclo.append(resultado[indice1])                
+def buscarCompetenciasEstudiante(solicitud, matricula_ciclo_id):
     calificaciones = []
-    for mat in matCiclo:
-        resultado = Calificacion.objects.filter(matricula_ciclo = mat.id)                    
-        if len(resultado) > 0:
-            for indice in range(0, len(resultado)):
-                calificaciones.append(resultado[indice])
+    resultado = Calificacion.objects.filter(matricula_ciclo = matricula_ciclo_id)                    
+    if len(resultado) > 0:
+        for indice in range(0, len(resultado)):
+            calificaciones.append(resultado[indice])
     return calificaciones
 
 def buscarCompetenciasHistorialEstudiante(solicitud):
@@ -276,63 +260,69 @@ def programasEstudiante(solicitud):
 @login_required
 def horariosEstudiante(solicitud):
     if comprobarPermisos(solicitud):
-        programas = buscarProgramasEstudiante(solicitud)
-        matriculas = buscarMatriculaProgramasEstudiante(solicitud)
-        for matricula in matriculas:
-            MatriculasCiclo = MatriculaCiclo.objects.filter(matricula_programa = matricula.id)
-        calificaciones = buscarCompetenciasHistorialEstudiante(solicitud)
-        calificacionesCiclo = []
-        for indice in calificaciones:            
-            notas = {}
-            notas['id'] =                   indice.id
-            notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
-            notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
-            notas['nombreCompetencia'] =    Calificacion.nombreCompetencia(indice)
-            notas['matricula_ciclo'] =      indice.matricula_ciclo_id
-            notas['nota_definitiva'] =      indice.nota_definitiva
-            notas['nota_habilitacion'] =    indice.nota_habilitacion
-            notas['horarios'] =             Calificacion.horarios(indice)
-            calificacionesCiclo.append(notas)
+        programas = {}
+        ciclo = Ciclo.objects.get(id = cicloActual())
+        matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
+        for matPrograma in matProgramas:
+            aux = {}
+            aux['programas'] = matPrograma
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            for matCiclo in matCiclos:
+                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                if Ciclo.cicloActual(ciclo):
+                    aux['ciclo'] = matCiclo
+                    resultado = buscarCompetenciasEstudiante(solicitud, matCiclo.id) 
+                    aux['calificaciones'] = resultado
+                    aux['cantCalificaciones'] = len(resultado)
+            programas[matPrograma.id] = aux
         datos = {'programas': programas,
-                 'matriculas': MatriculasCiclo,
-                 'calificaciones': calificacionesCiclo,
-                 'cantidad': len(calificacionesCiclo)
-                 }           
+                 'ciclo': ciclo}
         return redireccionar('academico/estudiante/horarios.html', solicitud, datos)
     else:
         return logout(solicitud)
-    
+
 @login_required
 def notasEstudiante(solicitud):
     if comprobarPermisos(solicitud):
-        programas = buscarProgramasEstudiante(solicitud)
-        calificaciones = buscarCompetenciasEstudiante(solicitud)
-        cortes = Corte.objects.filter(ciclo = cicloActual()).order_by('fecha_inicio')
-        calificacionesCiclo = []
-        for indice in calificaciones:            
-            notas = {}
-            notas['id'] =                   indice.id
-            notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
-            notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
-            notas['nombreCompetencia'] =    Calificacion.nombreCompetencia(indice)
-            notas['matricula_ciclo'] =      indice.matricula_ciclo
-            notas['nota_definitiva'] =      indice.nota_definitiva
-            notas['nota_habilitacion'] =    indice.nota_habilitacion
-            notas['fallas'] =               indice.fallas
-            for corte in cortes:
-                try:
-                    resultado = NotaCorte.objects.get(calificacion = indice.id, corte = corte.id)
-                    notas[corte.id] = {'nota': resultado.nota, 'fallas': resultado.fallas}
-                except:
-                    notas[corte.id] = {'nota': 0, 'fallas': 0}
-            calificacionesCiclo.append(notas)
-        
-        datos = {'cortes': cortes,                 
-                 'programas': programas,
-                 'calificaciones': calificacionesCiclo,
-                 'cantidad': len(calificacionesCiclo),
-                 'cantidadCortes': 5+(len(cortes)*2)
-                 }           
+        programas = {}
+        matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
+        id_ciclo = cicloActual()
+        ciclo = Ciclo.objects.get(id = id_ciclo)
+        cortes = Corte.objects.filter(ciclo = id_ciclo).order_by('fecha_inicio')
+        for matPrograma in matProgramas:
+            aux = {}
+            aux['programas'] = matPrograma
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            for matCiclo in matCiclos:
+                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                if Ciclo.cicloActual(ciclo):
+                    aux['ciclo'] = matCiclo
+                    calificaciones = buscarCompetenciasEstudiante(solicitud, matCiclo.id) 
+                    calificacionesCiclo = []
+                    for indice in calificaciones:            
+                        notas = {}
+                        notas['id'] =                   indice.id
+                        notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
+                        notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
+                        notas['nombreCompetencia'] =    Calificacion.nombreCompetencia(indice)
+                        notas['matricula_ciclo'] =      indice.matricula_ciclo
+                        notas['nota_definitiva'] =      indice.nota_definitiva
+                        notas['nota_habilitacion'] =    indice.nota_habilitacion
+                        notas['fallas'] =               indice.fallas
+                        for corte in cortes:
+                            try:
+                                resultado = NotaCorte.objects.get(calificacion = indice.id, corte = corte.id)
+                                notas[corte.id] = {'nota': resultado.nota, 'fallas': resultado.fallas}
+                            except:
+                                notas[corte.id] = {'nota': 0, 'fallas': 0}
+                        calificacionesCiclo.append(notas)
+                    aux['calificaciones'] = calificacionesCiclo
+                    aux['cantCalificaciones'] = len(calificacionesCiclo)
+            programas[matPrograma.id] = aux
+        datos = {'programas': programas,
+                 'ciclo': ciclo,
+                 'cortes': cortes,
+                 'cantCortes': (len(cortes)*2)+5}        
         return redireccionar('academico/estudiante/notas.html', solicitud, datos)
     else:
         return logout(solicitud)
@@ -340,27 +330,23 @@ def notasEstudiante(solicitud):
 @login_required
 def historialEstudiante(solicitud):
     if comprobarPermisos(solicitud):
-        programas = buscarProgramasEstudiante(solicitud)
-        matriculas = buscarMatriculaProgramasEstudiante(solicitud)
-        for matricula in matriculas:
-            MatriculasCiclo = MatriculaCiclo.objects.filter(matricula_programa = matricula.id)
-        calificaciones = buscarCompetenciasHistorialEstudiante(solicitud)
-        calificacionesCiclo = []
-        for indice in calificaciones:            
-            notas = {}
-            notas['id'] =                   indice.id
-            notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
-            notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
-            notas['nombreCompetencia'] =    Calificacion.nombreCompetencia(indice)
-            notas['matricula_ciclo'] =      indice.matricula_ciclo_id
-            notas['nota_definitiva'] =      indice.nota_definitiva
-            notas['nota_habilitacion'] =    indice.nota_habilitacion
-            calificacionesCiclo.append(notas)
-        datos = {'programas': programas,
-                 'matriculas': MatriculasCiclo,
-                 'calificaciones': calificacionesCiclo,
-                 'cantidad': len(calificacionesCiclo)
-                 }           
+        programas = {}
+        matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
+        for matPrograma in matProgramas:
+            aux = {}
+            aux['programas'] = matPrograma
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            ciclo = {}
+            for matCiclo in matCiclos:
+                resCiclo  = Ciclo.objects.get(id = matCiclo.ciclo_id)
+                resultado = buscarCompetenciasEstudiante(solicitud, matCiclo.id) 
+                ciclo[matCiclo.id] = {'ciclo': matCiclo,
+                                      'codigoCiclo': resCiclo,
+                                      'calificaciones': resultado,
+                                      'cantCalificaciones': len(resultado)}
+            aux['ciclos'] = ciclo
+            programas[matPrograma.id] = aux
+        datos = {'programas': programas}
         return redireccionar('academico/estudiante/historial.html', solicitud, datos)
     else:
         return logout(solicitud)
