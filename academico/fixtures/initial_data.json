@@ -1328,6 +1328,62 @@
     }
   },
   {
+    "model": "academico.genero",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Masculino"
+    }
+  },
+  {
+    "model": "academico.tipofuncionario",
+    "pk": 1,
+    "fields": {
+      "codigo": "1",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.tipofuncionario",
+    "pk": 2,
+    "fields": {
+      "codigo": "2",
+      "nombre": "Director"
+    }
+  },
+  {
+    "model": "academico.tipofuncionario",
+    "pk": 3,
+    "fields": {
+      "codigo": "3",
+      "nombre": "Tesorero"
+    }
+  },
+  {
+    "model": "academico.tipofuncionario",
+    "pk": 4,
+    "fields": {
+      "codigo": "4",
+      "nombre": "Coordinador académico"
+    }
+  },
+  {
+    "model": "academico.tipofuncionario",
+    "pk": 5,
+    "fields": {
+      "codigo": "5",
+      "nombre": "Secretaria(o)"
+    }
+  },
+  {
+    "model": "academico.tipofuncionario",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Bibliotecaria(o)"
+    }
+  },
+  {
     "model": "auth.group",
     "pk": 1,
     "fields": {

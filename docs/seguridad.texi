@@ -1,0 +1,45 @@
+@node Seguridad
+@chapter Seguridad
+La seguridad es uno de los factores más importantes a tener en cuenta en una aplicación web.
+Con el fin de desarrollar un sistema seguro y confiable, se ha hecho especial énfasis la protección
+de la información. 
+
+@itemize
+@item @emph{Autenticación de usuarios}: El usuario que desee acceder a los distintos módulos del sistema, 
+	en primer lugar deberá identificarse con un nombre de usuario y una contraseña válida. 
+	Éste nombre de usuario es único y la contraseña sólamente deberá ser conocida por el usuario. 
+	Cada usuario dispone de un perfil de usuario, con el fin de dar acceso únicamente a los módulos 
+	que le han sido asignados por el administrador. De esta forma se evitará por ejemplo que un estudiante 
+	acceda a funciones exclusivas del docente, o que un docente pueda ingresar al módulo administrador. 
+
+@item @emph{Almacenamiento de contraseñas}: Las contraseñas son el método principal utilizado para 
+	verificar la identidad de los usuarios. Por esta razón la seguridad de las contraseñas es de suma importancia 
+	para la protección del usuario y de la aplicación. Es por esto que las contraseñas son encriptadas antes 
+	de ser almacenadas en la base de datos y sólamente el usuario deberá conocer su contraseña. Aún así,
+	se recomienda leer documentación acerca de cómo crear contraseñas robustas, donde se hacen recomendaciones 
+	tales como no utilizar únicamente palabras o únicamente números, no utilizar palabras reconocibles, 
+	no utilizar información personal, no escribir la contraseña, preferiblemente usar contraseñas largas,
+	modificar las contraseñas cada cierto periodo de tiempo, entre otras otras consideraciones importantes.
+
+@item @emph{Expiración de sesiones}: Además de el método de autenticación descrito anteriormente, 
+	se ha implementado el manejo de sesiones. Si el usuario deja de usar la aplicación durante un intervalo de 
+	tiempo de 10 minutos, el sistema cerrará automáticamente la sesión con el fin de evitar que la aplicación 
+	se haya quedado abierta por olvido del usuario.
+
+@item @emph{Restricción de permisos}: La aplicación cuenta con tres perfiles de usuario: El administrador, 
+	el estudiante y el docente. Cada perfil de usuario dispone de una serie de permisos que pueden ser  
+	gestionados desde el usuario administrador. El usuario únicamente puede acceder a los módulos sobre los que se
+	le han habilitado los permisos respectivos. Es posible dar permisos para crear un nuevo registro, 
+	para modificar información y para eliminar información en forma independiente.
+
+@item @emph{Inyección de SQL}: Existen otros métodos de vulnerabilidad como es el caso de la inyección de SQL.
+	Básicamente consiste en incrustrar consultas de tipo SQL que pueden afectar y hacer vulnerable 
+	la información de la base de datos. Sin embargo la aplicación se ha construido sobre la base de que 
+	"@emph{Nunca, bajo ninguna circunstancia, se debe confiar en los datos que llegan del navegador}". Bajo esta
+	premisa se han implementado algunas técnicas que evitan la inyección de código SQL en la aplicación.
+	
+@item @emph{Actualización permanente}: La aplicación está soportada en servidores web con sistemas Linux seguros. 
+	Se realizan actualizaciones permanentes con el fin de prevenir cualquier posible vulnerabilidad y se 
+	realiza continuo seguimiento al flujo de información para detectar posibles infiltraciones.
+
+@end itemize
