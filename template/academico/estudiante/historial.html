@@ -14,46 +14,73 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1>Mis Notas </h1>
+		<h1>Historial Académico </h1>
 		<ul class="tabs"">
-			{% for programa in programas %}
-				<li><a href="#">{{ programa.nombre }}</a></li>
+			{% for llave, valor in programas.items %}
+				<li><a href="#">{{ valor.programas.nombre_programa }}</a></li>
 			{% endfor %}
-		</ul>		
-		<div class="panes">
-			{% for programa in programas %}
-				<div class="panesDiv">
-					{% for matricula in matriculas %}
-						<table id="estudiantes" class="grilla" width="100%">
-							<thead>
-								<tr>
-									<th>Código</th>
-									<th>Competencia</th>					
-									<th style="width: 20px;">Hab.</th>
-									<th style="width: 20px;">Def.</th>					
-								</tr>
-							</thead>
-							<tbody>				
-								{% for calificacion in calificaciones %}
-									{% ifequal calificacion.matricula_ciclo matricula.id %}
-										<tr class="{% cycle '' 'odd' %}">
-											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-		                        			<td>{{ calificacion.nombreCompetencia }}</td>
-		                        			<td style="text-align:center">{{ calificacion.nota_habilitacion }}</td>
-											<td style="text-align:center">{{ calificacion.nota_definitiva }}</td>
-										</tr>					
-									{% endifequal %}
-								{% endfor %}
-							</tbody>
-							<tfoot>
-								<tr>
-									<th scope="row" colspan="2">Total Competencia: {{ cantidad }}</td>
-									<th>Promedio: </td>
-									<th>{{ matricula.promedio_ciclo }} </td>
-								</tr>
-							</tfoot>
-						</table>
-					{% endfor %}								
+		</ul>
+		<div class="panes">			
+			{% for llave, valor in programas.items %}
+				<div class="panesDiv">		
+					{% for llaveCiclo, valorCiclo in valor.ciclos.items %}
+						{% if valorCiclo.ciclo %}
+							{% if valorCiclo.cantCalificaciones > 0 %}
+								{% ifnotequal forloop.counter 1 %}</br>{% endifnotequal %}
+								<h3>Ciclo: {{ valorCiclo.codigoCiclo.codigo}} </h3>
+								<table id="estudiantes" class="grilla" width="100%">
+									<thead>
+										<tr>
+											<th style="width: 40px;">Código</th>
+											<th>Competencia</th>
+											<th style="width: 20px;">F.T.</th>	
+											<th style="width: 20px;">Hab.</th>
+											<th style="width: 20px;">Def.</th>													
+										</tr>
+									</thead>
+									<tbody>				
+										{% for calificacion in valorCiclo.calificaciones %}
+											<tr class="{% cycle '' 'odd' %}">
+												<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+			                        			<td>{{ calificacion.nombreCompetencia }}</td>
+			                        			{% for corte in cortes %} 
+													<td style="text-align:center">
+														{% for llave, valor in calificacion.items %}
+															{% ifequal llave corte.id %}
+														    	{{ valor.nota }}
+														    {% endifequal %}
+														{% endfor %}
+													</td>
+													<td style="text-align:center">
+														{% for llave, valor in calificacion.items %}
+														    {% ifequal llave corte.id %}
+														    	{{ valor.fallas }}
+														    {% endifequal %}
+														{% endfor %}
+													</td>
+												{% endfor %}
+												<td style="text-align:center">{{ calificacion.fallas }}</th>
+												<td style="text-align:center">{{ calificacion.nota_habilitacion }}</td>
+												<td style="text-align:center">{{ calificacion.nota_definitiva }}</td>
+											</tr>
+										{% endfor %}
+									</tbody>
+									<tfoot>
+										<tr>
+											<th scope="row" colspan="2">Total Competencia: {{valorCiclo.cantCalificaciones }}</td>
+											<th scope="row" colspan="2">Promedio:</td>
+											<th style="text-align:center">{{ valorCiclo.ciclo.promedio_ciclo}}</th>	
+										</tr>
+									</tfoot>
+								</table>						
+							{% else %}
+								{% ifnotequal forloop.counter 1 %}</br>{% endifnotequal %}
+								<h3>Ciclo: {{ valorCiclo.codigoCiclo}} </h3>
+								<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
+								</br>
+							{% endif %}
+						{% endif %}
+					{% endfor %}					
 				</div>
 			{% endfor %}
 		</div>

@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+{% endblock %}
+
 {% block ruta %} 
 	<ul id="nav">
 		<li><a href="/">Inicio</a></li>
@@ -12,42 +16,49 @@
 	<div id="content" class="with_sidebar">
 		<h1>Horarios</h1>
 		<ul class="tabs"">
-			{% for programa in programas %}
-				<li><a href="#">{{ programa.nombre }}</a></li>
+			{% for llave, valor in programas.items %}
+				<li><a href="#">{{ valor.programas.nombre_programa }}</a></li>
 			{% endfor %}
 		</ul>		
 		<div class="panes">
-			{% for programa in programas %}
+			{% for llave, valor in programas.items %}
 				<div class="panesDiv">
-					{% for matricula in matriculas %}
-						<table id="estudiantes" class="grilla" width="100%">
-							<thead>
-								<tr>
-									<th>Código</th>
-									<th>Nombre</th>
-									<th>Horario</th>				
-								</tr>
-							</thead>
-							<tbody>				
-								{% for calificacion in calificaciones %}
-									<tr class="{% cycle '' 'odd' %}">
-										<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-	                        			<td>{{ calificacion.nombreCompetencia }}</td>
-	                        			<td style="text-align:center">
-	                        				{% for horario in calificacion.horarios %}
-												{{ horario }}<br/>
-											{% endfor %}
-										</td>
-									</tr>		
-								{% endfor %}
-							</tbody>
-							<tfoot>
-								<tr>
-									<th scope="row" colspan="4">Total Competencia: {{ cantidad }}</td>
-								</tr>
-							</tfoot>
-						</table>
-					{% endfor %}								
+					{% if valor.ciclo %}
+						{% if valor.cantCalificaciones > 0 %}							
+							<h3>Ciclo: {{ ciclo.codigo}} </h3>
+							<table id="estudiantes" class="grilla" width="100%">
+								<thead>
+									<tr>
+										<th style="width: 40px;">Código</th>
+										<th>Nombre</th>
+										<th>Horario</th>				
+									</tr>
+								</thead>
+								<tbody>				
+									{% for calificacion in valor.calificaciones %}
+										<tr class="{% cycle '' 'odd' %}">
+											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
+		                        			<td>{{ calificacion.nombreCompetencia }}</td>
+		                        			<td>
+		                        				{% for horario in calificacion.horarios %}
+													{{ horario }}<br/>
+												{% endfor %}
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+								<tfoot>
+									<tr>
+										<th scope="row" colspan="4">Total Competencia: {{ valor.cantCalificaciones }}</td>
+									</tr>
+								</tfoot>
+							</table>
+						{% else %}
+							<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
+						{% endif %}
+					{% else %}
+						<h4>Lo sentimos, al parecer usted no se ha matriculado en este ciclo.</h4>
+					{% endif %}							
 				</div>
 			{% endfor %}
 		</div>
