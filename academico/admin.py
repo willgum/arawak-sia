@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario
 from django.contrib import admin
 
-from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 
 class CalificacionInline(admin.TabularInline):
@@ -340,6 +339,37 @@ class CorteAdmin(admin.ModelAdmin):
     date_hierarchy = 'fecha_inicio'
     
 
+class FuncionarioInline(admin.TabularInline):
+    model = Funcionario
+    extra = 1
+    fields = ('nombre', 'tipo_documento', 'documento', 'lugar_expedicion', 'tipo_funcionario')
+
+class InstitucionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Información básica', {'fields': [
+            'nombre',
+            'nit',
+            'resolucion', 
+            'direccion', 
+            'telefono',
+            'fax',
+            'email',
+            'web',
+            'logo',]}),
+    ]
+    
+    list_display = (
+        'nombre',
+        'nit',         
+        'telefono', 
+        'web',
+        'email'      
+    )
+    
+    inlines = [FuncionarioInline,]
+    search_fields = ('nit',)
+    
+
 class ButtonableModelAdmin(admin.ModelAdmin):
     """
    A subclass of this admin will let you add buttons (like history) in the
@@ -394,14 +424,15 @@ class CicloAdmin(ButtonableModelAdmin):
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
 #===============================================================================
+admin.site.register(Calificacion, CalificacionAdmin)
+admin.site.register(Ciclo, CicloAdmin)
 admin.site.register(Competencia, CompetenciaAdmin)
 admin.site.register(Corte, CorteAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(Estudiante, EstudianteAdmin)
-admin.site.register(Calificacion, CalificacionAdmin)
+admin.site.register(Institucion, InstitucionAdmin)
 admin.site.register(MatriculaCiclo, MatriculaCicloAdmin)
 admin.site.register(MatriculaPrograma, MatriculaProgramaAdmin)
 admin.site.register(Salon, SalonAdmin)
-admin.site.register(Ciclo, CicloAdmin)
 admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(Profesor, ProfesorAdmin)

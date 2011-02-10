@@ -10,7 +10,6 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 
-from django.contrib import admin
 from django.forms import ModelForm, TextInput
 
 NOTA_MIN = 0.0
@@ -169,6 +168,13 @@ class TipoPrograma(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    
+class TipoFuncionario (models.Model):
+    codigo = models.CharField(max_length = 3)
+    nombre = models.CharField(max_length = 50)
+    
+    def __unicode__(self):
+        return self.nombre
 
 
 def validar_nota(nota):
@@ -282,7 +288,7 @@ class Profesor(models.Model):
         
         if self.foto.name != "":
             tmp_foto = self.documento + "c.jpg"
-            self.foto.name = "imagenes/original/" + self.documento + "c.jpg"
+            self.foto.name = "imagenes/original/" + tmp_foto
             existe_foto = True
         
         try:
@@ -409,15 +415,15 @@ class Estudiante(models.Model):
         if self.fotocopia_documento.name != "":
             existe_documento = True
             tmp_documento = self.documento + "a.jpg"
-            self.fotocopia_documento.name = "imagenes/original/" + self.documento + "a.jpg"
+            self.fotocopia_documento.name = "imagenes/original/" + tmp_documento
         if self.fotocopia_diploma.name != "":
             existe_diploma = True
             tmp_diploma = self.documento + "b.jpg"
-            self.fotocopia_diploma.name = "imagenes/original/" + self.documento + "b.jpg"
+            self.fotocopia_diploma.name = "imagenes/original/" + tmp_diploma
         if self.foto.name != "":
             existe_foto = True
             tmp_foto = self.documento + "c.jpg"
-            self.foto.name = "imagenes/original/" + self.documento + "c.jpg"
+            self.foto.name = "imagenes/original/" + tmp_foto
             
         try:
             user = User.objects.get(id=self.id_usuario)
@@ -773,3 +779,50 @@ class HorarioCurso(models.Model):
     
     class Meta:
         unique_together = ("dia", "hora_inicio","hora_fin", "salon")
+        
+class Institucion(models.Model):
+    nombre = models.CharField(max_length=200)
+    nit = models.CharField(max_length=20)
+    resolucion = models.TextField( verbose_name='Resolución', max_length=200, blank=True)
+    direccion = models.CharField( verbose_name='Dirección', max_length=200, blank=True)
+    telefono = models.CharField(verbose_name='Teléfono', max_length=20, blank=True)
+    fax = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(blank=True)
+    web = models.URLField(blank=True)
+    logo = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
+    
+    class Meta:
+        verbose_name_plural = 'Institución'
+    
+    def __unicode__(self):
+        return self.nombre
+    
+    def save(self, *args, **kwargs):
+        
+#        OPCIÓN PARA CARGAR FOTO EN TAMAÑO ORIGINAL, MINI Y THUMNAIL
+        existe_logo = False
+        if self.logo.name != "":
+            tmp_logo = self.nit + "c.jpg"
+            self.logo.name = "imagenes/original/" + tmp_logo
+            existe_logo = True        
+         
+        super(Institucion, self).save(*args, **kwargs)
+        
+        if existe_logo == True:
+            logo_org = settings.MEDIA_ROOT + "imagenes/original/" + tmp_logo
+            logo_min = settings.MEDIA_ROOT + "imagenes/mini/" + tmp_logo
+            logo_thu = settings.MEDIA_ROOT + "imagenes/thumbnail/" + tmp_logo
+            
+            scale(logo_org, THUMB_WIDTH, THUMB_HEIGHT, logo_thu)
+            scale(logo_org, MINI_WIDTH, MINI_HEIGHT, logo_min)
+        
+class Funcionario(models.Model):
+    institucion = models.ForeignKey(Institucion)
+    nombre = models.CharField(max_length=200, verbose_name='Nombre')
+    tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1) 
+    documento = models.CharField(max_length=12, unique = True, validators=[validar_numerico])
+    lugar_expedicion = models.CharField(verbose_name='Lugar expedición', max_length=200, blank=True)
+    tipo_funcionario = models.ForeignKey(TipoFuncionario, blank=True, null=True, default=1) 
+    
+    def __unicode__(self):
+        return self.tipo_funcionario.nombre
