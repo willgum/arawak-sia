@@ -581,7 +581,7 @@ class MatriculaCiclo(models.Model):
         return self.matricula_programa.codigo
     
     def codigo_ciclo(self):
-        return self.ciclo.id
+        return self.ciclo.codigo
     
     def cicloActual(self):
         return self.ciclo.cicloActual()
