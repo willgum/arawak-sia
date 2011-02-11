@@ -10,31 +10,42 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1>Ingresar Notas </h1>
-		<table class="grilla" width="100%">
-			<thead>
-				<tr>
-					<th>Código</th>
-					<th>Nombre</th>
-					<th>Programa</th>
-					<th></th>
-				</tr>
-			</thead>			
-			<tbody>				
-				{% for curso in cursos %}
-					<tr class="{% cycle '' 'odd' %}">
-						<th scope="row"><a href="{{curso.idCompetencia}}/">{{ curso.codigoCompetencia }}</a></th>
-						<td>{{ curso.nombre }}</td>
-						<td style="text-align:center">{{ curso.nombrePrograma }}</td>
-						<td style="text-align:center"><a href="guardar/{{curso.id}}/">Notas</a></td>
-					</tr>					
+		<ul class="tabs"">
+			{% for llave, valor in programas.items %}
+				<li><a href="#">{{ valor.programa.nombre }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for programa in programas %}
+				<div class="panesDiv">
+				{% for llave, valor in programas.items %}
+					<h3>Ciclo: {{ ciclo.codigo}} </h3>
+					<table id="estudiantes" class="grilla" width="100%">
+						<thead>
+							<tr>
+								<th style="width: 80px;">Código</th>
+								<th>Competencia</th>
+								<th style="width: 100px;"></th>				
+							</tr>
+						</thead>
+						<tbody>				
+							{% for llaveCursos, valorCurso in valor.cursos.items %}
+								<tr class="{% cycle '' 'odd' %}">
+									<th scope="row"><a href="{{valorCurso.idCompetencia}}/">{{ valorCurso.codigoCompetencia }}</a></th>
+                        			<td>{{ valorCurso.nombre }}</td>
+                        			<td><a href="guardar/{{valorCurso.id}}/">Ingresar Notas</a></td>
+								</tr>
+							{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="row" colspan="4">Total Competencia: {{ valor.cantidad }}</td>
+							</tr>
+						</tfoot>
+					</table>
 				{% endfor %}
-			</tbody>			
-			<tfoot>
-				<tr>
-					<th scope="row" colspan="4">Total Programas: {{cantidad}}</td>
-				</tr>
-			</tfoot>
-		</table>
+				</div>
+			{% endfor %}
+		</div>
 	</div>			
 {% endblock %}
