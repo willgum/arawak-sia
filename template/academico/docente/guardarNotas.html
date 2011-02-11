@@ -104,10 +104,10 @@
 					{% for corte in cortes %} 
 						<th>{{corte.porcentaje}}%</th>
 						<th>F.</th>
-					{% endfor %}
+					{% endfor %}	
+					<th style="width: 20px;">F.T.</th>
 					<th style="width: 20px;">Hab.</th>
-					<th style="width: 20px;">Def.</th>	
-					<th style="width: 20px;">F.T.</th>					
+					<th style="width: 20px;">Def.</th>					
 				</tr>
 			</thead>
 			<tbody>				
@@ -151,9 +151,9 @@
 								{% endif %}
 							</td>
 						{% endfor %}
+						<td style="text-align:center"><div id="{{calificacion.id}}_totalFallas">{{ calificacion.fallas }}</div></td>
 						<td style="text-align:center"><div id="{{calificacion.id}}_notaHab">{{ calificacion.nota_habilitacion }}</div></td>
-						<td style="text-align:center"><div id="{{calificacion.id}}_notaDef">{{ calificacion.nota_definitiva }}</div></td>					
-						<th style="text-align:center"><div id="{{calificacion.id}}_totalFallas">{{ calificacion.fallas }}</div></th>	
+						<th style="text-align:center"><div id="{{calificacion.id}}_notaDef">{{ calificacion.nota_definitiva }}</div></th>
 					</tr>					
 				{% endfor %}
 			</tbody>

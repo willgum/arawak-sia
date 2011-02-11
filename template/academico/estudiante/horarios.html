@@ -24,13 +24,15 @@
 			{% for llave, valor in programas.items %}
 				<div class="panesDiv">
 					{% if valor.ciclo %}
-						{% if valor.cantCalificaciones > 0 %}							
-							<h3>Ciclo: {{ ciclo.codigo}} </h3>
+						{% if valor.cantCalificaciones > 0 %}
 							<table id="estudiantes" class="grilla" width="100%">
 								<thead>
 									<tr>
+										<th colspan="3"><h3>Ciclo - {{ ciclo.codigo}}</h3></th>				
+									</tr>
+									<tr>
 										<th style="width: 40px;">Código</th>
-										<th>Nombre</th>
+										<th>Competencias</th>
 										<th>Horario</th>				
 									</tr>
 								</thead>
