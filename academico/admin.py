@@ -4,6 +4,37 @@ from django.contrib import admin
 
 from django.http import HttpResponseRedirect
 
+
+class ButtonableModelAdmin(admin.ModelAdmin):
+    """
+   A subclass of this admin will let you add buttons (like history) in the
+   change view of an entry.
+   http://www.theotherblog.com/Articles/2009/06/02/extending-the-django-admin-interface/
+    """
+    buttons=[]
+    buttons_list=[]
+    
+    def changelist_view(self, request, extra_context={}):
+        extra_context['buttons']=self.buttons_list
+        return super(ButtonableModelAdmin, self).changelist_view(request, extra_context)
+    
+    def change_view(self, request, object_id, extra_context={}):
+        extra_context['buttons']=self.buttons
+        return super(ButtonableModelAdmin, self).change_view(request, object_id, extra_context)
+
+    def __call__(self, request, url):
+        if url is not None:
+            import re
+            res=re.match('(.*/)?(?P<id>\d+)/(?P<command>.*)', url)
+            if res:
+                if res.group('command') in [b.func_name for b in self.buttons]:
+                    obj = self.model._default_manager.get(pk=res.group('id'))
+                    getattr(self, res.group('command'))(obj)
+                    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+        return super(ButtonableModelAdmin, self).__call__(request, url)
+
+
 class CalificacionInline(admin.TabularInline):
     model = Calificacion
     extra = 1
@@ -12,7 +43,7 @@ class CalificacionInline(admin.TabularInline):
     readonly_fields = ('nota_definitiva', 'nota_habilitacion')
 
 
-class MatriculaCicloAdmin(admin.ModelAdmin):
+class MatriculaCicloAdmin(ButtonableModelAdmin):
     raw_id_fields = ('matricula_programa', 'ciclo')
     fieldsets = [
         ('Información básica', {'fields': [
@@ -37,6 +68,14 @@ class MatriculaCicloAdmin(admin.ModelAdmin):
     list_filter = ['fecha_inscripcion', 'ciclo']
     search_fields = ('codigo_estudiante', 'ciclo')
     date_hierarchy = 'fecha_inscripcion'
+    
+    def constancia(self, obj):
+        url = "/admin/academico/matriculaciclo/constancia"
+        return HttpResponseRedirect( url )
+    constancia.url = "/admin/academico/matriculaciclo/constancia"    #puts this on the end of the admin URL.
+    constancia.short_description='Imprimir constancia'
+    
+    buttons = [constancia, ]
 
 
 class NotaCorteInline(admin.TabularInline):
@@ -227,7 +266,7 @@ class EstudianteAdmin(admin.ModelAdmin):
     search_fields = ['documento', 'nombre1', 'apellido1']
 
 
-class MatriculaProgramaAdmin(admin.ModelAdmin):
+class MatriculaProgramaAdmin(ButtonableModelAdmin):
     raw_id_fields = ('estudiante', 'programa')
     
     fieldsets = [
@@ -252,7 +291,23 @@ class MatriculaProgramaAdmin(admin.ModelAdmin):
                     )
     readonly_fields = ('promedio_acumulado',)
     
+    def make_published(self, request, queryset):
+        selected = request.GET.programa__id__exact
+        return HttpResponseRedirect("/inscritos/".join(selected))
+    make_published.short_description = "Mark selected stories as published"
+    
+    actions = [make_published]
+    list_filter = ['estado', 'programa']
     search_fields = ('codigo', 'nombre_programa', 'estado')
+    
+    def inscritos(self, request, obj):
+#        url = "/admin/academico/matriculaprograma/inscritos"
+        self.url = request.path
+        return HttpResponseRedirect( self.url )
+    
+    inscritos.short_description='Reporte inscritos'
+    
+    buttons_list = [inscritos, ]
 
 
 class ProfesorAdmin(admin.ModelAdmin):
@@ -372,29 +427,6 @@ class InstitucionAdmin(admin.ModelAdmin):
     search_fields = ('nit',)
     
 
-class ButtonableModelAdmin(admin.ModelAdmin):
-    """
-   A subclass of this admin will let you add buttons (like history) in the
-   change view of an entry.
-   http://www.theotherblog.com/Articles/2009/06/02/extending-the-django-admin-interface/
-    """
-    buttons=[]
-
-    def change_view(self, request, object_id, extra_context={}):
-        extra_context['buttons']=self.buttons
-        return super(ButtonableModelAdmin, self).change_view(request, object_id, extra_context)
-
-    def __call__(self, request, url):
-        if url is not None:
-            import re
-            res=re.match('(.*/)?(?P<id>\d+)/(?P<command>.*)', url)
-            if res:
-                if res.group('command') in [b.func_name for b in self.buttons]:
-                    obj = self.model._default_manager.get(pk=res.group('id'))
-                    getattr(self, res.group('command'))(obj)
-                    return HttpResponseRedirect(request.META['HTTP_REFERER'])
-
-        return super(ButtonableModelAdmin, self).__call__(request, url)
 
 class CicloAdmin(ButtonableModelAdmin):
     fieldsets = [

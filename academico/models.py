@@ -9,8 +9,8 @@ from django.db import models
 from django.conf import settings 
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
-
 from django.forms import ModelForm, TextInput
+
 
 NOTA_MIN = 0.0
 NOTA_MAX = 5.0
@@ -231,7 +231,8 @@ class CustomStorage(FileSystemStorage):
         if self.exists(name):
             self.delete(name)
         return name
-
+    
+    
 class Ciclo(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=8, unique=True)
     fecha_inicio = models.DateField()
@@ -366,7 +367,7 @@ class Programa(models.Model):
         return len(Competencia.objects.filter(programa=self))
     
     def __unicode__(self):
-        return "%s - %s" % (self.codigo, self.nombre)
+        return self.nombre
 
 
 class Estudiante(models.Model):
@@ -402,6 +403,9 @@ class Estudiante(models.Model):
     sisben = models.ForeignKey(Sisben, blank=True, default=1, null=True)
     discapacidad = models.ForeignKey(Discapacidad, blank=True, default=1, null=True)
     etnia = models.ForeignKey(Etnia, default=1, blank=True, null=True)
+    
+    def nombre(self):
+        return self.nombre1 + ' ' + self.nombre2 + ' ' + self.apellido1 + ' ' + self.apellido2
     
 #       Sobreescribir la función guardar para crear usuario
 #       Guardar información de acceso a la tabla de usuarios de DJANGO
@@ -503,7 +507,7 @@ class MatriculaPrograma(models.Model):
     promedio_acumulado = models.FloatField(blank=True, null=True, default=0, validators=[validar_nota])
     
     def nombre_estudiante(self):
-        return self.estudiante.nombre1 + ' ' + self.estudiante.apellido1
+        return self.estudiante.nombre()
     
     def nombre_programa(self):
         return self.programa.nombre

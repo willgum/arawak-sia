@@ -1,9 +1,10 @@
-#Wed Feb 02 09:12:32 COT 2011
+#Thu Feb 10 17:33:21 COT 2011
 eclipse.preferences.version=1
 encoding//academico/admin.py=utf-8
 encoding//academico/fixtures/initial_data.json=utf-8
 encoding//academico/fixtures/poliagro.json=utf-8
 encoding//academico/models.py=utf-8
+encoding//academico/reportes.py=utf-8
 encoding//academico/views.py=utf-8
 encoding//continuada/admin.py=utf-8
 encoding//continuada/models.py=utf-8

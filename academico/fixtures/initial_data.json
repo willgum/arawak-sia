@@ -1136,6 +1136,14 @@
     }
   },
   {
+    "model": "academico.estadoinscripcion",
+    "pk": 6,
+    "fields": {
+      "codigo": "6",
+      "nombre": "Pendiente"
+    }
+  },
+  {
     "model": "academico.periodicidad",
     "pk": 1,
     "fields": {
