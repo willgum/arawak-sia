@@ -27,9 +27,11 @@
 						{% if valorCiclo.ciclo %}
 							{% if valorCiclo.cantCalificaciones > 0 %}
 								{% ifnotequal forloop.counter 1 %}</br>{% endifnotequal %}
-								<h3>Ciclo: {{ valorCiclo.codigoCiclo.codigo}} </h3>
 								<table id="estudiantes" class="grilla" width="100%">
 									<thead>
+										<tr>
+											<th colspan="5"><h3>Ciclo: {{ valorCiclo.codigoCiclo.codigo}}</h3></th>													
+										</tr>
 										<tr>
 											<th style="width: 40px;">Código</th>
 											<th>Competencia</th>
@@ -61,7 +63,7 @@
 												{% endfor %}
 												<td style="text-align:center">{{ calificacion.fallas }}</th>
 												<td style="text-align:center">{{ calificacion.nota_habilitacion }}</td>
-												<td style="text-align:center">{{ calificacion.nota_definitiva }}</td>
+												<th style="text-align:center">{{ calificacion.nota_definitiva }}</th>
 											</tr>
 										{% endfor %}
 									</tbody>

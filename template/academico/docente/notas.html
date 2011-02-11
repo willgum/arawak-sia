@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+{% endblock %}
+
 {% block ruta %} 
 	<ul id="nav">
 		<li><a href="/">Inicio</a></li>
@@ -10,6 +14,7 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
+		<h1>Calificaciones</h1>
 		<ul class="tabs"">
 			{% for llave, valor in programas.items %}
 				<li><a href="#">{{ valor.programa.nombre }}</a></li>
@@ -19,9 +24,11 @@
 			{% for programa in programas %}
 				<div class="panesDiv">
 				{% for llave, valor in programas.items %}
-					<h3>Ciclo: {{ ciclo.codigo}} </h3>
 					<table id="estudiantes" class="grilla" width="100%">
 						<thead>
+							<tr>
+								<th colspan="3"><h3>Ciclo: {{ ciclo.codigo}}</h3></th>				
+							</tr>
 							<tr>
 								<th style="width: 80px;">Código</th>
 								<th>Competencia</th>
