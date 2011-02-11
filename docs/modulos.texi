@@ -230,7 +230,14 @@
 		@item Programa
 			Es un campo seleccionable que muestra los programas ofrecidos por la Institución Educativa. Si se desea elegir un programa que aún no existe, dé clic en el botón “Mas” para agregar un nuevo programa. 
 		@item Estado
-			Es un campo seleccionable que muestra los posibles estados del estudiante con respecto al programa. Contiene las opciones Activo, Egresado, Expulsado, Retirado, Suspendido.
+			Es un campo seleccionable que muestra los posibles estados de inscripción del estudiante con respecto al programa. Contiene las opciones Activo, Egresado, Expulsado, Retirado, Suspendido, Pendiente.
+			Se considera Activo un estudiante que actualmente cursa competencias en el ciclo académico vigente. 
+			Un estudiante Egresado es aquel que ha finalizado con éxito las competencias programadas y ha obtenido el certificado de aprobación del programa.
+			Un estudiante Expulsado es quien ha cometido una falta grave de tipo académico y/o comportamental y ha sido retirado por parte de las directivas de la institución.
+			Un estudiante Retirado es quien voluntariamente ha obtado por no continuar sus estudios en el programa en el que había sido inscrito y ha expresado a la institución su decisión de retirarse.
+			El estudiante Suspendido es aquel que ha cometido alguna falta y se le ha expresado que no podrá asistir a algunas clases en vista de que ha sido suspendido.
+			Finalmente, el estudiante Pendiente es quién aún no se ha matriculado en el ciclo académico vigente, pero tampoco ha manifestado que desee retirarse del programa académico al que está inscrito.
+				Por tanto, su matrícula aún está pendiente.
 		@item Fecha vencimiento
 			Es un campo de texto que almacena la fecha en la que vence la inscripción del estudiante al programa. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
 		@end table

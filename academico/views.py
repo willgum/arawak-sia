@@ -11,6 +11,10 @@ from django.contrib import auth                                                 
 from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
+#Pruebas GERALDO
+from reportes import rpt_Ciclo, rpt_ConstanciaCiclo, rpt_EstudiantesInscritos
+from geraldo.generators import PDFGenerator
+
 def comprobarPermisos(solicitud):
     if 'grupoUsuarioid' in solicitud.session: 
         sesion = Session.objects.get(session_key = solicitud.session.session_key)
@@ -431,3 +435,35 @@ def promocion_ciclo(solicitud, ciclo_id):
     datos = {'formset': formset,
              'ciclo': Ciclo.objects.get(id = ciclo_id)} 
     return redireccionar('admin/promocionCiclo.html', solicitud, datos)
+
+
+#----------------------------------------------vistas reportes administrativos ---------------------------------------------------------
+
+@login_required
+def reporte_ciclo(solicitud, ciclo_id):
+    resp = HttpResponse(mimetype='application/pdf')
+
+    ciclos = Ciclo.objects.order_by('codigo')
+    reporte = rpt_Ciclo(queryset=ciclos)
+    reporte.generate_by(PDFGenerator, filename=resp)
+
+    return resp
+
+
+def constanciaMatriculaCiclo(solicitud, matriculaciclo_id):
+    resp = HttpResponse(mimetype='application/pdf')
+
+    tmp_matriculaciclo = MatriculaCiclo.objects.filter(id=matriculaciclo_id).order_by('fecha_inscripcion')
+    reporte = rpt_ConstanciaCiclo(queryset=tmp_matriculaciclo)
+    reporte.generate_by(PDFGenerator, filename=resp)
+
+    return resp
+
+def estudiantesInscritos(solicitud):
+    resp = HttpResponse(mimetype='application/pdf')
+
+    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('codigo')
+    reporte = rpt_EstudiantesInscritos(queryset=tmp_matriculaprograma)
+    reporte.generate_by(PDFGenerator, filename=resp)
+
+    return resp
