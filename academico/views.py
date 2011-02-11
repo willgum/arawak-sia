@@ -62,45 +62,49 @@ def logout(solicitud):
 
 #----------------------------------------------vistas docente---------------------------------------------------------
 
+def buscarProgramasDocente(solicitud):
+    programas = []
+    listaProgramas = []
+    usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
+    cursos = Curso.objects.filter(profesor = usuario.id, ciclo = cicloActual())
+    for curso in cursos:
+        programas.append(Programa.objects.get(id = curso.idPrograma))
+    for indice1 in range(0, len(programas)):
+        contador = 0
+        for indice2 in range(indice1, len(programas)):
+            if programas[indice1].codigo == programas[indice2].codigo:
+                contador += 1
+        if contador <= 1:
+            listaProgramas.append(programas[indice1]);
+    return listaProgramas
+    
 @login_required
 def programasDocente(solicitud):
     if comprobarPermisos(solicitud):
-        listaProgramas = []
-        usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-        competencias = Competencia.objects.filter(curso__profesor = usuario.id, curso__ciclo = cicloActual()).distinct()
-        programas = []
-        for competencia in competencias:
-            programas.append(Programa.objects.get(id = competencia.programa_id))
-        for indice1 in range(0, len(programas)):
-            contador = 0
-            for indice2 in range(indice1, len(programas)):
-                if programas[indice1].codigo == programas[indice2].codigo:
-                    contador += 1
-            if contador <= 1:
-                listaProgramas.append(programas[indice1]);
-        datos = {'programas': listaProgramas}
+        datos = {'programas': buscarProgramasDocente(solicitud)}
         return redireccionar('academico/docente/programas.html', solicitud, datos)
-    else:
-        return logout(solicitud)
-
-@login_required
-def competenciasDocente(solicitud):
-    if comprobarPermisos(solicitud):
-        usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-        competencias = Competencia.objects.filter(curso__profesor = usuario.id, curso__ciclo = cicloActual()).distinct()
-        datos = {'competencias': competencias,
-                 'cantidad': len(competencias)}        
-        return redireccionar('academico/docente/competencias.html', solicitud, datos)
     else:
         return logout(solicitud)
 
 @login_required
 def horariosDocente(solicitud):
     if comprobarPermisos(solicitud):
+        id_ciclo = cicloActual()
+        ciclo = Ciclo.objects.get(id = id_ciclo)
+        programas = buscarProgramasDocente(solicitud)
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-        cursos = Curso.objects.filter(profesor = usuario.id, ciclo = cicloActual())
-        datos = {'cursos': cursos,
-                 'cantidad': len(cursos)}
+        cursos = Curso.objects.filter(profesor = usuario.id, ciclo = id_ciclo)
+        auxProgramas = {}
+        for programa in programas:
+            auxCursos = {}
+            for curso in cursos:          
+                if curso.idPrograma() == programa.id:
+                    auxCursos[curso.id] = curso
+            auxProgramas[programa.id] = {'programa': programa,
+                                         'cursos': auxCursos,
+                                         'cantidad': len(auxCursos),}
+        datos = {'programas': auxProgramas,
+                 'ciclo': ciclo}
         return redireccionar('academico/docente/horarios.html', solicitud, datos)
     else:
         return logout(solicitud)
@@ -108,10 +112,22 @@ def horariosDocente(solicitud):
 @login_required
 def notasDocente(solicitud):
     if comprobarPermisos(solicitud):
+        id_ciclo = cicloActual()
+        ciclo = Ciclo.objects.get(id = id_ciclo)
+        programas = buscarProgramasDocente(solicitud)
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-        cursos = Curso.objects.filter(profesor = usuario.id, ciclo = cicloActual())
-        datos = {'cursos': cursos,
-                 'cantidad': len(cursos)}
+        cursos = Curso.objects.filter(profesor = usuario.id, ciclo = id_ciclo)
+        auxProgramas = {}
+        for programa in programas:
+            auxCursos = {}
+            for curso in cursos:          
+                if curso.idPrograma() == programa.id:
+                    auxCursos[curso.id] = curso
+            auxProgramas[programa.id] = {'programa': programa,
+                                         'cursos': auxCursos,
+                                         'cantidad': len(auxCursos),}
+        datos = {'programas': auxProgramas,
+                 'ciclo': ciclo}
         return redireccionar('academico/docente/notas.html', solicitud, datos)
     else:
         return logout(solicitud)
@@ -154,15 +170,15 @@ def guardarNotaDocente(request):
     if request.POST:
         idCalificacion = request.POST.get('idCalificacion')
         idCorte = request.POST.get('idCorte')
-        valor = request.POST.get('valor')            
+        valor = request.POST.get('valor')
         notascorte = []
         try:
             notascorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
             notascorte.nota = valor
-        except:
+        except NotaCorte.DoesNotExist: 
             notascorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = valor, fallas = 0, comportamiento_id = 1)
         notascorte.save()
-        calificacion = Calificacion.objects.get(id = idCalificacion) 
+        calificacion = Calificacion.objects.get(id = idCalificacion)
         diccionario = {calificacion: calificacion}
         datos = serializers.serialize("json", diccionario)
         return HttpResponse(datos) 
@@ -176,7 +192,7 @@ def guardarFallasDocente(request):
         try:
             notascorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
             notascorte.fallas = valor
-        except:
+        except NotaCorte.DoesNotExist:
             notascorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = 0, fallas = valor, comportamiento_id = 1)
         notascorte.save()
         calificacion = Calificacion.objects.get(id = idCalificacion) 
@@ -185,11 +201,11 @@ def guardarFallasDocente(request):
         return HttpResponse(datos)
 
 @login_required
-def competenciasDetalleDocente(solicitud, competencia_id):
+def competenciasDocente(solicitud, competencia_id):
     if comprobarPermisos(solicitud):
         competencia = Competencia.objects.get(id = competencia_id)
         datos = {'competencia': competencia}  
-        return redireccionar('academico/docente/competenciaDetalle.html', solicitud, datos)
+        return redireccionar('academico/docente/competencia.html', solicitud, datos)
     else:
         return logout(solicitud)
         

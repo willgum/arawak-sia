@@ -10,41 +10,47 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1>Mis Competencias </h1>
-		{% if msg_error %} 
-		    {{ msg_error }} 
-		{% else %}
-			<table class="grilla" width="100%">
-				<thead>
-					<tr>
-						<th>Código</th>
-						<th>Nombre</th>
-						<th>Programa</th>
-						<th>Horario</th>
-					</tr>
-				</thead>
-				
-				<tbody>				
-					{% for curso in cursos %}
-						<tr class="{% cycle '' 'odd' %}">
-							<th scope="row"><a href="{{curso.idCompetencia}}/">{{ curso.codigoCompetencia }}</a></th>
-							<td>{{ curso.nombre }}</td>
-							<td style="text-align:center">{{ curso.nombrePrograma }}</td>
-							<td style="text-align:center">
-								{% for horario in curso.horarios %}
-									{{ horario }}<br/>
-								{% endfor %}
-							</td>
-						</tr>					
-					{% endfor %}
-				</tbody>
-				
-				<tfoot>
-					<tr>
-						<th scope="row" colspan="4">Total Programas: {{cantidad}}</td>
-					</tr>
-				</tfoot>	
-			</table>
-		{% endif %}
+		<h1>Horarios</h1>
+		<ul class="tabs"">
+			{% for llave, valor in programas.items %}
+				<li><a href="#">{{ valor.programa.nombre }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for programa in programas %}
+				<div class="panesDiv">
+				{% for llave, valor in programas.items %}	
+					<h3>Ciclo: {{ ciclo.codigo}} </h3>
+					<table id="estudiantes" class="grilla" width="100%">
+						<thead>
+							<tr>
+								<th style="width: 80px;">Código</th>
+								<th>Competencia</th>
+								<th style="width: 150px;">Horario</th>				
+							</tr>
+						</thead>
+						<tbody>				
+							{% for llaveCursos, valorCursos in valor.cursos.items %}
+								<tr class="{% cycle '' 'odd' %}">
+									<th scope="row"><a href="{{valorCursos.idCompetencia}}/">{{ valorCursos.codigoCompetencia }}</a></th>
+                        			<td>{{ valorCursos.nombre }}</td>
+                        			<td>
+                        				{% for horario in valorCursos.horarios %}
+											{{ horario }}<br/>
+										{% endfor %}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="row" colspan="4">Total Competencia: {{ valor.cantidad }}</td>
+							</tr>
+						</tfoot>
+					</table>
+				{% endfor %}
+				</div>
+			{% endfor %}
+		</div>
 	</div>			
 {% endblock %}

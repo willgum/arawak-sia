@@ -514,15 +514,19 @@ class MatriculaPrograma(models.Model):
         
         for tmp_nota in tmp_promedio_ciclo:
             tmp_promedio_acumulado = tmp_promedio_acumulado + tmp_nota.promedio_ciclo
-              
-        self.promedio_acumulado = round(tmp_promedio_acumulado/len(tmp_promedio_ciclo), 2)
+        
+        if len(tmp_promedio_ciclo)>0:
+            self.promedio_acumulado = round(tmp_promedio_acumulado/len(tmp_promedio_ciclo), 2)
+        else:
+            self.promedio_acumulado = 0
         MatriculaPrograma.save(self)
      
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
         tmp_codigo = "%s" %(MatriculaPrograma.objects.filter(codigo__startswith=self.programa.codigo).count() + 1)
-        self.codigo = "%s%s" %(self.programa.codigo, tmp_codigo.zfill(5))
+        if self.id is None:
+            self.codigo = "%s%s" %(self.programa.codigo, tmp_codigo.zfill(5))
             
         super(MatriculaPrograma, self).save(*args, **kwargs)
     
@@ -555,7 +559,7 @@ class Competencia(models.Model):
         return len(Curso.objects.filter(competencia=self))
     
     def idPrograma(self):
-        return "%s" % (self.programa.id)
+        return self.programa.id
     
     def codigoPrograma(self):
         return "%s" % (self.programa.codigo)
@@ -638,7 +642,7 @@ class Curso(models.Model):
         return "%s" % (self.competencia.codigo)
     
     def idPrograma(self):
-        return "%s" % (self.competencia.idPrograma())
+        return self.competencia.idPrograma()
     
     def codigoPrograma(self):
         return "%s" % (self.competencia.codigoPrograma())
