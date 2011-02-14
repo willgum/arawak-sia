@@ -1,13 +1,26 @@
 {% extends 'base.html' %}
 
 {% block jquerycript %}	
-	$("#formulario :input").tooltip
+	$(":input").change
 	(
+		function() 
 		{
-			position: "top left",
-			offset: [-5, 170],
-			effect: "fade",
-			opacity: 1.0
+			idValor = $(this).attr("name");
+			var validar = $(":input").validator({lang: 'es'});
+			if (!validar.data("validator").checkValidity())
+				$(this).focus();
+			else
+				$.post
+				(
+					"actualizar/", 
+					{
+						idUsuario: {{ user.id }},
+						perfil: {{ request.session.grupoUsuarioid }},
+						campo:$(this).attr("name"),
+						valor:$(this).attr("value")
+					},
+					function(data){}
+				);
 		}
 	);
 	
@@ -20,8 +33,6 @@
 			':url' 		: 'Ingrese una dirección url valida'
 		}
 	);
-	
-	$("#formulario").validator({lang: 'es'});
 {% endblock %}
 
 {% block ruta %} 
@@ -41,28 +52,28 @@
 					<h2>Informacion Basica</h2>
 					<table style="width: 100%;">
 						<tr>
-							<td><strong>{{ tipoDocumento.nombre }}: </strong></td>				
-						    <td>{{ usuario.documento }} 
+							<td style="padding: 3px; width: 140px;"><strong>{{ tipoDocumento.nombre }}: </strong></td>				
+						    <td style="padding: 3px;">{{ usuario.documento }} 
 						    {% if usuario.lugar_expedicion %} 
 						    	de {{usuario.lugar_expedicion}}
 						    {% endif%}
 						    </td>
 						</tr>
 						<tr>
-							<td><strong>Nombre Completo: </strong></td>
-							<td>{{ usuario.nombre1 }} {{ usuario.nombre2 }} {{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
+							<td style="padding: 3px;"><strong>Nombre Completo: </strong></td>
+							<td style="padding: 3px;">{{ usuario.nombre1 }} {{ usuario.nombre2 }} {{ usuario.apellido1 }} {{ usuario.apellido2 }}</td>
 						</tr>
 						<tr>
-							<td><strong>Genero: </strong></td>
-							<td>{{genero.nombre}}</td>
+							<td style="padding: 3px;"><strong>Genero: </strong></td>
+							<td style="padding: 3px;">{{genero.nombre}}</td>
 						</tr>
 						<tr>
-							<td><strong>Fecha de Nacimiento: </strong></td>
-							<td>{{usuario.fecha_nacimiento}}</td>
+							<td style="padding: 3px;"><strong>Fecha de Nacimiento: </strong></td>
+							<td style="padding: 3px;">{{usuario.fecha_nacimiento}}</td>
 						</tr>
 						<tr>
-							<td><strong>Lugar de Nacimiento: </strong></td>
-							<td>{{usuario.lugar_nacimiento}}</td>
+							<td style="padding: 3px;"><strong>Lugar de Nacimiento: </strong></td>
+							<td style="padding: 3px;">{{usuario.lugar_nacimiento}}</td>
 						</tr>
 					</table>
 				</td>
@@ -72,43 +83,31 @@
 			</tr>
 		</table>
 		<h2>Información de Residencia</h2>
-		<form id="formulario" action="/actulizarperfil/" method="post">
-			<table class="formulario" style="width: 100%;">
-				<tr>
-					<td style="padding: 3px; width: 110px;">Dirección: </td>				
-				    <td style="padding: 3px;"><input type="text" name="direccion" id="direccion" size="50" value = "{{ usuario.direccion }}" title="Digite la dirección actual de su domicilio"/></td>
-				</tr>	
-				<tr>
-					<td style="padding: 3px;">Lugar: </td>				
-				    <td style="padding: 3px;"><input type="text" name="lugar" id="lugar" size="40" value = "{{ usuario.lugar_residencia }}" title="Digite su lugar de residencia"/></td>
-				</tr>					
-				<tr>
-					<td style="padding: 3px;">Télefono Fijo: </td>				
-				    <td style="padding: 3px;"><input type="text" name="fijo" id="fijo" size="20" value = "{{ usuario.telefono }}" pattern="[0-9]{0,12}" title="Digite su numero de telefono fijo"/></td>
-				</tr>	
-				<tr>
-					<td style="padding: 3px;">Télefono Celular: </td>				
-				    <td style="padding: 3px;"><input type="text" name="celular" id="celular" size="20" value = "{{ usuario.movil }}" pattern="[0-9]{0,12}" title="Digite su numero de telefono celular"/></td>
-				</tr>
-				<tr>
-					<td style="padding: 3px;">E-Mail: </td>				
-				    <td style="padding: 3px;"><input type="email" name="email" id="email" size="40" value = "{{ usuario.email }}" title="Digite su e-mail"/></td>
-				</tr>	
-				<tr>
-					<td style="padding: 3px;">Web: </td>				
-				    <td style="padding: 3px;"><input type="url" name="web" id="web" size="50" value = "{{ usuario.web }}" title="Digite la dirección de su website"/></td>
-				</tr>
-				<tr>
-					<td style="padding: 3px;" colspan="2"><input type="submit" value="GUARDAR CAMBIOS" id="guardar" style="width: 100%"></td>
-				</tr>	
-				<tr>
-					<td style="padding: 3px;" colspan="2">
-						{% for msg in messages %} 
-						    {{ msg }} 
-						{% endfor %}
-					</td>
-				</tr>		
-			</table>
-		</form>
+		<table id="formulario" class="formulario" style="width: 100%;">
+			<tr>
+				<td style="padding: 3px; width: 140px;">Dirección: </td>				
+			    <td style="padding: 3px;"><input type="text" name="direccion" id="direccion" size="50" value = "{{ usuario.direccion }}"/></td>
+			</tr>	
+			<tr>
+				<td style="padding: 3px;">Lugar: </td>				
+			    <td style="padding: 3px;"><input type="text" name="lugar" id="lugar" size="40" value = "{{ usuario.lugar_residencia }}"/></td>
+			</tr>					
+			<tr>
+				<td style="padding: 3px;">Télefono Fijo: </td>				
+			    <td style="padding: 3px;"><input type="text" name="fijo" id="fijo" size="20" value = "{{ usuario.telefono }}" pattern="[0-9]{0,12}"/></td>
+			</tr>	
+			<tr>
+				<td style="padding: 3px;">Télefono Celular: </td>				
+			    <td style="padding: 3px;"><input type="text" name="celular" id="celular" size="20" value = "{{ usuario.movil }}" pattern="[0-9]{0,12}"/></td>
+			</tr>
+			<tr>
+				<td style="padding: 3px;">E-Mail: </td>				
+			    <td style="padding: 3px;"><input type="email" name="email" id="email" size="40" value = "{{ usuario.email }}"/></td>
+			</tr>	
+			<tr>
+				<td style="padding: 3px;">Web: </td>				
+			    <td style="padding: 3px;"><input type="url" name="web" id="web" size="50" value = "{{ usuario.web }}"/></td>
+			</tr>		
+		</table>
 	</div>			
 {% endblock %}

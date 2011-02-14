@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
 from django.contrib.sessions.models import Session
+from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                       # incorporo para poder acceder a archivos estaticos
 from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
 from django.contrib import auth                                   
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato
 from django.contrib.auth.decorators import login_required                           # permite usar @login_requerid
 
@@ -73,24 +74,30 @@ def perfil(solicitud):
     else:
         return logout(solicitud)    
 
-@login_required
 def actulizarPerfil(solicitud):
-    if comprobarPermisos(solicitud):
-        if solicitud.session['grupoUsuarioid'] == 3:
-            usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
+    if solicitud.POST:
+        idUsuario = solicitud.POST.get('idUsuario')
+        perfil = solicitud.POST.get('perfil')
+        campo = solicitud.POST.get('campo')
+        valor = solicitud.POST.get('valor') 
+        if perfil == str(3):
+            usuario = Profesor.objects.get(id_usuario = idUsuario)
         else:
-            usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
-        usuario.direccion = solicitud.POST['direccion']
-        usuario.lugar_residencia = solicitud.POST['lugar']
-        usuario.telefono = solicitud.POST['fijo']
-        usuario.movil = solicitud.POST['celular']
-        usuario.email = solicitud.POST['email']
-        usuario.web = solicitud.POST['web'] 
-        usuario.save()  
-        solicitud.user.message_set.create(message="Los datos fueron guardados exitosamente.")    
-        return HttpResponseRedirect("/perfil/")
-    else:
-        return logout(solicitud) 
+            usuario = Estudiante.objects.get(id_usuario = idUsuario)
+        if campo == 'direccion': 
+            usuario.direccion = valor
+        if campo == 'lugar': 
+            usuario.lugar_residencia = valor
+        if campo == 'fijo': 
+            usuario.telefono = valor
+        if campo == 'celular': 
+            usuario.movil = valor
+        if campo == 'email': 
+            usuario.email = valor
+        if campo == 'web': 
+            usuario.web = valor
+        usuario.save() 
+        return HttpResponse()
 
 @login_required
 def contrasena(solicitud):
@@ -99,19 +106,18 @@ def contrasena(solicitud):
     else:
         return logout(solicitud)
 
-@login_required
 def actulizarContrasena(solicitud):
-    if comprobarPermisos(solicitud):
-        if solicitud.user.check_password(solicitud.POST['actualPass']):
-            solicitud.user.set_password(solicitud.POST['nuevoPass'])
-            solicitud.user.save()
-            solicitud.user.message_set.create(message="La contraseña fue cambiada.")
-            return HttpResponseRedirect("/contrasena/")
+    if solicitud.POST:
+        idUsuario = solicitud.POST.get('idUsuario')
+        actualPass = solicitud.POST.get('actualPass')
+        nuevoPass = solicitud.POST.get('nuevoPass')
+        usuario = User.objects.get(id = idUsuario)
+        if usuario.check_password(actualPass):            
+            usuario.set_password(nuevoPass)
+            usuario.save()
+            return HttpResponse("Su contraseña fue actualizada")
         else:        
-            solicitud.user.message_set.create(message="Por favor digite nuevamente su contraseña")
-            return HttpResponseRedirect("/contrasena/")
-    else:
-        return logout(solicitud) 
+            return HttpResponse("Por favor digite nuevamente su contraseña")
 
 def login(solicitud):
     username = solicitud.POST['usuario']
