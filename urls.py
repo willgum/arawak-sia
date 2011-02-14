@@ -18,11 +18,11 @@ urlpatterns = patterns('',
     
     # perfil y actualizar perfil
     (r'^perfil/$', perfil),
-    (r'^actulizarperfil/$', actulizarPerfil),
+    (r'^perfil/actualizar/$', actulizarPerfil),
     
     # contrasena y actualizar contrasena
     (r'^contrasena/$', contrasena),
-    (r'^actulizarcontrasena/$', actulizarContrasena),
+    (r'^contrasena/actualizar/$', actulizarContrasena),
     
     
     # definicion de urls para la aplicacion academico     

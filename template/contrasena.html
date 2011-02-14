@@ -1,13 +1,38 @@
 {% extends 'base.html' %}
 
-{% block jquerycript %}
-	$("#formulario :input").tooltip
+{% block jquerycript %}	
+	$(":input").focus
 	(
+		function() 
 		{
-			position: "top left",
-			offset: [-5, 170],
-			effect: "fade",
-			opacity: 1.0
+			$(this).val("");			
+		}
+	);
+	
+	$("#formulario :input").change
+	(
+		function() 
+		{
+			var validar = $("#formulario :input").validator({lang: 'es'});
+			if (validar.data("validator").checkValidity())
+			{
+				$.post
+				(
+					"actualizar/", 
+					{
+						idUsuario: 	{{ user.id}},
+						actualPass: $("#actualPass").val(),
+						nuevoPass: 	$("#nuevoPass").val()
+					},
+					function(data)
+					{
+						$("#actualPass").val("");
+						$("#nuevoPass").val("");
+						$("#confirPass").val("");
+						alert(data);				
+					}
+				);
+			}
 		}
 	);
 	
@@ -22,20 +47,46 @@
 	
 	$.tools.validator.fn
 	(
-		"[minlength]", function(input, value) 
+		"[validar]", function(input, value) 
 		{
-			var min = input.attr("minlength");
-			return value.length>=min?true:{es: "La contraseña ingresada no concuerda con " + min + " caracteres"};
-		},
-		"[data-equals]", function(input, value) 
-		{
-			var name = input.attr("data-equals"),
- 			field = this.getInputs().filter("[name=" + name + "]"); 
-			return input.val()==field.val()?true:{es: "Este campo debe concordar con la nueva contraseña"}; 
+			validacion = true;
+			msg = "";			
+			if(input.attr("minlength") != null)
+			{
+				var min = input.attr("minlength");
+				if (value.length < min)
+				{
+					validacion = false;
+					msg = "La contraseña ingresada no concuerda con " + min + " caracteres";
+				}
+			}
+			
+			if (validacion && input.attr("no-equal") != null)
+			{
+				var name = input.attr("no-equal");
+				field = this.getInputs().filter("[name=" + name + "]");
+				if (input.val() == field.val())
+				{
+					validacion = false;
+					msg = "La nueva contraseña no puede ser igual a la anterior";
+				}
+			}
+			
+			if (validacion && input.attr("equal") != null)
+			{
+				var name = input.attr("equal");
+				field = this.getInputs().filter("[name=" + name + "]");
+				if (input.val() != field.val())
+				{
+					validacion = false;
+					msg = "Este campo debe concordar con la nueva contraseña";
+				}
+			}
+			
+			if (validacion)	return true;
+			else			return {es: msg}; 
 		}
-	);	
-	
-	$("#formulario").validator({lang: 'es'});
+	);
 {% endblock %}
 
 {% block ruta %} 
@@ -49,31 +100,19 @@
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Cambiar Contraseña</h1>
-		<form id="formulario" action="/actulizarcontrasena/" method="post">
-			<table class="formulario" style="width: 100%;">
-				<tr>
-					<td style="padding: 3px; width: 130px;">Contraseña Actual: </td>				
-				    <td style="padding: 3px;"><input type="password" name="actualPass" id="actualPass" size="30" required="required" minlength="6" title="Digite su contraseña actual"/></td>
-				</tr>	
-				<tr>
-					<td style="padding: 3px;">Nueva Contraseña: </td>				
-				    <td style="padding: 3px;"><input type="password" name="nuevoPass" id="nuevoPass" size="30" required="required" minlength="6" title="Su nueva contraseña debe tener minimo 6 caracteres"/></td>
-				</tr>					
-				<tr>
-					<td style="padding: 3px;">Confirmar Contraseña: </td>				
-				    <td style="padding: 3px;"><input type="password" name="confirPass" id="confirPass" size="30" data-equals="nuevoPass" title="Confirme la contraseña"/></td>
-				</tr>					
-				<tr>
-					<td style="padding: 3px;" colspan="2"><input type="submit" value="ACTUALIZAR CONTRASEÑA" id="guardar" style="width: 100%"></td>
-				</tr>	
-				<tr>
-					<td style="padding: 3px;" colspan="2">
-						{% for msg in messages %} 
-						    {{ msg }} 
-						{% endfor %}
-					</td>
-				</tr>		
-			</table>
-		</form>	
+		<table id="formulario" class="formulario" style="width: 100%;">
+			<tr>
+				<td style="padding: 3px; width: 130px;">Contraseña Actual: </td>				
+			    <td style="padding: 3px;"><input type="password" name="actualPass" id="actualPass" size="30" required="required" validar="validar" minlength="6"/></td>
+			</tr>	
+			<tr>
+				<td style="padding: 3px;">Nueva Contraseña: </td>				
+			    <td style="padding: 3px;"><input type="password" name="nuevoPass" id="nuevoPass" size="30" required="required" validar="validar" minlength="6" no-equal="actualPass"/></td>
+			</tr>					
+			<tr>
+				<td style="padding: 3px;">Confirmar Contraseña: </td>				
+			    <td style="padding: 3px;"><input type="password" name="confirPass" id="confirPass" size="30" required="required" validar="validar" minlength="6" equal="nuevoPass"/></td>
+			</tr>		
+		</table>
 	</div>			
 {% endblock %}
