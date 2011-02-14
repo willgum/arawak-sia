@@ -8,7 +8,7 @@
 	<ul id="nav">
 		<li><a href="/">Inicio</a></li>
 		<li>>></li>
-		<li><a href="/academico/competencias/">Competencias</a></li>
+		<li><a href="{{ request.session.url }}">{{ request.session.link }}</a></li>
 		<li>>></li>
 		<li>{{ competencia.nombre }}</li>
 	</ul>
@@ -20,28 +20,28 @@
 		<h2>{{ competencia.nombre }}</h2>
 		<table>
 			<tr>
-				<td valign="top" style="text-align:left"><strong>Programa: </strong></td>				
-			    <td valign="top" style="text-align:justify">{{ competencia.programa }}</td>
+				<td valign="top" style="padding: 3px; width: 80px; text-align:left"><strong>Código: </strong></td>				
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.codigo }}</td>
 			</tr>
 			<tr>
-				<td valign="top" style="text-align:left"><strong>Sufijo: </strong></td>				
-			    <td valign="top" style="text-align:justify">{{ competencia.sufijo }}</td>
+				<td valign="top" style="padding: 3px; text-align:left"><strong>Programa: </strong></td>				
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.programa }}</td>
 			</tr>
 			<tr>
-				<td valign="top" style="text-align:left"><strong>Descripción: </strong></td>				
-			    <td valign="top" style="text-align:justify">{{ competencia.descripcion }}</td>
+				<td valign="top" style="padding: 3px; text-align:left"><strong>Descripción: </strong></td>				
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.descripcion }}</td>
 			</tr>
 			<tr>
-				<td valign="top" style="text-align:left"><strong>Intensidad: </strong></td>				
-			    <td valign="top" style="text-align:justify">{{ competencia.intensidad }}</td>
+				<td valign="top" style="padding: 3px; text-align:left"><strong>Intensidad: </strong></td>				
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.intensidad }}</td>
 			</tr>
 			<tr>
-				<td valign="top" style="text-align:left"><strong>Creditos: </strong></td>				
-			    <td valign="top" style="text-align:justify">{{ competencia.creditos }}</td>
+				<td valign="top" style="padding: 3px; text-align:left"><strong>Créditos: </strong></td>				
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.creditos }}</td>
 			</tr>
 			<tr>
-				<td valign="top" style="text-align:left"><strong>Periodo: </strong></td>				
-			    <td valign="top" style="text-align:justify">{{ competencia.periodo }}</td>
+				<td valign="top" style="padding: 3px; text-align:left"><strong>Periodo: </strong></td>				
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.periodo }}</td>
 			</tr>
 		</table>
 	</div>			

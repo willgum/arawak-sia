@@ -21,6 +21,8 @@
 		        if (isNaN(numero))	
 		    	{
 		    		$(this).val("");
+		    		validar.data("validator").checkValidity()
+		    		this.focus();
 		    	}
 		    	else
 		    	{	
@@ -84,7 +86,7 @@
 			<tbody>				
 				{% for calificacion in calificaciones %}
 					<tr class="{% cycle '' 'odd' %}">
-						<th scope="row"><a href="#">{{ calificacion.codigo_estudiante }}</a></th>
+						<th scope="row">{{ calificacion.codigo_estudiante }}</th>
 						<td>{{ calificacion.nombre_estudiante }}</td>
 						{% for corte in cortes %} 
 							<td style="text-align:center">
