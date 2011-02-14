@@ -107,6 +107,8 @@ def horariosDocente(solicitud):
             auxProgramas[programa.id] = {'programa': programa,
                                          'cursos': auxCursos,
                                          'cantidad': len(auxCursos),}
+        solicitud.session['url'] = "/academico/docente/horarios/"
+        solicitud.session['link'] = "Horarios"
         datos = {'programas': auxProgramas,
                  'ciclo': ciclo}
         return redireccionar('academico/docente/horarios.html', solicitud, datos)
@@ -130,6 +132,8 @@ def notasDocente(solicitud):
             auxProgramas[programa.id] = {'programa': programa,
                                          'cursos': auxCursos,
                                          'cantidad': len(auxCursos),}
+        solicitud.session['url'] = "/academico/docente/notas/"
+        solicitud.session['link'] = "Calificaciones"
         datos = {'programas': auxProgramas,
                  'ciclo': ciclo}
         return redireccionar('academico/docente/notas.html', solicitud, datos)
@@ -295,6 +299,8 @@ def horariosEstudiante(solicitud):
                     aux['calificaciones'] = resultado
                     aux['cantCalificaciones'] = len(resultado)
             programas[matPrograma.id] = aux
+        solicitud.session['url'] = "/academico/estudiante/horarios/"
+        solicitud.session['link'] = "Horarios"
         datos = {'programas': programas,
                  'ciclo': ciclo}
         return redireccionar('academico/estudiante/horarios.html', solicitud, datos)
@@ -339,6 +345,8 @@ def notasEstudiante(solicitud):
                     aux['calificaciones'] = calificacionesCiclo
                     aux['cantCalificaciones'] = len(calificacionesCiclo)
             programas[matPrograma.id] = aux
+        solicitud.session['url'] = "/academico/estudiante/notas/"
+        solicitud.session['link'] = "Calificaciones"
         datos = {'programas': programas,
                  'ciclo': ciclo,
                  'cortes': cortes,
@@ -366,6 +374,8 @@ def historialEstudiante(solicitud):
                                       'cantCalificaciones': len(resultado)}
             aux['ciclos'] = ciclo
             programas[matPrograma.id] = aux
+        solicitud.session['url'] = "/academico/estudiante/historial/"
+        solicitud.session['link'] = "Historial Académico"
         datos = {'programas': programas}
         return redireccionar('academico/estudiante/historial.html', solicitud, datos)
     else:
