@@ -59,23 +59,26 @@ class rpt_ConstanciaCiclo(Report):
     margin_top = 3*cm
     margin_right = 2*cm
     margin_bottom = 1*cm
-
+    meses = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
+           'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
+    
     class band_detail(ReportBand):
         height = 0.5*cm
+        
+        
 #        TODO: El caso ideal es diseñar el texto de la constancia en un archivo de texto independiente, para que funcione de manera más dinámica.
         elements = [
                     ObjectValue(left=0, top=1*cm, width=16*cm,
-                        get_value=lambda instance: 'Que el(la) estudiante ' +\
-                            str(instance.nombre_estudiante()) +\
-                            ' identificado(a) con ' + (instance.matricula_programa.estudiante.tipo_documento.nombre) +\
-                            ' número ' + (instance.matricula_programa.estudiante.documento) + ' de ' +\
-                            str(instance.matricula_programa.estudiante.lugar_expedicion) +\
-                            ', se encuentra ' + (instance.matricula_programa.estado.nombre) + ' en el programa ' +\
-                            str(instance.nombre_programa() + ' de esta Institución educativa para el periodo comprendido del ' +\
+                        get_value=lambda instance: u'Que el(la) estudiante ' +\
+                            instance.matricula_programa.estudiante.nombre() +\
+                            ' identificado(a) con ' + instance.matricula_programa.estudiante.tipo_documento.nombre +\
+                            u' número ' + instance.matricula_programa.estudiante.documento + ' de ' +\
+                            instance.matricula_programa.estudiante.lugar_expedicion +\
+                            ', se encuentra ' + instance.matricula_programa.estado.nombre + ' en el programa ' +\
+                            instance.matricula_programa.programa.nombre + u' de esta Institución Educativa para el periodo comprendido del ' +\
                             str(instance.ciclo.fecha_inicio) + ' hasta el ' + str(instance.ciclo.fecha_fin) + '.<br/><br/>' +\
-                            'Se expide por solicitud del interesado para trámites personales, el día ' +\
-                            str(datetime.date.today().day) + ' de ' + str(datetime.date.today().month) + ' del año ' + str(datetime.date.today().day) + '.'   
-                        ),
+                            u'Se expide por solicitud del interesado para trámites personales, el día ' +\
+                            str(datetime.date.today().day) + ' de ' + rpt_ConstanciaCiclo.meses[datetime.date.today().month] + u' de ' + str(datetime.date.today().year) + '.',   
                         style={'alignment': TA_JUSTIFY, 'fontSize': 11})
         ]
         
@@ -122,27 +125,27 @@ class rpt_EstudiantesInscritos(Report):
         margin_bottom = 0.1*cm
         
         elements=(
-            ObjectValue(left=0.5*cm, top=0.1*cm, get_value=lambda instance: str(instance.nombre_estudiante())),
-            ObjectValue(left=6*cm, top=0.1*cm, get_value=lambda instance: str(instance.nombre_programa())),
-            ObjectValue(left=11.5*cm, top=0.1*cm, get_value=lambda instance: str(instance.estudiante.email)),
-            ObjectValue(left=17*cm, top=0.1*cm, get_value=lambda instance: str(instance.estudiante.telefono)),
-            ObjectValue(left=21*cm, top=0.1*cm, get_value=lambda instance: str(instance.estudiante.movil)),
+            ObjectValue(left=0.2*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.nombre()),
+            ObjectValue(left=6*cm, top=0.1*cm, get_value=lambda instance: instance.programa.nombre),
+            ObjectValue(left=11.2*cm, top=0.1*cm, get_value=lambda instance: instance.estado.nombre),
+            ObjectValue(left=13.7*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.email),
+            ObjectValue(left=18.7*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.telefono),
+            ObjectValue(left=22*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.movil),
             )
-        borders = {'left':True, 'right':True, 'bottom':True}
         
     class band_page_header(ReportBand):
         height = 1.6*cm
         elements = [
                 SystemField(expression='%(report_title)s', top=0.1*cm, left=0, width=BAND_WIDTH,
                     style={'fontName': 'Helvetica-Bold', 'fontSize': 14, 'alignment': TA_CENTER}),
-                Label(text="Estudiante", top=1.1*cm, left=0.5*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text="Estudiante", top=1.1*cm, left=0.2*cm, style={'fontName': 'Helvetica-Bold'}),
                 Label(text=u"Programa", top=1.1*cm, left=6*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"email", top=1.1*cm, left=11.5*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"Telefono", top=1.1*cm, left=17*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"Móvil", top=1.1*cm, left=20*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Estado", top=1.1*cm, left=11.2*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"email", top=1.1*cm, left=13.7*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Telefono", top=1.1*cm, left=18.7*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Móvil", top=1.1*cm, left=22*cm, style={'fontName': 'Helvetica-Bold'}),
                 ]
         borders = {'bottom': True}
-#        borders = {'bottom': True, 'top': True}
     
     class band_page_footer(ReportBand):
         height = 0.5*cm

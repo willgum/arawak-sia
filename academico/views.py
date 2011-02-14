@@ -455,7 +455,7 @@ def reporte_ciclo(solicitud, ciclo_id):
 
     ciclos = Ciclo.objects.order_by('codigo')
     reporte = rpt_Ciclo(queryset=ciclos)
-    reporte.generate_by(PDFGenerator, filename=resp)
+    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
 
     return resp
 
@@ -465,15 +465,15 @@ def constanciaMatriculaCiclo(solicitud, matriculaciclo_id):
 
     tmp_matriculaciclo = MatriculaCiclo.objects.filter(id=matriculaciclo_id).order_by('fecha_inscripcion')
     reporte = rpt_ConstanciaCiclo(queryset=tmp_matriculaciclo)
-    reporte.generate_by(PDFGenerator, filename=resp)
+    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
 
     return resp
 
 def estudiantesInscritos(solicitud):
     resp = HttpResponse(mimetype='application/pdf')
 
-    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('codigo')
+    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('estado', 'estudiante__apellido1', 'estudiante__apellido2', 'estudiante__nombre2')
     reporte = rpt_EstudiantesInscritos(queryset=tmp_matriculaprograma)
-    reporte.generate_by(PDFGenerator, filename=resp)
+    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
 
     return resp
