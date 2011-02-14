@@ -292,7 +292,7 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     readonly_fields = ('promedio_acumulado',)
     
     def make_published(self, request, queryset):
-        selected = request.GET.programa__id__exact
+        selected = request.META['QUERY_STRING']
         return HttpResponseRedirect("/inscritos/".join(selected))
     make_published.short_description = "Mark selected stories as published"
     
@@ -301,10 +301,11 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     search_fields = ('codigo', 'nombre_programa', 'estado')
     
     def inscritos(self, request, obj):
-#        url = "/admin/academico/matriculaprograma/inscritos"
-        self.url = request.path
+        url = "/admin/academico/matriculaprograma/inscritos" + request.META['QUERY_STRING']
+        MatriculaProgramaAdmin.inscritos.url = url
         return HttpResponseRedirect( self.url )
     
+    inscritos.url = "/admin/academico/matriculaprograma/inscritos"
     inscritos.short_description='Reporte inscritos'
     
     buttons_list = [inscritos, ]

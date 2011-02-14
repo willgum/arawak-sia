@@ -405,7 +405,7 @@ class Estudiante(models.Model):
     etnia = models.ForeignKey(Etnia, default=1, blank=True, null=True)
     
     def nombre(self):
-        return self.nombre1 + ' ' + self.nombre2 + ' ' + self.apellido1 + ' ' + self.apellido2
+        return u"%s %s %s %s" %(self.apellido1, self.apellido2, self.nombre1, self.nombre2)
     
 #       Sobreescribir la función guardar para crear usuario
 #       Guardar información de acceso a la tabla de usuarios de DJANGO
@@ -510,7 +510,7 @@ class MatriculaPrograma(models.Model):
         return self.estudiante.nombre()
     
     def nombre_programa(self):
-        return self.programa.nombre
+        return u"%s" %(self.programa.nombre)
     
     def calculaPromedioAcumulado(self, matricula_programa_id):
         tmp_promedio_ciclo = MatriculaCiclo.objects.filter(matricula_programa = matricula_programa_id)

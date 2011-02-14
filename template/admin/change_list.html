@@ -59,7 +59,7 @@
       {% if has_add_permission %}
         <ul class="object-tools">
             {% for button in buttons %}
-              <li><a href="{{ button.func_name }}/">{{ button.short_description }}</a></li>
+              <li><a href="{{ button.url }}/">{{ button.short_description }}</a></li>
             {% endfor %}
           <li>
             <a href="add/{% if is_popup %}?_popup=1{% endif %}" class="addlink">
