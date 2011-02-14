@@ -289,6 +289,9 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
                     'fecha_inscripcion',
                     'estado'
                     )
+    
+    date_hierarchy = 'fecha_inscripcion'
+    
     readonly_fields = ('promedio_acumulado',)
     
     def make_published(self, request, queryset):
