@@ -4,18 +4,16 @@
 	$(function() {$("ul.tabs").tabs("div.panes > div");});
 {% endblock %}
 
-{% block ruta %} 
-	<ul id="nav">
-		<li><a href="/">Inicio</a></li>
-		<li>>></li>
-		<li>Ingresar Notas</li>
-	</ul>
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li>Ingresar Notas</li>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Calificaciones</h1>
-		<ul class="tabs"">
+		<ul class="tabs">
 			{% for llave, valor in programas.items %}
 				<li><a href="#">{{ valor.programa.nombre }}</a></li>
 			{% endfor %}
@@ -35,20 +33,20 @@
 								<th style="width: 100px;"></th>				
 							</tr>
 						</thead>
+						<tfoot>
+							<tr>
+								<th scope="row" colspan="3">Total Competencia: {{ valor.cantidad }}</th>
+							</tr>
+						</tfoot>
 						<tbody>				
 							{% for llaveCursos, valorCurso in valor.cursos.items %}
 								<tr class="{% cycle '' 'odd' %}">
 									<th scope="row"><a href="{{valorCurso.idCompetencia}}/">{{ valorCurso.codigoCompetencia }}</a></th>
                         			<td>{{ valorCurso.nombre }}</td>
-                        			<th><a href="guardar/{{valorCurso.id}}/">Ingresar Notas</a></td>
+                        			<th><a href="guardar/{{valorCurso.id}}/">Ingresar Notas</a></th>
 								</tr>
 							{% endfor %}
 						</tbody>
-						<tfoot>
-							<tr>
-								<th scope="row" colspan="4">Total Competencia: {{ valor.cantidad }}</td>
-							</tr>
-						</tfoot>
 					</table>
 				{% endfor %}
 				</div>

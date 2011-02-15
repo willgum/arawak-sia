@@ -124,7 +124,7 @@ def login(solicitud):
     password = solicitud.POST['contrasena']
     user = auth.authenticate(username=username, password=password)
     if user is None:
-        solicitud.session['msg_error'] = 'Lo sentimos, no se pudo iniciar sesión compruebe que su nombre de usuario y contraseña sean los correctos.'
+        solicitud.session['msg_error'] = 'Nombre de usuario y/o contraseña incorrectos.'
     else:
         if user.is_active:
             auth.login(solicitud, user)
@@ -133,9 +133,9 @@ def login(solicitud):
                 solicitud.session['grupoUsuarioid'] = resultado[0]['grupoUsuarioid']
             else:
                 auth.logout(solicitud)
-                solicitud.session['msg_error'] = 'Lo sentimos, el sistema es de uso exclusivo de docente y estudiantes.'                    
+                solicitud.session['msg_error'] = 'Acceso denegado'                    
         else:
-            solicitud.session['msg_error'] = 'Lo sentimos, usted se encuentra temporalmente inabilitado para acceder a nuestro sistema'
+            solicitud.session['msg_error'] = 'Acceso denegado'
     return HttpResponseRedirect("/")
 
 def logout(solicitud):

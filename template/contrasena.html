@@ -57,7 +57,7 @@
 				if (value.length < min)
 				{
 					validacion = false;
-					msg = "La contraseña ingresada no concuerda con " + min + " caracteres";
+					msg = "Este campo debe tener minimo " + min + " caracteres";
 				}
 			}
 			
@@ -68,7 +68,7 @@
 				if (input.val() == field.val())
 				{
 					validacion = false;
-					msg = "La nueva contraseña no puede ser igual a la anterior";
+					msg = "Este campo debe ser diferente al valor actual";
 				}
 			}
 			
@@ -89,28 +89,26 @@
 	);
 {% endblock %}
 
-{% block ruta %} 
-	<ul id="nav">
-		<li><a href="/">Inicio</a></li>
-		<li>>></li>
-		<li>Cambiar Contraseña</li>
-	</ul>
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li>Cambiar contraseña</li>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1>Cambiar Contraseña</h1>
+		<h1>Cambiar contraseña</h1>
 		<table id="formulario" class="formulario" style="width: 100%;">
 			<tr>
-				<td style="padding: 3px; width: 130px;">Contraseña Actual: </td>				
-			    <td style="padding: 3px;"><input type="password" name="actualPass" id="actualPass" size="30" required="required" validar="validar" minlength="6"/></td>
+				<td style="padding: 3px; width: 130px;">Contraseña actual: </td>				
+			    <td style="padding: 3px;"><input type="password" name="actualPass" id="actualPass" size="30" required="required" validar="validar" minlength="6" no-equal="nuevoPass"/></td>
 			</tr>	
 			<tr>
-				<td style="padding: 3px;">Nueva Contraseña: </td>				
+				<td style="padding: 3px;">Nueva contraseña: </td>				
 			    <td style="padding: 3px;"><input type="password" name="nuevoPass" id="nuevoPass" size="30" required="required" validar="validar" minlength="6" no-equal="actualPass"/></td>
 			</tr>					
 			<tr>
-				<td style="padding: 3px;">Confirmar Contraseña: </td>				
+				<td style="padding: 3px;">Confirmar contraseña: </td>				
 			    <td style="padding: 3px;"><input type="password" name="confirPass" id="confirPass" size="30" required="required" validar="validar" minlength="6" equal="nuevoPass"/></td>
 			</tr>		
 		</table>

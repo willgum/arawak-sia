@@ -4,18 +4,16 @@
 	$(function() {$("ul.tabs").tabs("div.panes > div");});
 {% endblock %}
 
-{% block ruta %} 
-	<ul id="nav">
-		<li><a href="/">Inicio</a></li>
-		<li>>></li>
-		<li>Programas</li>
-	</ul>
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li>Programas</li>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Programas</h1>
-		<ul class="tabs"">
+		<ul class="tabs">
 			{% for programa in programas %}
 				<li><a href="#">{{ programa.nombre }}</a></li>
 			{% endfor %}
@@ -23,18 +21,18 @@
 		<div class="panes">
 			{% for programa in programas %}
 				<div class="panesDiv">
-					<h2>Informacion Basica</h2>
+					<h2>Información básica</h2>
 					<table>
 						<tr>
-							<td valign="top" style="text-align:left; width: 130px;"><strong>Codigo: </strong></td>				
+							<td valign="top" style="text-align:left; width: 130px;"><strong>Código: </strong></td>				
 						    <td valign="top" style="text-align:justify">{{ programa.codigo }}</td>
 						</tr>
 						<tr>
-							<td valign="top" style="text-align:left"><strong>Nombre Completo: </strong></td>				
+							<td valign="top" style="text-align:left"><strong>Nombre completo: </strong></td>				
 						    <td valign="top" style="text-align:justify">{{ programa.nombre }}</td>
 						</tr>
 						<tr>
-							<td valign="top" style="text-align:left"><strong>Tipo de Programa: </strong></td>				
+							<td valign="top" style="text-align:left"><strong>Tipo de programa: </strong></td>				
 						    <td valign="top" style="text-align:justify">{{ programa.tipo_programa }}</td>
 						</tr>
 						<tr>
@@ -69,7 +67,7 @@
 						    <td valign="top" style="text-align:justify">{{ programa.jornada }}</td>
 						</tr>						
 					</table>
-					<h2>Informacion Adicional</h2>
+					<h2>Información adicional</h2>
 					<table>
 						<tr>
 							<td valign="top" style="text-align:left; width: 130px;"><strong>Actitudes: </strong></td>				

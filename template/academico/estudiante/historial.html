@@ -4,18 +4,16 @@
 	$(function() {$("ul.tabs").tabs("div.panes > div");});
 {% endblock %}
 
-{% block ruta %} 
-	<ul id="nav">
+{% block ruta %}
 		<li><a href="/">Inicio</a></li>
 		<li>>></li>
 		<li>Historial Académico</li>
-	</ul>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Historial Académico </h1>
-		<ul class="tabs"">
+		<ul class="tabs">
 			{% for llave, valor in programas.items %}
 				<li><a href="#">{{ valor.programas.nombre_programa }}</a></li>
 			{% endfor %}
@@ -26,8 +24,8 @@
 					{% for llaveCiclo, valorCiclo in valor.ciclos.items %}
 						{% if valorCiclo.ciclo %}
 							{% if valorCiclo.cantCalificaciones > 0 %}
-								{% ifnotequal forloop.counter 1 %}</br>{% endifnotequal %}
-								<table id="estudiantes" class="grilla" width="100%">
+								{% ifnotequal forloop.counter 1 %}<br/>{% endifnotequal %}
+								<table class="grilla" width="100%">
 									<thead>
 										<tr>
 											<th colspan="5"><h3>Ciclo: {{ valorCiclo.codigoCiclo.codigo}}</h3></th>													
@@ -40,6 +38,13 @@
 											<th style="width: 20px;">Def.</th>													
 										</tr>
 									</thead>
+									<tfoot>
+										<tr>
+											<th scope="row" colspan="2">Total Competencias: {{valorCiclo.cantCalificaciones }}</th>
+											<th scope="row" colspan="2">Promedio:</th>
+											<th style="text-align:center">{{ valorCiclo.ciclo.promedio_ciclo}}</th>	
+										</tr>
+									</tfoot>
 									<tbody>				
 										{% for calificacion in valorCiclo.calificaciones %}
 											<tr class="{% cycle '' 'odd' %}">
@@ -61,25 +66,18 @@
 														{% endfor %}
 													</td>
 												{% endfor %}
-												<td style="text-align:center">{{ calificacion.fallas }}</th>
+												<td style="text-align:center">{{ calificacion.fallas }}</td>
 												<td style="text-align:center">{{ calificacion.nota_habilitacion }}</td>
 												<th style="text-align:center">{{ calificacion.nota_definitiva }}</th>
 											</tr>
 										{% endfor %}
 									</tbody>
-									<tfoot>
-										<tr>
-											<th scope="row" colspan="2">Total Competencia: {{valorCiclo.cantCalificaciones }}</td>
-											<th scope="row" colspan="2">Promedio:</td>
-											<th style="text-align:center">{{ valorCiclo.ciclo.promedio_ciclo}}</th>	
-										</tr>
-									</tfoot>
 								</table>						
 							{% else %}
-								{% ifnotequal forloop.counter 1 %}</br>{% endifnotequal %}
+								{% ifnotequal forloop.counter 1 %}<br/>{% endifnotequal %}
 								<h3>Ciclo: {{ valorCiclo.codigoCiclo}} </h3>
 								<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
-								</br>
+								<br/>
 							{% endif %}
 						{% endif %}
 					{% endfor %}					

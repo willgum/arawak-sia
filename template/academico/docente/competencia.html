@@ -4,14 +4,12 @@
 	$(function() {$("ul.tabs").tabs("div.panes > div");});
 {% endblock %}
 		
-{% block ruta %} 
-	<ul id="nav">
-		<li><a href="/">Inicio</a></li>
-		<li>>></li>
-		<li><a href="{{ request.session.url }}">{{ request.session.link }}</a></li>
-		<li>>></li>
-		<li>{{ competencia.nombre }}</li>
-	</ul>
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li><a href="{{ request.session.url }}">{{ request.session.link }}</a></li>
+	<li>>></li>
+	<li>{{ competencia.nombre }}</li>
 {% endblock %}
 
 {% block contenido %}

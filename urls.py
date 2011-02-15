@@ -37,4 +37,7 @@ urlpatterns = patterns('',
     
     # esta linea es necesaria para poder acceder a documentos archivos estaticos como css e imagenes    
     (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    
+    #
+    (r'^admin/auth/user/(?P<ciclo_id>\d+)/promocion/$', 'academico.views.promocion_ciclo'),
 )
