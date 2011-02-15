@@ -5,17 +5,15 @@
 {% endblock %}
 
 {% block ruta %} 
-	<ul id="nav">
-		<li><a href="/">Inicio</a></li>
-		<li>>></li>
-		<li>Horarios</li>
-	</ul>
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li>Horarios</li>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Horarios</h1>
-		<ul class="tabs"">
+		<ul class="tabs">
 			{% for llave, valor in programas.items %}
 				<li><a href="#">{{ valor.programas.nombre_programa }}</a></li>
 			{% endfor %}
@@ -36,6 +34,11 @@
 										<th>Horario</th>				
 									</tr>
 								</thead>
+								<tfoot>
+									<tr>
+										<th scope="row" colspan="4">Total Competencias: {{ valor.cantCalificaciones }}</th>
+									</tr>
+								</tfoot>
 								<tbody>				
 									{% for calificacion in valor.calificaciones %}
 										<tr class="{% cycle '' 'odd' %}">
@@ -49,11 +52,6 @@
 										</tr>
 									{% endfor %}
 								</tbody>
-								<tfoot>
-									<tr>
-										<th scope="row" colspan="4">Total Competencia: {{ valor.cantCalificaciones }}</td>
-									</tr>
-								</tfoot>
 							</table>
 						{% else %}
 							<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>

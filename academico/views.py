@@ -404,8 +404,7 @@ def promocion_ciclo(solicitud, ciclo_id):
             tmp_fecha_ini = date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
             
             tmp_fecha = solicitud.POST['fecha_fin']
-            tmp_fecha_fin = date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
-#            tmp_fecha_fin = datetime.date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
+            tmp_fecha_fin = datetime.date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
     
             #Duplicar los cortes de un ciclo anterior a un ciclo nuevo
             cortes = Corte.objects.filter(ciclo = ciclo_id)
@@ -418,8 +417,8 @@ def promocion_ciclo(solicitud, ciclo_id):
                 if tmp_suma_fecha == 0:
                     tmp_suma_fecha = tmp_fecha_ini - corte.fecha_inicio
 
-                nva_fecha_ini = corte.fecha_inicio + timedelta(days=tmp_suma_fecha.days)
-                nva_fecha_fin = corte.fecha_fin + timedelta(days=tmp_suma_fecha.days)
+                nva_fecha_ini = corte.fecha_inicio + datetime.timedelta(days=tmp_suma_fecha.days)
+                nva_fecha_fin = corte.fecha_fin + datetime.timedelta(days=tmp_suma_fecha.days)
                 
                 i = i+1
                 if i==len(cortes):

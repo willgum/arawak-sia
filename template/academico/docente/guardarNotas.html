@@ -40,9 +40,9 @@
 			        	}, 	        	
 			        	function(data) 
 			        	{
-			        		$("#" + idCalificacion + "_notaHab").html(data[0]["fields"]["nota_habilitacion"]);
-			        		$("#" + idCalificacion + "_notaDef").html(data[0]["fields"]["nota_definitiva"]);
-			        		$("#" + idCalificacion + "_totalFallas").html(data[0]["fields"]["fallas"]);    		
+			        		$("#notaHab_" + idCalificacion).html(data[0]["fields"]["nota_habilitacion"]);
+			        		$("#notaDef_" + idCalificacion).html(data[0]["fields"]["nota_definitiva"]);
+			        		$("#totalFallas_" + idCalificacion).html(data[0]["fields"]["fallas"]);    		
 			        	},
 			        	"json" 	
 			        );
@@ -58,12 +58,10 @@
 	);	
 {% endblock %}
 
-{% block ruta %} 
-	<ul id="nav">
-		<li><a href="/">Inicio</a></li>
-		<li>>></li>
-		<li>Competencias</li>
-	</ul>
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li>Competencias</li>
 {% endblock %}
 
 {% block contenido %}
@@ -83,6 +81,11 @@
 					<th style="width: 20px;">Def.</th>					
 				</tr>
 			</thead>
+			<tfoot>
+				<tr>
+					<th scope="row" colspan="{{ cantidadCortes }}">Total Estudiantes: {{ cantidad }}</th>
+				</tr>
+			</tfoot>
 			<tbody>				
 				{% for calificacion in calificaciones %}
 					<tr class="{% cycle '' 'odd' %}">
@@ -114,7 +117,7 @@
 									    	value="{{ valor.fallas }}"
 									    {% endifequal %}
 									{% endfor %}
-									fala="falla" idCalificacion="{{calificacion.id}}" idCorte="{{corte.id}}" required="required"/>
+									falla="falla" idCalificacion="{{calificacion.id}}" idCorte="{{corte.id}}" required="required"/>
 								{% else %}
 									{% for llave, valor in calificacion.items %}
 									    {% ifequal llave corte.id %}
@@ -124,17 +127,12 @@
 								{% endif %}
 							</td>
 						{% endfor %}
-						<td style="text-align:center"><div id="{{calificacion.id}}_totalFallas">{{ calificacion.fallas }}</div></td>
-						<td style="text-align:center"><div id="{{calificacion.id}}_notaHab">{{ calificacion.nota_habilitacion }}</div></td>
-						<th style="text-align:center"><div id="{{calificacion.id}}_notaDef">{{ calificacion.nota_definitiva }}</div></th>
+						<td style="text-align:center;"><div id="totalFallas_{{calificacion.id}}">{{ calificacion.fallas }}</div></td>
+						<td style="text-align:center;"><div id="notaHab_{{calificacion.id}}">{{ calificacion.nota_habilitacion }}</div></td>
+						<th style="text-align:center;"><div id="notaDef_{{calificacion.id}}">{{ calificacion.nota_definitiva }}</div></th>
 					</tr>					
 				{% endfor %}
 			</tbody>
-			<tfoot>
-				<tr>
-					<th scope="row" colspan="{{ cantidadCortes }}">Total Estudiantes: {{ cantidad }}</td>
-				</tr>
-			</tfoot>
 		</table>
 	</div>			
 {% endblock %}

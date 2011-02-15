@@ -1,8 +1,8 @@
 body {
-	font: Arial;
+	font-family: Arial;
 	color:#555;
 	margin:20px;
-	background:url(../images/body.jpg) top repeat-x #333;
+	background:url(../images/body.jpg) top repeat-x #838281;
 	height:100%;
 }
 
@@ -193,7 +193,7 @@ table.grilla {
 }
 
 table.grilla thead th,table.grilla tfoot th, table.grilla tfoot td {
-	background-color: #549200;
+	background-color: #144d29;
 	color: #FFF;
 	padding: 10px 10px
 }
@@ -208,12 +208,12 @@ table.grilla tbody tr.odd {
 
 table.grilla tbody a {
 	padding: 1px 2px;
-	color: #73ca01;
+	color: #378052;
 	text-decoration: none;
 }
 
 table.grilla tbody a:active,table.grilla tbody a:hover,table.grilla tbody a:focus,table.grilla tbody a:visited {
-	color: #73CA01;
+	color: #378052;
 }
 
 table.grilla tbody tr:hover {
@@ -228,7 +228,7 @@ table.grilla tbody a:visited:after {
 	padding: 3px;
 	border: solid;
 	border-width: 1px;
-	color: #549200;
+	color: #144d29;
 	font: 10px Arial;
 	width: 30px;
 	text-align:right;
@@ -240,7 +240,7 @@ table.grilla tbody a:visited:after {
 	margin:0 !important; 
 	padding:0;
 	height:30px;
-	border-bottom:1px solid #549200;
+	border-bottom:1px solid #144d29;
 }
 
 #content .tabs li { 
@@ -258,15 +258,14 @@ table.grilla tbody a:visited:after {
 	padding:5px 10px 4px 10px;
 	margin:3px 1px 0px 0px;
 	text-decoration:none;
-	border:1px solid #549200;	
+	border:1px solid #144d29;	
 	border-bottom:0px;
 	height:16px;
-	background-color:#549200;
+	background-color:#144d29;
 	color:#fff;
 	position:relative;
 	top:1px;	
 	outline:0;
-	-moz-border-radius:4px 4px 0 0;	
 }
 
 #content .tabs a:active {
@@ -274,14 +273,14 @@ table.grilla tbody a:visited:after {
 }
 
 #content .tabs a:hover {
-	background-color:#73CA01;
+	background-color:#378052;
 	color:#fff;
 }
 
 #content .tabs .current,#content  .tabs .current:hover,#content  .tabs li.current a {
 	background-color:#fff;
 	border-bottom:1px solid #fff;	
-	color:#549200;	
+	color:#144d29;	
 	cursor:default;
 }
 #content .panes .pane {
@@ -290,7 +289,7 @@ table.grilla tbody a:visited:after {
 
 #content .panesDiv {
 	padding:20px 10px;
-	border:1px solid #549200;
+	border:1px solid #144d29;
 	border-top:0;
 	background-color:#fff;
 }
@@ -348,7 +347,6 @@ table.grilla tbody a:visited:after {
 
 #footer a:hover {
 	color:#222;
-	text-decoration: underline;
 }
 
 /* mensajes de error jquery */
@@ -361,13 +359,6 @@ table.grilla tbody a:visited:after {
 	display:none;
 	font:10px Arial;
 	line-height:20px;
-	
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px; 
-	-moz-border-radius-bottomleft:0;
-	-moz-border-radius-topleft:0;	
-	-webkit-border-bottom-left-radius:0; 
-	-webkit-border-top-left-radius:0;
 }
 
 /* tooltips jquery */
@@ -381,11 +372,9 @@ table.grilla tbody a:visited:after {
 	text-align:left;
 	font:10px Arial;
 	line-height:15px;
-	
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px; 
-	-moz-border-radius-bottomleft:0;
-	-moz-border-radius-topleft:0;	
-	-webkit-border-bottom-left-radius:5px; 
-	-webkit-border-top-left-radius:5px;
+}
+
+.msgerror {
+    color: #D8000C;
+	text-align: center;
 }

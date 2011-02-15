@@ -4,18 +4,16 @@
 	$(function() {$("ul.tabs").tabs("div.panes > div");});
 {% endblock %}
 
-{% block ruta %} 
-	<ul id="nav">
+{% block ruta %}
 		<li><a href="/">Inicio</a></li>
 		<li>>></li>
 		<li>Calificaciones</li>
-	</ul>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Calificaciones</h1>
-		<ul class="tabs"">
+		<ul class="tabs">
 			{% for llave, valor in programas.items %}
 				<li><a href="#">{{ valor.programas.nombre_programa }}</a></li>
 			{% endfor %}
@@ -42,6 +40,11 @@
 										<th style="width: 20px;">Def.</th>
 									</tr>
 								</thead>
+								<tfoot>
+									<tr>
+										<th scope="row" colspan="{{ cantCortes }}">Total Competencias: {{ valor.cantCalificaciones }}</th>
+									</tr>
+								</tfoot>
 								<tbody>				
 									{% for calificacion in valor.calificaciones %}
 										<tr class="{% cycle '' 'odd' %}">
@@ -63,17 +66,12 @@
 													{% endfor %}
 												</td>
 											{% endfor %}
-											<td style="text-align:center">{{ calificacion.fallas }}</th>
+											<td style="text-align:center">{{ calificacion.fallas }}</td>
 											<td style="text-align:center">{{ calificacion.nota_habilitacion }}</td>
 											<th style="text-align:center">{{ calificacion.nota_definitiva }}</th>
 										</tr>
 									{% endfor %}
 								</tbody>
-								<tfoot>
-									<tr>
-										<th scope="row" colspan="{{ cantCortes }}">Total Competencia: {{ valor.cantCalificaciones }}</td>
-									</tr>
-								</tfoot>
 							</table>
 						{% else %}
 							<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
