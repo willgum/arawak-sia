@@ -1,58 +1,82 @@
 # -*- coding: utf-8 -*-
 import datetime
+import Image as PILImage
+import os
+from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
 
-from geraldo import Report, landscape, ReportBand, ObjectValue, SystemField,\
-        BAND_WIDTH, Label
+from geraldo import Report, ReportBand, ObjectValue, SystemField,\
+        BAND_WIDTH, Label, Image
 
-from reportlab.lib.pagesizes import LETTER
+from reportlab.lib.pagesizes import LETTER, portrait, landscape
 from reportlab.lib.units import cm
 from reportlab.lib.enums import TA_RIGHT, TA_CENTER, TA_JUSTIFY
 
-class rpt_Ciclo(Report):
-    title = 'Listado de ciclos'
-    author = 'Edwar Carranza'
-    
-    page_size = landscape(LETTER)
-    margin_left = 2*cm
-    margin_top = 0.5*cm
-    margin_right = 0.5*cm
-    margin_bottom = 0.5*cm
+cur_dir = settings.MEDIA_ROOT
 
-    class band_detail(ReportBand):
-        height = 0.5*cm
+#===============================================================================
+# CLASE PARA IMPRIMIR REPORTE CARNÉ DE ESTUDIANTES 
+#===============================================================================
+
+def get_chart_for_user(graphic):
+    """Method to get chart"""
+    filename = os.path.join(cur_dir,'%s'%str(graphic.instance.estudiante.foto).replace('original','thumbnail'))
+    if len('%s'%str(graphic.instance.estudiante.foto)) > 0:
+        return PILImage.open(filename)
+    else:
+        return None
+
+class rpt_EstudianteCarnet(Report):
+    title = 'Consolidado de estudiantes inscritos por programa'
+    author = 'Arawak-Claro'
+    
+    personal = (8.5*cm, 5.5*cm)
+    page_size = landscape(personal)
+    margin_left = 0.1*cm
+    margin_top = 0.1*cm
+    margin_right = 0.1*cm
+    margin_bottom = 0.1*cm
+    
+    class band_begin(ReportBand):
+        height = 1*cm
         elements=(
-            ObjectValue(attribute_name='id', left=0.5*cm),
-            ObjectValue(attribute_name='codigo', left=3*cm),
-            ObjectValue(attribute_name='fecha_inicio', left=6*cm,
-                get_value=lambda instance: instance.fecha_inicio.strftime('%m/%d/%Y')),
+            Image(left=3*cm, top=0*cm, 
+                get_image=lambda graphic: PILImage.open(os.path.join(cur_dir, 'imagenes/original/encabezado1.JPG'))),
+                  )
+        
+         
+    class band_detail(ReportBand):
+        auto_expand_height = True
+        
+        elements=(
+#            Image(left=0.3*cm, top=0*cm,
+#                get_image=lambda graphic: PILImage.open(os.path.join(cur_dir, '%s'%str(graphic.instance.estudiante.foto).replace('original','thumbnail')))),
+            Image(left=0.3*cm, top=0*cm, get_image=get_chart_for_user),
+            Label(text='Nombre', left=3*cm, style={'fontName': 'Helvetica-Bold', 'fontSize': 9}),
+            ObjectValue(attribute_name = u'estudiante.nombre', top=0.4*cm, left=3*cm),
+            Label(text='Identificación', left=3*cm, top=1*cm, style={'fontName': 'Helvetica-Bold', 'fontSize': 9}),
+            ObjectValue(attribute_name = u'estudiante.documento', top=1.4*cm, left=3*cm),
+            Label(text='RH', left=6*cm, top=1*cm, style={'fontName': 'Helvetica-Bold', 'fontSize': 9}),
+            ObjectValue(attribute_name = u'estudiante.grupo_sanguineo.nombre', top=1.4*cm, left=6*cm, width=BAND_WIDTH),
+            Label(text='Código', left=3*cm, top=2*cm, style={'fontName': 'Helvetica-Bold', 'fontSize': 9}),
+            ObjectValue(attribute_name = u'codigo', top=2.4*cm, left=3*cm, width=BAND_WIDTH),
+            Label(text='Programa', left=3*cm, top=3*cm, style={'fontName': 'Helvetica-Bold', 'fontSize': 9}),
+            ObjectValue(attribute_name = u'programa.nombre', top=3.4*cm, left=3*cm, width=BAND_WIDTH),
             )
         
-    class band_page_header(ReportBand):
-        height = 1.3*cm
-        elements = [
-                SystemField(expression='%(report_title)s', top=0.1*cm, left=0, width=BAND_WIDTH,
-                    style={'fontName': 'Helvetica-Bold', 'fontSize': 14, 'alignment': TA_CENTER}),
-                Label(text="ID", top=0.8*cm, left=0.5*cm),
-                Label(text=u"Codigo", top=0.8*cm, left=3*cm),
-                Label(text=u"Fecha inicio", top=0.8*cm, left=6*cm),
-                SystemField(expression=u'Pagina %(page_number)d de %(page_count)d', top=0.1*cm,
-                    width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
-                ]
-#        borders = {'bottom': True, 'top': True}
-    
     class band_page_footer(ReportBand):
-        height = 0.5*cm
+        height = 0.3*cm
         elements = [
-                Label(text='Geraldo Reports', top=0.1*cm),
-                SystemField(expression=u'Printed in %(now:%Y, %b %d)s at %(now:%H:%M)s', top=0.1*cm,
-                    width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
+                Label(text='http://arawak.com.co', width=BAND_WIDTH, style={'fontSize':8, 'alignment': TA_CENTER}),
                 ]
         borders = {'top': True}
-        
-        
+       
+                
+#===============================================================================
+# CLASE PARA IMPRIMIR CONSTANCIA DE ESTUDIO DE ESTUDIANTES 
+#===============================================================================
 class rpt_ConstanciaCiclo(Report):
     title = 'Listado de ciclos'
-    author = 'Edwar Carranza'
+    author = 'Arawak-Claro'
     
     page_size = LETTER
     margin_left = 2.5*cm
@@ -105,7 +129,10 @@ class rpt_ConstanciaCiclo(Report):
                 ]
         borders = {'top': True}
         
-        
+
+#===============================================================================
+# CLASE PARA IMPRIMIR LISTADO DE ESTUDIANTES INSCRITOS CON LOS DISTINTOS ESTADOS 
+#===============================================================================
 class rpt_EstudiantesInscritos(Report):
     title = 'Listado de estudiantes inscritos'
     author = 'Edwar Carranza'
@@ -131,6 +158,61 @@ class rpt_EstudiantesInscritos(Report):
             ObjectValue(left=13.7*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.email),
             ObjectValue(left=18.7*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.telefono),
             ObjectValue(left=22*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.movil),
+            )
+        
+    class band_page_header(ReportBand):
+        height = 1.6*cm
+        elements = [
+                SystemField(expression='%(report_title)s', top=0.1*cm, left=0, width=BAND_WIDTH,
+                    style={'fontName': 'Helvetica-Bold', 'fontSize': 14, 'alignment': TA_CENTER}),
+                Label(text="Estudiante", top=1.1*cm, left=0.2*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Programa", top=1.1*cm, left=6*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Estado", top=1.1*cm, left=11.2*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"email", top=1.1*cm, left=13.7*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Telefono", top=1.1*cm, left=18.7*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Móvil", top=1.1*cm, left=22*cm, style={'fontName': 'Helvetica-Bold'}),
+                ]
+        borders = {'bottom': True}
+    
+    class band_page_footer(ReportBand):
+        height = 0.5*cm
+        elements = [
+                Label(text='http://arawak.com.co', top=0.1*cm),
+                SystemField(expression=u'Pagina %(page_number)d de %(page_count)d', top=0.1*cm,
+                    width=BAND_WIDTH, style={'alignment': TA_CENTER}),
+                SystemField(expression=u'Impreso %(now:%b %d, %Y)s %(now:%H:%M)s', top=0.1*cm,
+                    width=BAND_WIDTH, style={'alignment': TA_RIGHT}),
+                ]
+        borders = {'top': True}
+        
+
+#===============================================================================
+# CLASE PARA IMPRIMIR CONSOLIDADO DE ESTUDIANTES INSCRITOS 
+#===============================================================================
+class rpt_ConsolidadoInscritos(Report):
+    title = 'Consolidado de estudiantes inscritos por programa'
+    author = 'Arawak-Claro'
+    
+    page_size = landscape(LETTER)
+    margin_left = 2*cm
+    margin_top = 1.5*cm
+    margin_right = 1.5*cm
+    margin_bottom = 1.5*cm
+    
+    class band_begin(ReportBand):
+        height = 1*cm
+         
+    class band_detail(ReportBand):
+        auto_expand_height = True
+        
+        margin_bottom = 0.1*cm
+        
+        elements=(
+            ObjectValue(left=0.1*cm, top=0.1*cm, attribute_name = u'programa.nombre'),
+            ObjectValue(left=6*cm, top=0.1*cm, get_value=lambda instance: instance.estudiantesActivos()),
+#            ObjectValue(left=13.7*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.email),
+#            ObjectValue(left=18.7*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.telefono),
+#            ObjectValue(left=22*cm, top=0.1*cm, get_value=lambda instance: instance.estudiante.movil),
             )
         
     class band_page_header(ReportBand):

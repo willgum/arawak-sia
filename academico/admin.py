@@ -223,17 +223,18 @@ class AmonestacionInline(admin.TabularInline):
     extra = 1
 
 
-class EstudianteAdmin(admin.ModelAdmin):
+class EstudianteAdmin(ButtonableModelAdmin):
     fieldsets = [
         ('Identificacion', { 'fields': [ 
             'nombre1',
             'nombre2', 
             'apellido1', 
             'apellido2', 
-            'genero', 
             'tipo_documento', 
             'documento', 
             'lugar_expedicion',
+            'genero', 
+            'grupo_sanguineo', 
             'fecha_nacimiento', 
             'lugar_nacimiento']}),
         ('Requisitos', {'fields': [
@@ -264,7 +265,7 @@ class EstudianteAdmin(admin.ModelAdmin):
     ]
     list_display = ('documento', 'nombre1', 'apellido1', 'usuario', 'email', 'genero')
     search_fields = ['documento', 'nombre1', 'apellido1']
-
+    
 
 class MatriculaProgramaAdmin(ButtonableModelAdmin):
     raw_id_fields = ('estudiante', 'programa')
@@ -294,24 +295,28 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     
     readonly_fields = ('promedio_acumulado',)
     
-    def make_published(self, request, queryset):
-        selected = request.META['QUERY_STRING']
-        return HttpResponseRedirect("/inscritos/".join(selected))
-    make_published.short_description = "Mark selected stories as published"
-    
-    actions = [make_published]
     list_filter = ['estado', 'programa']
     search_fields = ('codigo', 'nombre_programa', 'estado')
     
     def inscritos(self, request, obj):
-        url = "/admin/academico/matriculaprograma/inscritos" + request.META['QUERY_STRING']
-        MatriculaProgramaAdmin.inscritos.url = url
-        return HttpResponseRedirect( self.url )
-    
+        obj.inscritos()
     inscritos.url = "/admin/academico/matriculaprograma/inscritos"
-    inscritos.short_description='Reporte inscritos'
+    inscritos.short_description='Detalle inscritos'
     
-    buttons_list = [inscritos, ]
+    def consolidadoInscritos(self, request, obj):
+        obj.consolidadoInscritos()
+    consolidadoInscritos.url = "/admin/academico/matriculaprograma/consolidadoinscritos"
+    consolidadoInscritos.short_description='Consolidado inscritos'
+    
+    buttons_list = [inscritos, consolidadoInscritos, ]
+    
+    def imprimircarnet(self, request, obj):
+        obj.imprimirCarnet()
+        
+    imprimircarnet.short_description='Imprimir Carnet'
+    
+    buttons = [imprimircarnet, ]
+
 
 
 class ProfesorAdmin(admin.ModelAdmin):
@@ -321,10 +326,11 @@ class ProfesorAdmin(admin.ModelAdmin):
             'nombre2', 
             'apellido1', 
             'apellido2', 
-            'genero', 
             'tipo_documento', 
             'documento', 
             'lugar_expedicion',
+            'genero', 
+            'grupo_sanguineo', 
             'fecha_nacimiento', 
             'lugar_nacimiento', 
             'foto']}),

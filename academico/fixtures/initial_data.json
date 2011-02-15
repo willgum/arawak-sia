@@ -1344,6 +1344,69 @@
     }
   },
   {
+    "model": "academico.gruposanguineo",
+    "pk": 1,
+    "fields": {
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 2,
+    "fields": {
+      "nombre": "O+"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 3,
+    "fields": {
+      "nombre": "A+"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 4,
+    "fields": {
+      "nombre": "B+"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 5,
+    "fields": {
+      "nombre": "AB+"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 6,
+    "fields": {
+      "nombre": "O-"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 7,
+    "fields": {
+      "nombre": "A-"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 8,
+    "fields": {
+      "nombre": "B-"
+    }
+  },
+  {
+    "model": "academico.gruposanguineo",
+    "pk": 9,
+    "fields": {
+      "nombre": "AB-"
+    }
+  },
+  {
     "model": "academico.tipofuncionario",
     "pk": 1,
     "fields": {
