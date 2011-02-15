@@ -12,7 +12,7 @@ from academico.models import Profesor, Estudiante, Curso, Competencia, Programa,
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 #Pruebas GERALDO
-from reportes import rpt_Ciclo, rpt_ConstanciaCiclo, rpt_EstudiantesInscritos
+from reportes import rpt_ConstanciaCiclo, rpt_EstudiantesInscritos, rpt_ConsolidadoInscritos, rpt_EstudianteCarnet
 from geraldo.generators import PDFGenerator
 
 def comprobarPermisos(solicitud):
@@ -404,7 +404,8 @@ def promocion_ciclo(solicitud, ciclo_id):
             tmp_fecha_ini = date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
             
             tmp_fecha = solicitud.POST['fecha_fin']
-            tmp_fecha_fin = datetime.date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
+            tmp_fecha_fin = date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
+#            tmp_fecha_fin = datetime.date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
     
             #Duplicar los cortes de un ciclo anterior a un ciclo nuevo
             cortes = Corte.objects.filter(ciclo = ciclo_id)
@@ -417,8 +418,8 @@ def promocion_ciclo(solicitud, ciclo_id):
                 if tmp_suma_fecha == 0:
                     tmp_suma_fecha = tmp_fecha_ini - corte.fecha_inicio
 
-                nva_fecha_ini = corte.fecha_inicio + datetime.timedelta(days=tmp_suma_fecha.days)
-                nva_fecha_fin = corte.fecha_fin + datetime.timedelta(days=tmp_suma_fecha.days)
+                nva_fecha_ini = corte.fecha_inicio + timedelta(days=tmp_suma_fecha.days)
+                nva_fecha_fin = corte.fecha_fin + timedelta(days=tmp_suma_fecha.days)
                 
                 i = i+1
                 if i==len(cortes):
@@ -450,16 +451,6 @@ def promocion_ciclo(solicitud, ciclo_id):
 #----------------------------------------------vistas reportes administrativos ---------------------------------------------------------
 
 @login_required
-def reporte_ciclo(solicitud, ciclo_id):
-    resp = HttpResponse(mimetype='application/pdf')
-
-    ciclos = Ciclo.objects.order_by('codigo')
-    reporte = rpt_Ciclo(queryset=ciclos)
-    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
-
-    return resp
-
-@login_required
 def constanciaMatriculaCiclo(solicitud, matriculaciclo_id):
     resp = HttpResponse(mimetype='application/pdf')
 
@@ -470,11 +461,31 @@ def constanciaMatriculaCiclo(solicitud, matriculaciclo_id):
     return resp
 
 @login_required
+def estudianteCarnet(solicitud, matriculaprograma_id):
+    resp = HttpResponse(mimetype='application/pdf')
+    
+    tmp_estudiante = MatriculaPrograma.objects.filter(id=matriculaprograma_id)
+    reporte = rpt_EstudianteCarnet(queryset=tmp_estudiante)
+    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+
+    return resp
+
+@login_required
 def estudiantesInscritos(solicitud):
     resp = HttpResponse(mimetype='application/pdf')
 
     tmp_matriculaprograma = MatriculaPrograma.objects.order_by('programa__nombre', 'estado', 'estudiante__apellido1', 'estudiante__apellido2', 'estudiante__nombre2')
     reporte = rpt_EstudiantesInscritos(queryset=tmp_matriculaprograma)
+    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+
+    return resp
+
+@login_required
+def consolidadoInscritos(solicitud):
+    resp = HttpResponse(mimetype='application/pdf')
+    
+    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('programa__nombre').distinct('programa')
+    reporte = rpt_ConsolidadoInscritos(queryset=tmp_matriculaprograma)
     reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
 
     return resp

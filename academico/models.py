@@ -110,6 +110,12 @@ class Genero (models.Model):
     
     def __unicode__(self):
         return self.nombre
+    
+class GrupoSanguineo (models.Model):
+    nombre = models.CharField(max_length = 15)
+    
+    def __unicode__(self):
+        return self.nombre
 
 class TipoReferencia (models.Model):
     codigo = models.CharField(max_length = 3)
@@ -263,9 +269,10 @@ class Profesor(models.Model):
     nombre2= models.CharField(max_length=50, verbose_name='Segundo nombre', blank=True)
     apellido1 = models.CharField(max_length=50, verbose_name='Primer apellido')
     apellido2 = models.CharField(max_length=50, verbose_name='Segundo apellido', blank=True)
-    genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
     tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1) 
     documento = models.CharField(max_length=12, unique = True, validators=[validar_numerico])
+    genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
+    grupo_sanguineo = models.ForeignKey(GrupoSanguineo, verbose_name='Grupo sanguíneo', blank=True, null=True, default=1)
     lugar_expedicion = models.CharField(verbose_name='Lugar expedición', max_length=200, blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(blank=True, max_length=200)
@@ -377,11 +384,12 @@ class Estudiante(models.Model):
     nombre2= models.CharField(max_length=50, verbose_name='Segundo nombre', blank=True)
     apellido1 = models.CharField(max_length=50, verbose_name='Primer apellido')
     apellido2 = models.CharField(max_length=50, verbose_name='Segundo apellido', blank=True)
-    genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
     tipo_documento = models.ForeignKey(TipoDocumento, blank=True, null=True, default=1) 
     documento = models.CharField(max_length=12, unique = True, validators=[validar_numerico])
     lugar_expedicion = models.CharField(max_length=200, verbose_name='Lugar expedición', blank=True)
     fecha_nacimiento = models.DateField(blank=True, null=True)
+    genero = models.ForeignKey(Genero, blank=True, null=True, default=1) 
+    grupo_sanguineo = models.ForeignKey(GrupoSanguineo, verbose_name='Grupo sanguíneo', blank=True, null=True, default=1)
     lugar_nacimiento = models.CharField(max_length=200, blank=True)
     
     # Requisitos
@@ -524,6 +532,9 @@ class MatriculaPrograma(models.Model):
         else:
             self.promedio_acumulado = 0
         MatriculaPrograma.save(self)
+    
+    def estudiantesActivos(self):
+        return "%s" %(len(MatriculaPrograma.objects.filter(programa=self)))
      
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
