@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
-import Image as PILImage
+import Image as PILImage, urllib2
 import os
 from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
 
@@ -17,14 +17,23 @@ cur_dir = settings.MEDIA_ROOT
 # CLASE PARA IMPRIMIR REPORTE CARNÉ DE ESTUDIANTES 
 #===============================================================================
 
-def get_chart_for_user(graphic):
-    """Method to get chart"""
+def get_foto_usuario(graphic):
     filename = os.path.join(cur_dir,'%s'%str(graphic.instance.estudiante.foto).replace('original','thumbnail'))
     if len('%s'%str(graphic.instance.estudiante.foto)) > 0:
+        if os.path.exists(filename):
+            return PILImage.open(filename)
+        else:
+            return None
+    else:
+        return None
+    
+def get_encabezado(graphic):
+    filename = os.path.join(cur_dir, 'imagenes/original/encabezado.jpg')
+    if os.path.exists(filename):
         return PILImage.open(filename)
     else:
         return None
-
+    
 class rpt_EstudianteCarnet(Report):
     title = 'Consolidado de estudiantes inscritos por programa'
     author = 'Arawak-Claro'
@@ -39,8 +48,7 @@ class rpt_EstudianteCarnet(Report):
     class band_begin(ReportBand):
         height = 1*cm
         elements=(
-            Image(left=3*cm, top=0*cm, 
-                get_image=lambda graphic: PILImage.open(os.path.join(cur_dir, 'imagenes/original/encabezado1.JPG'))),
+            Image(left=3*cm, top=0*cm, get_image=get_encabezado),
                   )
         
          
@@ -48,9 +56,7 @@ class rpt_EstudianteCarnet(Report):
         auto_expand_height = True
         
         elements=(
-#            Image(left=0.3*cm, top=0*cm,
-#                get_image=lambda graphic: PILImage.open(os.path.join(cur_dir, '%s'%str(graphic.instance.estudiante.foto).replace('original','thumbnail')))),
-            Image(left=0.3*cm, top=0*cm, get_image=get_chart_for_user),
+            Image(left=0.3*cm, top=0*cm, get_image=get_foto_usuario),
             Label(text='Nombre', left=3*cm, style={'fontName': 'Helvetica-Bold', 'fontSize': 9}),
             ObjectValue(attribute_name = u'estudiante.nombre', top=0.4*cm, left=3*cm),
             Label(text='Identificación', left=3*cm, top=1*cm, style={'fontName': 'Helvetica-Bold', 'fontSize': 9}),
