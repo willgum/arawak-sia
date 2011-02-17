@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from academico.models import MatriculaCiclo, Profesor, Curso, Programa, Ciclo
+from django.core.validators import MinValueValidator
+
 
 
 class MatriculaFinanciera(models.Model):
@@ -8,11 +10,11 @@ class MatriculaFinanciera(models.Model):
     matricula_ciclo = models.ForeignKey(MatriculaCiclo)
     fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
     becado = models.BooleanField(help_text="Indica si el estudiante recibe o no beca.")
-    valor_descuento = models.FloatField(verbose_name='Valor descuento', blank=True, null=True, default=0)
-    valor_matricula = models.FloatField(verbose_name='Valor matrícula', blank=True, null=True, default=0)
-    valor_abonado = models.FloatField(verbose_name='Valor abonado', blank=True, null=True, default=0)
+    valor_descuento = models.FloatField(verbose_name='Valor descuento', blank=True, null=True, default=0, validators=[MinValueValidator(0)])
+    valor_matricula = models.FloatField(verbose_name='Valor matrícula', blank=True, null=True, default=0, validators=[MinValueValidator(0)])
+    valor_abonado = models.FloatField(verbose_name='Valor abonado', blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     cuotas = models.IntegerField(help_text="Número de cuotas a diferir el valor de la matrícula.", default=1)
-    cancelada = models.BooleanField(help_text='Indica si no existen deudas.')
+    paz_y_salvo = models.BooleanField(help_text='Indica si no existen deudas.')
     
     def __unicode__(self):
         return "%s" %(self.matricula_ciclo.codigo_ciclo())
@@ -39,9 +41,9 @@ class MatriculaFinanciera(models.Model):
             if pago.cancelada==True:
                 valor = valor + pago.valor
         if valor >= self.valor_matricula:
-            self.cancelada = True
+            self.paz_y_salvo = True
         else:
-            self.cancelada = False
+            self.paz_y_salvo = False
         self.valor_abonado = valor
         self.save()
         
@@ -61,7 +63,7 @@ class MatriculaFinanciera(models.Model):
 class Pago(models.Model):
     matricula_financiera = models.ForeignKey(MatriculaFinanciera)
     fecha_pago = models.DateField()
-    valor = models.FloatField()
+    valor = models.FloatField(validators=[MinValueValidator(0)])
     recibo_caja = models.CharField(max_length=200)
     concepto = models.TextField(max_length=200, blank=True)
     
@@ -70,8 +72,8 @@ class Letra(models.Model):
     matricula_financiera = models.ForeignKey(MatriculaFinanciera)
     fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
     fecha_vencimiento = models.DateField()
-    valor = models.FloatField(default=0)
-    fecha_pago = models.DateField()
+    valor = models.FloatField(validators=[MinValueValidator(0)])
+    fecha_pago = models.DateField(blank=True, null=True)
     cancelada = models.BooleanField(help_text='Indica si no existen deudas.')
     
     def save(self, *args, **kwargs):
