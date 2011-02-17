@@ -23,7 +23,7 @@ class MatriculaFinancieraAdmin(admin.ModelAdmin):
                                 'valor_descuento',
                                 'valor_matricula',
                                 'valor_abonado',
-                                'cancelada',
+                                'paz_y_salvo',
                                 'cuotas']}),
     ]
     
@@ -33,12 +33,12 @@ class MatriculaFinancieraAdmin(admin.ModelAdmin):
         'nombre_estudiante',
         'nombre_programa',
         'inscripcion_ciclo',
-        'cancelada'
+        'paz_y_salvo'
     )
     
     inlines = [LetraInline, PagoInline]
     
-    list_filter = ['cancelada', 'matricula_ciclo',]
+    list_filter = ['paz_y_salvo', 'matricula_ciclo',]
     search_fields = ('codigo_estudiante', 'inscripcion_ciclo')
     date_hierarchy = 'fecha_expedicion'
     readonly_fields = ('valor_abonado','valor_matricula')
