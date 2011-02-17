@@ -11,7 +11,6 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 from django.forms import ModelForm, TextInput
 
-
 NOTA_MIN = 0.0
 NOTA_MAX = 5.0
 NOTA_APR = 3.5
@@ -203,7 +202,7 @@ def validar_numerico(cifra):
 #    scale: Función para escalar una imágen a un with y height dados
 def scale(fname, width, height, fname_scaled):
     img = Image.open(fname)
-
+    
     new_height = width * img.size[1] / img.size[0]
     new_width = height * img.size[0] / img.size[1]
     
