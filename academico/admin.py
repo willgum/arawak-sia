@@ -66,7 +66,7 @@ class MatriculaCicloAdmin(ButtonableModelAdmin):
     
     inlines = [CalificacionInline]
     list_filter = ['fecha_inscripcion', 'ciclo']
-    search_fields = ('codigo_estudiante', 'ciclo')
+    search_fields = ('matricula_programa__programa__id', )
     date_hierarchy = 'fecha_inscripcion'
     
     def constancia(self, obj):
