@@ -256,6 +256,45 @@
 		Finalmente se tiene las opciones para eliminar un registro de estudiante existente. Grabar el estudiante actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el estudiante actual y dejar la ventana activa para seguir editando el registro. Grabar el estudiante actual y volver a la ventana de estudiantes.
 
 
+@subsection Institución
+	@subsubsection Información básica:
+	@table @dfn
+	@item Nombre
+		Es un campo de texto obligatorio. Almacena el nombre de la Institución Educativa que será usado por el sistema. Permite un máximo 200 caracteres.
+	@item Nit
+		Es un campo de texto obligatorio que almacena el número de identificación NIT de la Institución Educativa. El campo es de tipo texto y tiene una longitud máxima de 12 caracteres.
+	@item Resolución
+		Es un campo de texto de tipo informativo que almacena la información de la resolución de aprobación de la Institución Educativa.
+	@item Dirección
+		Es un campo de texto de carácter opcional. Almacena la dirección de ubicación de la Institución. Permite un máximo de 200 caracteres.
+	@item Teléfono
+		Es un campo de texto que permite un máximo de 20 caracteres. Almacena el teléfono al cual se puede contactar a la Institución.
+	@item Fax
+		Es un campo de texto que permite un máximo de 20 caracteres. Almacena el fax al cual se puede contactar a la Institución.
+	@item Email
+		Es un campo de texto opcional. Almacena el correo electrónico de la Institución. Admite un máximo de 75 caracteres. El sistema hace la validación de que el correo debe esté en el formato correcto.
+	@item Web
+		Es un campo de texto opcional. Almacena la url de la web que referencia la Institución. Admite un máximo de 200 caracteres.
+	@item Logo
+		Es la opción que permite subir el logo de la Institución al sistema. Esta opción es de carácter opcional y solamente sube formatos de imagen válidos.
+	@end table
+	
+	@subsubsection Funcionarios:
+		Esta sección es de carácter opcional. Permite visualizar los fincionarios que hacen parte activa de la Institución. 
+		Si desea añadir más de un funcionario, dé clic en el hipervínculo “Agregar otro Funcionario”. Contiene los siguientes campos:
+	@table @dfn
+	@item Nombre
+		Es un campo de texto obligatorio. Almacena el nombre del funcionario que va a ser agregado. Permite un máximo 200 caracteres.
+	@item Tipo documento
+		Es un campo seleccionable de carácter opcional, donde el usuario elige el tipo de documento de identidad del funcionario. Las opciones son: Cédula de Ciudadanía, Tarjeta de Identidad, Cédula de Extranjería, Registro Civil.
+	@Documento
+		Es un campo de texto almacena el número de identificación del funcionario. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
+	@Lugar expedición
+		Es un campo de texto opcional. Almacena el lugar en que fue expedido el documento de identificación del funcionario (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+	@Tipo funcionario
+		Es un campo de texto almacena el tipo de funcionario que está siendo agregado. Las opciones son: Director(a), Tesorero(a), Coordinador(a) académico, Secretaria(o), Bibliotecaria(o).
+	@end table
+	
 @subsection Matrícula ciclos
 	@subsubsection Información básica:
 	@table @dfn

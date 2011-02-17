@@ -11,6 +11,7 @@ from reportlab.lib.pagesizes import LETTER, portrait, landscape
 from reportlab.lib.units import cm
 from reportlab.lib.enums import TA_RIGHT, TA_CENTER, TA_JUSTIFY
 
+
 cur_dir = settings.MEDIA_ROOT
 
 #===============================================================================
