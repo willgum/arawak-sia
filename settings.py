@@ -126,6 +126,6 @@ INSTALLED_APPS = (
     'academico',
     'geraldo',
     # 'continuada',
-    # 'financiero',
+    'financiero',
     # 'egresados',
 )
