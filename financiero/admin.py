@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from financiero.models import Pago, Letra, MatriculaFinanciera, Multa, HoraCatedra
+from financiero.models import Pago, Letra, MatriculaFinanciera, Multa, HoraCatedra, CostoPrograma
 from django.contrib import admin
 
 
@@ -14,17 +14,34 @@ class LetraInline(admin.TabularInline):
   
   
 class MatriculaFinancieraAdmin(admin.ModelAdmin):
+    raw_id_fields = ('matricula_ciclo',)
+    
     fieldsets = [
         (None,  {'fields': [    'fecha_expedicion',
-                                'inscripcion_estudiante', 
-                                'estado',
+                                'matricula_ciclo', 
                                 'becado',
-                                'valor_inscripcion',
+                                'valor_descuento',
                                 'valor_matricula',
-                                'cuotas',
-                                'cancelada']}),
+                                'valor_abonado',
+                                'cancelada',
+                                'cuotas']}),
     ]
-    inlines = [PagoInline, LetraInline]
+    
+    list_display = (
+        'fecha_expedicion',
+        'codigo_estudiante',
+        'nombre_estudiante',
+        'nombre_programa',
+        'inscripcion_ciclo',
+        'cancelada'
+    )
+    
+    inlines = [LetraInline, PagoInline]
+    
+    list_filter = ['cancelada', 'matricula_ciclo',]
+    search_fields = ('codigo_estudiante', 'inscripcion_ciclo')
+    date_hierarchy = 'fecha_expedicion'
+    readonly_fields = ('valor_abonado','valor_matricula')
   
   
 class MultaAdmin(admin.ModelAdmin):
@@ -46,7 +63,24 @@ class HoraCatedraAdmin(admin.ModelAdmin):
                                 'observaciones']}),
     ]
 
+class CostoProgramaAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,  {'fields': [    'programa',
+                                'ciclo',
+                                'valor']}),
+    ]
+    
+    list_display = (
+        'nombre_programa',
+        'codigo_ciclo',
+        'valor'
+    )
+    
+    list_filter = ['ciclo',]
+    search_fields = ('nombre_programa', 'codigo_ciclo')
+    raw_id_fields = ('programa', 'ciclo')
 
 admin.site.register(HoraCatedra, HoraCatedraAdmin)
 admin.site.register(MatriculaFinanciera, MatriculaFinancieraAdmin)
 admin.site.register(Multa, MultaAdmin)
+admin.site.register(CostoPrograma, CostoProgramaAdmin)
