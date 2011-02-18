@@ -137,10 +137,10 @@ class CostoPrograma(models.Model):
 class Sesion(models.Model):
     hora_catedra = models.ForeignKey(HoraCatedra)
     curso = models.ForeignKey(Curso)
-    fecha = models.DateField(verbose_name='Fecha sesión de curso')
+    fecha = models.DateField(verbose_name='Fecha sesión de clase')
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-    tiempo_planeado = models.IntegerField(help_text='Tiempo esperado de duración de sesión en minutos', default=0, validators=[MinValueValidator(0)])
+    tiempo_planeado = models.IntegerField(help_text='Tiempo esperado de duración de sesión en minutos', blank=True, null=True, validators=[MinValueValidator(0)])
     
     class Meta:
         verbose_name_plural = 'Sesiones'

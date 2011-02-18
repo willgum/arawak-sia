@@ -1,6 +1,10 @@
 @node Módulos
 @chapter Módulos
 
+@c ---------------------------------------------
+@c ------ SECCIÓN DEL MÓDULO ACADÉMICO --------
+@c ---------------------------------------------
+
 @section Módulo académico
 
 @subsection Calificaciones
@@ -98,7 +102,7 @@
 	Almacena la cantidad de cortes de evaluación con los que contará el ciclo. Contiene los siguientes campos:
 	@table @dfn
 	@item Ciclo
-		Es un campo de texto de texto de carácter obligatorio que almacena el ciclo académico al que sobre el que se creará el nuevo corte.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes. 
+		Es un campo de texto de carácter obligatorio que almacena el ciclo académico al que sobre el que se creará el nuevo corte.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes. 
 	@item Sufijo
 		Es un campo de texto de carácter obligatorio. Almacena el identificador del nuevo corte en el ciclo y junto con el código de ciclo forma el código de corte. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 	@item Porcentaje
@@ -113,20 +117,38 @@
 	
 	
 @subsection Cursos
-	Es la sección que permite crear un curso asignando la competencia a un ciclo y profesor seleccionado. Contiene los siguientes campos: 
+	@subsubsection Información básica
+		Es la sección que permite crear un curso asignando la competencia a un ciclo y profesor seleccionado. Contiene los siguientes campos: 
 	@table @dfn
 	@item Competencia
-		Es un campo de texto de texto de carácter obligatorio que almacena la competencia que se asignará al curso. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes. 
+		Es un campo de texto de carácter obligatorio que almacena la competencia que se asignará al curso. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes. 
 	@item Grupo
-		Es un campo de texto de texto de carácter obligatorio que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
+		Es un campo de texto de carácter obligatorio que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
 	@item Profesor
-		Es un campo de texto de texto de carácter obligatorio que almacena el docente que impartirá el curso. Para buscar algún docente dé clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
+		Es un campo de texto de carácter obligatorio que almacena el docente que impartirá el curso. Para buscar algún docente dé clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
 	@item Ciclo
 		Es un campo de texto de carácter obligatorio que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
 	@item Esperados
-		Es un campo de texto de texto de carácter opcional que almacena el número esperado de estudiantes en el curso.  El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		Es un campo de texto de carácter opcional que almacena el número esperado de estudiantes en el curso.  El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 	@end table
 	
+	@subsubsection Horario cursos
+		Es una sección opcional de carácter informativo. Permite agregar el horario de las sesiones para el curso que está siendo creado.
+		Si se desea añadir más de una sesión en el horario de curso, dé clic en el hipervínculo “Agregar otro horario curso”. 
+		Para que el sistema agregue el horario, deberá diligenciar todos los espacios disponibles. Contiene los siguientes campos:
+	 @table @dfn
+	 @item Dia
+	 	Es un campo seleccionable. Contiene los días de la semana.
+	 @item Hora inicio
+	 	Es un campo de texto. Almacena la hora de inicio de la sesión de clase. El formato de hora es hh:mm:ss, donde @emph{h} es hora, @emph{m} es minuto y @emph{s} es segundo.
+	 	Junto al campo de texto se agrega un icono tipo reloj y al dar clic, se habilitan unas opciones de hora predefinidas (Ahora, Media noche, 6 a.m., Medio día). 
+	 @item Hora fin
+	 	Es un campo de texto. Almacena la hora de finalización de la sesión de clase. El formato de hora es hh:mm:ss, donde @emph{h} es hora, @emph{m} es minuto y @emph{s} es segundo.
+	 	Junto al campo de texto se agrega un icono tipo reloj y al dar clic, se habilitan unas opciones de hora predefinidas (Ahora, Media noche, 6 a.m., Medio día).
+	 @item Salón
+	 	Es un campo seleccionable. Contiene los salones que han sido previamente creados. 
+	 	Deberá seleccionar el salón en donde se llevará a cabo la sesión de clase.
+	 @end table 
 	Finalmente se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de Matrícula programas.
 
 
@@ -287,11 +309,11 @@
 		Es un campo de texto obligatorio. Almacena el nombre del funcionario que va a ser agregado. Permite un máximo 200 caracteres.
 	@item Tipo documento
 		Es un campo seleccionable de carácter opcional, donde el usuario elige el tipo de documento de identidad del funcionario. Las opciones son: Cédula de Ciudadanía, Tarjeta de Identidad, Cédula de Extranjería, Registro Civil.
-	@Documento
+	@item Documento
 		Es un campo de texto almacena el número de identificación del funcionario. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
-	@Lugar expedición
+	@item Lugar expedición
 		Es un campo de texto opcional. Almacena el lugar en que fue expedido el documento de identificación del funcionario (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
-	@Tipo funcionario
+	@item Tipo funcionario
 		Es un campo de texto almacena el tipo de funcionario que está siendo agregado. Las opciones son: Director(a), Tesorero(a), Coordinador(a) académico, Secretaria(o), Bibliotecaria(o).
 	@end table
 	
@@ -458,3 +480,155 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 	@end table
 	
 	Finalmente se tiene las opciones para eliminar un salón existente. Grabar el salón actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el salón actual y dejar la ventana activa para seguir editando el registro. Grabar el salón actual y volver a la ventana de salones.
+	
+
+@c ---------------------------------------------
+@c ------ SECCIÓN DEL MÓDULO FINANCIERO --------
+@c ---------------------------------------------
+
+@section Módulo financiero
+	@subsection Costo programas
+		@table @dfn
+		@item Programa
+			Es un campo seleccionable de carácter obligatorio que permite elegir el programa al que se desea 
+			matricular al estudiante. Para buscar un programa dé clic en el botón “Lupa” que está junto al campo.
+		@item Ciclo
+			Es un campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  
+			Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
+		@item Valor
+			Es un campo de texto de tipo numérico que puede ser de carácter entero o decimal. 
+			Refleja el costo de la matrícula del programa en el ciclo académico seleccionado. 
+		@end table
+		
+		
+	@subsection Horas cátedra
+		@subsubsection Información básica
+		@table @dfn
+			@item Profesor
+				Es un campo de texto que almacena la información del profesor seleccionado. 
+				Para buscar algún profesor dé clic en el botón Lupa, se abrirá una nueva ventana con los profesores existentes en el sistema.
+			@item Ciclo
+				Es un campo de texto que almacena el ciclo académico sobre el que se establecerá el valor de hora cátedra.  
+				Para buscar algún ciclo dé clic en el botón Lupa, se abrirá una ventana nueva con los ciclos existentes.
+			@item Valor hora
+				Es un campo de texto de tipo numérico que puede ser de carácter entero o decimal. Almacena el costo
+				que se pagará al docente por cada hora de clase impartida.
+			@item Observaciones
+		@end table
+		
+		@subsubsection Sesiones
+			La sección sesiones almacena la información de sesiones de clase del profesor en los diferentes cursos a cargo. 
+			Es una sección de carácter opcional. Si se desea añadir más de una sesión, dé clic en el hipervínculo “Agregar otra sesión”. 
+			Para que el sistema agregue la nueva sesión, deberá diligenciar todos los espacios disponibles. Contiene los siguientes campos:
+		@table @dfn
+			@item Curso
+				Es un campo seleccionable que permite elegir el curso sobre el que se va a ingresar la información de sesión de clase. 
+				Para buscar un curso dé clic en el botón “Lupa” que está junto al campo.
+			@item Fecha sesión de clase
+				Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio a la sesión de clase. 
+				Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+				El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+			@item Hora inicio
+				Es un campo de texto. Almacena la hora de inicio de la sesión de clase. El formato de hora es @emph{hh:mm:ss}, donde @emph{h} es hora, @emph{m} es minuto y @emph{s} es segundo.
+				Junto al campo de texto se agrega un icono tipo reloj y al dar clic, se habilitan unas opciones de hora predefinidas (Ahora, Media noche, 6 a.m., Medio día). 
+			@item Hora fin
+				Es un campo de texto. Almacena la hora de finalización de la sesión de clase. El formato de hora es @emph{hh:mm:ss}, donde @emph{h} es hora, @emph{m} es minuto y @emph{s} es segundo.
+				Junto al campo de texto se agrega un icono tipo reloj y al dar clic, se habilitan unas opciones de hora predefinidas (Ahora, Media noche, 6 a.m., Medio día).
+			@item Tiempo planeado
+				Es un campo de texto de tipo numérico que únicamente admite valores de tipo entero. Permite 
+				establecer cuál es el tiempo planeado de duración en minutos de la sesión de clase.
+		@end table
+		
+	
+	@subsection Inscripciones programa
+		@table @dfn
+			@item Fecha de inscripción
+				Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se inscribe un candidato 
+				a uno de los programas académicos ofrecidos por la Institución Educativa. 
+				Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+				El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+			@item Matrícula programa
+				Es un campo de texto seleccionable de carácter obligatorio que permite elegir el candidato inscrito a determinado programa. 
+				Para buscar la matrícula de programa dé clic en el botón “Lupa” que está junto al campo.
+			@item Valor inscripción
+				Es un campo de texto de tipo numérico que puede ser de carácter entero o decimal. 
+				Refleja el costo de inscribirse a uno de los programas académicos ofrecidos por la Institución Educativa.
+			@item Fecha de pago
+				Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se ha efectuado el pago de la inscripción. 
+				Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+				El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo. 
+		@end table
+		
+	
+	@subsection Matrícula financiera
+		@subsubsection Información básica
+		@table @dfn
+		@item Inscripción programa
+			Es un campo de texto seleccionable de carácter obligatorio que permite elegir una de las inscripciones que se han realizado en los distintos programas. 
+			Para buscar una inscripción de programa dé clic en el botón “Lupa” que está junto al campo.
+		@item Fecha expedición
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se expide el recibo de pago  
+			para matricularse al ciclo académico del programa que el estudiante se había inscrito previamente. 
+			Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+			El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Matrícula ciclo
+			Es un campo de texto seleccionable de carácter obligatorio que permite elegir el estudiante matriculado 
+			en determinado ciclo académico de un programa. Para buscar la matrícula de ciclo dé clic en el botón “Lupa” que está junto al campo.
+		@item Becado
+			Es un campo de tipo seleccionable de carácter opcional que permite determinar si el estudiante tiene algún tipo de beca
+			o descuento sobre el costo de la matrícula al programa.
+		@item Valor descuento
+			Es un campo de texto de tipo numérico de carácter opcional que puede ser de carácter entero o decimal. Indica el valor de descuento sobre el costo de matrícula.
+		@item Valor matrícula
+			Es un campo de texto de tipo numérico de carácter informativo que puede ser de carácter entero o decimal. 
+			Representa el costo de matrícula al programa menos el valor de descuento en el ciclo académico seleccionado.
+		@item Valor abonado
+			Es un campo de texto de tipo numérico de carácter informativo que puede ser de carácter entero o decimal. Corresponde al valor abonado al costo de matrícula a la fecha.
+		@item Paz y salvo
+			Es un campo de tipo seleccionable de carácter informativo que permite determinar si el estudiante se encuentra 
+			a paz y salvo con el pago de la matrícula. Se determina a partir del valor de matrícula menos el valor abonado.
+		@item Cuotas
+			Es un campo de texto de tipo numérico entero de carácter obligatorio que almacena la cantidad de cuotas en las que 
+			se distribuye el pago de matrícula de semestre.
+		@end table
+		
+		@subsubsection Letras
+		 	La sección Letras almacena la información de las letras que respaldan los pagos de las cuotas en las que se ha distribuido 
+		 	el costo de la matrícula. Es una sección de carácter opcional. Si se desea añadir más de una Letra, dé clic en el hipervínculo 
+		 	“Agregar otra Letra”. Contiene los siguientes campos:
+		@table @dfn
+		@item Fecha expedición
+		 	Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se expide la letra que respalda el pago de la cuota respectiva. 
+			Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+			El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Fecha vencimiento
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que expira la letra que respalda el pago de la cuota respectiva. 
+			Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+			El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Valor
+			Es un campo numérico que puede ser de carácter entero o decimal. Almacena el valor de la cuota que está siendo respaldada por la letra.
+		@item Fecha pago
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se hace efectivo el pago de la cuota. 
+			Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+			El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Cancelada
+			Es un campo seleccionable que almacena si la cuota fué o no cancelada. A partir de las cuotas canceladas se determina el valor abonado a la deuda.  
+		@end table
+		
+		@subsubsection Pagos
+			La sección Pagos almacena la información de pagos realizados distintos a los del valor de las cuotas de financiación 
+			de matrícula de programa. Por ejemplo pagos de multas, pagos de constancias de estudios o certificados de notas, entre otros. 
+		 	Es una sección de carácter opcional. Si se desea añadir más de un Pago, dé clic en el hipervínculo 
+		 	“Agregar otro Pago”. Contiene los siguientes campos:
+		 @table @dfn
+		 @item Fecha pago
+			Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se hace efectivo el pago por algún concepto. 
+			Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+			El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+		@item Valor
+			Es un campo numérico que puede ser de carácter entero o decimal. Almacena el valor del pago efectuado por algún concepto.
+		@item Recibo caja
+			Es un campo de texto de máximo 200 caracteres que almacena el consecutivo del recibo de caja que soporta el pago realizado por algún concepto.
+		@item Concepto
+			Es un campo de texto que almacena el concepto por el cual se ha realizado un pago por parte de un estudiante a la Institución Educativa.  
+		 @end table

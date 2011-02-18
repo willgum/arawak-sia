@@ -41,7 +41,8 @@ class MatriculaFinancieraAdmin(admin.ModelAdmin):
     raw_id_fields = ('inscripcion_programa', 'matricula_ciclo',)
     
     fieldsets = [
-        (None,  {'fields': [    'inscripcion_programa',
+        ('Información básica',  {'fields': [    
+                                'inscripcion_programa',
                                 'fecha_expedicion',
                                 'matricula_ciclo', 
                                 'becado',
@@ -78,7 +79,8 @@ class HoraCatedraAdmin(admin.ModelAdmin):
     raw_id_fields = ('profesor', 'ciclo')
     
     fieldsets = [
-        (None,  {'fields': [    'profesor',
+        ('Información básica', {'fields': [    
+                                'profesor',
                                 'ciclo',
                                 'valor_hora',
                                 'observaciones']}),
