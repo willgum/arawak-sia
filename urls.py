@@ -27,13 +27,19 @@ urlpatterns = patterns('',
     
     # definicion de urls para la aplicacion academico     
     (r'^academico/', include('academico.urls')),
+    (r'^financiero/', include('academico.urls')),
     
     # administrador de la aplicacion
+    # url's programa academico
     (r'^admin/academico/ciclo/(?P<ciclo_id>\d+)/promocion/$', 'academico.views.promocion_ciclo'),
     (r'^admin/academico/matriculaciclo/(?P<matriculaciclo_id>\d+)/constancia/$', 'academico.views.constanciaMatriculaCiclo'),
     (r'^admin/academico/matriculaprograma/inscritos/$', 'academico.views.estudiantesInscritos'),
     (r'^admin/academico/matriculaprograma/consolidadoinscritos/$', 'academico.views.consolidadoInscritos'),
     (r'^admin/academico/matriculaprograma/(?P<matriculaprograma_id>\d+)/imprimircarnet/$', 'academico.views.estudianteCarnet'),
+    
+    # url's programa financiero
+    (r'^admin/financiero/matriculafinanciera/reportecartera/$', 'financiero.views.reporteCartera'),
+    
     (r'^admin/', include(admin.site.urls)),
     
     # esta linea es necesaria para poder acceder a documentos archivos estaticos como css e imagenes    
