@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from financiero.models import Pago, Letra, MatriculaFinanciera, HoraCatedra, CostoPrograma, Sesion, InscripcionPrograma
 from django.contrib import admin
-
+from academico.admin import ButtonableModelAdmin 
 
 class PagoInline(admin.TabularInline):
     model = Pago
@@ -37,7 +37,7 @@ class InscripcionProgramaAdmin(admin.ModelAdmin):
     date_hierarchy = 'fecha_inscripcion'
 
   
-class MatriculaFinancieraAdmin(admin.ModelAdmin):
+class MatriculaFinancieraAdmin(ButtonableModelAdmin):
     raw_id_fields = ('inscripcion_programa', 'matricula_ciclo',)
     
     fieldsets = [
@@ -62,8 +62,13 @@ class MatriculaFinancieraAdmin(admin.ModelAdmin):
         'paz_y_salvo'
     )
     
-    inlines = [LetraInline, PagoInline]
+    def reporteCartera(self, request, obj):
+        obj.reporteCartera()
+    reporteCartera.url = "/admin/financiero/matriculafinanciera/reportecartera"
+    reporteCartera.short_description='Reporte cartera'
     
+    inlines = [LetraInline, PagoInline]
+    buttons_list = [reporteCartera, ]
     list_filter = ['paz_y_salvo', 'matricula_ciclo',]
     search_fields = ('codigo_estudiante', 'inscripcion_ciclo')
     date_hierarchy = 'fecha_expedicion'
