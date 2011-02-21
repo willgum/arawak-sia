@@ -405,7 +405,6 @@ def promocion_ciclo(solicitud, ciclo_id):
             
             tmp_fecha = solicitud.POST['fecha_fin']
             tmp_fecha_fin = date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
-#            tmp_fecha_fin = datetime.date(int(tmp_fecha[6:10]), int(tmp_fecha[3:5]), int(tmp_fecha[0:2]))
     
             #Duplicar los cortes de un ciclo anterior a un ciclo nuevo
             cortes = Corte.objects.filter(ciclo = ciclo_id)

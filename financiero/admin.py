@@ -38,13 +38,13 @@ class InscripcionProgramaAdmin(admin.ModelAdmin):
 
   
 class MatriculaFinancieraAdmin(ButtonableModelAdmin):
-    raw_id_fields = ('inscripcion_programa', 'matricula_ciclo',)
+    raw_id_fields = ('inscripcion_programa', 'ciclo',)
     
     fieldsets = [
         ('Información básica',  {'fields': [    
                                 'inscripcion_programa',
                                 'fecha_expedicion',
-                                'matricula_ciclo', 
+                                'ciclo', 
                                 'becado',
                                 'valor_descuento',
                                 'valor_matricula',
@@ -58,7 +58,7 @@ class MatriculaFinancieraAdmin(ButtonableModelAdmin):
         'codigo_estudiante',
         'nombre_estudiante',
         'nombre_programa',
-        'inscripcion_ciclo',
+        'ciclo',
         'paz_y_salvo'
     )
     
@@ -69,8 +69,8 @@ class MatriculaFinancieraAdmin(ButtonableModelAdmin):
     
     inlines = [LetraInline, PagoInline]
     buttons_list = [reporteCartera, ]
-    list_filter = ['paz_y_salvo', 'matricula_ciclo',]
-    search_fields = ('codigo_estudiante', 'inscripcion_ciclo')
+    list_filter = ['paz_y_salvo', 'ciclo',]
+    search_fields = ('codigo_estudiante', 'ciclo')
     date_hierarchy = 'fecha_expedicion'
     readonly_fields = ('valor_abonado','valor_matricula')
   
