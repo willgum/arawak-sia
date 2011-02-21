@@ -39,6 +39,7 @@ urlpatterns = patterns('',
     
     # url's programa financiero
     (r'^admin/financiero/matriculafinanciera/reportecartera/$', 'financiero.views.reporteCartera'),
+    (r'^admin/financiero/matriculafinanciera/(?P<matriculafinanciera_id>\d+)/estadoCuenta/$', 'financiero.views.estadoCuenta'),
     
     (r'^admin/', include(admin.site.urls)),
     

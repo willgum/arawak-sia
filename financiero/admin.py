@@ -67,10 +67,22 @@ class MatriculaFinancieraAdmin(ButtonableModelAdmin):
     reporteCartera.url = "/admin/financiero/matriculafinanciera/reportecartera"
     reporteCartera.short_description='Reporte cartera'
     
+    def estadoCuenta(self, request, obj):
+        obj.estadoCuenta()
+    estadoCuenta.url = "/admin/financiero/matriculafinanciera/estadoCuenta"
+    estadoCuenta.short_description='Estado de cuenta'
+    
+    
     inlines = [LetraInline, PagoInline]
     buttons_list = [reporteCartera, ]
+    buttons = [estadoCuenta, ]
+    
     list_filter = ['paz_y_salvo', 'ciclo',]
-    search_fields = ('codigo_estudiante', 'ciclo')
+    search_fields = ('inscripcion_programa__matricula_programa__estudiante__nombre1',
+                     'inscripcion_programa__matricula_programa__estudiante__nombre2',
+                     'inscripcion_programa__matricula_programa__estudiante__apellido1',
+                     'inscripcion_programa__matricula_programa__estudiante__apellido1',
+                     'inscripcion_programa__matricula_programa__codigo', 'ciclo__codigo')
     date_hierarchy = 'fecha_expedicion'
     readonly_fields = ('valor_abonado','valor_matricula')
   
