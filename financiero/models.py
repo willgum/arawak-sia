@@ -32,8 +32,7 @@ class InscripcionPrograma(models.Model):
 class MatriculaFinanciera(models.Model):
     # Informacion general
     inscripcion_programa = models.ForeignKey(InscripcionPrograma)
-    matricula_ciclo = models.ForeignKey(MatriculaCiclo)
-#    matricula_ciclo = models.ForeignKey(MatriculaCiclo, limit_choices_to = {'matricula_programa__programa__id': 1})
+    ciclo = models.ForeignKey(Ciclo)
     fecha_expedicion = models.DateField(verbose_name='Fecha expedición')
     becado = models.BooleanField(help_text="Indica si el estudiante recibe o no beca.")
     valor_descuento = models.FloatField(help_text="Indica el valor de descuento sobre el costo de matrícula.", verbose_name='Valor descuento', blank=True, null=True, default=0, validators=[MinValueValidator(0)])
@@ -43,27 +42,27 @@ class MatriculaFinanciera(models.Model):
     paz_y_salvo = models.BooleanField(help_text='Indica si no existen deudas.')
     
     class Meta:
-        unique_together = ("inscripcion_programa", "matricula_ciclo")
+        unique_together = ("inscripcion_programa", "ciclo")
         verbose_name_plural = 'Matrículas financieras'
         verbose_name = 'Matrícula financiera'
         
     def __unicode__(self):
-        return "%s" %(self.matricula_ciclo.codigo_ciclo())
+        return "%s" %(self.ciclo.codigo)
     
     def codigo_estudiante(self):
-        return "%s" %(self.matricula_ciclo.codigo_estudiante())
+        return "%s" %(self.inscripcion_programa.codigo_estudiante())
     
     def nombre_estudiante(self):
-        return "%s" %(self.matricula_ciclo.nombre_estudiante())
+        return "%s" %(self.inscripcion_programa.nombre_estudiante())
     
     def id_programa(self):
-        return "%s" %(self.matricula_ciclo.matricula_programa.programa.id)
+        return "%s" %(self.inscripcion_programa.id_programa())
     
     def nombre_programa(self):
-        return "%s" %(self.matricula_ciclo.nombre_programa())
+        return "%s" %(self.inscripcion_programa.nombre_programa())
     
     def inscripcion_ciclo(self):
-        return "%s" %(self.matricula_ciclo.codigo_ciclo())
+        return "%s" %(self.ciclo.codigo)
     
     def cancelar(self):
         pagos = Letra.objects.filter(matricula_financiera = self.id)
@@ -80,11 +79,11 @@ class MatriculaFinanciera(models.Model):
     
     
     def valor_saldo(self):
-        return "%s" %(self.valor_matricula - self.valor_abonado)
+        return self.valor_matricula - self.valor_abonado
         
     def save(self, *args, **kwargs):
         try:
-            costo_programa = CostoPrograma.objects.get(programa = self.matricula_ciclo.matricula_programa.programa)
+            costo_programa = CostoPrograma.objects.get(programa = self.inscripcion_programa.id_programa())
             valor = costo_programa.valor - self.valor_descuento
         except CostoPrograma.DoesNotExist:
             valor = 0
