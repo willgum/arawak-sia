@@ -1,0 +1,56 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n admin_modify adminmedia %}
+
+{% block extrahead %}{{ block.super }}
+{% url admin:jsi18n as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+
+<script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script> 
+<script type="text/javascript" src="{% admin_media_prefix %}js/calendar.js"></script> 
+<script type="text/javascript" src="{% admin_media_prefix %}js/admin/DateTimeShortcuts.js"></script> 
+
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+	 <a href="../../../">{% trans "Inicio" %}</a> &rsaquo;
+     <a href="../../">{% trans "Financiero" %}</a> &rsaquo;
+     <a href="../">{% trans "horacatedra" %}</a> &rsaquo; 
+     {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+</div>
+<div id="content" class="colM">
+	<h1>Liquidar pago a profesor</h1>
+	<div>
+		Se pagará al profesor las horas en el rango de fechas seleccionadas. 
+	</div>
+	<div id="content-main">
+		<form id="formulario" action="../reportenomina/" method="post">
+			<input type="hidden" name="hora_catedra" value="{{ horacatedra.id }}" />
+			<div>
+				<fieldset class="module aligned ">
+						<div class="form-row fecha_inicio">
+							<div>
+								<label for="id_fecha_inicio" class="required">Fecha inicio: </label>
+								<input id="id_fecha_inicio" type="text" class="vDateField" name="fecha_inicio" /> 
+							</div>
+						</div>
+						<div class="form-row fecha_fin">
+							<div>
+								<label for="id_fecha_fin" class="required">Fecha fin: </label>
+								<input id="id_fecha_fin" type="text" class="vDateField" name="fecha_fin" /> 
+							</div>
+						</div>
+				</fieldset>
+			</div>
+			<div class="submit-row" > 
+		    	<input type="submit" value="Liquidar" />
+		    </div>
+		</form>
+	</div>	
+</div>
+
+{% endif %}{% endblock %}

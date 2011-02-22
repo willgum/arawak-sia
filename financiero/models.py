@@ -192,6 +192,7 @@ class LiquidarPago(models.Model):
     fecha_liquidacion = models.DateField(verbose_name='Fecha liquidación')
     fecha_inicio = models.DateField(verbose_name='Fecha inicio')
     fecha_fin = models.DateField(verbose_name='Fecha fin')
+    horas_sesiones = models.PositiveIntegerField(help_text='Horas de clase', blank=True, null=True)
     valor_liquidado = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
     valor_adelanto = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
     valor_descuento = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
