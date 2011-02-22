@@ -2,7 +2,7 @@
 
 # Create your views here.
 from django.http import HttpResponse
-from financiero.models import MatriculaFinanciera, HoraCatedraForm, HoraCatedra, Ciclo, Sesion, Adelanto, LiquidarPago, LiquidarPagoForm
+from financiero.models import MatriculaFinanciera, HoraCatedraForm, HoraCatedra, Ciclo, Sesion, Adelanto, LiquidarPago, LiquidarPagoForm, Descuento
 from academico.models import Profesor
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 from django.shortcuts import render_to_response
@@ -12,7 +12,7 @@ from django.conf import settings
 from datetime import date
     
 #Reportes GERALDO
-from reportes import rpt_ReporteCartera, rpt_EstadoCuenta
+from reportes import rpt_ReporteCartera, rpt_EstadoCuenta, rpt_LiquidarPagoDocente, rpt_LiquidarNominaDocente
 
 from geraldo.generators import PDFGenerator
 
@@ -67,20 +67,32 @@ def liquidarPago(solicitud, horacatedra_id):
     if solicitud.method == 'POST':
         formPago = LiquidarPagoForm(solicitud.POST)
         if formPago.is_valid():
-#            tmp_fecha = formPago.fecha_inicio
-#            tmp_fecha_inicio = formPago.fecha_inicio
-#            tmp_fecha = solicitud.POST['fecha_fin']
-#            tmp_fecha_fin = formPago.fecha_fin
-#            tmp_liquidarPago = LiquidarPago(hora_catedra_id=horacatedra_id, fecha_liquidacion=formPago.fecha_liquidacion)
-            formPago.pago.valor_liquidado = 0
-            formPago.valor_adelanto = 0
-            formPago.valor_descuento = 0
-            formPago.save()
-#            tmp_liquidarPago.save()
-#            formset.save()
-            solicitud.user.message_set.create(message="El ciclo fue promovido correctamente.")
-#        return HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id + "/rpt_horacatedra/")
-            return  HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id)
+            tmp_formPago = formPago.save(commit=False)
+            sum_adelantos = 0.0
+            sum_descuentos = 0.0
+            sum_liquidado = 0.0
+            sum_sesiones = 0
+           
+            #Sumar los tiempos de sesión esperados por el docente
+            sesiones = Sesion.objects.filter(hora_catedra=horacatedra_id, fecha_sesion__range=(tmp_formPago.fecha_inicio, tmp_formPago.fecha_fin))
+            for sesion in sesiones:
+                sum_sesiones = sum_sesiones + sesion.tiempo_planeado
+            sum_liquidado = tmp_horaCatedra.valor_hora*(sum_sesiones/tmp_horaCatedra.tiempo_hora)
+            
+            #Sumar adelantos realizados al docente
+            adelantos = Adelanto.objects.filter(hora_catedra=horacatedra_id, fecha_adelanto__range=(tmp_formPago.fecha_inicio, tmp_formPago.fecha_fin))
+            for adelanto in adelantos:
+                sum_adelantos = sum_adelantos + adelanto.valor
+           
+            #Sumar descuentos realizados al valor liquidado del docente
+            descuentos = Descuento.objects.filter(hora_catedra=horacatedra_id)
+            for descuento in descuentos:
+                sum_descuentos = sum_descuentos + (sum_liquidado*(descuento.porcentaje*0.01))
+            tmp_formPago.valor_liquidado = sum_liquidado
+            tmp_formPago.valor_adelanto = sum_adelantos
+            tmp_formPago.valor_descuento = sum_descuentos
+            tmp_formPago.save()
+            return  HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id + "/rpt_horacatedra")
     else:
         formPago = LiquidarPagoForm()
     datos = {'formpago': formPago,
@@ -90,18 +102,32 @@ def liquidarPago(solicitud, horacatedra_id):
              'adelanto': Adelanto.objects.filter(hora_catedra = horacatedra_id),
              'horacatedra': HoraCatedra.objects.get(id = horacatedra_id),
              'liquidarpago': LiquidarPago.objects.filter(hora_catedra = horacatedra_id),} 
-    return redireccionar('admin/liquidar_pago.html', solicitud, datos)
+    return redireccionar('admin/financiero/liquidar_pago.html', solicitud, datos)
+
+
+@login_required
+def reporteLiquidarNomina(solicitud):
+    resp = HttpResponse(mimetype='application/pdf')
+    
+    tmp_liquidarPago = LiquidarPago.objects.filter(fecha_liquidacion__range=(date(2011, 2, 1), date(2011, 2, 28)))
+    if tmp_liquidarPago:
+        reporte = rpt_LiquidarNominaDocente(queryset=tmp_liquidarPago)
+        reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+        return resp
+    else:
+        solicitud.user.message_set.create(message="No existe datos para mostrar.")
+        return HttpResponseRedirect("/admin/financiero/horacatedra/")
 
 
 @login_required
 def reporteLiquidarPago(solicitud, horacatedra_id):
     resp = HttpResponse(mimetype='application/pdf')
     
-#    tmp_estadoCuenta = MatriculaFinanciera.objects.filter(id=matriculafinanciera_id)
-#    if tmp_estadoCuenta:
-#        reporte = rpt_EstadoCuenta(queryset=tmp_estadoCuenta)
-#        reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
-#        return resp
-#    else:
-#        solicitud.user.message_set.create(message="No existe datos para mostrar.")
-#        return HttpResponseRedirect("/admin/financiero/matriculafinanciera")
+    tmp_liquidarPago = LiquidarPago.objects.filter(hora_catedra=horacatedra_id)
+    if tmp_liquidarPago:
+        reporte = rpt_LiquidarPagoDocente(queryset=tmp_liquidarPago)
+        reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+        return resp
+    else:
+        solicitud.user.message_set.create(message="No existe datos para mostrar.")
+        return HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id)

@@ -444,7 +444,7 @@ def promocion_ciclo(solicitud, ciclo_id):
         formset = CicloForm()
     datos = {'formset': formset,
              'ciclo': Ciclo.objects.get(id = ciclo_id)} 
-    return redireccionar('admin/promocionCiclo.html', solicitud, datos)
+    return redireccionar('admin/academico/promocionCiclo.html', solicitud, datos)
 
 
 #----------------------------------------------vistas reportes administrativos ---------------------------------------------------------
