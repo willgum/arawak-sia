@@ -155,9 +155,9 @@ class HoraCatedraForm(ModelForm):
 
 class Adelanto(models.Model):
     hora_catedra = models.ForeignKey(HoraCatedra)
-    fecha_adelanto = models.DateField(verbose_name='Fecha de adelanto')
+    fecha_adelanto = models.DateField()
     valor = models.FloatField(default=0, validators=[MinValueValidator(0)])
-    fecha_retorno = models.DateField(verbose_name='Fecha de retorno de adelanto')
+    fecha_retorno = models.DateField()
     concepto = models.TextField(max_length=200, blank=True) 
     cancelada = models.BooleanField(help_text='Indica si no existen deudas por adelanto.')
     
@@ -168,10 +168,10 @@ class Adelanto(models.Model):
 class Sesion(models.Model):
     hora_catedra = models.ForeignKey(HoraCatedra)
     curso = models.ForeignKey(Curso)
-    fecha = models.DateField(verbose_name='Fecha sesión de clase')
+    fecha_sesion = models.DateField(verbose_name='Fecha sesión')
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-    tiempo_planeado = models.IntegerField(help_text='Tiempo esperado de duración de sesión en minutos', blank=True, null=True, validators=[MinValueValidator(0)])
+    tiempo_planeado = models.PositiveIntegerField(help_text='Tiempo esperado de duración de sesión en minutos', blank=True, null=True)
     
     class Meta:
         verbose_name_plural = 'Sesiones'
@@ -181,23 +181,23 @@ class Sesion(models.Model):
 class Descuento(models.Model):
     hora_catedra = models.ForeignKey(HoraCatedra)
     concepto = models.CharField(max_length=200, blank=True)
-    porcenaje = models.PositiveIntegerField(max_length=2)
+    porcentaje = models.PositiveIntegerField(max_length=2)
     
     def __unicode__(self):
         return "%s" %(self.porcenaje)
 
 class LiquidarPago(models.Model):
     hora_catedra = models.ForeignKey(HoraCatedra)
-    fecha_liquidacion = models.DateField(verbose_name='Fecha liquidación pago')
-    fecha_inicio = models.DateField(verbose_name='Fecha inicio liquidación')
-    fecha_fin = models.DateField(verbose_name='Fecha fin liquidación')
+    recibo = models.CharField(max_length=20, unique=True, help_text="Número de recibo")
+    fecha_liquidacion = models.DateField(verbose_name='Fecha liquidación')
+    fecha_inicio = models.DateField(verbose_name='Fecha inicio')
+    fecha_fin = models.DateField(verbose_name='Fecha fin')
     valor_liquidado = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
     valor_adelanto = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
     valor_descuento = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
     
-    class Meta:
-        unique_together = ("hora_catedra", "fecha_liquidacion")
-        
+    def valor_total(self):
+        return self.valor_liquidado - (self.valor_adelanto + self.valor_descuento)
         
 class LiquidarPagoForm(ModelForm):
     class Meta:

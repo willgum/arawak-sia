@@ -41,14 +41,20 @@
 						</div>
 						<div class="form-row ciclo">
 							 <div>
-				  				<label for="id_codigo" class="required">Ciclo: </label>				
+				  				<label for="id_ciclo" class="required">Ciclo: </label>				
 								<div> {{ ciclo.codigo }} </div>
+							 </div>
+						</div>
+						<div class="form-row recibo">
+							 <div>
+				  				<label for="id_recibo" class="required">Recibo: </label>				
+								<div> {{ formpago.recibo }} </div>
 							 </div>
 						</div>
 						<div class="form-row fecha_liquidacion">
 							<div>
 								{{ formpago.fecha_liquidacion.errors }}
-								<label for="id_fecha_liquidacion" class="required">Fecha de liquidación: </label>
+								<label for="id_fecha_liquidacion" class="required">Fecha liquidación: </label>
 								{{ formpago.fecha_liquidacion }}
 							</div>
 						</div>

@@ -127,9 +127,16 @@ class HoraCatedraAdmin(ButtonableModelAdmin):
     liquidarpago.url = "/admin/financiero/horacatedra/liquidarpago"
     liquidarpago.short_description='Liquidar pago'
     
+    def liquidarnomina(self, request, obj):
+        obj.estadoCuenta()
+    liquidarnomina.url = "/admin/financiero/matriculafinanciera/liquidarnomina"
+    liquidarnomina.short_description='Reporte nómina'
+    
+    
     inlines = [SesionInline, AdelantoInLine, DescuentoInLine, ]
     buttons = [liquidarpago, ] 
-
+    buttons_list = [liquidarnomina, ]
+    
 
 class CostoProgramaAdmin(admin.ModelAdmin):
     fieldsets = [
