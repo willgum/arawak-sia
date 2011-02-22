@@ -2,6 +2,8 @@
 from django.db import models
 from academico.models import MatriculaPrograma, Profesor, Curso, Programa, Ciclo
 from django.core.validators import MinValueValidator
+from django.forms import ModelForm, TextInput
+
 
 class InscripcionPrograma(models.Model):
     matricula_programa = models.OneToOneField(MatriculaPrograma)
@@ -77,7 +79,6 @@ class MatriculaFinanciera(models.Model):
         self.valor_abonado = valor
         self.save()
     
-    
     def valor_saldo(self):
         return self.valor_matricula - self.valor_abonado
         
@@ -116,16 +117,7 @@ class Letra(models.Model):
         super(Letra, self).delete(*args, **kwargs)
         self.matricula_financiera.cancelar()
   
-class HoraCatedra(models.Model):
-    profesor = models.ForeignKey(Profesor)
-    ciclo = models.ForeignKey(Ciclo)
-    valor_hora = models.FloatField(default=0, validators=[MinValueValidator(0)])
-    observaciones = models.TextField(max_length=200, blank=True)
-        
-    class Meta:
-        verbose_name_plural = 'horas cátedra'
-        verbose_name = 'hora cátedra'
-        
+
 class CostoPrograma(models.Model):
     programa = models.ForeignKey(Programa)
     ciclo = models.ForeignKey(Ciclo)
@@ -136,6 +128,42 @@ class CostoPrograma(models.Model):
     
     def codigo_ciclo(self):
         return "%s" %(self.ciclo.codigo)
+ 
+  
+class HoraCatedra(models.Model):
+    profesor = models.ForeignKey(Profesor)
+    ciclo = models.ForeignKey(Ciclo)
+    tiempo_hora = models.PositiveIntegerField(default=60, help_text="Indica el tiempo de hora cátedra en minutos.")
+    valor_hora = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    observaciones = models.TextField(max_length=200, blank=True)
+        
+    class Meta:
+        verbose_name_plural = 'horas cátedra'
+        verbose_name = 'hora cátedra'
+    
+    def __unicode__(self):
+        return "%s" %(self.id)
+    
+    def nombre_profesor(self):
+        return self.profesor.nombre()
+
+
+class HoraCatedraForm(ModelForm):
+    class Meta:
+        model = HoraCatedra
+
+
+class Adelanto(models.Model):
+    hora_catedra = models.ForeignKey(HoraCatedra)
+    fecha_adelanto = models.DateField(verbose_name='Fecha de adelanto')
+    valor = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    fecha_retorno = models.DateField(verbose_name='Fecha de retorno de adelanto')
+    concepto = models.TextField(max_length=200, blank=True) 
+    cancelada = models.BooleanField(help_text='Indica si no existen deudas por adelanto.')
+    
+    def __unicode__(self):
+        return "%s" %(self.fecha_adelanto)
+       
     
 class Sesion(models.Model):
     hora_catedra = models.ForeignKey(HoraCatedra)
@@ -148,4 +176,32 @@ class Sesion(models.Model):
     class Meta:
         verbose_name_plural = 'Sesiones'
         verbose_name = 'Sesión'
+   
+   
+class Descuento(models.Model):
+    hora_catedra = models.ForeignKey(HoraCatedra)
+    concepto = models.CharField(max_length=200, blank=True)
+    porcenaje = models.PositiveIntegerField(max_length=2)
     
+    def __unicode__(self):
+        return "%s" %(self.porcenaje)
+
+class LiquidarPago(models.Model):
+    hora_catedra = models.ForeignKey(HoraCatedra)
+    fecha_liquidacion = models.DateField(verbose_name='Fecha liquidación pago')
+    fecha_inicio = models.DateField(verbose_name='Fecha inicio liquidación')
+    fecha_fin = models.DateField(verbose_name='Fecha fin liquidación')
+    valor_liquidado = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
+    valor_adelanto = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
+    valor_descuento = models.FloatField(default=0, validators=[MinValueValidator(0)], blank=True, null=True)
+    
+    class Meta:
+        unique_together = ("hora_catedra", "fecha_liquidacion")
+        
+        
+class LiquidarPagoForm(ModelForm):
+    class Meta:
+        model = LiquidarPago
+        widgets = {'fecha_liquidacion': TextInput(attrs={'class':'vDateField'}),
+                   'fecha_inicio': TextInput(attrs={'class':'vDateField'}),
+                   'fecha_fin': TextInput(attrs={'class':'vDateField'})}
