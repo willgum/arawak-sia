@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from financiero.models import Pago, Letra, MatriculaFinanciera, HoraCatedra, CostoPrograma, Sesion, InscripcionPrograma
+from financiero.models import Pago, Letra, MatriculaFinanciera, HoraCatedra, CostoPrograma, Sesion, InscripcionPrograma, Adelanto, Descuento
 from django.contrib import admin
 from academico.admin import ButtonableModelAdmin 
 
@@ -69,7 +69,7 @@ class MatriculaFinancieraAdmin(ButtonableModelAdmin):
     
     def estadoCuenta(self, request, obj):
         obj.estadoCuenta()
-    estadoCuenta.url = "/admin/financiero/matriculafinanciera/estadoCuenta"
+    estadoCuenta.url = "/admin/financiero/matriculafinanciera/estadocuenta"
     estadoCuenta.short_description='Estado de cuenta'
     
     
@@ -91,19 +91,45 @@ class SesionInline(admin.TabularInline):
     model = Sesion
     extra = 1
     raw_id_fields = ('curso', )
-  
-class HoraCatedraAdmin(admin.ModelAdmin):
+    
+    
+class AdelantoInLine(admin.TabularInline):
+    model = Adelanto
+    extra = 1
+
+
+class DescuentoInLine(admin.TabularInline):
+    model = Descuento
+    extra = 1
+
+
+class HoraCatedraAdmin(ButtonableModelAdmin):
     raw_id_fields = ('profesor', 'ciclo')
     
     fieldsets = [
         ('Información básica', {'fields': [    
                                 'profesor',
                                 'ciclo',
+                                'tiempo_hora',
                                 'valor_hora',
                                 'observaciones']}),
     ]
     
-    inlines = [SesionInline, ] 
+    list_display = (
+            'profesor',
+            'ciclo',
+            'tiempo_hora',
+            'valor_hora'
+                    )
+    
+    def liquidarpago(self, request, obj):
+        obj.liquidarpago()
+    liquidarpago.url = "/admin/financiero/horacatedra/liquidarpago"
+    liquidarpago.short_description='Liquidar pago'
+    
+    inlines = [SesionInline, AdelantoInLine, DescuentoInLine, ]
+    buttons = [liquidarpago, ] 
+
 
 class CostoProgramaAdmin(admin.ModelAdmin):
     fieldsets = [

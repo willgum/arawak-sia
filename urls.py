@@ -39,7 +39,9 @@ urlpatterns = patterns('',
     
     # url's programa financiero
     (r'^admin/financiero/matriculafinanciera/reportecartera/$', 'financiero.views.reporteCartera'),
-    (r'^admin/financiero/matriculafinanciera/(?P<matriculafinanciera_id>\d+)/estadoCuenta/$', 'financiero.views.estadoCuenta'),
+    (r'^admin/financiero/matriculafinanciera/(?P<matriculafinanciera_id>\d+)/estadocuenta/$', 'financiero.views.estadoCuenta'),
+    (r'^admin/financiero/horacatedra/(?P<horacatedra_id>\d+)/liquidarpago/$', 'financiero.views.liquidarPago'),
+    (r'^admin/financiero/horacatedra/(?P<horacatedra_id>\d+)/rpt_horacatedra/$', 'financiero.views.reporteLiquidarPago'),
     
     (r'^admin/', include(admin.site.urls)),
     

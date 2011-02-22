@@ -323,6 +323,8 @@ class Profesor(models.Model):
             scale(foto_org, THUMB_WIDTH, THUMB_HEIGHT, foto_thu)
             scale(foto_org, MINI_WIDTH, MINI_HEIGHT, foto_min)
  
+    def nombre(self):
+        return "%s %s %s %s" %(self.nombre1, self.nombre2, self.apellido1, self.apellido2) 
     
     def usuario(self):
         user = User.objects.get(id=self.id_usuario)
