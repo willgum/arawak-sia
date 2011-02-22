@@ -24,63 +24,100 @@
 					<h2>Información básica</h2>
 					<table>
 						<tr>
-							<td valign="top" style="text-align:left; width: 130px;"><strong>Código: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.codigo }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Nombre completo: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.nombre }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Tipo de programa: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.tipo_programa }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Descripción: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.descripcion }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Título: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.titulo }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Resolución: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.resolucion }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>SNIES: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.snies }}</td>
+							<td valign="top">
+								<table style="text-align:left; width: 380px;">
+									<tr>
+										<td valign="top" style="text-align:left; width: 130px;"><strong>Código: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.codigo }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Nombre completo: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.nombre }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Tipo de programa: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.tipo_programa }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Descripción: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.descripcion }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Título: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.titulo }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Resolución: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.resolucion }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>SNIES: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.snies }}</td>
+									</tr>
+								</table>
+							</td>
+							<td valign="top">
+								<img src="{{ path }}{{ programa.progreso }}" alt="Progreso"/>
+							</td>
 						</tr>
 					</table>
 					<h2>Horarios</h2>
 					<table>
 						<tr>
-							<td valign="top" style="text-align:left; width: 130px;"><strong>Periodicidad: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.periodicidad }}</td>
+							<td valign="top">
+								<table style="text-align:left; width: 380px;">
+									<tr>
+										<td valign="top" style="text-align:left; width: 130px;"><strong>Periodicidad: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.periodicidad }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Duración: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.duracion }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Jornada: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.jornada }}</td>
+									</tr>						
+								</table>
+							</td>
+							<td valign="top">
+								<table style="text-align:left; width:170px;">
+									<tr>
+										<td valign="top" style="text-align:left; width: 150px;"><strong>Total Competencias:</strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.competencias }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Competencias vistas:</strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.vistas }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Competencias aprobadas:</strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.aprobadas }}</td>
+									</tr>						
+								</table>
+							</td>							
 						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Duración: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.duracion }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Jornada: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.jornada }}</td>
-						</tr>						
 					</table>
 					<h2>Información adicional</h2>
 					<table>
 						<tr>
-							<td valign="top" style="text-align:left; width: 130px;"><strong>Actitudes: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.actitudes }}</td>
+							<td valign="top">
+								<table>
+									<tr>
+										<td valign="top" style="text-align:left; width: 130px;"><strong>Actitudes: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.actitudes }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Perfil profesional: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.perfil_profesional }}</td>
+									</tr>
+									<tr>
+										<td valign="top" style="text-align:left"><strong>Funciones: </strong></td>				
+									    <td valign="top" style="text-align:justify">{{ programa.funciones }}</td>
+									</tr>						
+								</table>
+							</td>
 						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Perfil profesional: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.perfil_profesional }}</td>
-						</tr>
-						<tr>
-							<td valign="top" style="text-align:left"><strong>Funciones: </strong></td>				
-						    <td valign="top" style="text-align:justify">{{ programa.funciones }}</td>
-						</tr>						
 					</table>
 				</div>
 			{% endfor %}

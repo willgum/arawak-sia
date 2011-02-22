@@ -10,7 +10,8 @@
 			if (!validar.data("validator").checkValidity())
 				$(this).focus();
 			else
-				$.post
+			{
+		  		$.post
 				(
 					"actualizar/", 
 					{
@@ -19,8 +20,9 @@
 						campo:$(this).attr("name"),
 						valor:$(this).attr("value")
 					},
-					function(data){}
+					function(data){alert(data);}
 				);
+			}
 		}
 	);
 	
