@@ -129,7 +129,7 @@ class HoraCatedraAdmin(ButtonableModelAdmin):
     
     def liquidarnomina(self, request, obj):
         obj.estadoCuenta()
-    liquidarnomina.url = "/admin/financiero/matriculafinanciera/liquidarnomina"
+    liquidarnomina.url = "/admin/financiero/horacatedra/liquidarnomina"
     liquidarnomina.short_description='Reporte nómina'
     
     
