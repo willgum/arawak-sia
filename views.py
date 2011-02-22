@@ -76,6 +76,7 @@ def perfil(solicitud):
 
 def actulizarPerfil(solicitud):
     if solicitud.POST:
+        solicitud.session['prueba'] = "llegamos"
         idUsuario = solicitud.POST.get('idUsuario')
         perfil = solicitud.POST.get('perfil')
         campo = solicitud.POST.get('campo')
@@ -97,7 +98,7 @@ def actulizarPerfil(solicitud):
         if campo == 'web': 
             usuario.web = valor
         usuario.save() 
-        return HttpResponse()
+        return HttpResponse("hola")
 
 @login_required
 def contrasena(solicitud):

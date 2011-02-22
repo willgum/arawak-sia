@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
 from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm
+from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, NOTA_APR
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 #Pruebas GERALDO
@@ -226,14 +226,71 @@ def buscarProgramasEstudiante(solicitud):
     matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
     programas = []
     for matricula in matriculas:
-        programas.append(Programa.objects.get(id = matricula.programa_id))
-    for indice1 in range(0, len(programas)):
-        contador = 0
-        for indice2 in range(indice1, len(programas)):
-            if programas[indice1].codigo == programas[indice2].codigo:
-                contador += 1
-        if contador <= 1:
-            listaProgramas.append(programas[indice1]);
+        vistas = 0
+        aprobadas = 0        
+        programas = Programa.objects.get(id = matricula.programa_id)
+        programa = {}
+        programa['codigo'] =                programas.codigo
+        programa['nombre'] =                programas.nombre
+        programa['tipo_programa'] =         programas.tipo_programa
+        programa['descripcion'] =           programas.descripcion
+        programa['titulo'] =                programas.titulo
+        programa['resolucion'] =            programas.resolucion
+        programa['snies'] =                 programas.snies
+        programa['periodicidad'] =          programas.periodicidad
+        programa['duracion'] =              programas.duracion
+        programa['jornada'] =               programas.jornada
+        programa['competencias'] =          programas.competencias()
+        programa['actitudes'] =             programas.actitudes
+        programa['perfil_profesional'] =    programas.perfil_profesional
+        programa['funciones'] =             programas.funciones
+        matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matricula.id)
+        for matCiclo in matCiclos:
+            resultados = Calificacion.objects.filter(matricula_ciclo = matCiclo)
+            for resultado in resultados:
+                vistas = vistas + 1
+                if resultado.nota_definitiva is not None and resultado.nota_definitiva >= NOTA_APR:
+                    aprobadas = aprobadas +1
+        programa['vistas'] =    vistas
+        programa['aprobadas'] = aprobadas
+       
+        if aprobadas == 0 or programas.competencias() == 0:
+            programa['progreso'] = "images/progreso/00.png" 
+        else:
+            progreso = (aprobadas*100)/programas.competencias()
+             
+            if progreso > 0 and progreso <= 7.14:
+                programa['progreso'] = "images/progreso/01.png"
+            if progreso > 7.14 and progreso <= 14.28:
+                programa['progreso'] = "images/progreso/01.png"
+            if progreso > 14.28 and progreso <= 14.28:
+                programa['progreso'] = "images/progreso/02.png"
+            if progreso > 7.14 and progreso <= 24.42:
+                programa['progreso'] = "images/progreso/03.png"
+            if progreso > 21.42 and progreso <= 28.56:
+                programa['progreso'] = "images/progreso/04.png"
+            if progreso > 28.56 and progreso <= 35.7:
+                programa['progreso'] = "images/progreso/05.png"
+            if progreso > 35.7 and progreso <= 42.84:
+                programa['progreso'] = "images/progreso/06.png"
+            if progreso > 42.84 and progreso <= 49.98:
+                programa['progreso'] = "images/progreso/07.png"        
+            if progreso > 49.98 and progreso <= 57.12:
+                programa['progreso'] = "images/progreso/08.png"
+            if progreso > 57.12 and progreso <= 64.26:
+                programa['progreso'] = "images/progreso/09.png"
+            if progreso > 64.26 and progreso <= 71.4:
+                programa['progreso'] = "images/progreso/10.png"
+            if progreso > 71.4 and progreso <= 78.54:
+                programa['progreso'] = "images/progreso/11.png"
+            if progreso > 78.54 and progreso <= 85.68:
+                programa['progreso'] = "images/progreso/12.png"
+            if progreso > 85.68 and progreso <= 100:
+                programa['progreso'] = "images/progreso/13.png"
+            if progreso >= 100:
+                programa['progreso'] = "images/progreso/14.png"
+        
+        listaProgramas.append(programa)
     return listaProgramas
 
 def buscarMatriculaProgramasEstudiante(solicitud):
