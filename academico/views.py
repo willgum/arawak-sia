@@ -540,7 +540,7 @@ def estudiantesInscritos(solicitud):
 def consolidadoInscritos(solicitud):
     resp = HttpResponse(mimetype='application/pdf')
     
-    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('programa__nombre').distinct('programa')
+    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('programa__nombre')
     reporte = rpt_ConsolidadoInscritos(queryset=tmp_matriculaprograma)
     reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
 

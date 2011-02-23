@@ -534,8 +534,24 @@ class MatriculaPrograma(models.Model):
             self.promedio_acumulado = 0
         MatriculaPrograma.save(self)
     
-    def estudiantesActivos(self):
-        return "%s" %(len(MatriculaPrograma.objects.filter(programa=self)))
+    def estudianteActivo(self):
+        if self.estado.id==1:  return 1
+        else:               return 0
+    def estudianteEgresado(self):
+        if self.estado.id==2:  return 1
+        else:               return 0
+    def estudianteExpulsado(self):
+        if self.estado.id==3:  return 1
+        else:               return 0
+    def estudianteRetirado(self):
+        if self.estado.id==4:  return 1
+        else:               return 0
+    def estudianteSuspendido(self):
+        if self.estado.id==5:  return 1
+        else:               return 0
+    def estudiantePendiente(self):
+        if self.estado.id==6:  return 1
+        else:               return 0
      
 #    Asignar automáticamente código de inscripción a estudiante
 #    Se usó sentencia mysql y se requiere modificar settings en mysql
