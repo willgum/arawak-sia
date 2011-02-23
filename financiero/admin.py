@@ -33,7 +33,8 @@ class InscripcionProgramaAdmin(admin.ModelAdmin):
         'fecha_pago'
     )
     
-    search_fields = ('matricula_programa', )
+    search_fields = ('matricula_programa__estudiante__nombre1', 'matricula_programa__estudiante__nombre2', 
+                     'matricula_programa__programa__nombre', 'matricula_programa__codigo')
     date_hierarchy = 'fecha_inscripcion'
 
   
@@ -62,20 +63,20 @@ class MatriculaFinancieraAdmin(ButtonableModelAdmin):
         'paz_y_salvo'
     )
     
-    def reporteCartera(self, request, obj):
+    def reportecartera(self, request, obj):
         obj.reporteCartera()
-    reporteCartera.url = "/admin/financiero/matriculafinanciera/reportecartera"
-    reporteCartera.short_description='Reporte cartera'
+    reportecartera.url = "/admin/financiero/matriculafinanciera/reportecartera"
+    reportecartera.short_description='Reporte cartera'
     
-    def estadoCuenta(self, request, obj):
+    def estadocuenta(self, request, obj):
         obj.estadoCuenta()
-    estadoCuenta.url = "/admin/financiero/matriculafinanciera/estadocuenta"
-    estadoCuenta.short_description='Estado de cuenta'
+    estadocuenta.url = "/admin/financiero/matriculafinanciera/estadocuenta"
+    estadocuenta.short_description='Estado de cuenta'
     
     
     inlines = [LetraInline, PagoInline]
-    buttons_list = [reporteCartera, ]
-    buttons = [estadoCuenta, ]
+    buttons_list = [reportecartera, ]
+    buttons = [estadocuenta, ]
     
     list_filter = ['paz_y_salvo', 'ciclo',]
     search_fields = ('inscripcion_programa__matricula_programa__estudiante__nombre1',

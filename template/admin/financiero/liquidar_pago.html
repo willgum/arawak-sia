@@ -9,7 +9,20 @@
 <script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script> 
 <script type="text/javascript" src="{% admin_media_prefix %}js/calendar.js"></script> 
 <script type="text/javascript" src="{% admin_media_prefix %}js/admin/DateTimeShortcuts.js"></script> 
-
+<script type="text/javascript">
+	function historialPago(){
+		location.href="../rpt_historialpago/";
+	}
+	function imprimirPago(){
+		if(window.document.getElementById('id_recibo').value!=""){
+			location.href="../rpt_imprimirpago/" + window.document.getElementById('id_recibo').value;
+		}
+		else{
+			alert("Debe digitar un código de recibo.", "CLARO");
+			}
+		
+	}
+</script>
 {{ media }}
 {% endblock %}
 
@@ -23,11 +36,9 @@
      <a href="../">{{ horacatedra.id }}</a> &rsaquo; 
      {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
 </div>
-<div id="content" class="colM">
+{% endif %}{% endblock %}
+{% block content %}
 	<h1>Liquidar pago a profesor</h1>
-	<div>
-		Se pagará al profesor las horas en el rango de fechas seleccionadas. 
-	</div>
 	<div id="content-main">
 		<form id="formulario" action="." method="post">
 			<input type="hidden" name="hora_catedra" value="{{ horacatedra.id }}" />
@@ -47,6 +58,7 @@
 						</div>
 						<div class="form-row recibo">
 							 <div>
+							 	{{ formpago.recibo.errors }}
 				  				<label for="id_recibo" class="required">Recibo: </label>				
 								<div> {{ formpago.recibo }} </div>
 							 </div>
@@ -75,10 +87,10 @@
 				</fieldset>
 			</div>
 			<div class="submit-row" > 
+				<input type="button" value="Historial pagos" onclick="historialPago()"/>
+				<input type="button" value="Imprimir pago" onclick="imprimirPago()"/>
 		    	<input type="submit" value="Liquidar" />
 		    </div>
 		</form>
 	</div>	
-</div>
-
-{% endif %}{% endblock %}
+{% endblock %}

@@ -3,7 +3,7 @@ from django.conf import settings                                                
 from datetime import date
 
 from geraldo import Report, ReportBand, ObjectValue, SystemField,\
-        BAND_WIDTH, Label, FIELD_ACTION_SUM, SubReport, Image
+        BAND_WIDTH, Label, FIELD_ACTION_SUM, SubReport, Image, ReportGroup
 
 import Image as PILImage
 import os
@@ -60,24 +60,20 @@ class rpt_ReporteCartera(Report):
     margin_right = 1.5*cm
     margin_bottom = 1*cm
     band_page_footer = PageFooterBand
-    
-    class band_begin(ReportBand):
-        height = 0.1*cm
+    band_page_header = PageHeaderBand
         
-    class band_page_header(ReportBand):
-        height = 1.1*cm
+    class band_begin(ReportBand):
+        height = 0.9*cm
         elements = [
-                SystemField(expression='%(report_title)s', top=0*cm, left=0, width=BAND_WIDTH,
-                    style={'fontName': 'Helvetica-Bold', 'fontSize': 14, 'alignment': TA_CENTER}),
-                Label(text="Estudiante", top=0.7*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"Programa", top=0.7*cm, left=5*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"Ciclo", top=0.7*cm, left=10*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"Vlr. matrícula", top=0.7*cm, left=11.5*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"Vlr. abonado", top=0.7*cm, left=14*cm, style={'fontName': 'Helvetica-Bold'}),
-                Label(text=u"Vlr. Saldo", top=0.7*cm, left=16.5*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text="Estudiante", top=0.4*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Programa", top=0.4*cm, left=5*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Ciclo", top=0.4*cm, left=10*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Vlr. matrícula", top=0.4*cm, left=11.5*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Vlr. abonado", top=0.4*cm, left=14*cm, style={'fontName': 'Helvetica-Bold'}),
+                Label(text=u"Vlr. Saldo", top=0.4*cm, left=16.5*cm, style={'fontName': 'Helvetica-Bold'}),
                 ]
         borders = {'bottom': True}
-         
+        
     class band_detail(ReportBand):
         auto_expand_height = True
         
@@ -132,7 +128,7 @@ class rpt_EstadoCuenta(Report):
     subreports = [
         SubReport(
 #                  Message.objects.filter(user__id=%(object)s.id)'
-            queryset_string = '%(object)s.objects.filter(id=%(object)s.id)',
+#            queryset_string = '%(object)s.objects.filter(id=%(object)s.id)',
             band_header = ReportBand(
                 height=0.5*cm,
                 elements=[
@@ -180,7 +176,7 @@ class rpt_LiquidarPagoDocente(Report):
     band_page_header = PageHeaderBand
     
     class band_begin(ReportBand):
-        height = 0.6*cm
+        height = 0.1*cm
         
     class band_detail(ReportBand):
         auto_expand_height = True
@@ -200,15 +196,30 @@ class rpt_LiquidarPagoDocente(Report):
                         get_value=lambda instance: u'Pago correspondiente a las horas cátedra dictadas del ' +
                         str(instance.fecha_inicio.day) + ' de ' + meses[instance.fecha_inicio.month] + ' de ' + str(instance.fecha_inicio.year) + ' al ' +\
                         str(instance.fecha_fin.day) + ' de ' + meses[instance.fecha_fin.month] + ' de ' + str(instance.fecha_fin.year) + '.'),
-            Label(text="Valor liquidado:", top=3*cm, left=0*cm),
-            ObjectValue(attribute_name='valor_liquidado', top=3*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
-            Label(text="Valor adelantos:", top=3.5*cm, left=0*cm),
-            ObjectValue(attribute_name='valor_adelanto', top=3.5*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
-            Label(text="Valor descuentos:", top=4*cm, left=0*cm),
-            ObjectValue(attribute_name='valor_descuento', top=4*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
-            Label(text="Total:", top=4.5*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
-            ObjectValue(attribute_name='valor_total', top=4.5*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
+            Label(text="Valor liquidado:", top=2.5*cm, left=0*cm),
+            ObjectValue(attribute_name='valor_liquidado', top=2.5*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
+            Label(text="Valor adelantos:", top=3*cm, left=0*cm),
+            ObjectValue(attribute_name='valor_adelanto', top=3*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
+            Label(text="Valor descuentos:", top=3.5*cm, left=0*cm),
+            ObjectValue(attribute_name='valor_descuento', top=3.5*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
+            Label(text="Total:", top=4*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
+            ObjectValue(attribute_name='valor_total', top=4*cm, left=0*cm, style={'fontName': 'Helvetica-Bold', 'alignment': TA_RIGHT}),
             )
+    
+    groups = [
+        ReportGroup(attribute_name='recibo',
+            band_header=ReportBand(
+                height=0.4*cm,
+            ),
+            band_footer=ReportBand(
+                height=0.3*cm,
+                borders={'bottom': True},
+            ),
+        ),
+    ]
+#    class band_summary(ReportBand):
+#        height = 1*cm
+#        borders = {'top': True}
         
         
 #===============================================================================

@@ -296,7 +296,7 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     readonly_fields = ('promedio_acumulado',)
     
     list_filter = ['estado', 'programa']
-    search_fields = ('codigo', 'nombre_programa', 'estado')
+    search_fields = ('codigo', 'programa__nombre', 'estado__nombre', 'estudiante__nombre1', 'estudiante__apellido1')
     
     def inscritos(self, request, obj):
         obj.inscritos()
