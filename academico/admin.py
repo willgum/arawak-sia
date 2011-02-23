@@ -463,13 +463,7 @@ class CicloAdmin(ButtonableModelAdmin):
     promocion.url = "/admin/academico/ciclo/promocion"    #puts this on the end of the admin URL.
     promocion.short_description='Promover ciclo'
     
-    def reporte(self, obj):
-        url = "/admin/academico/ciclo/reporte"
-        return HttpResponseRedirect( url )
-    reporte.url = "/admin/academico/ciclo/reporte"    #puts this on the end of the admin URL.
-    reporte.short_description='Reporte'
-    
-    buttons = [ promocion, reporte]
+    buttons = [ promocion, ]
 
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
