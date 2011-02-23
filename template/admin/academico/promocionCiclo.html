@@ -23,7 +23,8 @@
      <a href="../">{{ ciclo.codigo }}</a> &rsaquo; 
      {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
 </div>
-<div id="content" class="colM">
+{% endif %}{% endblock %}
+{% block content %}
 	<h1>Promocionar a nuevo ciclo</h1>
 	<div>
 		Se creará un nuevo ciclo a partir del ciclo actual: {{ ciclo.codigo }}
@@ -62,5 +63,4 @@
 		</form>
 	</div>	
 </div>
-
-{% endif %}{% endblock %}
+{% endblock %}

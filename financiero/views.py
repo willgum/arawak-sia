@@ -72,8 +72,13 @@ def liquidarPago(solicitud, horacatedra_id):
             tmp_formPago.valor_liquidado = sum_liquidado
             tmp_formPago.valor_adelanto = sum_adelantos
             tmp_formPago.valor_descuento = sum_descuentos
-            tmp_formPago.save()
-            return  HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id + "/rpt_horacatedra")
+            if tmp_formPago.valor_liquidado == 0:
+                solicitud.user.message_set.create(message="No se ha realizado la liquidación. No hay valor para liquidar.")
+                return  HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id + "")
+            else:
+                tmp_formPago.save()
+                solicitud.user.message_set.create(message="La liquidación se ha realizado correctamente.")
+                return  HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id + "/rpt_imprimirpago/" + tmp_formPago.recibo)
     else:
         formPago = LiquidarPagoForm()
     datos = {'formpago': formPago,
@@ -104,7 +109,7 @@ def reporteCartera(solicitud):
     
 
 @login_required
-def estadoCuenta(solicitud, matriculafinanciera_id):
+def reporteEstadoCuenta(solicitud, matriculafinanciera_id):
     resp = HttpResponse(mimetype='application/pdf')
     
     tmp_estadoCuenta = MatriculaFinanciera.objects.filter(id=matriculafinanciera_id)
@@ -136,7 +141,20 @@ def reporteLiquidarNomina(solicitud):
 
 
 @login_required
-def reporteLiquidarPago(solicitud, horacatedra_id):
+def reporteLiquidarPago(solicitud, horacatedra_id, recibo):
+    resp = HttpResponse(mimetype='application/pdf')
+    
+    tmp_liquidarPago = LiquidarPago.objects.filter(hora_catedra=horacatedra_id, recibo=recibo)
+    if tmp_liquidarPago:
+        reporte = rpt_LiquidarPagoDocente(queryset=tmp_liquidarPago)
+        reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+        return resp
+    else:
+        solicitud.user.message_set.create(message="No existe datos para mostrar.")
+        return HttpResponseRedirect("/admin/financiero/horacatedra/" + horacatedra_id)
+    
+@login_required
+def reporteHistorialPago(solicitud, horacatedra_id):
     resp = HttpResponse(mimetype='application/pdf')
     
     tmp_liquidarPago = LiquidarPago.objects.filter(hora_catedra=horacatedra_id)
