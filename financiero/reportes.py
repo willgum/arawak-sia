@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
-from datetime import date
 
 from geraldo import Report, ReportBand, ObjectValue, SystemField,\
         BAND_WIDTH, Label, FIELD_ACTION_SUM, SubReport, Image, ReportGroup
@@ -129,6 +128,7 @@ class rpt_EstadoCuenta(Report):
         SubReport(
 #                  Message.objects.filter(user__id=%(object)s.id)'
 #            queryset_string = '%(object)s.objects.filter(id=%(object)s.id)',
+            queryset_string = '%Letra.objects.filter(id=%(object)s.id)',
             band_header = ReportBand(
                 height=0.5*cm,
                 elements=[
@@ -140,8 +140,8 @@ class rpt_EstadoCuenta(Report):
             band_detail = ReportBand(
                 height=0.5*cm,
                 elements=[
-                    ObjectValue(attribute_name='fecha_expedicion', top=0, left=0.2*cm),
-                    ObjectValue(attribute_name='valor', top=0, left=4*cm),
+                    ObjectValue(attribute_name=u'fecha_expedicion', top=0, left=0.2*cm),
+                    ObjectValue(attribute_name=u'valor', top=0, left=4*cm),
                  ],
                  borders={'left': True, 'right': True},
             ),
@@ -217,9 +217,6 @@ class rpt_LiquidarPagoDocente(Report):
             ),
         ),
     ]
-#    class band_summary(ReportBand):
-#        height = 1*cm
-#        borders = {'top': True}
         
         
 #===============================================================================
