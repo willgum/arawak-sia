@@ -738,7 +738,7 @@ class Calificacion(models.Model):
     def codigoCompetencia(self):
         return "%s" % (self.curso.codigoCompetencia())
     
-    def nombreCompetencia(self):
+    def nombre_competencia(self):
         return "%s" % (self.curso.nombre())
     
     def idPrograma(self):

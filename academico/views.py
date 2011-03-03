@@ -387,7 +387,7 @@ def notasEstudiante(solicitud):
                         notas['id'] =                   indice.id
                         notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
                         notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
-                        notas['nombreCompetencia'] =    Calificacion.nombreCompetencia(indice)
+                        notas['nombreCompetencia'] =    Calificacion.nombre_competencia(indice)
                         notas['matricula_ciclo'] =      indice.matricula_ciclo
                         notas['nota_definitiva'] =      indice.nota_definitiva
                         notas['nota_habilitacion'] =    indice.nota_habilitacion

@@ -99,16 +99,20 @@ class CalificacionAdmin(admin.ModelAdmin):
     ]
     inlines = [NotaCorteInline]
     list_display = (
-        'curso', 
-        'codigo_estudiante', 
+        'nombre_competencia', 
+        'nombre_estudiante', 
         'codigo_ciclo',
         'nota_definitiva', 
         'nota_habilitacion',
         'fallas',
         'perdio_fallas',
     )
+    
     readonly_fields = ('nota_definitiva', 'codigo_ciclo')
-    search_fields = ['curso', 'codigo_estudiante']
+    search_fields = ['matricula_ciclo__ciclo__codigo', 'curso__competencia__nombre', 
+                     'matricula_ciclo__matricula_programa__estudiante__nombre1', 'matricula_ciclo__matricula_programa__estudiante__nombre2', 
+                     'matricula_ciclo__matricula_programa__estudiante__apellido1', 'matricula_ciclo__matricula_programa__estudiante__apellido2',]
+#    matricula_ciclo__matricula_programa__estudiante__nombre1
 
 
 class ProgramaAdmin(admin.ModelAdmin):
