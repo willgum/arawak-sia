@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
 from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, NOTA_APR
+from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 #Pruebas GERALDO
@@ -225,10 +225,12 @@ def buscarProgramasEstudiante(solicitud):
     usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
     matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
     programas = []
+    tipoPrograma = []
     for matricula in matriculas:
         vistas = 0
         aprobadas = 0        
         programas = Programa.objects.get(id = matricula.programa_id)
+        tipoPrograma = TipoPrograma.objects.get(id = programas.tipo_programa_id)
         programa = {}
         programa['codigo'] =                programas.codigo
         programa['nombre'] =                programas.nombre
@@ -249,7 +251,7 @@ def buscarProgramasEstudiante(solicitud):
             resultados = Calificacion.objects.filter(matricula_ciclo = matCiclo)
             for resultado in resultados:
                 vistas = vistas + 1
-                if resultado.nota_definitiva is not None and resultado.nota_definitiva >= NOTA_APR:
+                if resultado.nota_definitiva is not None and resultado.nota_definitiva >= tipoPrograma.nota_aprobacion:
                     aprobadas = aprobadas +1
         programa['vistas'] =    vistas
         programa['aprobadas'] = aprobadas

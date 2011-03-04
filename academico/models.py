@@ -11,9 +11,9 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 from django.forms import ModelForm, TextInput
 
-NOTA_MIN = 0.0
-NOTA_MAX = 5.0
-NOTA_APR = 3.5
+#NOTA_MIN = 0.0
+#NOTA_MAX = 5.0
+#NOTA_APR = 3.5
 
 MINI_WIDTH = 80
 MINI_HEIGHT = 100
@@ -170,6 +170,9 @@ class TipoEstudio(models.Model):
 class TipoPrograma(models.Model):
     codigo = models.CharField(max_length=3)
     nombre = models.CharField(max_length=50)
+    nota_minima = models.FloatField(blank=True, null=True, default=0)
+    nota_maxima = models.FloatField(blank=True, null=True, default=0)
+    nota_aprobacion = models.FloatField(blank=True, null=True, default=0)
     
     def __unicode__(self):
         return self.nombre
@@ -183,8 +186,9 @@ class TipoFuncionario (models.Model):
 
 
 def validar_nota(nota):
-        if nota < NOTA_MIN or nota > NOTA_MAX:
-            raise ValidationError("%s no es una nota válida" % nota)
+    raise ValidationError("%s no es una nota válida" % nota)
+#        if nota < NOTA_MIN or nota > NOTA_MAX:
+#            raise ValidationError("%s no es una nota válida" % nota)
         
 def validar_porcentaje(porcentaje):
         if porcentaje < 1 or porcentaje > 100:
@@ -513,7 +517,7 @@ class MatriculaPrograma(models.Model):
     estado = models.ForeignKey(EstadoInscripcion, blank=True, null=True, default=1)
     fecha_vencimiento = models.DateField()
     becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
-    promedio_acumulado = models.FloatField(blank=True, null=True, default=0, validators=[validar_nota])
+    promedio_acumulado = models.FloatField(blank=True, null=True, default=0)
     
     def nombre_estudiante(self):
         return self.estudiante.nombre()
@@ -605,7 +609,7 @@ class MatriculaCiclo(models.Model):
     matricula_programa = models.ForeignKey(MatriculaPrograma)
     ciclo = models.ForeignKey(Ciclo)
     observaciones = models.TextField(max_length=200, blank=True)
-    promedio_ciclo = models.FloatField(blank=True, null=True, default=0, validators=[validar_nota])
+    promedio_ciclo = models.FloatField(blank=True, null=True, default=0)
     
     def __unicode__(self):
         return self.matricula_programa.codigo
@@ -659,7 +663,8 @@ class Curso(models.Model):
     esperados = models.SmallIntegerField(help_text='Número esperado de estudiantes.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
-        return self.codigo()
+        return self.competencia.nombre
+#        return self.codigo()
     
     def nombre(self):
         return self.competencia.nombre
@@ -708,7 +713,7 @@ class Amonestacion(models.Model):
 class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
     matricula_ciclo = models.ForeignKey(MatriculaCiclo)
-    nota_definitiva = models.FloatField(blank=True, null=True, default=0, validators=[validar_nota])
+    nota_definitiva = models.FloatField(blank=True, null=True, default=0)
     nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, default=0, validators=[validar_nota])
     fallas = models.IntegerField(help_text="Número de total de fallas en el ciclo.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
@@ -792,6 +797,7 @@ class Corte(models.Model):
 class NotaCorte(models.Model):
     calificacion = models.ForeignKey(Calificacion)
     corte = models.ForeignKey(Corte)
+#    TODO: corregir validar_nota, las notas ya no son estáticas
     nota = models.FloatField(blank=True, null=True, validators=[validar_nota])
     fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     comportamiento = models.ForeignKey(TipoComportamiento, blank=True, null=True, default=1)

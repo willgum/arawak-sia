@@ -29,7 +29,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'sia', 
+        'NAME': 'syspro', 
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -91,6 +91,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.redirects.middleware.RedirectFallbackMiddleware',
     'django.middleware.csrf.CsrfResponseMiddleware',
 )
 
@@ -120,6 +121,7 @@ INSTALLED_APPS = (
     
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'django.contrib.redirects',
     
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',

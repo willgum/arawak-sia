@@ -15,7 +15,6 @@ cur_dir = settings.MEDIA_ROOT
 meses = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
-
 def get_encabezado(graphic):
     filename = os.path.join(cur_dir, 'imagenes/original/encabezado.jpg')
     if os.path.exists(filename):
@@ -218,7 +217,8 @@ class rpt_ConsolidadoInscritos(Report):
     band_page_header = PageHeaderBand
     
     class band_begin(ReportBand):
-        height = 0.9*cm
+        height = 0.8*cm
+        margin_botom = 1*cm
         elements = [
                 Label(text="Programa", top=0.3*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
                 Label(text=u"Activos", top=0.3*cm, left=7.5*cm, style={'fontName': 'Helvetica-Bold', 'alignment':TA_CENTER}),
@@ -232,11 +232,12 @@ class rpt_ConsolidadoInscritos(Report):
          
     class band_detail(ReportBand):
         auto_expand_height = True
-        margin_bottom = 0.1*cm
         
     groups = [
         ReportGroup(attribute_name='programa',
+            margin_top = 1*cm,
             band_header=ReportBand(
+                margin_top = 0.1*cm,
                 auto_expand_height = True,
                 elements=[
                           ObjectValue(left=0*cm, top=0*cm, width=10*cm, attribute_name = u'programa.nombre'),

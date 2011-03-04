@@ -49,7 +49,7 @@
 									{% for calificacion in valor.calificaciones %}
 										<tr class="{% cycle '' 'odd' %}">
 											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-		                        			<td>{{ calificacion.nombreCompetencia }}</td>
+		                        			<td>{{ calificacion.nombre_competencia }}</td>
 		                        			{% for corte in cortes %} 
 												<td style="text-align:center">
 													{% for llave, valor in calificacion.items %}
