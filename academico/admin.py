@@ -400,7 +400,8 @@ class CursoAdmin(admin.ModelAdmin):
         'sesiones',
     )
     list_filter = ['ciclo']
-    search_fields = ('competencia',)
+    search_fields = ('competencia__nombre', 'profesor__nombre1', 'profesor__nombre2', 
+                     'profesor__apellido1', 'profesor__apellido2',)
 
 class CorteInline(admin.TabularInline):
     model = Corte

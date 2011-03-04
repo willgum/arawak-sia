@@ -161,7 +161,7 @@ class rpt_EstudiantesInscritos(Report):
     band_page_header = PageHeaderBand
     
     class band_begin(ReportBand):
-        height = 0.9*cm
+        height = 0.1*cm
        
     class band_detail(ReportBand):
         auto_expand_height = True
@@ -180,8 +180,8 @@ class rpt_EstudiantesInscritos(Report):
             band_header=ReportBand(
                 height = 1.3*cm,
                 elements=[
-                          Label(text="Programa:", top=0*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
-                          ObjectValue(left=2.3*cm, top=0*cm, width=10*cm, attribute_name = u'programa.nombre', style={'fontName': 'Helvetica-Bold'}),
+                          Label(text="Programa:", top=0.1*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
+                          ObjectValue(left=2.3*cm, top=0.1*cm, width=10*cm, attribute_name = u'programa.nombre', style={'fontName': 'Helvetica-Bold'}),
                           
                           Label(text="Estudiante", top=0.7*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
                           Label(text=u"Estado", top=0.7*cm, left=11.2*cm, style={'fontName': 'Helvetica-Bold'}),
@@ -240,13 +240,13 @@ class rpt_ConsolidadoInscritos(Report):
                 margin_top = 0.1*cm,
                 auto_expand_height = True,
                 elements=[
-                          ObjectValue(left=0*cm, top=0*cm, width=10*cm, attribute_name = u'programa.nombre'),
-                          ObjectValue(left=5*cm, top=0*cm, attribute_name=u'estudianteActivo', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=7.5*cm, top=0*cm, attribute_name=u'estudianteEgresado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=10*cm, top=0*cm, attribute_name=u'estudiantePendiente', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=12.5*cm, top=0*cm, attribute_name=u'estudianteExpulsado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=15*cm, top=0*cm, attribute_name=u'estudianteRetirado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=17.5*cm, top=0*cm, attribute_name=u'estudianteSuspendido', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=0*cm, top=0.2*cm, width=10*cm, attribute_name = u'programa.nombre'),
+                          ObjectValue(left=5*cm, top=0.2*cm, attribute_name=u'estudianteActivo', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=7.5*cm, top=0.2*cm, attribute_name=u'estudianteEgresado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=10*cm, top=0.2*cm, attribute_name=u'estudiantePendiente', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=12.5*cm, top=0.2*cm, attribute_name=u'estudianteExpulsado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=15*cm, top=0.2*cm, attribute_name=u'estudianteRetirado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=17.5*cm, top=0.2*cm, attribute_name=u'estudianteSuspendido', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
                           ]
             ),
         ),
