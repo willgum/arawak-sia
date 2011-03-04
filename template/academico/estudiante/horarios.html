@@ -43,7 +43,7 @@
 									{% for calificacion in valor.calificaciones %}
 										<tr class="{% cycle '' 'odd' %}">
 											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-		                        			<td>{{ calificacion.nombreCompetencia }}</td>
+		                        			<td>{{ calificacion.nombre_competencia }}</td>
 		                        			<td>
 		                        				{% for horario in calificacion.horarios %}
 													{{ horario }}<br/>

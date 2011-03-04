@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma
 from django.contrib import admin
 
 from django.http import HttpResponseRedirect
@@ -66,7 +66,9 @@ class MatriculaCicloAdmin(ButtonableModelAdmin):
     
     inlines = [CalificacionInline]
     list_filter = ['fecha_inscripcion', 'ciclo']
-    search_fields = ('matricula_programa__programa__id', )
+    search_fields = ('matricula_programa__programa__id', 'matricula_programa__programa__nombre',
+                     'matricula_programa__estudiante__nombre1', 'matricula_programa__estudiante__nombre2', 
+                     'matricula_programa__estudiante__apellido1', 'matricula_programa__estudiante__apellido2',)
     date_hierarchy = 'fecha_inscripcion'
     
     def constancia(self, obj):
@@ -112,8 +114,27 @@ class CalificacionAdmin(admin.ModelAdmin):
     search_fields = ['matricula_ciclo__ciclo__codigo', 'curso__competencia__nombre', 
                      'matricula_ciclo__matricula_programa__estudiante__nombre1', 'matricula_ciclo__matricula_programa__estudiante__nombre2', 
                      'matricula_ciclo__matricula_programa__estudiante__apellido1', 'matricula_ciclo__matricula_programa__estudiante__apellido2',]
-#    matricula_ciclo__matricula_programa__estudiante__nombre1
 
+
+class TipoProgramaAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Información básica', {'fields': [     
+            'codigo',             
+            'nombre',
+            'nota_minima', 
+            'nota_maxima', 
+            'nota_aprobacion']}),
+    ]
+    list_display = (
+        'codigo',             
+            'nombre',
+            'nota_minima', 
+            'nota_maxima', 
+            'nota_aprobacion',
+    )
+    list_display_links = ('codigo', 'nombre')
+    search_fields = ['codigo', 'nombre']
+    
 
 class ProgramaAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -148,7 +169,6 @@ class ProgramaAdmin(admin.ModelAdmin):
     list_display_links = ('codigo', 'nombre')
     search_fields = ['codigo', 'nombre']
     list_filter = ['tipo_programa', 'jornada', 'periodicidad']
-
 
 
 class SalonAdmin(admin.ModelAdmin):
@@ -483,4 +503,5 @@ admin.site.register(MatriculaCiclo, MatriculaCicloAdmin)
 admin.site.register(MatriculaPrograma, MatriculaProgramaAdmin)
 admin.site.register(Salon, SalonAdmin)
 admin.site.register(Programa, ProgramaAdmin)
+admin.site.register(TipoPrograma, TipoProgramaAdmin)
 admin.site.register(Profesor, ProfesorAdmin)
