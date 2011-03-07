@@ -3,6 +3,7 @@
 	<head>
 		<title>{{ titulo_pagina }}</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="shortcut icon" href="{{ path }}images/favicon.ico"/>
 		<link rel="stylesheet" href="{{ path }}css/estilo.css" type="text/css" media="screen,projection" />
 		<link rel="stylesheet" href="{{ path }}css/estilo_imprimir.css" type="text/css" media="print" />
 		<script type="text/javascript" src="{{ path }}js/jquery.tools.min.js"></script>
@@ -44,13 +45,13 @@
 											<td><strong>Usuario</strong></td>
 										</tr>
 										<tr>
-										    <td><input type="text" name="usuario" id="usuario" required="required"/></td>
+										    <td><input type="text" name="usuario" id="usuario"/></td>
 										</tr>
 										<tr>
 											<td><strong>Contraseña</strong></td>
 										</tr>
 										<tr>
-										    <td><input type="password" name="contrasena" id="contrasena" required="required"/></td>					    
+										    <td><input type="password" name="contrasena" id="contrasena"/></td>					    
 										</tr>
 									</table>							
 									<p><input type="submit" value="INICIAR SESIÓN"/></p>
@@ -113,14 +114,14 @@
 			
 			<div id="footer">     
 				<p style="float:right;">
-					<a href="http://jigsaw.w3.org/css-validator/check/referer">
-						<img style="border:0;height:15px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!"/>
+					<a href="http://jigsaw.w3.org/css-validator/">
+						<img style="border:0;height:15px" src="{{ path }}images/vcss.jpg" alt="Valid CSS!"/>
 					</a>
-					<a href="http://jigsaw.w3.org/css-validator/check/referer">
-						<img style="border:0;height:15px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS!" />
-					</a>
+					<a href="http://validator.w3.org/">
+				    	<img style="border:0;height:15px" src="{{ path }}images/valid-xhtml10.jpg" alt="Valid XHTML 1.0 Transitional"/>
+				    </a>
 				</p>
-				<p><a href="http://arawak.com.co/" target="_blank">Arawak</a> Claro © 2011 SIA 2011.</p>
+				<p><a href="http://arawak.com.co/" target="_blank">Arawak</a> Claro © 2011.</p>
 			</div>
 		</div>
 	</body>

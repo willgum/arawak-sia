@@ -380,6 +380,9 @@ class Programa(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    
+    def abreviatura(self):
+        return self.nombre[0:5] + " ... " + self.nombre[-5:]
 
 
 class Estudiante(models.Model):
