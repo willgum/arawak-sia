@@ -15,7 +15,11 @@
 		<h1>Calificaciones</h1>
 		<ul class="tabs">
 			{% for llave, valor in programas.items %}
-				<li><a href="#">{{ valor.programa.nombre }}</a></li>
+				{% if programas|length > 5 %}
+					<li><a href="#">{{ valor.programa.abreviatura }}</a></li>
+				{% else %}
+					<li><a href="#">{{ valor.programa.nombre }}</a></li>
+				{% endif %}
 			{% endfor %}
 		</ul>		
 		<div class="panes">
