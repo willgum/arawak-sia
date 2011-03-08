@@ -97,6 +97,7 @@ class CalificacionAdmin(admin.ModelAdmin):
             'nota_definitiva', 
             'nota_habilitacion',
             'perdio_fallas',
+            'tipo_aprobacion',
             ]}),
     ]
     inlines = [NotaCorteInline]
