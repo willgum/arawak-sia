@@ -167,6 +167,16 @@ class TipoEstudio(models.Model):
         return self.nombre
 
 
+class TipoAprobacion(models.Model):
+    codigo = models.CharField(max_length=3)
+    nombre = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.codigo
+    
+    def get_nombre(self):
+        return self.nombre
+
 class TipoPrograma(models.Model):
     codigo = models.CharField(max_length=3)
     nombre = models.CharField(max_length=50)
@@ -720,6 +730,7 @@ class Calificacion(models.Model):
     nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, default=0, validators=[validar_nota])
     fallas = models.IntegerField(help_text="Número de total de fallas en el ciclo.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
+    tipo_aprobacion = models.ForeignKey(TipoAprobacion, default=1)
     
     class Meta:
         unique_together = ("curso", "matricula_ciclo")

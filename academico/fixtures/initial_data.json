@@ -992,6 +992,46 @@
     }
   },
   {
+    "model": "academico.tipoaprobacion",
+    "pk": 1,
+    "fields": {
+      "codigo": "-",
+      "nombre": "Sin Asignar"
+    }
+  },
+  {
+    "model": "academico.tipoaprobacion",
+    "pk": 2,
+    "fields": {
+      "codigo": "A",
+      "nombre": "Aprobada"
+    }
+  },
+  {
+    "model": "academico.tipoaprobacion",
+    "pk": 3,
+    "fields": {
+      "codigo": "Ho",
+      "nombre": "Homologada"
+    }
+  },
+  {
+    "model": "academico.tipoaprobacion",
+    "pk": 4,
+    "fields": {
+      "codigo": "Ha",
+      "nombre": "Habilitada"
+    }
+  },
+  {
+    "model": "academico.tipoaprobacion",
+    "pk": 5,
+    "fields": {
+      "codigo": "R",
+      "nombre": "Reprobada"
+    }
+  },
+  {
     "model": "academico.jornada",
     "pk": 1,
     "fields": {
