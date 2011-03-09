@@ -393,7 +393,7 @@ def notasEstudiante(solicitud):
                         notas['matricula_ciclo'] =      indice.matricula_ciclo
                         notas['nota_definitiva'] =      indice.nota_definitiva
                         notas['nota_habilitacion'] =    indice.nota_habilitacion
-                        notas['tipo_aprobacion'] =      indice.tipo_aprobacion
+                        notas['tipo_aprobacion'] =      Calificacion.abreviatura_aprobacion(indice)
                         notas['fallas'] =               indice.fallas
                         for corte in cortes:
                             try:
