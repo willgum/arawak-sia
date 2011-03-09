@@ -206,7 +206,8 @@ class CompetenciaAdmin(admin.ModelAdmin):
             'sufijo', 
             'nombre', 
             'descripcion', 
-            'intensidad', 
+            'intensidad_semanal',
+            'intensidad_ciclo', 
             'creditos',
             'periodo']}),
     ]
@@ -216,13 +217,13 @@ class CompetenciaAdmin(admin.ModelAdmin):
         'codigo', 
         'nombre', 
         'programa', 
-        'intensidad', 
+        'intensidad_ciclo', 
         'creditos',
         'periodo',
         'grupos',
     )
     
-    list_filter = ['programa', 'intensidad', 'periodo']
+    list_filter = ['programa', 'intensidad_ciclo', 'periodo']
     search_fields = ('nombre',)
 
 

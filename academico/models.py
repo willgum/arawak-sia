@@ -172,10 +172,10 @@ class TipoAprobacion(models.Model):
     nombre = models.CharField(max_length=50)
     
     def __unicode__(self):
-        return self.codigo
-    
-    def get_nombre(self):
         return self.nombre
+    
+    def get_codigo(self):
+        return self.codigo
 
 class TipoPrograma(models.Model):
     codigo = models.CharField(max_length=3)
@@ -195,8 +195,9 @@ class TipoFuncionario (models.Model):
         return self.nombre
 
 
-def validar_nota(nota):
-    raise ValidationError("%s no es una nota válida" % nota)
+#    TODO: implementar opción para validar notas permitidas
+#def validar_nota(nota):
+#    raise ValidationError("%s no es una nota válida" % nota)
 #        if nota < NOTA_MIN or nota > NOTA_MAX:
 #            raise ValidationError("%s no es una nota válida" % nota)
         
@@ -595,7 +596,8 @@ class Competencia(models.Model):
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     creditos = models.IntegerField(help_text='Número de créditos de la competencia.', blank=True, null=True)
     periodo = models.SmallIntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
-    intensidad = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
+    intensidad_semanal = models.SmallIntegerField(help_text='Número de horas requeridas en la semana.', blank=True, null=True, validators=[MinValueValidator(0)])
+    intensidad_ciclo = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def save(self, *args, **kwargs):
         self.codigo = "%s%s" % (self.programa.codigo, self.sufijo)
@@ -727,7 +729,7 @@ class Calificacion(models.Model):
     curso = models.ForeignKey(Curso)
     matricula_ciclo = models.ForeignKey(MatriculaCiclo)
     nota_definitiva = models.FloatField(blank=True, null=True, default=0)
-    nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, default=0, validators=[validar_nota])
+    nota_habilitacion = models.FloatField(verbose_name='Nota habilitación', blank=True, null=True, default=0)
     fallas = models.IntegerField(help_text="Número de total de fallas en el ciclo.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     perdio_fallas = models.BooleanField(verbose_name='Perdió por fallas')
     tipo_aprobacion = models.ForeignKey(TipoAprobacion, default=1)
@@ -772,6 +774,9 @@ class Calificacion(models.Model):
     def horarios(self):
         return self.curso.horarios()
     
+    def abreviatura_aprobacion(self):
+        return "%s" % (self.tipo_aprobacion.get_codigo())
+    
     def calculaDefinitiva(self, calificacion_id):
         tmp_notas = NotaCorte.objects.filter(calificacion = calificacion_id)
         tmp_calificacion = 0.0
@@ -812,7 +817,7 @@ class NotaCorte(models.Model):
     calificacion = models.ForeignKey(Calificacion)
     corte = models.ForeignKey(Corte)
 #    TODO: corregir validar_nota, las notas ya no son estáticas
-    nota = models.FloatField(blank=True, null=True, validators=[validar_nota])
+    nota = models.FloatField(blank=True, null=True)
     fallas = models.IntegerField(help_text="Número de fallas durante el corte.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     comportamiento = models.ForeignKey(TipoComportamiento, blank=True, null=True, default=1)
      
