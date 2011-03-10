@@ -39,7 +39,7 @@ class CalificacionInline(admin.TabularInline):
     model = Calificacion
     extra = 1
     raw_id_fields = ('curso',)
-    fields = ('curso', 'nota_definitiva', 'nota_habilitacion', 'perdio_fallas')
+    fields = ('curso', 'nota_definitiva', 'nota_habilitacion', 'perdio_fallas', 'tipo_aprobacion')
     readonly_fields = ('nota_definitiva', 'nota_habilitacion')
 
 
