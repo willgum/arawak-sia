@@ -11,16 +11,19 @@
 				$(this).focus();
 			else
 			{
-		  		$.post
+		  		$.ajax
 				(
-					"actualizar/", 
 					{
-						idUsuario: {{ user.id }},
-						perfil: {{ request.session.grupoUsuarioid }},
-						campo:$(this).attr("name"),
-						valor:$(this).attr("value")
-					},
-					function(data){alert(data);}
+						type: "POST",
+						url: "actualizar/",
+						data:	{
+									idUsuario: {{ user.id }},
+									perfil: {{ request.session.grupoUsuarioid }},
+									campo:$(this).attr("name"),
+									valor:$(this).attr("value")
+								},
+						success: function(datos) {}
+					}
 				);
 			}
 		}

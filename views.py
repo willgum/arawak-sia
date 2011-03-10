@@ -8,7 +8,7 @@ from django.views.static import Context, HttpResponseRedirect                   
 from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
 from django.contrib import auth                                   
 from django.contrib.auth.models import Group, User
-from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato
+from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion
 from django.contrib.auth.decorators import login_required                           # permite usar @login_requerid
 
 def buscarPerfil(solicitud):
@@ -42,10 +42,13 @@ def comprobarPermisos(solicitud):
         return False
 
 def redireccionar(plantilla, solicitud, datos):
+    intituciones = Institucion.objects.all()
+    for resultado in intituciones:
+        institucion = resultado
     variables = {
         'user': solicitud.user, 
-        'titulo': '.: SIA - Sistema de Información Académica :.',
-        'titulo_pagina': '.: SIA - Sistema de Información Académica :.',
+        'titulo': '.: ' + institucion.nombre + ' :.',
+        'titulo_pagina': '.: ' + institucion.nombre + ' :.',
         'path': settings.MEDIA_URL,
     }
     llaves = datos.keys()
@@ -98,7 +101,7 @@ def actulizarPerfil(solicitud):
         if campo == 'web': 
             usuario.web = valor
         usuario.save() 
-        return HttpResponse("hola")
+        return HttpResponse()
 
 @login_required
 def contrasena(solicitud):
