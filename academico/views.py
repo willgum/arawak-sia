@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
 from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma
+from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 #Pruebas GERALDO
@@ -32,10 +32,13 @@ def comprobarPermisos(solicitud):
         return False
 
 def redireccionar(plantilla, solicitud, datos):
+    intituciones = Institucion.objects.all()
+    for resultado in intituciones:
+        institucion = resultado
     variables = {
         'user': solicitud.user, 
-        'titulo': '.: SIA - Sistema de Información Académica :.',
-        'titulo_pagina': '.: SIA - Sistema de Información Académica :.',
+        'titulo': '.: ' + institucion.nombre + ' :.',
+        'titulo_pagina': '.: ' + institucion.nombre + ' :.',
         'path': settings.MEDIA_URL,
     }
     llaves = datos.keys()
@@ -154,6 +157,7 @@ def guardarNotasDocente(solicitud, curso_id):
                 notas['matricula_ciclo'] =      indice.matricula_ciclo
                 notas['nota_definitiva'] =      indice.nota_definitiva
                 notas['nota_habilitacion'] =    indice.nota_habilitacion
+                notas['perdio_fallas'] =        indice.perdio_fallas
                 notas['fallas'] =               indice.fallas
                 notas['codigo_estudiante'] =    Calificacion.codigo_estudiante(indice)
                 notas['nombre_estudiante'] =    Calificacion.nombre_estudiante(indice)
@@ -179,34 +183,36 @@ def guardarNotaDocente(solicitud):
         idCalificacion = solicitud.POST.get('idCalificacion')
         idCorte = solicitud.POST.get('idCorte')
         valor = solicitud.POST.get('valor')
-        notascorte = []
         try:
-            notascorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
-            notascorte.nota = valor
-        except NotaCorte.DoesNotExist: 
-            notascorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = valor, fallas = 0, comportamiento_id = 1)
-        notascorte.save()
-        calificacion = Calificacion.objects.get(id = idCalificacion)
-        diccionario = {calificacion: calificacion}
-        datos = serializers.serialize("json", diccionario)
-        return HttpResponse(datos) 
+            notacorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
+            notacorte.nota = valor
+            NotaCorte.save(notacorte)
+        except:
+            try:
+                notacorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = valor, fallas = 0, comportamiento_id = 1)
+                NotaCorte.save(notacorte)
+            except:
+                "error"
+        calificacion = Calificacion.objects.filter(id = idCalificacion)
+        return HttpResponse(serializers.serialize("json", calificacion)) 
 
 def guardarFallasDocente(solicitud):
     if solicitud.POST:
         idCalificacion = solicitud.POST.get('idCalificacion')
         idCorte = solicitud.POST.get('idCorte')
-        valor = solicitud.POST.get('valor')            
-        notascorte = []
+        valor = solicitud.POST.get('valor')  
         try:
-            notascorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
-            notascorte.fallas = valor
-        except NotaCorte.DoesNotExist:
-            notascorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = 0, fallas = valor, comportamiento_id = 1)
-        notascorte.save()
-        calificacion = Calificacion.objects.get(id = idCalificacion) 
-        diccionario = {calificacion: calificacion}
-        datos = serializers.serialize("json", diccionario)
-        return HttpResponse(datos)
+            notacorte = NotaCorte.objects.get(calificacion = idCalificacion, corte = idCorte)
+            notacorte.fallas = valor
+            NotaCorte.save(notacorte)
+        except:
+            try:
+                notacorte = NotaCorte(calificacion_id = idCalificacion, corte_id = idCorte, nota = 0, fallas = valor, comportamiento_id = 1)
+                NotaCorte.save(notacorte)
+            except:
+                "error"
+        calificacion = Calificacion.objects.filter(id = idCalificacion) 
+        return HttpResponse(serializers.serialize("json", calificacion))
 
 @login_required
 def competenciasDocente(solicitud, competencia_id):

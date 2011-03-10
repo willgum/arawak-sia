@@ -16,20 +16,23 @@
 			var validar = $("#formulario :input").validator({lang: 'es'});
 			if (validar.data("validator").checkValidity())
 			{
-				$.post
+				$.ajax
 				(
-					"actualizar/", 
 					{
-						idUsuario: 	{{ user.id}},
-						actualPass: $("#actualPass").val(),
-						nuevoPass: 	$("#nuevoPass").val()
-					},
-					function(data)
-					{
-						$("#actualPass").val("");
-						$("#nuevoPass").val("");
-						$("#confirPass").val("");
-						alert(data);				
+						type: "POST",
+						url: "actualizar/",
+						data:	{
+									idUsuario: 	{{ user.id}},
+									actualPass: $("#actualPass").val(),
+									nuevoPass: 	$("#nuevoPass").val()
+								},
+						success: 	function(dato) 
+								 	{
+										$("#actualPass").val("");
+										$("#nuevoPass").val("");
+										$("#confirPass").val("");
+										alert(dato);
+								 	}
 					}
 				);
 			}

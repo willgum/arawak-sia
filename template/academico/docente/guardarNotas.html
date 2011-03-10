@@ -30,22 +30,30 @@
 			    	idCalificacion = $(this).attr("idCalificacion");
 			        idCorte = $(this).attr("idCorte");
 			        
-			    	$.post
-			        (	
-			        	url,
-			        	{
-			        		idCalificacion: idCalificacion,
-			        		idCorte: idCorte,
-			        		valor: numero
-			        	}, 	        	
-			        	function(data) 
-			        	{
-			        		$("#notaHab_" + idCalificacion).html(data[0]["fields"]["nota_habilitacion"]);
-			        		$("#notaDef_" + idCalificacion).html(data[0]["fields"]["nota_definitiva"]);
-			        		$("#totalFallas_" + idCalificacion).html(data[0]["fields"]["fallas"]);    		
-			        	},
-			        	"json" 	
-			        );
+			        $.ajax
+					(
+						{
+							type: "POST",
+							url: url,
+							data:	{
+										idCalificacion: idCalificacion,
+						        		idCorte: idCorte,
+						        		valor: numero
+									},
+							success:function(datos) 
+									{
+										datos = JSON.parse(datos);
+										$("#notaDef_" + idCalificacion).html(datos[0]["fields"]["nota_definitiva"]);
+						        		$("#totalFallas_" + idCalificacion).html(datos[0]["fields"]["fallas"]);    
+									},
+							error: 	function(objeto, quepaso, otroobj)
+								  	{
+            							alert("Pasó lo siguiente: "+objeto.statusText);
+        							},
+							contentType: "application/json"
+						}
+					);
+			        
 			        $(this).val(numero.toString());
 				}
 			}
@@ -77,7 +85,7 @@
 						<th>F.</th>
 					{% endfor %}	
 					<th style="width: 20px;">F.T.</th>
-					<th style="width: 20px;">Hab.</th>
+					<th style="width: 20px;">P.F.</th>
 					<th style="width: 20px;">Def.</th>					
 				</tr>
 			</thead>
@@ -127,9 +135,33 @@
 								{% endif %}
 							</td>
 						{% endfor %}
-						<td style="text-align:center;"><div id="totalFallas_{{calificacion.id}}">{{ calificacion.fallas }}</div></td>
-						<td style="text-align:center;"><div id="notaHab_{{calificacion.id}}">{{ calificacion.nota_habilitacion }}</div></td>
-						<th style="text-align:center;"><div id="notaDef_{{calificacion.id}}">{{ calificacion.nota_definitiva }}</div></th>
+						<td style="text-align:center;">
+							<div id="totalFallas_{{calificacion.id}}">
+								{% ifequal calificacion.fallas None %}
+									0
+								{% else %}
+									{{ calificacion.fallas }}
+								{% endifequal %}
+							</div>
+						</td>
+						<td style="text-align:center;">
+							<div id="perdioFallas{{calificacion.id}}">
+								<INPUT NAME="perdioFallas{{calificacion.id}}" TYPE=CHECKBOX READONLY
+									{% ifequal calificacion.perdio_fallas 1 %}
+										CHECKED
+									{% endifequal %}
+								>
+							</div>
+						</td>
+						<th style="text-align:center;">
+							<div id="notaDef_{{calificacion.id}}">
+								{% ifequal calificacion.nota_definitiva None %}
+									0
+								{% else %}
+									{{ calificacion.nota_definitiva }}
+								{% endifequal %}
+							</div>
+						</th>
 					</tr>					
 				{% endfor %}
 			</tbody>
