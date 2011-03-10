@@ -5,6 +5,17 @@ Con el fin de desarrollar un sistema seguro y confiable, se ha hecho especial é
 de la información. 
 
 @itemize
+@item @emph{Certificado SSL}: Es el Protocolo de Capa de Conexión Segura (SSL por sus siglas en inglés). 
+	Previene el @emph{Phishing} y @emph{Pharming}. El @emph{Phishing} es un tipo de ataque que se caracteriza
+	por intentar adquirir información de forma fraudulenta. La mayoría de los métodos de phishing utilizan 
+	alguna forma técnica de engaño en el diseño para mostrar que un enlace en un correo electrónico 
+	parezca una copia de la organización por la cual se hace pasar el impostor. URLs mal escritas o el uso 
+	de subdominios son trucos comúnmente usados por phishers.
+	El @emph{Pharming} es la explotación de una vulnerabilidad en el software 
+	de los servidores DNS (Domain Name System) o en el de los equipos de los propios usuarios, 
+	que permite a un atacante redirigir un nombre de dominio (domain name) a otra máquina distinta. 
+	   
+
 @item @emph{Autenticación de usuarios}: El usuario que desee acceder a los distintos módulos del sistema, 
 	en primer lugar deberá identificarse con un nombre de usuario y una contraseña válida. 
 	Éste nombre de usuario es único y la contraseña sólamente deberá ser conocida por el usuario. 

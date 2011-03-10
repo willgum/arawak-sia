@@ -20,13 +20,15 @@
 			Es un campo de texto de tipo numérico que refleja la nota de habilitación del curso. La nota de habilitación debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
 		@item Perdió por fallas
 			Es un campo de texto seleccionable que indica si el estudiante perdió o no por fallas el curso seleccionado.
+		@item Tipo aprobación
+			Es un campo seleccionable que permite elegir un tipo de aprobación o reprobación de competencia. Las opciones son: Aprobada, Homologada, Habilitada, Reprobada.
 		@end table
 		
 	@subsubsection Nota cortes
 		@table @dfn
-		@item NotaCorte
+		@item Corte
 			Es un campo seleccionable que permite elegir el corte sobre el que se registrará la nota parcial. Para buscar un corte dé clic en el botón “Lupa” que está junto al campo. 
-		@item Nota definitiva
+		@item Nota
 			Es un campo de texto de tipo numérico que refleja la nota parcial del curso para el corte seleccionado. La nota parcial debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
 		@item Fallas
 			Es un campo de texto de tipo numérico que refleja las fallas parciales del estudiante en el curso.  El campo solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
@@ -76,8 +78,10 @@
 			Es un campo de texto de carácter obligatorio. Es el nombre de la competencia. Permite un máximo de 	50 caracteres.
 		@item Descripción
 			Es un campo de texto de carácter opcional. Almacena una breve descripción de la competencia.
-		@item Intensidad
-			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas para impartir el contenido de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Intensidad_semanal
+			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas a la semana para impartir el contenido de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Intensidad_ciclo
+			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas en el ciclo académico para impartir el contenido de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 		@item Créditos
 			Es un campo de texto de carácter opcional. Almacena el número de créditos que ofrece la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 		@item Periodo
@@ -172,6 +176,10 @@
 			Es un campo de texto obligatorio que almacena el número de identificación del estudiante. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
 		@item Lugar expedición
 			Es un campo de texto opcional. Almacena el lugar en que fue expedido el documento de identificación del estudiante (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+		@item Género
+			Es un campo seleccionable de carácter opcional, donde el usuario elige el Género del estudiante, con las opciones: Femenino, Masculino.
+		@item Grupo sanguíneo
+			Es un campo seleccionable de carácter opcional, donde el usuario elige el Grupo sanguíneo del estudiante. Las opciones son: O+, A+, B+, AB+, O-, A-, B-, AB-.
 		@item Fecha nacimiento
 			Es un campo de fecha opcional. Almacena la fecha de nacimiento del estudiante. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo. La fecha de nacimiento puede ser digitada en el campo de texto. Además cuenta con las opciones “Hoy”, que tomará la fecha de hoy como fecha de nacimiento, o la opción “Calendario” que mostrará un calendario en pantalla y permite seleccionar una fecha.
 		@item Lugar de nacimiento
@@ -341,6 +349,8 @@
 			Es un campo de texto de tipo numérico que refleja la nota de habilitación del curso. La nota de habilitación debe estar dentro del rango de calificación determinado por la Institución Educativa y debe ser de formato numérico válido.
 		@item Perdió por fallas
 			Es un campo de texto seleccionable que indica si el estudiante perdió o no por fallas el curso seleccionado.
+		@item Tipo aprobación
+			Es un campo seleccionable que permite elegir el tipo de aprobación de la competencia evaluada.
 	@end table
 	
 Finalmente se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de matrícula ciclo.
@@ -377,14 +387,16 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 		Es un campo de texto obligatorio. Almacena el primer apellido del profesor. Permite un máximo de 50 caracteres.
 	@item Segundo apellido
 		Es un campo de texto opcional. Almacena el segundo nombre del profesor. Permite un máximo de 50 caracteres.
-	@item Género
-		Es un campo seleccionable de carácter opcional, donde el usuario elige el género del profesor. Las opciones son: Femenino, Masculino.
 	@item Tipo documento
 		Es un campo seleccionable de carácter opcional, donde el usuario elige el tipo de documento de identidad del profesor. Las opciones son: Cédula de Ciudadanía, Tarjeta de Identidad, Cédula de Extranjería, Registro Civil.
 	@item Documento
 		Es un campo de texto obligatorio que almacena el número de identificación del profesor. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 12 caracteres.
 	@item Lugar expedición
 		Es un campo de texto opcional. Almacena el lugar en que fue expedido el documento de identificación del profesor (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
+	@item Género
+		Es un campo seleccionable de carácter opcional, donde el usuario elige el género del profesor. Las opciones son: Femenino, Masculino.
+	@item Grupo sanguíneo
+		Es un campo seleccionable de carácter opcional, donde el usuario elige el Grupo sanguíneo del profesor. Las opciones son: O+, A+, B+, AB+, O-, A-, B-, AB-.
 	@item Fecha nacimiento
 		Es un campo de fecha opcional. Almacena la fecha de nacimiento del profesor. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo. La fecha de nacimiento puede ser digitada en el campo de texto. Además cuenta con las opciones “Hoy”, que tomará la fecha de hoy como fecha de nacimiento, o la opción “Calendario” que mostrará un calendario en pantalla y permite seleccionar una fecha.
 	@item Lugar de nacimiento
@@ -482,6 +494,23 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 	Finalmente se tiene las opciones para eliminar un salón existente. Grabar el salón actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el salón actual y dejar la ventana activa para seguir editando el registro. Grabar el salón actual y volver a la ventana de salones.
 	
 
+@subsection Tipo programas
+	@table @dfn
+	@item Código
+	Es un campo de texto de carácter obligatorio que almacena el código que identifica el tipo de programa. Permite una longitud máxima de 3 caracteres. 
+	@item Nombre
+		Es un campo de texto de carácter obligatorio que almacena el nombre del tipo de programa. Por ejemplo Técnico, Tecnológico o Universitario.
+	@item Nota mínima
+		Es un campo de texto de tipo numérico que refleja la nota mínima permitida por la Institución Educativa como nota de valoración.
+	@item Nota máxima
+		Es un campo de texto de tipo numérico que refleja la nota máxima permitida por la Institución Educativa como nota de valoración.
+	@item Nota aprobación
+		Es un campo de texto de tipo numérico que refleja la nota mínima de aprobación permitida por la Institución Educativa, que determinará la aprobación o reprobación de las competencias.
+	@end table
+	
+	Finalmente se tiene las opciones para eliminar un Tipo programa existente. Grabar el Tipo programa actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el Tipo programa actual y dejar la ventana activa para seguir editando el registro. Grabar el Tipo programa actual y volver a la ventana de Tipo programas.
+
+
 @c ---------------------------------------------
 @c ------ SECCIÓN DEL MÓDULO FINANCIERO --------
 @c ---------------------------------------------
@@ -510,10 +539,13 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 			@item Ciclo
 				Es un campo de texto que almacena el ciclo académico sobre el que se establecerá el valor de hora cátedra.  
 				Para buscar algún ciclo dé clic en el botón Lupa, se abrirá una ventana nueva con los ciclos existentes.
+			@item Tiempo hora
+				Es un campo de texto de tipo numérico entero. Almacena el tiempo estimado en minutos de una hora académica.
 			@item Valor hora
 				Es un campo de texto de tipo numérico que puede ser de carácter entero o decimal. Almacena el costo
 				que se pagará al docente por cada hora de clase impartida.
 			@item Observaciones
+				Es un campo de texto de carácter opcional que permite almacenar cualquier tipo de observación correspondiente sobre las horas del profesor seleccionado.
 		@end table
 		
 		@subsubsection Sesiones
@@ -524,7 +556,7 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 			@item Curso
 				Es un campo seleccionable que permite elegir el curso sobre el que se va a ingresar la información de sesión de clase. 
 				Para buscar un curso dé clic en el botón “Lupa” que está junto al campo.
-			@item Fecha sesión de clase
+			@item Fecha sesión
 				Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio a la sesión de clase. 
 				Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
 				El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
@@ -539,6 +571,38 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 				establecer cuál es el tiempo planeado de duración en minutos de la sesión de clase.
 		@end table
 		
+		@subsubsection Adelantos
+			La sección adelantos almacena la información de adelantos de pago realizados al profesor. 
+			Es una sección de carácter opcional. Si se desea añadir más de un adelanto, dé clic en el hipervínculo “Agregar otro adelanto”. 
+			Para que el sistema agregue el nuevo adelanto, deberá diligenciar todos los espacios disponibles. Contiene los siguientes campos:
+		@table @dfn
+			@item Fecha adelanto
+				Es un campo de fecha de carácter obligatorio. Almacena la fecha en que se hará el adelanto de pago al profesor. 
+				Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+				El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+			@item Valor
+				Es un campo de texto de tipo numérico. Almacena el valor del adelanto de pago dado al profesor.
+			@item Fecha retorno
+				Es un campo de fecha de carácter opcional. Almacena la fecha en que se retornó a la Institución Educativa el adelanto del profesor. 
+				Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
+				El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+			@item Concepto
+				Es un campo de texto. Almacena el concepto por el cual se dió un adelanto al profesor.
+			@item Cancelada
+				Es un campo seleccionable que determina si el adelanto ya fué pagado o no en su totalidad.
+		@end table
+		
+		@subsubsection Descuentos
+			La sección descuentos almacena la información de descuentos sobre el pago realizados al profesor. 
+			Es una sección de carácter opcional. Si se desea añadir más de un descuento, dé clic en el hipervínculo “Agregar otro descuento”. 
+			Para que el sistema agregue el nuevo descuento, deberá diligenciar todos los espacios disponibles. Contiene los siguientes campos:
+		@table @dfn
+			@item Concepto
+				Es un campo de texto. Almacena el concepto por el cual se realiza descuento sobre el pago al profesor.
+			@item Porcentaje
+				Es un campo de texto de tipo numérico. Almacena el porcentaje de descuento respectivo sobre el pago del profesor. No debe ser mayor de 100.
+		@end table
+	
 	
 	@subsection Inscripciones programa
 		@table @dfn
@@ -571,9 +635,9 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 			para matricularse al ciclo académico del programa que el estudiante se había inscrito previamente. 
 			Tiene las opciones para seleccionar la fecha de Hoy o para abrir un pequeño calendario y seleccionar allí la fecha deseada. 
 			El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
-		@item Matrícula ciclo
-			Es un campo de texto seleccionable de carácter obligatorio que permite elegir el estudiante matriculado 
-			en determinado ciclo académico de un programa. Para buscar la matrícula de ciclo dé clic en el botón “Lupa” que está junto al campo.
+		@item Ciclo
+			Es un campo de texto seleccionable de carácter obligatorio que permite elegir el ciclo académico sobre el que se hará la inscripción. 
+			Para buscar el ciclo dé clic en el botón “Lupa” que está junto al campo.
 		@item Becado
 			Es un campo de tipo seleccionable de carácter opcional que permite determinar si el estudiante tiene algún tipo de beca
 			o descuento sobre el costo de la matrícula al programa.
