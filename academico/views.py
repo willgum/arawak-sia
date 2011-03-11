@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
 from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion
+from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion, MatriculaCicloForm, MatriculaProgramaForm
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 #Pruebas GERALDO
@@ -514,6 +514,14 @@ def promocion_ciclo(solicitud, ciclo_id):
              'ciclo': Ciclo.objects.get(id = ciclo_id)} 
     return redireccionar('admin/academico/promocionCiclo.html', solicitud, datos)
 
+@login_required
+def reporteInscritos(solicitud):
+    formset = MatriculaCicloForm()
+    formprogramas = MatriculaProgramaForm()
+    datos = {'formset': formset,
+             'formprogramas': formprogramas,
+             }
+    return redireccionar('admin/academico/reporteInscritos.html', solicitud, datos)
 
 #----------------------------------------------vistas reportes administrativos ---------------------------------------------------------
 
@@ -538,21 +546,69 @@ def estudianteCarnet(solicitud, matriculaprograma_id):
     return resp
 
 @login_required
-def estudiantesInscritos(solicitud):
+def detalleInscritos(solicitud):
     resp = HttpResponse(mimetype='application/pdf')
-
-    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('programa__nombre', 'estado', 'estudiante__apellido1', 'estudiante__apellido2', 'estudiante__nombre2')
-    reporte = rpt_EstudiantesInscritos(queryset=tmp_matriculaprograma)
-    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
-
+    ciclo_id = solicitud.POST['ciclo']
+    programa_id = solicitud.POST['programa']
+    estado_id = solicitud.POST['estado']
+    
+    if programa_id != "" and estado_id != "" and ciclo_id != "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id, matricula_programa__estado=estado_id, ciclo=ciclo_id)
+    if programa_id == "" and estado_id != "" and ciclo_id != "":
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__estado=estado_id, ciclo=ciclo_id)
+    if programa_id != "" and estado_id == "" and ciclo_id != "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id, ciclo=ciclo_id)
+    if programa_id != "" and estado_id != "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id, matricula_programa__estado=estado_id)
+    if programa_id == "" and estado_id == "" and ciclo_id != "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(ciclo=ciclo_id)
+    if programa_id == "" and estado_id != "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__estado=estado_id)
+    if programa_id != "" and estado_id == "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id)
+    if programa_id == "" and estado_id == "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter()
+    
+    if tmp_matriculaprograma:
+        reporte = rpt_EstudiantesInscritos(queryset=tmp_matriculaprograma.order_by('matricula_programa__programa__nombre', 'matricula_programa__estudiante__apellido1', 'matricula_programa__estudiante__apellido2', 'matricula_programa__estudiante__nombre1', 'matricula_programa__estudiante__nombre2'))
+        reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+    else:
+        solicitud.user.message_set.create(message="No existe datos para mostrar.")
+        return HttpResponseRedirect("/admin/academico/matriculaprograma/inscritos/")
+#    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('programa__nombre', 'estado', 'estudiante__apellido1', 'estudiante__apellido2', 'estudiante__nombre2')
+#    reporte = rpt_EstudiantesInscritos(queryset=tmp_matriculaprograma)
+#    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+#
     return resp
 
 @login_required
 def consolidadoInscritos(solicitud):
     resp = HttpResponse(mimetype='application/pdf')
+    ciclo_id = solicitud.POST['ciclo']
+    programa_id = solicitud.POST['programa']
+    estado_id = solicitud.POST['estado']
     
-    tmp_matriculaprograma = MatriculaPrograma.objects.order_by('programa__nombre')
-    reporte = rpt_ConsolidadoInscritos(queryset=tmp_matriculaprograma)
-    reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
-
+    if programa_id != "" and estado_id != "" and ciclo_id != "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id, matricula_programa__estado=estado_id, ciclo=ciclo_id).order_by('matricula_programa__programa__nombre')
+    if programa_id == "" and estado_id != "" and ciclo_id != "":
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__estado=estado_id, ciclo=ciclo_id).order_by('matricula_programa__programa__nombre')
+    if programa_id != "" and estado_id == "" and ciclo_id != "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id, ciclo=ciclo_id).order_by('matricula_programa__programa__nombre')
+    if programa_id != "" and estado_id != "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id, matricula_programa__estado=estado_id).order_by('matricula_programa__programa__nombre')
+    if programa_id == "" and estado_id == "" and ciclo_id != "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(ciclo=ciclo_id).order_by('matricula_programa__programa__nombre')
+    if programa_id == "" and estado_id != "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__estado=estado_id).order_by('matricula_programa__programa__nombre')
+    if programa_id != "" and estado_id == "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter(matricula_programa__programa=programa_id).order_by('matricula_programa__programa__nombre')
+    if programa_id == "" and estado_id == "" and ciclo_id == "":   
+        tmp_matriculaprograma = MatriculaCiclo.objects.filter().order_by('matricula_programa__programa__nombre')
+    
+    if tmp_matriculaprograma:
+        reporte = rpt_ConsolidadoInscritos(queryset=tmp_matriculaprograma)
+        reporte.generate_by(PDFGenerator, filename=resp, encode_to="utf-8")
+    else:
+        solicitud.user.message_set.create(message="No existe datos para mostrar.")
+        return HttpResponseRedirect("/admin/academico/matriculaprograma/inscritos/")
     return resp

@@ -1,0 +1,79 @@
+{% extends "admin/base_site.html" %}
+
+{% load i18n admin_modify adminmedia %}
+
+{% block extrahead %}{{ block.super }}
+{% url admin:jsi18n as jsi18nurl %}
+<script type="text/javascript" src="{{ jsi18nurl|default:"../../../jsi18n/" }}"></script>
+
+<script type="text/javascript" src="{% admin_media_prefix %}js/core.js"></script> 
+<script type="text/javascript" src="{% admin_media_prefix %}js/calendar.js"></script> 
+<script type="text/javascript" src="{% admin_media_prefix %}js/admin/DateTimeShortcuts.js"></script> 
+<SCRIPT language="JavaScript"> 
+function OnSubmitForm()
+{
+	if(document.pressed == 'Consolidado')
+	{
+		document.formulario.action ="../consolidadoinscritos/";
+	}
+	else
+	if(document.pressed == 'Detalle')
+	{
+		document.formulario.action ="../detalleinscritos/";
+	}
+	return true;
+}
+</SCRIPT> 
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/forms.css" />{% endblock %}
+
+{% block breadcrumbs %}{% if not is_popup %}
+<div class="breadcrumbs">
+	 <a href="../../../">{% trans "Inicio" %}</a> &rsaquo;
+     <a href="../../">{% trans "Academico" %}</a> &rsaquo;
+     <a href="../">{% trans "Matrícula programas" %}</a> &rsaquo;
+     {% trans "Inscritos" %} &rsaquo;
+     {% if add %}{% trans "Add" %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+</div>
+{% endif %}{% endblock %}
+{% block content %}
+	<h1>Reporte de estudiantes inscritos</h1>
+	<div>
+		Si desea ver toda la información, no seleccione ningún filtro en la parte de abajo. 
+		En caso contrario, seleccione los campos que desea filtrar.
+	
+	</div>
+	<div id="content-main">
+		<FORM name="formulario" onSubmit="return OnSubmitForm();" method="post"> 
+			<div>
+				<fieldset class="module aligned ">
+						<div class="form-row ciclo">
+					  		<div>
+									<label for="id_ciclo" class="required">Ciclo: </label>				
+					    	    {{ formset.ciclo }}
+							 </div>
+						</div>
+						<div class="form-row programa">
+							<div>
+									<label for="id_programa" class="required">Programa: </label>				
+							    {{ formprogramas.programa }}
+							</div>					
+						</div>
+						<div class="form-row estado">
+							<div>
+									<label for="id_estado" class="required">Estado: </label>				
+							    {{ formprogramas.estado }}
+							</div>
+						</div>
+				</fieldset>
+			</div>
+			<div class="submit-row" >
+				<input type="submit" value="Consolidado" onclick="document.pressed=this.value"/> 
+		    	<input type="submit" value="Detalle" onclick="document.pressed=this.value"/>
+		    </div>
+		</form>
+	</div>	
+</div>
+{% endblock %}

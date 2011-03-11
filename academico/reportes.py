@@ -168,20 +168,20 @@ class rpt_EstudiantesInscritos(Report):
         margin_bottom = 0.1*cm
         
         elements=(
-            ObjectValue(left=0*cm, top=0.1*cm, width=10*cm, attribute_name=u'estudiante.nombre'),
-            ObjectValue(left=11.2*cm, top=0.1*cm, attribute_name=u'estado.nombre'),
-            ObjectValue(left=13.7*cm, top=0.1*cm, attribute_name=u'estudiante.email'),
-            ObjectValue(left=18.7*cm, top=0.1*cm, attribute_name=u'estudiante.telefono'),
-            ObjectValue(left=22*cm, top=0.1*cm, attribute_name=u'estudiante.movil'),
+            ObjectValue(left=0*cm, top=0.1*cm, width=10*cm, attribute_name=u'matricula_programa.estudiante.nombre'),
+            ObjectValue(left=11.2*cm, top=0.1*cm, attribute_name=u'matricula_programa.estado.nombre'),
+            ObjectValue(left=13.7*cm, top=0.1*cm, attribute_name=u'matricula_programa.estudiante.email'),
+            ObjectValue(left=18.7*cm, top=0.1*cm, attribute_name=u'matricula_programa.estudiante.telefono'),
+            ObjectValue(left=22*cm, top=0.1*cm, attribute_name=u'matricula_programa.estudiante.movil'),
             )
     
     groups = [
-        ReportGroup(attribute_name='programa',
+        ReportGroup(attribute_name='matricula_programa.programa',
             band_header=ReportBand(
                 height = 1.3*cm,
                 elements=[
                           Label(text="Programa:", top=0.1*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
-                          ObjectValue(left=2.3*cm, top=0.1*cm, width=10*cm, attribute_name = u'programa.nombre', style={'fontName': 'Helvetica-Bold'}),
+                          ObjectValue(left=2.3*cm, top=0.1*cm, width=10*cm, attribute_name = u'matricula_programa.programa.nombre', style={'fontName': 'Helvetica-Bold'}),
                           
                           Label(text="Estudiante", top=0.7*cm, left=0*cm, style={'fontName': 'Helvetica-Bold'}),
                           Label(text=u"Estado", top=0.7*cm, left=11.2*cm, style={'fontName': 'Helvetica-Bold'}),
@@ -234,19 +234,19 @@ class rpt_ConsolidadoInscritos(Report):
         auto_expand_height = True
         
     groups = [
-        ReportGroup(attribute_name='programa',
+        ReportGroup(attribute_name='matricula_programa.programa',
             margin_top = 1*cm,
             band_header=ReportBand(
                 margin_top = 0.1*cm,
                 auto_expand_height = True,
                 elements=[
-                          ObjectValue(left=0*cm, top=0.2*cm, width=10*cm, attribute_name = u'programa.nombre'),
-                          ObjectValue(left=5*cm, top=0.2*cm, attribute_name=u'estudianteActivo', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=7.5*cm, top=0.2*cm, attribute_name=u'estudianteEgresado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=10*cm, top=0.2*cm, attribute_name=u'estudiantePendiente', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=12.5*cm, top=0.2*cm, attribute_name=u'estudianteExpulsado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=15*cm, top=0.2*cm, attribute_name=u'estudianteRetirado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
-                          ObjectValue(left=17.5*cm, top=0.2*cm, attribute_name=u'estudianteSuspendido', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=0*cm, top=0.2*cm, width=10*cm, attribute_name = u'matricula_programa.programa.nombre'),
+                          ObjectValue(left=5*cm, top=0.2*cm, attribute_name=u'matricula_programa.estudianteActivo', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=7.5*cm, top=0.2*cm, attribute_name=u'matricula_programa.estudianteEgresado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=10*cm, top=0.2*cm, attribute_name=u'matricula_programa.estudiantePendiente', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=12.5*cm, top=0.2*cm, attribute_name=u'matricula_programa.estudianteExpulsado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=15*cm, top=0.2*cm, attribute_name=u'matricula_programa.estudianteRetirado', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
+                          ObjectValue(left=17.5*cm, top=0.2*cm, attribute_name=u'matricula_programa.estudianteSuspendido', action=FIELD_ACTION_SUM, style={'alignment': TA_RIGHT}),
                           ]
             ),
         ),

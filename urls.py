@@ -33,8 +33,9 @@ urlpatterns = patterns('',
     # url's programa academico
     (r'^admin/academico/ciclo/(?P<ciclo_id>\d+)/promocion/$', 'academico.views.promocion_ciclo'),
     (r'^admin/academico/matriculaciclo/(?P<matriculaciclo_id>\d+)/constancia/$', 'academico.views.constanciaMatriculaCiclo'),
-    (r'^admin/academico/matriculaprograma/inscritos/$', 'academico.views.estudiantesInscritos'),
+    (r'^admin/academico/matriculaprograma/inscritos/$', 'academico.views.reporteInscritos'),
     (r'^admin/academico/matriculaprograma/consolidadoinscritos/$', 'academico.views.consolidadoInscritos'),
+    (r'^admin/academico/matriculaprograma/detalleinscritos/$', 'academico.views.detalleInscritos'),
     (r'^admin/academico/matriculaprograma/(?P<matriculaprograma_id>\d+)/imprimircarnet/$', 'academico.views.estudianteCarnet'),
     
     # url's programa financiero
