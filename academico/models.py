@@ -588,6 +588,12 @@ class MatriculaPrograma(models.Model):
         verbose_name = 'Matrícula programa'
         verbose_name_plural = 'Matrícula programas' 
 
+
+class MatriculaProgramaForm(ModelForm):
+    class Meta:
+        model = MatriculaPrograma
+        
+        
 class Competencia(models.Model):
     programa = models.ForeignKey(Programa)
     codigo = models.CharField(max_length=10)
@@ -668,7 +674,10 @@ class MatriculaCiclo(models.Model):
         verbose_name_plural = 'Matrícula ciclos'
 
 
-    
+class MatriculaCicloForm(ModelForm):
+    class Meta:
+        model = MatriculaCiclo
+                
     
 class Curso(models.Model):
     competencia = models.ForeignKey(Competencia)

@@ -327,14 +327,9 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     def inscritos(self, request, obj):
         obj.inscritos()
     inscritos.url = "/admin/academico/matriculaprograma/inscritos"
-    inscritos.short_description='Detalle inscritos'
+    inscritos.short_description='Estudiantes inscritos'
     
-    def consolidadoInscritos(self, request, obj):
-        obj.consolidadoInscritos()
-    consolidadoInscritos.url = "/admin/academico/matriculaprograma/consolidadoinscritos"
-    consolidadoInscritos.short_description='Consolidado inscritos'
-    
-    buttons_list = [inscritos, consolidadoInscritos, ]
+    buttons_list = [inscritos, ]
     
     def imprimircarnet(self, request, obj):
         obj.imprimirCarnet()
