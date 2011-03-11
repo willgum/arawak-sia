@@ -15,11 +15,7 @@
 		<h1>Programas</h1>
 			<ul class="tabs">
 				{% for programa in programas %}
-					{% if programas|length > 5 %}
-						<li><a href="#">{{ programa.abreviatura }}</a></li>
-					{% else %}
-						<li><a href="#">{{ programa.nombre }}</a></li>
-					{% endif %}
+					<li><a href="#" title="{{ valor.programa.nombre }}">{{ programa.abreviatura }}</a></li>
 				{% endfor %}
 			</ul>
 		<div class="panes">

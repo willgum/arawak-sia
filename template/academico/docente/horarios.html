@@ -15,11 +15,7 @@
 		<h1>Horarios</h1>
 		<ul class="tabs">
 			{% for llave, valor in programas.items %}
-				{% if programas|length > 5 %}
-					<li><a href="#">{{ valor.programa.abreviatura }}</a></li>
-				{% else %}
-					<li><a href="#">{{ valor.programa.nombre }}</a></li>
-				{% endif %}
+				<li><a href="#" title="{{ valor.programa.nombre }}">{{ valor.programa.abreviatura }}</a></li>
 			{% endfor %}
 		</ul>		
 		<div class="panes">

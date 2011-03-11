@@ -42,7 +42,6 @@
 									},
 							success:function(datos) 
 									{
-										datos = JSON.parse(datos);
 										$("#notaDef_" + idCalificacion).html(datos[0]["fields"]["nota_definitiva"]);
 						        		$("#totalFallas_" + idCalificacion).html(datos[0]["fields"]["fallas"]);    
 									},
@@ -146,8 +145,8 @@
 						</td>
 						<td style="text-align:center;">
 							<div id="perdioFallas{{calificacion.id}}">
-								<INPUT NAME="perdioFallas{{calificacion.id}}" TYPE=CHECKBOX READONLY
-									{% ifequal calificacion.perdio_fallas 1 %}
+								<INPUT NAME="perdioFallas{{calificacion.id}}" TYPE=CHECKBOX disabled="disabled" 
+									{% ifequal calificacion.perdio_fallas 0 %}
 										CHECKED
 									{% endifequal %}
 								>

@@ -88,7 +88,9 @@ def buscarProgramasDocente(solicitud):
 @login_required
 def programasDocente(solicitud):
     if comprobarPermisos(solicitud):
-        datos = {'programas': buscarProgramasDocente(solicitud)}
+        programas = buscarProgramasDocente(solicitud)
+        datos = {'padding': ((len(programas)/5)+1)*25,
+                 'programas': buscarProgramasDocente(solicitud)}
         return redireccionar('academico/docente/programas.html', solicitud, datos)
     else:
         return logout(solicitud)
@@ -194,7 +196,7 @@ def guardarNotaDocente(solicitud):
             except:
                 "error"
         calificacion = Calificacion.objects.filter(id = idCalificacion)
-        return HttpResponse(serializers.serialize("json", calificacion)) 
+        return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8') 
 
 def guardarFallasDocente(solicitud):
     if solicitud.POST:
@@ -212,7 +214,7 @@ def guardarFallasDocente(solicitud):
             except:
                 "error"
         calificacion = Calificacion.objects.filter(id = idCalificacion) 
-        return HttpResponse(serializers.serialize("json", calificacion))
+        return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8')
 
 @login_required
 def competenciasDocente(solicitud, competencia_id):
