@@ -15,13 +15,13 @@
 		<h1>Programas</h1>
 		<ul class="tabs">
 			{% for programa in programas %}
-				<li><a href="#">{{ programa.nombre }}</a></li>
+				<li><a href="#" title="{{ programa.nombre }}">{{ programa.abreviatura }}</a></li>
 			{% endfor %}
 		</ul>		
 		<div class="panes">
 			{% for programa in programas %}
 				<div class="panesDiv">
-					<h2>Información básica</h2>
+					<h2 style="margin-top:{{ margintop }}px;">Información básica</h2>
 					<table>
 						<tr>
 							<td valign="top">

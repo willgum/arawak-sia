@@ -238,8 +238,7 @@ table.grilla tbody a:visited:after {
 
 #content .tabs { 
 	margin:0 !important; 
-	padding:0;
-	border-bottom:1px solid #144d29;
+	padding:0px 2px;
 }
 
 #content .tabs li { 
@@ -288,7 +287,6 @@ table.grilla tbody a:visited:after {
 #content .panesDiv {
 	padding:0px 10px 20px 10px;
 	border:1px solid #144d29;
-	border-top:0;
 	background-color:#fff;
 }
 
