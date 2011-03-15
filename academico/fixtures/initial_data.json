@@ -1512,7 +1512,7 @@
     "model": "auth.group",
     "pk": 3,
     "fields": {
-      "name": "Docente"
+      "name": "Profesor"
     }
   },
   {

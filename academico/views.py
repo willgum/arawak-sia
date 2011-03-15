@@ -84,12 +84,20 @@ def buscarProgramasDocente(solicitud):
         if contador <= 1:
             listaProgramas.append(programas[indice1]);
     return listaProgramas
-    
+
+def calcularMargintop(programas):
+    i = 0
+    margintop = 0
+    while i < len(programas):
+        margintop = margintop + 22
+        i = i + 5 
+    return margintop
+         
 @login_required
 def programasDocente(solicitud):
     if comprobarPermisos(solicitud):
         programas = buscarProgramasDocente(solicitud)
-        datos = {'padding': ((len(programas)/5)+1)*25,
+        datos = {'margintop': calcularMargintop(programas),
                  'programas': buscarProgramasDocente(solicitud)}
         return redireccionar('academico/docente/programas.html', solicitud, datos)
     else:
@@ -115,6 +123,7 @@ def horariosDocente(solicitud):
         solicitud.session['url'] = "/academico/docente/horarios/"
         solicitud.session['link'] = "Horarios"
         datos = {'programas': auxProgramas,
+                 'margintop': calcularMargintop(programas),
                  'ciclo': ciclo}
         return redireccionar('academico/docente/horarios.html', solicitud, datos)
     else:
@@ -140,6 +149,7 @@ def notasDocente(solicitud):
         solicitud.session['url'] = "/academico/docente/notas/"
         solicitud.session['link'] = "Calificaciones"
         datos = {'programas': auxProgramas,
+                 'margintop': calcularMargintop(programas),
                  'ciclo': ciclo}
         return redireccionar('academico/docente/notas.html', solicitud, datos)
     else:
@@ -242,6 +252,7 @@ def buscarProgramasEstudiante(solicitud):
         programa = {}
         programa['codigo'] =                programas.codigo
         programa['nombre'] =                programas.nombre
+        programa['abreviatura'] =           programas.abreviatura()
         programa['tipo_programa'] =         programas.tipo_programa
         programa['descripcion'] =           programas.descripcion
         programa['titulo'] =                programas.titulo
@@ -343,7 +354,9 @@ def buscarCompetenciasHistorialEstudiante(solicitud):
 @login_required
 def programasEstudiante(solicitud):
     if comprobarPermisos(solicitud):
-        datos = {'programas': buscarProgramasEstudiante(solicitud)}
+        programas = buscarProgramasEstudiante(solicitud)
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas}
         return redireccionar('academico/estudiante/programas.html', solicitud, datos)
     else:
         return logout(solicitud)
@@ -368,7 +381,8 @@ def horariosEstudiante(solicitud):
             programas[matPrograma.id] = aux
         solicitud.session['url'] = "/academico/estudiante/horarios/"
         solicitud.session['link'] = "Horarios"
-        datos = {'programas': programas,
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas,
                  'ciclo': ciclo}
         return redireccionar('academico/estudiante/horarios.html', solicitud, datos)
     else:

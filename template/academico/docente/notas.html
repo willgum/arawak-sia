@@ -15,43 +15,41 @@
 		<h1>Calificaciones</h1>
 		<ul class="tabs">
 			{% for llave, valor in programas.items %}
-				{% if programas|length > 5 %}
-					<li><a href="#">{{ valor.programa.abreviatura }}</a></li>
-				{% else %}
-					<li><a href="#">{{ valor.programa.nombre }}</a></li>
-				{% endif %}
+				<li><a href="#" title="{{ valor.programa.nombre }}">{{ valor.programa.abreviatura }}</a></li>
 			{% endfor %}
 		</ul>		
 		<div class="panes">
 			{% for programa in programas %}
 				<div class="panesDiv">
 				{% for llave, valor in programas.items %}
-					<table id="estudiantes" class="grilla" width="100%">
-						<thead>
-							<tr>
-								<th colspan="3"><h3>Ciclo: {{ ciclo.codigo}}</h3></th>				
-							</tr>
-							<tr>
-								<th style="width: 80px;">Código</th>
-								<th>Competencia</th>
-								<th style="width: 100px;"></th>				
-							</tr>
-						</thead>
-						<tfoot>
-							<tr>
-								<th scope="row" colspan="3">Total Competencia: {{ valor.cantidad }}</th>
-							</tr>
-						</tfoot>
-						<tbody>				
-							{% for llaveCursos, valorCurso in valor.cursos.items %}
-								<tr class="{% cycle '' 'odd' %}">
-									<th scope="row"><a href="{{valorCurso.idCompetencia}}/">{{ valorCurso.codigoCompetencia }}</a></th>
-                        			<td>{{ valorCurso.nombre }}</td>
-                        			<th><a href="guardar/{{valorCurso.id}}/">Ingresar Notas</a></th>
+					{% ifequal programa valor.programa.id %}
+						<table id="estudiantes" class="grilla" width="100%" style="margin-top:{{ margintop }}px;">
+							<thead>
+								<tr>
+									<th colspan="3"><h3>Ciclo: {{ ciclo.codigo}}</h3></th>				
 								</tr>
-							{% endfor %}
-						</tbody>
-					</table>
+								<tr>
+									<th style="width: 80px;">Código</th>
+									<th>Competencia</th>
+									<th style="width: 100px;"></th>				
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th scope="row" colspan="3">Total Competencia: {{ valor.cantidad }}</th>
+								</tr>
+							</tfoot>
+							<tbody>				
+								{% for llaveCursos, valorCurso in valor.cursos.items %}
+									<tr class="{% cycle '' 'odd' %}">
+										<th scope="row"><a href="{{valorCurso.idCompetencia}}/">{{ valorCurso.codigoCompetencia }}</a></th>
+	                        			<td>{{ valorCurso.nombre }}</td>
+	                        			<th><a href="guardar/{{valorCurso.id}}/">Ingresar Notas</a></th>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					{% endifequal %}
 				{% endfor %}
 				</div>
 			{% endfor %}
