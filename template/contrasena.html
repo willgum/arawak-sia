@@ -24,7 +24,8 @@
 						data:	{
 									idUsuario: 	{{ user.id}},
 									actualPass: $("#actualPass").val(),
-									nuevoPass: 	$("#nuevoPass").val()
+									nuevoPass: 	$("#nuevoPass").val(),
+									csrfmiddlewaretoken : $('#csrf_token >div >input').attr("value")
 								},
 						success: 	function(dato) 
 								 	{
@@ -100,6 +101,7 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
+		<div id="csrf_token">{% csrf_token %}</div>
 		<h1>Cambiar contraseña</h1>
 		<table id="formulario" class="formulario" style="width: 100%;">
 			<tr>

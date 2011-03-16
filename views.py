@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.core.context_processors import csrf
 from datetime import datetime, timedelta
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
@@ -78,7 +79,9 @@ def perfil(solicitud):
         return logout(solicitud)    
 
 def actulizarPerfil(solicitud):
-    if solicitud.POST:
+    if solicitud.POST: 
+        c = {}
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
         solicitud.session['prueba'] = "llegamos"
         idUsuario = solicitud.POST.get('idUsuario')
         perfil = solicitud.POST.get('perfil')
@@ -112,6 +115,8 @@ def contrasena(solicitud):
 
 def actulizarContrasena(solicitud):
     if solicitud.POST:
+        c = {}
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
         idUsuario = solicitud.POST.get('idUsuario')
         actualPass = solicitud.POST.get('actualPass')
         nuevoPass = solicitud.POST.get('nuevoPass')

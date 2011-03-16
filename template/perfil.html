@@ -20,9 +20,12 @@
 									idUsuario: {{ user.id }},
 									perfil: {{ request.session.grupoUsuarioid }},
 									campo:$(this).attr("name"),
-									valor:$(this).attr("value")
+									valor:$(this).attr("value"),
+									csrfmiddlewaretoken : $('#csrf_token >div >input').attr("value")
 								},
-						success: function(datos) {}
+						success: function(datos) {},
+						error: 	function(objeto, quepaso, otroobj) {alert("Pasó lo siguiente: "+objeto.statusText);},
+						contentType: "application/x-www-form-urlencoded"
 					}
 				);
 			}
@@ -52,6 +55,7 @@
 		<table style="width: 100%;">
 			<tr>
 				<td style="vertical-align:top;">
+					<div id="csrf_token">{% csrf_token %}</div>					
 					<h2>Información básica</h2>
 					<table style="width: 100%;">
 						<tr>
