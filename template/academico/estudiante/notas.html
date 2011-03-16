@@ -15,7 +15,7 @@
 		<h1>Calificaciones</h1>
 		<ul class="tabs">
 			{% for llave, valor in programas.items %}
-				<li><a href="#">{{ valor.programas.nombre_programa }}</a></li>
+				<li><a href="#" title="{{ valor.programas.nombre_programa }}">{{ valor.programas.abreviatura }}</a></li>
 			{% endfor %}
 		</ul>		
 		<div class="panes">
@@ -23,7 +23,7 @@
 				<div class="panesDiv">
 					{% if valor.ciclo %}
 						{% if valor.cantCalificaciones > 0 %}
-							<table id="estudiantes" class="grilla" width="100%">
+							<table id="estudiantes" class="grilla" width="100%" style="margin-top:{{ margintop }}px;">
 								<thead>
 									<tr>
 										<th colspan="{{ cantCortes }}"><h3>Ciclo - {{ ciclo.codigo}}</h3></th>				
@@ -66,9 +66,21 @@
 													{% endfor %}
 												</td>
 											{% endfor %}
-											<td style="text-align:center">{{ calificacion.fallas }}</td>
+											<td style="text-align:center">
+												{% ifequal calificacion.fallas None %}
+													0
+												{% else %}
+													{{ calificacion.fallas }}
+												{% endifequal %}
+											</td>
 											<td style="text-align:center">{{ calificacion.tipo_aprobacion }}</td>
-											<th style="text-align:center">{{ calificacion.nota_definitiva }}</th>
+											<th style="text-align:center">
+												{% ifequal calificacion.nota_definitiva None %}
+													0,0
+												{% else %}
+													{{ calificacion.nota_definitiva }}
+												{% endifequal %}
+											</th>
 										</tr>
 									{% endfor %}
 								</tbody>

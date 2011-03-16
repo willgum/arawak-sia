@@ -434,7 +434,8 @@ def notasEstudiante(solicitud):
             programas[matPrograma.id] = aux
         solicitud.session['url'] = "/academico/estudiante/notas/"
         solicitud.session['link'] = "Calificaciones"
-        datos = {'programas': programas,
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas,
                  'ciclo': ciclo,
                  'cortes': cortes,
                  'cantCortes': (len(cortes)*2)+5}        
@@ -463,7 +464,8 @@ def historialEstudiante(solicitud):
             programas[matPrograma.id] = aux
         solicitud.session['url'] = "/academico/estudiante/historial/"
         solicitud.session['link'] = "Historial Académico"
-        datos = {'programas': programas}
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas}
         return redireccionar('academico/estudiante/historial.html', solicitud, datos)
     else:
         return logout(solicitud)
