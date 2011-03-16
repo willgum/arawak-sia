@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from django.core.context_processors import csrf
 from datetime import datetime, timedelta, date
 from django.contrib.sessions.models import Session
 from django.core import serializers
@@ -192,6 +193,8 @@ def guardarNotasDocente(solicitud, curso_id):
         
 def guardarNotaDocente(solicitud):
     if solicitud.POST:
+        c = {}
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
         idCalificacion = solicitud.POST.get('idCalificacion')
         idCorte = solicitud.POST.get('idCorte')
         valor = solicitud.POST.get('valor')
@@ -210,6 +213,8 @@ def guardarNotaDocente(solicitud):
 
 def guardarFallasDocente(solicitud):
     if solicitud.POST:
+        c = {}
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
         idCalificacion = solicitud.POST.get('idCalificacion')
         idCorte = solicitud.POST.get('idCorte')
         valor = solicitud.POST.get('valor')  

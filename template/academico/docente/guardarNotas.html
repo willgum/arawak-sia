@@ -38,17 +38,14 @@
 							data:	{
 										idCalificacion: idCalificacion,
 						        		idCorte: idCorte,
-						        		valor: numero
+						        		valor: numero,
+										csrfmiddlewaretoken : $('#csrf_token >div >input').attr("value")
 									},
 							success:function(datos) 
 									{
 										$("#notaDef_" + idCalificacion).html(datos[0]["fields"]["nota_definitiva"]);
 						        		$("#totalFallas_" + idCalificacion).html(datos[0]["fields"]["fallas"]);    
 									},
-							error: 	function(objeto, quepaso, otroobj)
-								  	{
-            							alert("Pasó lo siguiente: "+objeto.statusText);
-        							},
 							contentType: "application/json"
 						}
 					);
@@ -73,7 +70,8 @@
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1> {{curso.nombre}} </h1>		
+		<h1> {{curso.nombre}} </h1>	
+		<div id="csrf_token">{% csrf_token %}</div>	
 		<table id="estudiantes" class="grilla" width="100%">
 			<thead>
 				<tr>
