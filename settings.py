@@ -1,7 +1,7 @@
 # Django settings for sia project.
 import os.path
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True      # se indica a la aplicacion que la sesion xpira cuando se cierra el navegador
 PROJECT_DIR = os.path.dirname(__file__)

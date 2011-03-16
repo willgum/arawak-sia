@@ -182,7 +182,7 @@ body {
 /* tabla usada para los formularios*/
 
 .formulario {
-	background:#f6f6f6;	
+	background:#dcdcdc;	
 }
 
 /* tabla usada para los formularios*/
@@ -325,7 +325,7 @@ table.grilla tbody a:visited:after {
 #footer {
 	margin:5px 0 0 0;
 	padding:15px;
-	background:#f6f6f6;
+	background:#dcdcdc;
 	border-top:2px solid #eee;
 	clear:both;
 }
