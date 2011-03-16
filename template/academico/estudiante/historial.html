@@ -21,7 +21,7 @@
 		<div class="panes">			
 			{% for llave, valor in programas.items %}
 				<div class="panesDiv">	
-					<div style="margin-top:{{ margintop }}px;"/>		
+					<div style="height:{{ margintop }}px;"></div>	
 					{% for llaveCiclo, valorCiclo in valor.ciclos.items %}
 						{% if valorCiclo.ciclo %}
 							{% if valorCiclo.cantCalificaciones > 0 %}
@@ -35,7 +35,7 @@
 											<th style="width: 40px;">Código</th>
 											<th>Competencia</th>
 											<th style="width: 20px;">F.T.</th>	
-											<th style="width: 20px;">Hab.</th>
+											<th style="width: 20px;">T.A.</th>
 											<th style="width: 20px;">Def.</th>													
 										</tr>
 									</thead>

@@ -21,9 +21,10 @@
 		<div class="panes">
 			{% for llave, valor in programas.items %}
 				<div class="panesDiv">
+					<div style="height:{{ margintop }}px;"></div>
 					{% if valor.ciclo %}
 						{% if valor.cantCalificaciones > 0 %}
-							<table id="estudiantes" class="grilla" width="100%" style="margin-top:{{ margintop }}px;">
+							<table id="estudiantes" class="grilla" width="100%">
 								<thead>
 									<tr>
 										<th colspan="{{ cantCortes }}"><h3>Ciclo - {{ ciclo.codigo}}</h3></th>				
@@ -36,7 +37,7 @@
 											<th>{{corte.porcentaje}}%</th>
 										{% endfor %}
 										<th style="width: 20px;">F.T.</th>
-										<th style="width: 20px;">Hab.</th>
+										<th style="width: 20px;">T.A.</th>
 										<th style="width: 20px;">Def.</th>
 									</tr>
 								</thead>
