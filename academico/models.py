@@ -539,6 +539,9 @@ class MatriculaPrograma(models.Model):
     def nombre_programa(self):
         return u"%s" %(self.programa.nombre)
     
+    def abreviatura(self):
+        return self.programa.abreviatura()
+    
     def calculaPromedioAcumulado(self, matricula_programa_id):
         tmp_promedio_ciclo = MatriculaCiclo.objects.filter(matricula_programa = matricula_programa_id)
         tmp_promedio_acumulado = 0.0
