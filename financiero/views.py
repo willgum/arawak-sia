@@ -1,26 +1,55 @@
 # -*- coding: utf-8 -*-
 
 # Create your views here.
+from datetime import datetime, timedelta, date
+from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 from financiero.models import MatriculaFinanciera, HoraCatedra, Ciclo, Sesion, Adelanto, LiquidarPago, LiquidarPagoForm, Descuento
-from academico.models import Profesor, CicloForm
+from academico.models import Profesor, CicloForm, Institucion, Corte, MatriculaCiclo, Calificacion, NotaCorte, Estudiante, MatriculaPrograma, Programa, TipoPrograma
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                                        # se incorporo para poder acceder a archivos estaticos
-from django.conf import settings
-from datetime import date
-    
+from django.conf import settings  
+from django.contrib import auth   
+
 #Reportes GERALDO
 from reportes import rpt_ReporteCartera, rpt_EstadoCuenta, rpt_LiquidarPagoDocente, rpt_LiquidarNominaDocente
 
 from geraldo.generators import PDFGenerator
 
+def calcularMargintop(programas):
+    i = 0
+    margintop = 0
+    while i < len(programas):
+        margintop = margintop + 22
+        i = i + 5 
+    return margintop
+
+def comprobarPermisos(solicitud):
+    if 'grupoUsuarioid' in solicitud.session: 
+        sesion = Session.objects.get(session_key = solicitud.session.session_key)
+        if  datetime.now() <= sesion.expire_date:
+            sesion.expire_date = datetime.now() + timedelta(minutes=10)
+            sesion.save()
+        if solicitud.session['grupoUsuarioid'] == 3:
+            return True
+        else:
+            if solicitud.session['grupoUsuarioid'] == 4:
+                return True
+            else:
+                return False
+    else:
+        return False
+
 def redireccionar(plantilla, solicitud, datos):
+    intituciones = Institucion.objects.all()
+    for resultado in intituciones:
+        institucion = resultado
     variables = {
         'user': solicitud.user, 
-        'titulo': '.: SIA - Sistema de Información Académica :.',
-        'titulo_pagina': '.: SIA - Sistema de Información Académica :.',
+        'titulo': '.: ' + institucion.nombre + ' :.',
+        'titulo_pagina': '.: ' + institucion.nombre + ' :.',
         'path': settings.MEDIA_URL,
     }
     llaves = datos.keys()
@@ -29,7 +58,192 @@ def redireccionar(plantilla, solicitud, datos):
     variables =  Context(variables)
     return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
 
+@login_required
+def indice(solicitud):
+    if comprobarPermisos(solicitud):
+        return redireccionar('financiero/index.html', solicitud, {})
+    else:
+        return logout(solicitud)
 
+def cicloActual():
+    hoy = date.today()
+    cicloActual = Ciclo.objects.get(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
+    return cicloActual.id
+        
+def logout(solicitud):
+    if 'grupoUsuarioid' in solicitud.session:
+        del solicitud.session['grupoUsuarioid']
+    if 'msg_error' in solicitud.session:
+        solicitud.session['msg_error']
+    auth.logout(solicitud)    
+    return HttpResponseRedirect("/")
+
+#----------------------------------------------vistas estudiante---------------------------------------------------------
+
+def buscarProgramasEstudiante(solicitud):
+    listaProgramas = []
+    hoy = date.today()
+    usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+    matriculas = MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
+    programas = []
+    tipoPrograma = []
+    for matricula in matriculas:
+        vistas = 0
+        aprobadas = 0        
+        programas = Programa.objects.get(id = matricula.programa_id)
+        tipoPrograma = TipoPrograma.objects.get(id = programas.tipo_programa_id)
+        programa = {}
+        programa['codigo'] =                programas.codigo
+        programa['nombre'] =                programas.nombre
+        programa['abreviatura'] =           programas.abreviatura()
+        programa['tipo_programa'] =         programas.tipo_programa
+        programa['descripcion'] =           programas.descripcion
+        programa['titulo'] =                programas.titulo
+        programa['resolucion'] =            programas.resolucion
+        programa['snies'] =                 programas.snies
+        programa['periodicidad'] =          programas.periodicidad
+        programa['duracion'] =              programas.duracion
+        programa['jornada'] =               programas.jornada
+        programa['competencias'] =          programas.competencias()
+        programa['actitudes'] =             programas.actitudes
+        programa['perfil_profesional'] =    programas.perfil_profesional
+        programa['funciones'] =             programas.funciones
+        matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matricula.id)
+        for matCiclo in matCiclos:
+            resultados = Calificacion.objects.filter(matricula_ciclo = matCiclo)
+            for resultado in resultados:
+                vistas = vistas + 1
+                if resultado.nota_definitiva is not None and resultado.nota_definitiva >= tipoPrograma.nota_aprobacion:
+                    aprobadas = aprobadas +1
+        programa['vistas'] =    vistas
+        programa['aprobadas'] = aprobadas
+       
+        if aprobadas == 0 or programas.competencias() == 0:
+            programa['progreso'] = "images/progreso/00.png" 
+        else:
+            progreso = (aprobadas*100)/programas.competencias()
+             
+            if progreso > 0 and progreso <= 7.14:
+                programa['progreso'] = "images/progreso/01.png"
+            if progreso > 7.14 and progreso <= 14.28:
+                programa['progreso'] = "images/progreso/01.png"
+            if progreso > 14.28 and progreso <= 14.28:
+                programa['progreso'] = "images/progreso/02.png"
+            if progreso > 7.14 and progreso <= 24.42:
+                programa['progreso'] = "images/progreso/03.png"
+            if progreso > 21.42 and progreso <= 28.56:
+                programa['progreso'] = "images/progreso/04.png"
+            if progreso > 28.56 and progreso <= 35.7:
+                programa['progreso'] = "images/progreso/05.png"
+            if progreso > 35.7 and progreso <= 42.84:
+                programa['progreso'] = "images/progreso/06.png"
+            if progreso > 42.84 and progreso <= 49.98:
+                programa['progreso'] = "images/progreso/07.png"        
+            if progreso > 49.98 and progreso <= 57.12:
+                programa['progreso'] = "images/progreso/08.png"
+            if progreso > 57.12 and progreso <= 64.26:
+                programa['progreso'] = "images/progreso/09.png"
+            if progreso > 64.26 and progreso <= 71.4:
+                programa['progreso'] = "images/progreso/10.png"
+            if progreso > 71.4 and progreso <= 78.54:
+                programa['progreso'] = "images/progreso/11.png"
+            if progreso > 78.54 and progreso <= 85.68:
+                programa['progreso'] = "images/progreso/12.png"
+            if progreso > 85.68 and progreso <= 100:
+                programa['progreso'] = "images/progreso/13.png"
+            if progreso >= 100:
+                programa['progreso'] = "images/progreso/14.png"
+        
+        listaProgramas.append(programa)
+    return listaProgramas
+
+def buscarMatriculaProgramasEstudiante(solicitud):
+    hoy = date.today()
+    usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+    return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
+
+def buscarCompetenciasEstudiante(solicitud, matricula_ciclo_id):
+    calificaciones = []
+    resultado = Calificacion.objects.filter(matricula_ciclo = matricula_ciclo_id)                    
+    if len(resultado) > 0:
+        for indice in range(0, len(resultado)):
+            calificaciones.append(resultado[indice])
+    return calificaciones
+
+def buscarCompetenciasHistorialEstudiante(solicitud):
+    matPrograma = buscarMatriculaProgramasEstudiante(solicitud)                
+    matCiclo = []
+    for mat in matPrograma:
+        resultado = MatriculaCiclo.objects.filter(matricula_programa = mat.id)
+        if len(resultado) > 0:
+            for indice1 in range(0, len(resultado)):
+                contador = 0
+                if len(matCiclo) > 0:
+                    for indice2 in range(0, len(matCiclo)):
+                        if resultado[indice1] == matCiclo[indice2]:
+                            contador += 1
+                        if contador == 0:
+                            matCiclo.append(resultado[indice1])
+                else:
+                    matCiclo.append(resultado[indice1])                
+    calificaciones = []
+    for mat in matCiclo:
+        resultado = Calificacion.objects.filter(matricula_ciclo = mat.id)                    
+        if len(resultado) > 0:
+            for indice in range(0, len(resultado)):
+                calificaciones.append(resultado[indice])
+    return calificaciones
+
+@login_required
+def pazySalvo(solicitud):
+    if comprobarPermisos(solicitud):
+        programas = {}
+        matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
+        id_ciclo = cicloActual()
+        ciclo = Ciclo.objects.get(id = id_ciclo)
+        cortes = Corte.objects.filter(ciclo = id_ciclo).order_by('fecha_inicio')
+        for matPrograma in matProgramas:
+            aux = {}
+            aux['programas'] = matPrograma
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            for matCiclo in matCiclos:
+                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                if Ciclo.cicloActual(ciclo):
+                    aux['ciclo'] = matCiclo
+                    calificaciones = buscarCompetenciasEstudiante(solicitud, matCiclo.id) 
+                    calificacionesCiclo = []
+                    for indice in calificaciones:            
+                        notas = {}
+                        notas['id'] =                   indice.id
+                        notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
+                        notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
+                        notas['nombreCompetencia'] =    Calificacion.nombre_competencia(indice)
+                        notas['matricula_ciclo'] =      indice.matricula_ciclo
+                        notas['nota_definitiva'] =      indice.nota_definitiva
+                        notas['nota_habilitacion'] =    indice.nota_habilitacion
+                        notas['tipo_aprobacion'] =      Calificacion.abreviatura_aprobacion(indice)
+                        notas['fallas'] =               indice.fallas
+                        for corte in cortes:
+                            try:
+                                resultado = NotaCorte.objects.get(calificacion = indice.id, corte = corte.id)
+                                notas[corte.id] = {'nota': resultado.nota, 'fallas': resultado.fallas}
+                            except:
+                                notas[corte.id] = {'nota': 0, 'fallas': 0}
+                        calificacionesCiclo.append(notas)
+                    aux['calificaciones'] = calificacionesCiclo
+                    aux['cantCalificaciones'] = len(calificacionesCiclo)
+            programas[matPrograma.id] = aux
+        solicitud.session['url'] = "/academico/estudiante/notas/"
+        solicitud.session['link'] = "Calificaciones"
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas,
+                 'ciclo': ciclo,
+                 'cortes': cortes,
+                 'cantCortes': (len(cortes)*2)+5}        
+        return redireccionar('financiero/estudiante/pazysalvo.html', solicitud, datos)
+    else:
+        return logout(solicitud)
+    
 @login_required
 def liquidarNomina(solicitud):
     tmp_ciclo = CicloForm()

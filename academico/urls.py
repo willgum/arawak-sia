@@ -19,7 +19,7 @@ urlpatterns = patterns('',
     
     #urls para estudiantes
     (r'^$', indice),
-    (r'^$estudiante/', indice),
+    (r'^estudiante/$', indice),
     (r'^estudiante/programas/$', programasEstudiante),
 
     (r'^estudiante/horarios/$', horariosEstudiante),

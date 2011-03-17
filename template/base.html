@@ -77,6 +77,12 @@
 										<li><a href="/academico/estudiante/historial/">Historial académico</a></li>
 									{% endif %}
 								</ul>
+								{% if request.session.grupoUsuarioid == 4 %}
+									<h2>Financiero</h2>	
+									<ul>
+										<li><a href="/financiero/estudiante/pazysalvo/">Paz y salvo</a></li>
+									</ul>
+								{% endif %}
 							{% endif %}
 						</div>				
 					</td>
@@ -113,11 +119,11 @@
 			</table>		
 			
 			<div id="footer">     
-				<p style="float:right;">
-					<a href="http://jigsaw.w3.org/css-validator/" target="_blank">
+				<p style="float:right;>
+					<a href="http://jigsaw.w3.org/css-validator/" target="_blank" style="text-decoration:none;">
 						<img style="border:0;height:15px" src="{{ path }}images/vcss.jpg" alt="Valid CSS!"/>
 					</a>
-					<a href="http://validator.w3.org/" target="_blank">
+					<a href="http://validator.w3.org/" target="_blank" style="text-decoration:none;">
 				    	<img style="border:0;height:15px" src="{{ path }}images/valid-xhtml10.jpg" alt="Valid XHTML 1.0 Transitional"/>
 				    </a>
 				</p>

@@ -16,6 +16,14 @@ from django.contrib.auth.decorators import login_required                       
 from reportes import rpt_ConstanciaCiclo, rpt_EstudiantesInscritos, rpt_ConsolidadoInscritos, rpt_EstudianteCarnet
 from geraldo.generators import PDFGenerator
 
+def calcularMargintop(programas):
+    i = 0
+    margintop = 0
+    while i < len(programas):
+        margintop = margintop + 22
+        i = i + 5 
+    return margintop
+
 def comprobarPermisos(solicitud):
     if 'grupoUsuarioid' in solicitud.session: 
         sesion = Session.objects.get(session_key = solicitud.session.session_key)
@@ -51,7 +59,7 @@ def redireccionar(plantilla, solicitud, datos):
 @login_required
 def indice(solicitud):
     if comprobarPermisos(solicitud):
-        return redireccionar('index.html', solicitud, {})
+        return redireccionar('academico/index.html', solicitud, {})
     else:
         return logout(solicitud)
 
@@ -85,14 +93,6 @@ def buscarProgramasDocente(solicitud):
         if contador <= 1:
             listaProgramas.append(programas[indice1]);
     return listaProgramas
-
-def calcularMargintop(programas):
-    i = 0
-    margintop = 0
-    while i < len(programas):
-        margintop = margintop + 22
-        i = i + 5 
-    return margintop
          
 @login_required
 def programasDocente(solicitud):
