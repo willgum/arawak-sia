@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from django.contrib.auth.views import login, logout
-from views import *                 # maneja la vista para el index de la aplicacion
-from django.views.static import *                        # se incorporo para poder acceder a archivos estaticos
+from views import *                                     # maneja la vista para el index de la aplicacion
+from django.views.static import *                       # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings                        # se incopora para poder acceder a los valores creados en el settings
 
 # Uncomment the next two lines to enable the admin:
@@ -27,7 +27,7 @@ urlpatterns = patterns('',
     
     # definicion de urls para la aplicacion academico     
     (r'^academico/', include('academico.urls')),
-    (r'^financiero/', include('academico.urls')),
+    (r'^financiero/', include('financiero.urls')),
     
     # administrador de la aplicacion
     # url's programa academico
