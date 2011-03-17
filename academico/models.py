@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 import Image
-#import os
+import os
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
@@ -216,22 +216,23 @@ def validar_numerico(cifra):
 
 #    scale: Función para escalar una imágen a un with y height dados
 def scale(fname, width, height, fname_scaled):
-    img = Image.open(fname)
-    
-    new_height = width * img.size[1] / img.size[0]
-    new_width = height * img.size[0] / img.size[1]
-    
-    if height - new_height > 0:
-        new_height = height
-        new_width = new_height * img.size[0] / img.size[1]
-    elif width - new_width > 0:
-        new_width = width
+    if os.path.exists(fname):
+        img = Image.open(fname)
+        
         new_height = width * img.size[1] / img.size[0]
-    
-    out = img.resize((new_width, new_height))
-    box = ((new_width/2 - width/2), (new_height/2 - height/2), (new_width/2 + width/2), (new_height/2 + height/2))
-    out = out.crop(box)
-    out.save(fname_scaled, "JPEG")
+        new_width = height * img.size[0] / img.size[1]
+        
+        if height - new_height > 0:
+            new_height = height
+            new_width = new_height * img.size[0] / img.size[1]
+        elif width - new_width > 0:
+            new_width = width
+            new_height = width * img.size[1] / img.size[0]
+        
+        out = img.resize((new_width, new_height))
+        box = ((new_width/2 - width/2), (new_height/2 - height/2), (new_width/2 + width/2), (new_height/2 + height/2))
+        out = out.crop(box)
+        out.save(fname_scaled, "JPEG")
 
 class CustomStorage(FileSystemStorage):
 #    En caso de que la imagen exista, la borra para ingresarla de nuevo
