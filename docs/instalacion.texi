@@ -1,23 +1,32 @@
 @node Instalación
 @chapter Instalación
 
-La instalación de ....
+Arawak Claro utiliza la arquitectura cliente-servidor para su normal funcionamiento. Esta arquitectura puede ser emulada tanto en una Intranet como en Internet. Para instalar Arawak Claro el sistema debe cumplir con los siguientes requisitos.
 
 @section Requerimientos del sistema
 
+Las siguientes aplicaciones deben estar instaladas y configuradas en el servidor. Para detalles acerca del proceso de instalación de cada una de ellas, visite los sitios suministrados a continuación.
+
 @itemize
-@item Python 2.7
-@item Django
-@item MySQL
-@item Apache
+@item Apache 2.0 http://www.apache.org/
+@item MySQL 5.0 http://www.mysql.com/
+@item Python 2.7 http://www.python.org/
+	@itemize
+	@item Python Image Library 1.1.7. http://www.pythonware.com/products/pil/
+	@item MySQL-python 1.2.3. http://pypi.python.org/pypi/MySQL-python/1.2.3
+	@item Geraldo reports 0.9.7. http://www.geraldoreports.org/
+	@end itemize
+@item Django 1.2. http://www.djangoproject.com/
 @end itemize
 
 @section Flujo de trabajo
-En la gráfica se muestra el flujo de trabajo recomendado para facilitar el uso de la plataforma y ofrecer una experiencia de usuario
+En la @ref{fig:diagrama_procesos} se muestra el flujo de trabajo recomendado para facilitar el uso de la plataforma y ofrecer una experiencia de usuario
 satisfactoria.
 
-@float Figure, fig:diagrama
-    @image{img/diagrama_procesos, , , 'Diagrama de procesos', png}
+@float Figure, fig:diagrama_procesos
+@center @image{img/diagrama_procesos, 15cm, , 'Diagrama de procesos', png}
+@shortcaption{Diagrama de procesos}
+@caption{Diagrama de procesos. Cada uno de los recuadros indica el conjunto de actividades necesarias para cargar la información correctamente, no obstante el enfoque versátil de la plataforma permite realizar la alimentación en cualquier orden, es decir la secuencia ilustrada en el diagrama debe intrepretarse como una recomendación y por ningún como una secuencia estricta.}
 @end float
 
 @subsection Configuración general
