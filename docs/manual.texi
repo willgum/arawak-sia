@@ -7,22 +7,30 @@
 @c %**end of header
 
 
+@macro claro{}
+Arawak Claro
+@end macro
+
+@macro arawak{}
+Arawak Soluciones Tecnológicas S.A.S.
+@end macro
+
 
 @copying
-Manual de usuario Arawak Claro, versión 1.0.
+Manual de usuario @claro{}, versión 1.0.
 
-Todos los derechos reservados @copyright{} 2011 Arawak Soluciones Tecnológicas.
+Todos los derechos reservados @copyright{} 2011 @arawak{}
 
 @quotation
-Este material puede ser distribuido, copiado y exhibido por terceros si se muestra en los créditos. No se puede obtener ningún beneficio comercial. No se pueden realizar obras derivadas.
+Este material puede ser distribuido, copiado y exhibido por terceros si se muestra en los créditos. No se puede obtener ningún beneficio comercial. No se pueden realizar obras derivadas. Este documento ha sido producido con TeXinfo.
 @end quotation
 @end copying
 
 @titlepage
-@title Arawak Claro
-@subtitle Sistema de información académica
+@title @claro{}
+@subtitle Sistema de Información y Gestión Académica
 @subtitle Manual de usuario, versión 1.0
-@author Javier Enciso
+@author Carranza, E.; Enciso, J.
 
 @c  The following two commands
 @c  start the copyright page.
@@ -30,15 +38,19 @@ Este material puede ser distribuido, copiado y exhibido por terceros si se muest
 @vskip 0pt plus 1filll
 @insertcopying
 
-Publicado por Arawak Soluciones Tecnológicas @*
+Publicado por @arawak{} @*
 Calle 32 No. 38 – 15 @*
-Villavicencio, Meta @*
-Colombia @*
+Villavicencio, Colombia @*
 ISBN Pend.
 @end titlepage
 
-@c Aqui aparece la tabla de contenido
+@c Tabla de contenido
 @contents
+
+@c Lista de Figuras
+@node Lista de figuras
+@unnumbered Lista de figuras
+@listoffloats Figure
 
 @ifnottex
 @node Top
