@@ -76,7 +76,7 @@ class MatriculaFinancieraAdmin(ButtonableModelAdmin):
     
     inlines = [LetraInline, PagoInline]
     buttons_list = [reportecartera, ]
-    buttons = [estadocuenta, ]
+#    buttons = [estadocuenta, ]
     
     list_filter = ['paz_y_salvo', 'ciclo',]
     search_fields = ('inscripcion_programa__matricula_programa__estudiante__nombre1',
