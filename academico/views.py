@@ -278,44 +278,39 @@ def buscarProgramasEstudiante(solicitud):
                 if resultado.nota_definitiva is not None and resultado.nota_definitiva >= tipoPrograma.nota_aprobacion:
                     aprobadas = aprobadas +1
         programa['vistas'] =    vistas
-        programa['aprobadas'] = aprobadas
-       
+        programa['aprobadas'] = aprobadas       
         if aprobadas == 0 or programas.competencias() == 0:
-            programa['progreso'] = "images/progreso/00.png" 
+            programa['progreso'] = "images/progreso/01.png" 
+            programa['porcentaje'] = 0
         else:
             progreso = (aprobadas*100)/programas.competencias()
-             
-            if progreso > 0 and progreso <= 7.14:
-                programa['progreso'] = "images/progreso/01.png"
-            if progreso > 7.14 and progreso <= 14.28:
-                programa['progreso'] = "images/progreso/01.png"
-            if progreso > 14.28 and progreso <= 14.28:
+            programa['porcentaje'] = progreso 
+            if progreso >= 0 and progreso <= 8.33:
                 programa['progreso'] = "images/progreso/02.png"
-            if progreso > 7.14 and progreso <= 24.42:
+            if progreso > 8.33 and progreso <= 16.66:
                 programa['progreso'] = "images/progreso/03.png"
-            if progreso > 21.42 and progreso <= 28.56:
+            if progreso > 16.66 and progreso <= 24.99:
                 programa['progreso'] = "images/progreso/04.png"
-            if progreso > 28.56 and progreso <= 35.7:
+            if progreso > 24.99 and progreso <= 33.32:
                 programa['progreso'] = "images/progreso/05.png"
-            if progreso > 35.7 and progreso <= 42.84:
+            if progreso > 33.32 and progreso <= 41.65:
                 programa['progreso'] = "images/progreso/06.png"
-            if progreso > 42.84 and progreso <= 49.98:
-                programa['progreso'] = "images/progreso/07.png"        
-            if progreso > 49.98 and progreso <= 57.12:
+            if progreso > 41.65 and progreso <= 49.98:
+                programa['progreso'] = "images/progreso/07.png"
+            if progreso > 49.98 and progreso <= 58.31:
                 programa['progreso'] = "images/progreso/08.png"
-            if progreso > 57.12 and progreso <= 64.26:
-                programa['progreso'] = "images/progreso/09.png"
-            if progreso > 64.26 and progreso <= 71.4:
+            if progreso > 58.31 and progreso <= 66.64:
+                programa['progreso'] = "images/progreso/09.png"        
+            if progreso > 66.64 and progreso <= 74.97:
                 programa['progreso'] = "images/progreso/10.png"
-            if progreso > 71.4 and progreso <= 78.54:
+            if progreso > 74.97 and progreso <= 83.3:
                 programa['progreso'] = "images/progreso/11.png"
-            if progreso > 78.54 and progreso <= 85.68:
+            if progreso > 83.3 and progreso <= 91.63:
                 programa['progreso'] = "images/progreso/12.png"
-            if progreso > 85.68 and progreso <= 100:
+            if progreso > 91.96 and progreso <= 99.9:
                 programa['progreso'] = "images/progreso/13.png"
             if progreso >= 100:
-                programa['progreso'] = "images/progreso/14.png"
-        
+                programa['progreso'] = "images/progreso/14.png"        
         listaProgramas.append(programa)
     return listaProgramas
 
