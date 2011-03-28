@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block javascript %}
+	function imprimir()	{if (window.print)	window.print();}
+</script>
+{% endblock %}
+
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li><a href="/financiero/">Financiero</a></li>
+	<li>>></li>
+	<li>Paz y salvo</li>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<table width="100%" style="border-collapse:collapse;">
+			<tr>
+				<th colspan="10"><h2>{{ titulo_pagina }}</h2></th>
+			</tr>
+			<tr height="0">
+				<td width="59px"></td>
+				<td width="59px"></td>
+				<td width="59px"></td>
+				<td width="59px"></td>
+				<td width="59px"></td>
+				<td width="59px"></td>
+				<td width="59px"></td>
+				<td width="58px"></td>
+				<td width="58px"></td>
+				<td width="58px"></td>
+			</tr>
+			<tr align="center">
+				<td colspan="10">
+					<h2>certifica que:</h2>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>
+						El estudiante <strong>{{ estudiante.nombre }}</strong> identificado con 
+						{% ifequal estudiante.tipo_documento "Sin Asignar" %}<strong>{{ estudiante.tipo_documento }}</strong> 
+						{% else %}el documento numero{% endifequal %} <strong>{{ estudiante.documento }}</strong>, 
+						de acuerdo a las disposiciones vigentes se encuentra a paz y salvo por concepto de:
+					</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10"><h2>PAGO MATRÍCULA:</h2></td>
+			</tr>
+			<tr align="left">
+				<td colspan="2"><strong>Ciclo:</strong></td>
+				<td colspan="8">{{ciclo }}</td>
+			</tr>
+			<tr align="left">
+				<td colspan="2"><strong>Programa:</strong></td>
+				<td colspan="8">{{ inscripcionPrograma.nombre_programa }}</td>
+			</tr>
+			<tr align="left">
+				<td colspan="2"><strong>Valor:</strong></td>
+				<td colspan="8">$ {{ inscripcionPrograma.valor_inscripcion }}</td>
+			</tr>
+			<tr align="left">
+				<td colspan="2"><strong>Fecha de inscripción:</strong></td>
+				<td colspan="3">{{ inscripcionPrograma.fecha_inscripcion }}</td>
+				<td colspan="2"><strong>Fecha de pago:</strong></td>
+				<td colspan="3">{{ inscripcionPrograma.fecha_pago }}</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+			<tr align="center">
+				<td colspan="10"><h2>Certficado emitido por internet</h2></td>
+			</tr>
+			<tr align="left">
+				<td colspan="2"><strong>Fecha de emisión:</strong></td>
+				<td colspan="2">{{ fecha }}</td>
+				<td colspan="2"><strong>Hora de emisión:</strong></td>
+				<td colspan="4">{{ hora }}</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>
+						Para su validez, este certificado debe tener la firma y sello del tesorero, esta certificación debe ser confirmada por parte
+						del interesado o del funcionario a quien deba presentarse.
+					</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p><strong>_________________________________________________</strong></p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p><strong>Firma y sello del tesorero</strong></p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+			<tr align="left">
+				<td colspan="10">
+					<p>&nbsp;</p>
+				</td>
+			</tr>
+		</table>
+		<h2><a href="javascript:imprimir()">Imprimir</A></h2>		
+	</div>			
+{% endblock %}

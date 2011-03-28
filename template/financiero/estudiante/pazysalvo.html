@@ -24,76 +24,53 @@
 			{% for llave, valor in programas.items %}
 				<div class="panesDiv">
 					<div style="height:{{ margintop }}px;"></div>
-					{% if valor.ciclo %}
-						{% if valor.cantCalificaciones > 0 %}
-							<table id="estudiantes" class="grilla" width="100%">
-								<thead>
-									<tr>
-										<th colspan="{{ cantCortes }}"><h3>Ciclo - {{ ciclo.codigo}}</h3></th>				
-									</tr>
-									<tr>
-										<th style="width: 40px;">Código</th>
-										<th>Competencia</th>					
-										{% for corte in cortes %} 
-											<th>F.</th>
-											<th>{{corte.porcentaje}}%</th>
-										{% endfor %}
-										<th style="width: 20px;">F.T.</th>
-										<th style="width: 20px;">T.A.</th>
-										<th style="width: 20px;">Def.</th>
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th scope="row" colspan="{{ cantCortes }}">Total Competencias: {{ valor.cantCalificaciones }}</th>
-									</tr>
-								</tfoot>
-								<tbody>				
-									{% for calificacion in valor.calificaciones %}
-										<tr class="{% cycle '' 'odd' %}">
-											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-		                        			<td>{{ calificacion.nombreCompetencia }}</td>
-		                        			{% for corte in cortes %} 
-												<td style="text-align:center">
-													{% for llave, valor in calificacion.items %}
-													    {% ifequal llave corte.id %}
-													    	{{ valor.fallas }}
-													    {% endifequal %}
-													{% endfor %}
-												</td>
-												<td style="text-align:center">
-													{% for llave, valor in calificacion.items %}
-														{% ifequal llave corte.id %}
-													    	{{ valor.nota }}
-													    {% endifequal %}
-													{% endfor %}
-												</td>
-											{% endfor %}
-											<td style="text-align:center">
-												{% ifequal calificacion.fallas None %}
-													0
-												{% else %}
-													{{ calificacion.fallas }}
-												{% endifequal %}
-											</td>
-											<td style="text-align:center">{{ calificacion.tipo_aprobacion }}</td>
-											<th style="text-align:center">
-												{% ifequal calificacion.nota_definitiva None %}
-													0,0
-												{% else %}
-													{{ calificacion.nota_definitiva }}
-												{% endifequal %}
-											</th>
-										</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-						{% else %}
-							<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
-						{% endif %}
+					<table class="grilla" width="100%">
+						<thead>
+							<tr>
+								<th colspan="5"><h3>Ciclo - {{ ciclo.codigo}}</h3></th>				
+							</tr>
+							<tr>
+								<th>Fecha de expedición</th>		
+								<th>Fecha de vencimiento</th>
+								<th>Fecha de pago</th>
+								<th>Valor</th>
+								<th></th>			
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th scope="row" colspan="5">Total Pagos: {{ valor.cantidad }}</th>
+							</tr>
+						</tfoot>
+						<tbody>				
+							{% for letra in valor.letras %}
+								<tr class="{% cycle '' 'odd' %}">
+									<th scope="row">{{ letra.fecha_expedicion }}</th>
+									<th scope="row">{{ letra.fecha_vencimiento }}</th>
+                        			<th scope="row">
+                        				{% if letra.fecha_pago %}	
+                        					{{ letra.fecha_pago }}
+                        				{% else %}
+                        					-
+                        				{% endif %}
+                        			</th>
+                        			<th scope="row">{{ letra.valor }}</th>
+                        			<th scope="row">
+                        				{% if letra.cancelada %}
+                        					<a href="plazo/{{letra.id}}/" target="_blank">Recibo</a>
+                        				{% endif %}
+                        			</th>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% if valor.pazysalvo %}	
+						<h2>Nota:</h2>
+						<p>Usted ya cancelo la totalidad del valor de la matriculo de este programa. <strong><a href="{{ valor.matFinans.id }}/" target="_blank">Generar Paz y salvo</a></strong></p> 
 					{% else %}
-						<h4>Lo sentimos, al parecer usted no se ha matriculado en este ciclo.</h4>
-					{% endif %}							
+						<h2>Nota:</h2>
+						<p>Para poder imprimir el paz y salvo es necesario primero pagar la totalidad de las letras.</p>  
+					{% endif %}				
 				</div>
 			{% endfor %}
 		</div>

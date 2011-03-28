@@ -116,6 +116,9 @@ class Letra(models.Model):
     def delete(self, *args, **kwargs):
         super(Letra, self).delete(*args, **kwargs)
         self.matricula_financiera.cancelar()
+        
+    def nombre_programa(self):
+        return "%s" %(self.matricula_financiera.nombre_programa())
   
 
 class CostoPrograma(models.Model):
