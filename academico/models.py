@@ -207,12 +207,12 @@ def validar_porcentaje(porcentaje):
 
 def validar_digito(digito):
     if not digito.isdigit():
-        raise ValidationError("%s no es dígito válido" % digito)
+        raise ValidationError(u"No es dígito válido")
 
 def validar_numerico(cifra):
     for c in cifra:
         if not c.isdigit():
-            raise ValidationError('%s no es valor numérico válido' % cifra)
+            raise ValidationError(u'No es valor numérico válido')
 
 #    scale: Función para escalar una imágen a un with y height dados
 def scale(fname, width, height, fname_scaled):
