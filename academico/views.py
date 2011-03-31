@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
 from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Curso, Competencia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion, MatriculaCicloForm, MatriculaProgramaForm
+from academico.models import Profesor, Estudiante, Curso, Materia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion, MatriculaCicloForm, MatriculaProgramaForm
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 #Pruebas GERALDO
@@ -232,11 +232,11 @@ def guardarFallasDocente(solicitud):
         return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8')
 
 @login_required
-def competenciasDocente(solicitud, competencia_id):
+def materiasDocente(solicitud, materia_id):
     if comprobarPermisos(solicitud):
-        competencia = Competencia.objects.get(id = competencia_id)
-        datos = {'competencia': competencia}  
-        return redireccionar('academico/docente/competencia.html', solicitud, datos)
+        materia = Materia.objects.get(id = materia_id)
+        datos = {'materia': materia}  
+        return redireccionar('academico/docente/materias.html', solicitud, datos)
     else:
         return logout(solicitud)
         
@@ -266,7 +266,7 @@ def buscarProgramasEstudiante(solicitud):
         programa['periodicidad'] =          programas.periodicidad
         programa['duracion'] =              programas.duracion
         programa['jornada'] =               programas.jornada
-        programa['competencias'] =          programas.competencias()
+        programa['materias'] =              programas.materias()
         programa['actitudes'] =             programas.actitudes
         programa['perfil_profesional'] =    programas.perfil_profesional
         programa['funciones'] =             programas.funciones
@@ -279,11 +279,11 @@ def buscarProgramasEstudiante(solicitud):
                     aprobadas = aprobadas +1
         programa['vistas'] =    vistas
         programa['aprobadas'] = aprobadas       
-        if aprobadas == 0 or programas.competencias() == 0:
+        if aprobadas == 0 or programas.materias() == 0:
             programa['progreso'] = "images/progreso/01.png" 
             programa['porcentaje'] = 0
         else:
-            progreso = (aprobadas*100)/programas.competencias()
+            progreso = (aprobadas*100)/programas.materias()
             programa['porcentaje'] = progreso 
             if progreso >= 0 and progreso <= 8.33:
                 programa['progreso'] = "images/progreso/02.png"
@@ -319,7 +319,7 @@ def buscarMatriculaProgramasEstudiante(solicitud):
     usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
     return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
 
-def buscarCompetenciasEstudiante(solicitud, matricula_ciclo_id):
+def buscarMateriasEstudiante(solicitud, matricula_ciclo_id):
     calificaciones = []
     resultado = Calificacion.objects.filter(matricula_ciclo = matricula_ciclo_id)                    
     if len(resultado) > 0:
@@ -327,7 +327,7 @@ def buscarCompetenciasEstudiante(solicitud, matricula_ciclo_id):
             calificaciones.append(resultado[indice])
     return calificaciones
 
-def buscarCompetenciasHistorialEstudiante(solicitud):
+def buscarMateriasHistorialEstudiante(solicitud):
     matPrograma = buscarMatriculaProgramasEstudiante(solicitud)                
     matCiclo = []
     for mat in matPrograma:
@@ -375,7 +375,7 @@ def horariosEstudiante(solicitud):
                 ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
                 if Ciclo.cicloActual(ciclo):
                     aux['ciclo'] = matCiclo
-                    resultado = buscarCompetenciasEstudiante(solicitud, matCiclo.id) 
+                    resultado = buscarMateriasEstudiante(solicitud, matCiclo.id) 
                     aux['calificaciones'] = resultado
                     aux['cantCalificaciones'] = len(resultado)
             programas[matPrograma.id] = aux
@@ -404,14 +404,14 @@ def notasEstudiante(solicitud):
                 ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
                 if Ciclo.cicloActual(ciclo):
                     aux['ciclo'] = matCiclo
-                    calificaciones = buscarCompetenciasEstudiante(solicitud, matCiclo.id) 
+                    calificaciones = buscarMateriasEstudiante(solicitud, matCiclo.id) 
                     calificacionesCiclo = []
                     for indice in calificaciones:            
                         notas = {}
                         notas['id'] =                   indice.id
-                        notas['idCompetencia'] =        Calificacion.idCompetencia(indice)
-                        notas['codigoCompetencia'] =    Calificacion.codigoCompetencia(indice)
-                        notas['nombreCompetencia'] =    Calificacion.nombre_competencia(indice)
+                        notas['idMateria'] =            Calificacion.idMateria(indice)
+                        notas['codigoMateria'] =        Calificacion.codigoMateria(indice)
+                        notas['nombreMateria'] =        Calificacion.nombre_materia(indice)
                         notas['matricula_ciclo'] =      indice.matricula_ciclo
                         notas['nota_definitiva'] =      indice.nota_definitiva
                         notas['nota_habilitacion'] =    indice.nota_habilitacion
@@ -450,7 +450,7 @@ def historialEstudiante(solicitud):
             ciclo = {}
             for matCiclo in matCiclos:
                 resCiclo  = Ciclo.objects.get(id = matCiclo.ciclo_id)
-                resultado = buscarCompetenciasEstudiante(solicitud, matCiclo.id) 
+                resultado = buscarMateriasEstudiante(solicitud, matCiclo.id) 
                 ciclo[matCiclo.id] = {'ciclo': matCiclo,
                                       'codigoCiclo': resCiclo,
                                       'calificaciones': resultado,
@@ -466,11 +466,11 @@ def historialEstudiante(solicitud):
         return logout(solicitud)
 
 @login_required
-def competenciasDetalleEstudiante(solicitud, competencia_id):
+def materiasDetalleEstudiante(solicitud, materia_id):
     if comprobarPermisos(solicitud):
-        competencia = Competencia.objects.get(id = competencia_id)
-        datos = {'competencia': competencia}  
-        return redireccionar('academico/estudiante/competencia.html', solicitud, datos)
+        materia = Materia.objects.get(id = materia_id)
+        datos = {'materia': materia}  
+        return redireccionar('academico/estudiante/materias.html', solicitud, datos)
     else:
         return logout(solicitud)
         
@@ -513,7 +513,7 @@ def promocion_ciclo(solicitud, ciclo_id):
             #Duplicar los cursos de un ciclo anterior a un ciclo nuevo
             cursos = Curso.objects.filter(ciclo = ciclo_id)
             for curso in cursos:
-                tmp_curso = Curso(competencia_id=curso.competencia_id, ciclo_id=tmp_ciclo.id, profesor_id = curso.profesor_id, grupo=curso.grupo, esperados=curso.esperados)
+                tmp_curso = Curso(materia_id=curso.materia_id, ciclo_id=tmp_ciclo.id, profesor_id = curso.profesor_id, grupo=curso.grupo, esperados=curso.esperados)
                 tmp_curso.save()
             
             #Duplicar las matrículas de estudiante a ciclo de un ciclo anterior a un ciclo nuevo

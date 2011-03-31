@@ -33,20 +33,20 @@
 									</tr>
 									<tr>
 										<th style="width: 40px;">Código</th>
-										<th>Competencias</th>
+										<th>Materias</th>
 										<th>Horario</th>				
 									</tr>
 								</thead>
 								<tfoot>
 									<tr>
-										<th scope="row" colspan="4">Total Competencias: {{ valor.cantCalificaciones }}</th>
+										<th scope="row" colspan="4">Total Materias: {{ valor.cantCalificaciones }}</th>
 									</tr>
 								</tfoot>
 								<tbody>				
 									{% for calificacion in valor.calificaciones %}
 										<tr class="{% cycle '' 'odd' %}">
-											<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-		                        			<td>{{ calificacion.nombre_competencia }}</td>
+											<th scope="row"><a href="{{calificacion.idMateria}}/">{{ calificacion.codigoMateria }}</a></th>
+		                        			<td>{{ calificacion.nombre_materia }}</td>
 		                        			<td>
 		                        				{% for horario in calificacion.horarios %}
 													{{ horario }}<br/>
@@ -57,7 +57,7 @@
 								</tbody>
 							</table>
 						{% else %}
-							<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
+							<h4>Lo sentimos, al parecer usted no tiene materias inscritas para este Ciclo.</h4>
 						{% endif %}
 					{% else %}
 						<h4>Lo sentimos, al parecer usted no se ha matriculado en este ciclo.</h4>
