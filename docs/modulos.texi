@@ -87,6 +87,15 @@
 		@item Periodo
 			Es un campo de texto de carácter opcional. Almacena el ciclo o nivel en el cual debe verse esta materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 		@end table
+	
+	@subsubsection Requisitos
+		Es la sección que permite asignar materias que son requisito de la materia seleccionada. Esta sección es de carácter opcional. Contiene los siguientes campos: 
+		@table @dfn
+		@item Requisitos disponibles
+			Es una lista con las materias disponibles para ser seleccionadas como requisito. Si desea asignar alguna, seleccionela y dé clic en la flecha que apunta a la derecha.
+		@item Requisitos elegidos
+			Es una lista con las materias que han sido seleccionadas para ser requisito de la materia actual. Si desea quitar alguna, seleccionela y dé clic en la flecha que apunta hacia la izquierda.
+		@end table
 		
 	@subsubsection Cursos
 		Es la sección que permite asignar la materia a un ciclo y profesor seleccionado. Si se desea agregar la materia a un nuevo curso, dé clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
