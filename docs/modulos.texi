@@ -21,7 +21,7 @@
 		@item Perdió por fallas
 			Es un campo de texto seleccionable que indica si el estudiante perdió o no por fallas el curso seleccionado.
 		@item Tipo aprobación
-			Es un campo seleccionable que permite elegir un tipo de aprobación o reprobación de competencia. Las opciones son: Aprobada, Homologada, Habilitada, Reprobada.
+			Es un campo seleccionable que permite elegir un tipo de aprobación o reprobación de materia. Las opciones son: Aprobada, Homologada, Habilitada, Reprobada.
 		@end table
 		
 	@subsubsection Nota cortes
@@ -66,30 +66,30 @@
 	Finalmente se tiene las opciones para eliminar un ciclo existente. Grabar el ciclo  actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el ciclo  actual y dejar la ventana activa para seguir editando el registro. Grabar el ciclo actual y volver a la ventana de ciclos.
 
 	
-@subsection Competencias
-	Son las asignaturas o competencias que conforman el Programa Académico ofrecido por la institución educativa y que deberán ser cursadas para su aprobación.
+@subsection Materias
+	Son las materias que conforman el Programa Académico ofrecido por la institución educativa y que deberán ser cursadas para su aprobación.
 	@subsubsection Información básica
 		@table @dfn
 		@item Programa
 			Es un campo seleccionable de carácter obligatorio. Contiene los programas académicos ofrecidos por la institución educativa. Dé clic en el botón “Mas” para agregar un nuevo programa. 
 		@item Sufijo
-			Es un campo de texto de carácter obligatorio que identifica la competencia. El sufijo de la competencia junto con el código de programa forma el código de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 3 caracteres.
+			Es un campo de texto de carácter obligatorio que identifica la materia. El sufijo de la materia junto con el código de programa forma el código de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 3 caracteres.
 		@item Nombre
-			Es un campo de texto de carácter obligatorio. Es el nombre de la competencia. Permite un máximo de 	50 caracteres.
+			Es un campo de texto de carácter obligatorio. Es el nombre de la materia. Permite un máximo de 	50 caracteres.
 		@item Descripción
-			Es un campo de texto de carácter opcional. Almacena una breve descripción de la competencia.
+			Es un campo de texto de carácter opcional. Almacena una breve descripción de la materia.
 		@item Intensidad_semanal
-			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas a la semana para impartir el contenido de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas a la semana para impartir el contenido de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 		@item Intensidad_ciclo
-			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas en el ciclo académico para impartir el contenido de la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+			Es un campo de texto de carácter opcional. Almacena el número de horas requeridas en el ciclo académico para impartir el contenido de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 		@item Créditos
-			Es un campo de texto de carácter opcional. Almacena el número de créditos que ofrece la competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+			Es un campo de texto de carácter opcional. Almacena el número de créditos que ofrece la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 		@item Periodo
-			Es un campo de texto de carácter opcional. Almacena el ciclo o nivel en el cual debe verse esta competencia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+			Es un campo de texto de carácter opcional. Almacena el ciclo o nivel en el cual debe verse esta materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
 		@end table
 		
 	@subsubsection Cursos
-		Es la sección que permite asignar la competencia a un ciclo y profesor seleccionado. Si se desea agregar la competencia a un nuevo curso, dé clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
+		Es la sección que permite asignar la materia a un ciclo y profesor seleccionado. Si se desea agregar la materia a un nuevo curso, dé clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
 		@table @dfn
 		@item Grupo
 			Es un campo de texto que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
@@ -99,7 +99,7 @@
 			Es un campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
 		@end table
 	
-	Finalmente se tiene las opciones para eliminar una competencia existente. Grabar la competencia actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar la competencia actual y dejar la ventana activa para seguir editando el registro. Grabar la competencia actual y volver a la ventana de competencias.
+	Finalmente se tiene las opciones para eliminar una materia existente. Grabar la materia actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar la materia actual y dejar la ventana activa para seguir editando el registro. Grabar la materia actual y volver a la ventana de materias.
 
 
 @subsection Cortes
@@ -122,10 +122,10 @@
 	
 @subsection Cursos
 	@subsubsection Información básica
-		Es la sección que permite crear un curso asignando la competencia a un ciclo y profesor seleccionado. Contiene los siguientes campos: 
+		Es la sección que permite crear un curso asignando la materia a un ciclo y profesor seleccionado. Contiene los siguientes campos: 
 	@table @dfn
-	@item Competencia
-		Es un campo de texto de carácter obligatorio que almacena la competencia que se asignará al curso. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes. 
+	@item Materia
+		Es un campo de texto de carácter obligatorio que almacena la materia que se asignará al curso. Para buscar una materia, dé clic en el botón Lupa para abrir una ventana nueva con las materias existentes. 
 	@item Grupo
 		Es un campo de texto de carácter obligatorio que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
 	@item Profesor
@@ -261,8 +261,8 @@
 			Es un campo seleccionable que muestra los programas ofrecidos por la Institución Educativa. Si se desea elegir un programa que aún no existe, dé clic en el botón “Mas” para agregar un nuevo programa. 
 		@item Estado
 			Es un campo seleccionable que muestra los posibles estados de inscripción del estudiante con respecto al programa. Contiene las opciones Activo, Egresado, Expulsado, Retirado, Suspendido, Pendiente.
-			Se considera Activo un estudiante que actualmente cursa competencias en el ciclo académico vigente. 
-			Un estudiante Egresado es aquel que ha finalizado con éxito las competencias programadas y ha obtenido el certificado de aprobación del programa.
+			Se considera Activo un estudiante que actualmente cursa materias en el ciclo académico vigente. 
+			Un estudiante Egresado es aquel que ha finalizado con éxito las materias programadas y ha obtenido el certificado de aprobación del programa.
 			Un estudiante Expulsado es quien ha cometido una falta grave de tipo académico y/o comportamental y ha sido retirado por parte de las directivas de la institución.
 			Un estudiante Retirado es quien voluntariamente ha obtado por no continuar sus estudios en el programa en el que había sido inscrito y ha expresado a la institución su decisión de retirarse.
 			El estudiante Suspendido es aquel que ha cometido alguna falta y se le ha expresado que no podrá asistir a algunas clases en vista de que ha sido suspendido.
@@ -350,7 +350,7 @@
 		@item Perdió por fallas
 			Es un campo de texto seleccionable que indica si el estudiante perdió o no por fallas el curso seleccionado.
 		@item Tipo aprobación
-			Es un campo seleccionable que permite elegir el tipo de aprobación de la competencia evaluada.
+			Es un campo seleccionable que permite elegir el tipo de aprobación de la materia evaluada.
 	@end table
 	
 Finalmente se tiene las opciones para eliminar el registro actual. Grabar el registro actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el registro actual y dejar la ventana activa para seguir editando la información. Grabar el registro actual y volver a la ventana de matrícula ciclo.
@@ -423,12 +423,12 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 	@end table
 	
 	@subsubsection Cursos
-		Es la sección que permite asignar el docente a un ciclo y una competencia seleccionada. Si se desea agregar el docente a un nuevo curso, dé clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
+		Es la sección que permite asignar el docente a un ciclo y una materia seleccionada. Si se desea agregar el docente a un nuevo curso, dé clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
 	@table @dfn
 	@item Grupo
 		Es un campo de texto que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
-	@item Competencia
-		Es un campo de texto que almacena la competencia que dictará el profesor. Para buscar una competencia, dé clic en el botón Lupa para abrir una ventana nueva con las competencias existentes.
+	@item Materia
+		Es un campo de texto que almacena la materia que dictará el profesor. Para buscar una materia, dé clic en el botón Lupa para abrir una ventana nueva con las materias existentes.
 	@item Ciclo
 		Es un campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo dé clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
 	@end table
@@ -505,7 +505,7 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 	@item Nota máxima
 		Es un campo de texto de tipo numérico que refleja la nota máxima permitida por la Institución Educativa como nota de valoración.
 	@item Nota aprobación
-		Es un campo de texto de tipo numérico que refleja la nota mínima de aprobación permitida por la Institución Educativa, que determinará la aprobación o reprobación de las competencias.
+		Es un campo de texto de tipo numérico que refleja la nota mínima de aprobación permitida por la Institución Educativa, que determinará la aprobación o reprobación de las materias.
 	@end table
 	
 	Finalmente se tiene las opciones para eliminar un Tipo programa existente. Grabar el Tipo programa actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el Tipo programa actual y dejar la ventana activa para seguir editando el registro. Grabar el Tipo programa actual y volver a la ventana de Tipo programas.
