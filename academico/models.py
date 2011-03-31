@@ -621,6 +621,7 @@ class MatriculaProgramaForm(ModelForm):
         
 class Materia(models.Model):
     programa = models.ForeignKey(Programa)
+    requisito = models.ManyToManyField("self", symmetrical=False)
     codigo = models.CharField(max_length=10)
     sufijo = models.CharField(max_length=3, help_text='El sufijo se añade al código del programa y forma el código')
     nombre = models.CharField(max_length=50)
@@ -631,12 +632,17 @@ class Materia(models.Model):
     intensidad_semanal = models.SmallIntegerField(help_text='Número de horas requeridas en la semana.', blank=True, null=True, validators=[MinValueValidator(0)])
     intensidad_ciclo = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
     
+    class Meta:
+        ordering = ('programa__nombre', 'periodo', 'nombre')
+        
     def save(self, *args, **kwargs):
         self.codigo = "%s%s" % (self.programa.codigo, self.sufijo)
         super(Materia, self).save(*args, **kwargs)
     
     def __unicode__(self):
-        return self.codigo
+        return u"%s | %s" % (
+            unicode(self.programa.abreviatura()),
+            unicode(self.nombre))
     
     def grupos(self):
         return len(Curso.objects.filter(materia=self))
