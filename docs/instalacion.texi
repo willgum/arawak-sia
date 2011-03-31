@@ -41,7 +41,7 @@ Es el primer proceso en el flujo de trabajo. Agrupa los subprocesos que hacen pa
 @subsection Configuración institucional
 Es el segundo proceso en el flujo de trabajo. Agrupa subprocesos más específicos de configuración de la Institución Educativa.
 @itemize 
-@item @emph{Administrar Competencias}: es el subproceso que facilita la administración de competencias que pertenecen a determinado programa.
+@item @emph{Administrar Materias}: es el subproceso que facilita la administración de materias que pertenecen a determinado programa.
 @item @emph{Administrar Cortes}: es el subproceso en donde se establece los cortes en los que está dividido el ciclo académico. Contiene un porcentaje de corte y un rango de fechas inicial y final del corte.
 @item @emph{Administrar Estudiantes}: es el subproceso en donde se gestiona la información de los estudiantes de la Institución Educativa.
 @item @emph{Administrar Profesores}: A través de este subproceso se gestiona la información básica y de contacto de los profesores de la Institución Educativa.
@@ -51,7 +51,7 @@ Es el segundo proceso en el flujo de trabajo. Agrupa subprocesos más específic
 @subsection Configuración periódica
 Es el tercer proceso en el flujo de trabajo. Agrupa los subprocesos que deberán ejecutarse con cada cambio de periodo académico.  
 @itemize
-@item @emph{Administrar Cursos}: Es el subproceso en donde se determina las competencias que estarán a cargo de cada docente en cada ciclo académico.  Opcionalmente, se puede establecer el horario de clases para el curso.
+@item @emph{Administrar Cursos}: Es el subproceso en donde se determina las materias que estarán a cargo de cada docente en cada ciclo académico.  Opcionalmente, se puede establecer el horario de clases para el curso.
 @item @emph{Administrar Matrícula de Programas}: En este subproceso se matricula al estudiante en el programa académico correspondiente.
 @item @emph{Administrar Matrícula de Ciclos}: Desde este subproceso se matricula al estudiante de determinado programa académico, en un nuevo ciclo.
 @item @emph{Administrar Calificaciones}: Este subproceso tiene como función principal establecer los cursos en los que está inscrito el estudiante en el ciclo. 
