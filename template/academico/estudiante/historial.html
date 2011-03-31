@@ -35,7 +35,7 @@
 										</tr>
 										<tr>
 											<th style="width: 40px;">Código</th>
-											<th>Competencia</th>
+											<th>Materia</th>
 											<th style="width: 20px;">F.T.</th>	
 											<th style="width: 20px;">T.A.</th>
 											<th style="width: 20px;">Def.</th>													
@@ -43,7 +43,7 @@
 									</thead>
 									<tfoot>
 										<tr>
-											<th scope="row" colspan="2">Total Competencias: {{valorCiclo.cantCalificaciones }}</th>
+											<th scope="row" colspan="2">Total Materias: {{valorCiclo.cantCalificaciones }}</th>
 											<th scope="row" colspan="2">Promedio:</th>
 											<th style="text-align:center">{{ valorCiclo.ciclo.promedio_ciclo}}</th>	
 										</tr>
@@ -51,8 +51,8 @@
 									<tbody>				
 										{% for calificacion in valorCiclo.calificaciones %}
 											<tr class="{% cycle '' 'odd' %}">
-												<th scope="row"><a href="{{calificacion.idCompetencia}}/">{{ calificacion.codigoCompetencia }}</a></th>
-			                        			<td>{{ calificacion.nombre_competencia }}</td>
+												<th scope="row"><a href="{{calificacion.idMateria}}/">{{ calificacion.codigoMateria }}</a></th>
+			                        			<td>{{ calificacion.nombre_materia }}</td>
 			                        			{% for corte in cortes %} 
 													<td style="text-align:center">
 														{% for llave, valor in calificacion.items %}
@@ -91,7 +91,7 @@
 							{% else %}
 								{% ifnotequal forloop.counter 1 %}<br/>{% endifnotequal %}
 								<h3>Ciclo: {{ valorCiclo.codigoCiclo}} </h3>
-								<h4>Lo sentimos, al parecer usted no tiene competencias inscritas para este Ciclo.</h4>
+								<h4>Lo sentimos, al parecer usted no tiene materias inscritas para este Ciclo.</h4>
 								<br/>
 							{% endif %}
 						{% endif %}

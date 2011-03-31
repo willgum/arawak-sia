@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Competencia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual
 from django.contrib import admin
 
 from django.http import HttpResponseRedirect
@@ -102,7 +102,7 @@ class CalificacionAdmin(admin.ModelAdmin):
     ]
     inlines = [NotaCorteInline]
     list_display = (
-        'nombre_competencia', 
+        'nombre_materia', 
         'nombre_estudiante', 
         'codigo_ciclo',
         'nota_definitiva', 
@@ -112,7 +112,7 @@ class CalificacionAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ('nota_definitiva', 'codigo_ciclo')
-    search_fields = ['matricula_ciclo__ciclo__codigo', 'curso__competencia__nombre', 
+    search_fields = ['matricula_ciclo__ciclo__codigo', 'curso__materia__nombre', 
                      'matricula_ciclo__matricula_programa__estudiante__nombre1', 'matricula_ciclo__matricula_programa__estudiante__nombre2', 
                      'matricula_ciclo__matricula_programa__estudiante__apellido1', 'matricula_ciclo__matricula_programa__estudiante__apellido2',]
 
@@ -165,7 +165,7 @@ class ProgramaAdmin(admin.ModelAdmin):
         'periodicidad', 
         'duracion', 
         'jornada',
-        'competencias'
+        'materias'
     )
     list_display_links = ('codigo', 'nombre')
     search_fields = ['codigo', 'nombre']
@@ -188,18 +188,17 @@ class SalonAdmin(admin.ModelAdmin):
 class CursoInline(admin.TabularInline):
     model = Curso
     extra = 1
-    raw_id_fields = ('ciclo', 'competencia', 'profesor')
-    fields = ('grupo', 'competencia', 'profesor', 'ciclo')
+    raw_id_fields = ('ciclo', 'materia', 'profesor')
+    fields = ('grupo', 'materia', 'profesor', 'ciclo')
 
 
-class CompetenciaInline(admin.TabularInline):
-    model = Competencia
-    extra = 1
+class MateriaInline(admin.TabularInline):
+    model = CompetenciMateria = 1
     raw_id_fields = ('codigo', 'programa', 'nombre')
     fields = ('grupo', 'profesor', 'ciclo')
 
 
-class CompetenciaAdmin(admin.ModelAdmin):
+class MateriaAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Información básica', {'fields': [
             'programa', 
@@ -209,7 +208,8 @@ class CompetenciaAdmin(admin.ModelAdmin):
             'intensidad_semanal',
             'intensidad_ciclo', 
             'creditos',
-            'periodo']}),
+            'periodo',
+            'tipo_valoracion']}),
     ]
     inlines = [CursoInline]
     list_display_links = ('codigo', 'nombre',)
@@ -376,10 +376,10 @@ class HorarioCursoInline(admin.TabularInline):
 
 
 class CursoAdmin(admin.ModelAdmin):
-    raw_id_fields = ('competencia', 'profesor', 'ciclo')
+    raw_id_fields = ('materia', 'profesor', 'ciclo')
     fieldsets = [
         ('Información básica', {'fields': [
-            'competencia', 
+            'materia', 
             'grupo',
             'profesor',
             'ciclo',
@@ -397,7 +397,7 @@ class CursoAdmin(admin.ModelAdmin):
         'sesiones',
     )
     list_filter = ['ciclo']
-    search_fields = ('competencia__nombre', 'profesor__nombre1', 'profesor__nombre2', 
+    search_fields = ('materia__nombre', 'profesor__nombre1', 'profesor__nombre2', 
                      'profesor__apellido1', 'profesor__apellido2',)
 
 class CorteInline(admin.TabularInline):
@@ -433,6 +433,22 @@ class FuncionarioInline(admin.TabularInline):
     extra = 1
     fields = ('nombre', 'tipo_documento', 'documento', 'lugar_expedicion', 'tipo_funcionario')
 
+
+class TipoNotaConceptualAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Información básica', {'fields': [
+            'codigo',
+            'nombre',]}),
+    ]
+    
+    list_display = (
+        'codigo',
+        'nombre',      
+    )
+    
+    search_fields = ('codigo', 'nombre')
+
+    
 class InstitucionAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Información básica', {'fields': [
@@ -445,6 +461,8 @@ class InstitucionAdmin(admin.ModelAdmin):
             'email',
             'web',
             'logo',]}),
+        ('Configuracion', {'fields': [
+            'control_acudiente',]}),
     ]
     
     list_display = (
@@ -455,7 +473,7 @@ class InstitucionAdmin(admin.ModelAdmin):
         'email'      
     )
     
-    inlines = [FuncionarioInline,]
+    inlines = [FuncionarioInline, ]
     search_fields = ('nit',)
     
 
@@ -492,7 +510,7 @@ class CicloAdmin(ButtonableModelAdmin):
 #===============================================================================
 admin.site.register(Calificacion, CalificacionAdmin)
 admin.site.register(Ciclo, CicloAdmin)
-admin.site.register(Competencia, CompetenciaAdmin)
+admin.site.register(Materia, MateriaAdmin)
 admin.site.register(Corte, CorteAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(Estudiante, EstudianteAdmin)
@@ -502,4 +520,5 @@ admin.site.register(MatriculaPrograma, MatriculaProgramaAdmin)
 admin.site.register(Salon, SalonAdmin)
 admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(TipoPrograma, TipoProgramaAdmin)
+admin.site.register(TipoNotaConceptual, TipoNotaConceptualAdmin)
 admin.site.register(Profesor, ProfesorAdmin)

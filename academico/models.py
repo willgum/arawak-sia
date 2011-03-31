@@ -20,6 +20,11 @@ MINI_HEIGHT = 100
 THUMB_WIDTH = 120
 THUMB_HEIGHT = 150
 
+TipoValoracion = (
+    ('1', 'Numérica'),
+    ('2', 'Conceptual'),
+)
+
 def crear_usuario(nombre1, nombre2, apellido1, apellido2):
     tmp_nombre2 = ""
     tmp_apellido2 = ""
@@ -177,6 +182,21 @@ class TipoAprobacion(models.Model):
     def get_codigo(self):
         return self.codigo
 
+    
+class TipoNotaConceptual(models.Model):
+    codigo = models.CharField(max_length=3)
+    nombre = models.CharField(max_length=50)
+    
+    def __unicode__(self):
+        return self.nombre
+    
+    def get_codigo(self):
+        return self.codigo
+    
+    class Meta:
+        verbose_name_plural = 'Tipo notas conceptuales'
+
+
 class TipoPrograma(models.Model):
     codigo = models.CharField(max_length=3)
     nombre = models.CharField(max_length=50)
@@ -186,7 +206,8 @@ class TipoPrograma(models.Model):
     
     def __unicode__(self):
         return self.nombre
-    
+
+
 class TipoFuncionario (models.Model):
     codigo = models.CharField(max_length = 3)
     nombre = models.CharField(max_length = 50)
@@ -203,7 +224,7 @@ class TipoFuncionario (models.Model):
         
 def validar_porcentaje(porcentaje):
         if porcentaje < 1 or porcentaje > 100:
-            raise ValidationError("%s no es una porcentaje válido" % porcentaje)
+            raise ValidationError(u"%s no es una porcentaje válido" % porcentaje)
 
 def validar_digito(digito):
     if not digito.isdigit():
@@ -387,8 +408,8 @@ class Programa(models.Model):
     perfil_profesional = models.TextField(max_length=200, help_text="Perfil profesional del egresado.", blank=True)
     funciones = models.TextField(max_length=200,help_text="Funciones en las que se puede desempeñar el egresado.", blank=True)
     
-    def competencias(self):
-        return len(Competencia.objects.filter(programa=self))
+    def materias(self):
+        return len(Materia.objects.filter(programa=self))
     
     def __unicode__(self):
         return self.nombre
@@ -598,26 +619,27 @@ class MatriculaProgramaForm(ModelForm):
         model = MatriculaPrograma
         
         
-class Competencia(models.Model):
+class Materia(models.Model):
     programa = models.ForeignKey(Programa)
     codigo = models.CharField(max_length=10)
     sufijo = models.CharField(max_length=3, help_text='El sufijo se añade al código del programa y forma el código')
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
-    creditos = models.IntegerField(help_text='Número de créditos de la competencia.', blank=True, null=True)
-    periodo = models.SmallIntegerField(help_text='Nivel en el cual se debe ver esta competencia.', blank=True, null=True)
+    creditos = models.IntegerField(help_text='Número de créditos de la materia.', blank=True, null=True)
+    periodo = models.SmallIntegerField(help_text='Nivel en el cual se debe ver esta materia.', blank=True, null=True)
+    tipo_valoracion = models.CharField(max_length=1, choices=TipoValoracion, blank=True, default='1')
     intensidad_semanal = models.SmallIntegerField(help_text='Número de horas requeridas en la semana.', blank=True, null=True, validators=[MinValueValidator(0)])
     intensidad_ciclo = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def save(self, *args, **kwargs):
         self.codigo = "%s%s" % (self.programa.codigo, self.sufijo)
-        super(Competencia, self).save(*args, **kwargs)
+        super(Materia, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return self.codigo
     
     def grupos(self):
-        return len(Curso.objects.filter(competencia=self))
+        return len(Curso.objects.filter(materia=self))
     
     def idPrograma(self):
         return self.programa.id
@@ -684,36 +706,36 @@ class MatriculaCicloForm(ModelForm):
                 
     
 class Curso(models.Model):
-    competencia = models.ForeignKey(Competencia)
+    materia = models.ForeignKey(Materia)
     ciclo = models.ForeignKey(Ciclo)
     profesor = models.ForeignKey(Profesor)
     grupo = models.CharField(help_text='Número del grupo 1, 2, 3, ...', max_length=2, validators=[validar_numerico])
     esperados = models.SmallIntegerField(help_text='Número esperado de estudiantes.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
-        return self.competencia.nombre
+        return self.materia.nombre
 #        return self.codigo()
     
     def nombre(self):
-        return self.competencia.nombre
+        return self.materia.nombre
     
     def codigo(self):
-        return "%s-%s" % (self.competencia.codigo, self.grupo)
+        return "%s-%s" % (self.materia.codigo, self.grupo)
     
-    def idCompetencia(self):
-        return "%s" % (self.competencia.id)
+    def idMateria(self):
+        return "%s" % (self.materia.id)
     
-    def codigoCompetencia(self):
-        return "%s" % (self.competencia.codigo)
+    def codigoMateria(self):
+        return "%s" % (self.materia.codigo)
     
     def idPrograma(self):
-        return self.competencia.idPrograma()
+        return self.materia.idPrograma()
     
     def codigoPrograma(self):
-        return "%s" % (self.competencia.codigoPrograma())
+        return "%s" % (self.materia.codigoPrograma())
     
     def nombrePrograma(self):
-        return "%s" % (self.competencia.nombrePrograma())
+        return "%s" % (self.materia.nombrePrograma())
     
     def horarios(self):
         return HorarioCurso.objects.filter(curso=self)
@@ -725,7 +747,7 @@ class Curso(models.Model):
         return len(Calificacion.objects.filter(curso=self))
     
     class Meta:
-        unique_together = ("competencia", "ciclo", "profesor", "grupo")
+        unique_together = ("materia", "ciclo", "profesor", "grupo")
         
         
         
@@ -766,13 +788,13 @@ class Calificacion(models.Model):
     def __unicode__(self):
         return "%s" % (self.curso)
     
-    def idCompetencia(self):
-        return "%s" % (self.curso.idCompetencia())
+    def idMateria(self):
+        return "%s" % (self.curso.idMateria())
     
-    def codigoCompetencia(self):
-        return "%s" % (self.curso.codigoCompetencia())
+    def codigoMateria(self):
+        return "%s" % (self.curso.codigoMateria())
     
-    def nombre_competencia(self):
+    def nombre_materia(self):
         return "%s" % (self.curso.nombre())
     
     def idPrograma(self):
@@ -853,7 +875,8 @@ class HorarioCurso(models.Model):
     
     class Meta:
         unique_together = ("dia", "hora_inicio","hora_fin", "salon")
-        
+
+
 class Institucion(models.Model):
     nombre = models.CharField(max_length=200)
     nit = models.CharField(max_length=20)
@@ -864,7 +887,7 @@ class Institucion(models.Model):
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
     logo = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
-    
+    control_acudiente = models.BooleanField()
     class Meta:
         verbose_name_plural = 'Institución'
     
@@ -889,7 +912,8 @@ class Institucion(models.Model):
             
             scale(logo_org, THUMB_WIDTH, THUMB_HEIGHT, logo_thu)
             scale(logo_org, MINI_WIDTH, MINI_HEIGHT, logo_min)
-        
+           
+       
 class Funcionario(models.Model):
     institucion = models.ForeignKey(Institucion)
     nombre = models.CharField(max_length=200, verbose_name='Nombre')

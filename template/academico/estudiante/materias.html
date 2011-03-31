@@ -7,37 +7,37 @@
 	<li>>></li>
 	<li><a href="{{ request.session.url }}">{{ request.session.link }}</a></li>
 	<li>>></li>
-	<li>{{ competencia.nombre }}</li>
+	<li>{{ materia.nombre }}</li>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1>Competencia</h1>
-		<h2>{{ competencia.nombre }}</h2>
+		<h1>Materia</h1>
+		<h2>{{ materia.nombre }}</h2>
 		<table>
 			<tr>
 				<td valign="top" style="padding: 3px; text-align:left"><strong>Código: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.codigo }}</td>
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.codigo }}</td>
 			</tr>
 			<tr>
 				<td valign="top" style="padding: 3px; width: 80px; text-align:left"><strong>Programa: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.nombrePrograma}}</td>
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.nombrePrograma}}</td>
 			</tr>
 			<tr>
 				<td valign="top" style="padding: 3px; text-align:left"><strong>Descripción: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.descripcion }}</td>
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.descripcion }}</td>
 			</tr>
 			<tr>
 				<td valign="top" style="padding: 3px; text-align:left"><strong>Intensidad: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.intensidad_ciclo }}</td>
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.intensidad_ciclo }}</td>
 			</tr>
 			<tr>
 				<td valign="top" style="padding: 3px; text-align:left"><strong>Créditos: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.creditos }}</td>
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.creditos }}</td>
 			</tr>
 			<tr>
 				<td valign="top" style="padding: 3px; text-align:left"><strong>Periodo: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ competencia.periodo }}</td>
+			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.periodo }}</td>
 			</tr>
 		</table>
 	</div>			

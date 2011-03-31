@@ -268,7 +268,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 1,
     "fields": {
       "programa": "1",
@@ -279,7 +279,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 2,
     "fields": {
       "programa": "1",
@@ -290,7 +290,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 3,
     "fields": {
       "programa": "1",
@@ -301,7 +301,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 4,
     "fields": {
       "programa": "1",
@@ -312,7 +312,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 5,
     "fields": {
       "programa": "1",
@@ -323,7 +323,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 6,
     "fields": {
       "programa": "1",
@@ -334,7 +334,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 7,
     "fields": {
       "programa": "1",
@@ -345,7 +345,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 8,
     "fields": {
       "programa": "1",
@@ -356,7 +356,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 9,
     "fields": {
       "programa": "1",
@@ -367,7 +367,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 10,
     "fields": {
       "programa": "1",
@@ -378,7 +378,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 11,
     "fields": {
       "programa": "1",
@@ -389,7 +389,7 @@
     }
   },
   {
-    "model": "academico.competencia",
+    "model": "academico.materia",
     "pk": 12,
     "fields": {
       "programa": "1",
@@ -638,7 +638,7 @@
     "model": "academico.curso",
     "pk": 1,
     "fields": {
-      "competencia": 1,
+      "materia": 1,
       "grupo": 1,
       "profesor": 1,
       "ciclo": 1
@@ -648,7 +648,7 @@
     "model": "academico.curso",
     "pk": 2,
     "fields": {
-      "competencia": 2,
+      "materia": 2,
       "grupo": 1,
       "profesor": 2,
       "ciclo": 1
@@ -658,7 +658,7 @@
     "model": "academico.curso",
     "pk": 3,
     "fields": {
-      "competencia": 3,
+      "materia": 3,
       "grupo": 1,
       "profesor": 3,
       "ciclo": 1
@@ -668,7 +668,7 @@
     "model": "academico.curso",
     "pk": 4,
     "fields": {
-      "competencia": 4,
+      "materia": 4,
       "grupo": 1,
       "profesor": 1,
       "ciclo": 1
@@ -678,7 +678,7 @@
     "model": "academico.curso",
     "pk": 5,
     "fields": {
-      "competencia": 5,
+      "materia": 5,
       "grupo": 1,
       "profesor": 2,
       "ciclo": 1
@@ -688,7 +688,7 @@
     "model": "academico.curso",
     "pk": 6,
     "fields": {
-      "competencia": 6,
+      "materia": 6,
       "grupo": 1,
       "profesor": 3,
       "ciclo": 1
@@ -698,7 +698,7 @@
     "model": "academico.curso",
     "pk": 7,
     "fields": {
-      "competencia": 7,
+      "materia": 7,
       "grupo": 1,
       "profesor": 1,
       "ciclo": 1
@@ -708,7 +708,7 @@
     "model": "academico.curso",
     "pk": 8,
     "fields": {
-      "competencia": 8,
+      "materia": 8,
       "grupo": 1,
       "profesor": 2,
       "ciclo": 1
@@ -718,7 +718,7 @@
     "model": "academico.curso",
     "pk": 9,
     "fields": {
-      "competencia": 9,
+      "materia": 9,
       "grupo": 1,
       "profesor": 3,
       "ciclo": 1
@@ -728,7 +728,7 @@
     "model": "academico.curso",
     "pk": 10,
     "fields": {
-      "competencia": 10,
+      "materia": 10,
       "grupo": 1,
       "profesor": 1,
       "ciclo": 1
@@ -738,7 +738,7 @@
     "model": "academico.curso",
     "pk": 11,
     "fields": {
-      "competencia": 11,
+      "materia": 11,
       "grupo": 1,
       "profesor": 2,
       "ciclo": 1
@@ -748,7 +748,7 @@
     "model": "academico.curso",
     "pk": 12,
     "fields": {
-      "competencia": 12,
+      "materia": 12,
       "grupo": 1,
       "profesor": 3,
       "ciclo": 1
