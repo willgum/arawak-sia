@@ -621,7 +621,7 @@ class MatriculaProgramaForm(ModelForm):
         
 class Materia(models.Model):
     programa = models.ForeignKey(Programa)
-    requisito = models.ManyToManyField("self", symmetrical=False)
+    requisito = models.ManyToManyField("self", symmetrical=False, blank=True, null=True)
     codigo = models.CharField(max_length=10)
     sufijo = models.CharField(max_length=3, help_text='El sufijo se añade al código del programa y forma el código')
     nombre = models.CharField(max_length=50)
