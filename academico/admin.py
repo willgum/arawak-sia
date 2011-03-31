@@ -199,7 +199,7 @@ class MateriaInline(admin.TabularInline):
 
 
 class MateriaAdmin(admin.ModelAdmin):
-    fieldsets = [
+    fieldsets = (
         ('Información básica', {'fields': [
             'programa', 
             'sufijo', 
@@ -210,7 +210,11 @@ class MateriaAdmin(admin.ModelAdmin):
             'creditos',
             'periodo',
             'tipo_valoracion']}),
-    ]
+        ('Requisitos', {'fields': ('requisito',)})
+    )
+    
+    filter_horizontal = ('requisito',)
+    
     inlines = [CursoInline]
     list_display_links = ('codigo', 'nombre',)
     list_display = (
