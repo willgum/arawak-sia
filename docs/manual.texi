@@ -12,7 +12,7 @@ Arawak Claro
 @end macro
 
 @macro arawak{}
-Arawak Soluciones Tecnológicas S.A.S.
+Arawak Soluciones Tecnológicas
 @end macro
 
 
@@ -22,7 +22,7 @@ Manual de usuario @claro{}, versión 1.0.
 Todos los derechos reservados @copyright{} 2011 @arawak{}
 
 @quotation
-Este material puede ser distribuido, copiado y exhibido por terceros si se muestra en los créditos. No se puede obtener ningún beneficio comercial. No se pueden realizar obras derivadas. Este documento ha sido producido con TeXinfo.
+Este material puede ser distribuido, copiado y exhibido por terceros si se muestra en los créditos. No se puede obtener ningún beneficio comercial. No se pueden realizar obras derivadas. Este documento ha sido producido con Texinfo.
 @end quotation
 @end copying
 
@@ -41,6 +41,7 @@ Este material puede ser distribuido, copiado y exhibido por terceros si se muest
 Publicado por @arawak{} @*
 Calle 32 No. 38 – 15 @*
 Villavicencio, Colombia @*
+http://www.arawak.com.co/ @*
 ISBN Pend.
 @end titlepage
 
@@ -60,12 +61,14 @@ This manual is for program, version version.
 @end ifnottex
 
 @menu
+* Introducción::   			Introducción al sistema.
 * Instalación::    			Requerimientos básicos e inslación.
 * Módulos::					Descripción funcional de los módulos del sistema.
 * Opciones avanzadas::		Máxima personalización del sistema.
 * Seguridad::				Mayor seguridad de la información.
 @end menu
 
+@include introduccion.texi
 @include instalacion.texi
 @include modulos.texi
 @include avanzadas.texi
