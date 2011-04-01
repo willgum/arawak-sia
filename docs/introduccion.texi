@@ -1,0 +1,8 @@
+@node Introducción
+@chapter Introducción
+
+La educación en cualquier nivel enfrenta nuevos retos cada día. La constante transformación del sector obliga al personal adminsitrativo a mantenerse a la vanguardia en el uso de las tecnologías de la información y comunicación para captar la siempre demandante atención de los estudiantes. 
+
+@claro{} es el sistema de información y gestión académica diseñado para afrontar los retos de las Instituciones académicas. Con nuestro sistema usted tendrá la posibilidad de gestionar eficientemente los recursos de su Institución, basado en los lineamientos de la norma ISO 9001, la cual establece los requisitos para un sistema de gestión de calidad. Adicionalmente, gracias a la licencia de código abierto de @claro{}, su Insitución tiene la libertad para escoger el mejor provedor de servicio basado en sus necesidades. 
+
+Encuentre en este manual usuario información detallada acerca de @claro{}. En el segundo capítulo se presentan los requisitos del sistema para instalar @claro{} en su Institución. En el tercer capítulo se describen los campos de datos utilizados en cada uno de los módulos. En el cuarto capítulo se muestran las opciones avanzadas que le permitirán sacarle el máximo provecho a nuestra plataforma tecnológica. Por último, en el quinto capítulo se explican algunas consideraciones de seguridad que le garantizan la fiabilidad de los datos almacenados en nuestro sistema.
