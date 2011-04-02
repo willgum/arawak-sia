@@ -161,6 +161,8 @@ def login(solicitud):
                                     else:
                                         if hoy.day < usuario.fecha_nacimiento.day:
                                             solicitud.session['control'] = 1
+                                        else:
+                                            solicitud.session['control'] = 0
                             else:
                                 if edad > 18:
                                     solicitud.session['control'] = 0
