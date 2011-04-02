@@ -140,6 +140,34 @@ def login(solicitud):
             resultado = buscarPerfil(solicitud)    
             if resultado[0]['resultado'] == True:        
                 solicitud.session['grupoUsuarioid'] = resultado[0]['grupoUsuarioid']
+                intituciones = Institucion.objects.all()
+                institucion = {}
+                for resultado in intituciones:
+                    institucion = resultado
+                if institucion.control_acudiente == True:
+                    if solicitud.session['grupoUsuarioid'] == 4:
+                        usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+                        if usuario.fecha_nacimiento is None:
+                            solicitud.session['control'] = 1
+                        else:
+                            hoy = datetime.now()
+                            edad = hoy.year - usuario.fecha_nacimiento.year
+                            if edad == 18:
+                                if hoy.month < usuario.fecha_nacimiento.month:
+                                    solicitud.session['control'] = 1
+                                else:
+                                    if hoy.month > usuario.fecha_nacimiento.month:
+                                        solicitud.session['control'] = 0
+                                    else:
+                                        if hoy.day < usuario.fecha_nacimiento.day:
+                                            solicitud.session['control'] = 1
+                            else:
+                                if edad > 18:
+                                    solicitud.session['control'] = 0
+                                else:
+                                    solicitud.session['control'] = 1
+                else:
+                    solicitud.session['control'] = 0
             else:
                 auth.logout(solicitud)
                 solicitud.session['msg_error'] = 'Acceso denegado'                    
