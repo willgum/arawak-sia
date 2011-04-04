@@ -65,6 +65,17 @@ def normalizar_usuario(cadena):
     cadena = cadena.replace(" ", "_")
     return cadena
 
+def normalizar_cadena(cadena):
+    # Remueve caracteres especiales para evitar error utf8.
+    cadena = cadena.replace(u"á", "a")
+    cadena = cadena.replace(u"é", "e")
+    cadena = cadena.replace(u"í", "i")
+    cadena = cadena.replace(u"ó", "o")
+    cadena = cadena.replace(u"ú", "u")
+    cadena = cadena.replace(u"ü", "u")
+    cadena = cadena.replace(u"ñ", "n")
+    return cadena
+
 
 class Sisben (models.Model):
     codigo = models.CharField(max_length = 3)
@@ -719,8 +730,7 @@ class Curso(models.Model):
     esperados = models.SmallIntegerField(help_text='Número esperado de estudiantes.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
-        return self.materia.nombre
-#        return self.codigo()
+        return normalizar_cadena(self.materia.nombre)
     
     def nombre(self):
         return self.materia.nombre
@@ -801,7 +811,7 @@ class Calificacion(models.Model):
         return "%s" % (self.curso.codigoMateria())
     
     def nombre_materia(self):
-        return "%s" % (self.curso.nombre())
+        return u"%s" % (self.curso.nombre())
     
     def idPrograma(self):
         return "%s" % (self.curso.idPrograma())
@@ -893,7 +903,7 @@ class Institucion(models.Model):
     email = models.EmailField(blank=True)
     web = models.URLField(blank=True)
     logo = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
-    control_acudiente = models.BooleanField()
+    control_acudiente = models.BooleanField(help_text="Activado, impide que estudiantes menores de edad cambien la contraseña.")
     class Meta:
         verbose_name_plural = 'Institución'
     
