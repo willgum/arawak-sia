@@ -23,6 +23,7 @@ THUMB_HEIGHT = 150
 TipoValoracion = (
     ('1', 'Numérica'),
     ('2', 'Conceptual'),
+    ('3', 'Horas'),
 )
 
 def crear_usuario(nombre1, nombre2, apellido1, apellido2):
@@ -832,15 +833,27 @@ class Calificacion(models.Model):
         tmp_notas = NotaCorte.objects.filter(calificacion = calificacion_id)
         tmp_calificacion = 0.0
         tmp_fallas = 0
-        
-        for tmp_nota in tmp_notas:
-            tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
-            tmp_calificacion = tmp_calificacion + (tmp_nota.nota * (tmp_corte.porcentaje * 0.01))
-            tmp_fallas = tmp_fallas + tmp_nota.fallas
-              
-        self.nota_definitiva = round(tmp_calificacion, 2)
-        self.fallas = tmp_fallas
-        Calificacion.save(self)
+#        Valoración numérica. Suma las notas de los cortes por el porcentaje de corte equivalente. Caso valoración numérica.
+        if self.curso.materia.tipo_valoracion=="1":
+            for tmp_nota in tmp_notas:
+                tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
+                tmp_calificacion = tmp_calificacion + (tmp_nota.nota * (tmp_corte.porcentaje * 0.01))
+                tmp_fallas = tmp_fallas + tmp_nota.fallas
+                  
+            self.nota_definitiva = round(tmp_calificacion, 2)
+            self.fallas = tmp_fallas
+            Calificacion.save(self)
+            
+#        Valoración por horas. Suma las horas de los cortes,como el caso de bienestar institucional.
+        if self.curso.materia.tipo_valoracion=="3":
+            for tmp_nota in tmp_notas:
+                tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
+                tmp_calificacion = tmp_calificacion + tmp_nota.nota
+                tmp_fallas = tmp_fallas + tmp_nota.fallas
+                  
+            self.nota_definitiva = tmp_calificacion
+            self.fallas = tmp_fallas
+            Calificacion.save(self)
         self.matricula_ciclo.promedioCiclo(self.matricula_ciclo.id)
         
     
