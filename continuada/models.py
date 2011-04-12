@@ -47,7 +47,7 @@ class Curso(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=200)
     nombre = models.CharField(max_length=200, blank=True)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
-    intensiintensidad_ciclols.IntegerField(help_text='Número de horas.', blank=True, null=True)
+    intensidad_ciclo = models.IntegerField(help_text='Número de horas.', blank=True, null=True)
     horario = models.CharField(max_length=200, blank=True)
     
     def __unicode__(self):
