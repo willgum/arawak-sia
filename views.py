@@ -2,7 +2,6 @@
 from django.core.context_processors import csrf
 from datetime import datetime, timedelta
 from django.contrib.sessions.models import Session
-from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -69,7 +68,10 @@ def perfil(solicitud):
             usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
         else:
             usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
-        foto = str(usuario.foto).replace('original','thumbnail')
+        if usuario.foto == '':
+            foto = 'images/perfil.jpg'
+        else:
+            foto = str(usuario.foto).replace('original','thumbnail')        
         datos = {'usuario': usuario,
                  'foto': foto,
                  'tipoDocumento': TipoDocumento.objects.get(codigo = usuario.tipo_documento_id),

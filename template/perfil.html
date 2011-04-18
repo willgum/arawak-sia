@@ -61,15 +61,21 @@
 		<h1>Perfil</h1>
 		<table style="width: 100%;">
 			<tr>
-				<td style="width:130px; text-align:left;">
-					{% if foto %}<img src="{{ path }}{{ foto }}" alt="Mi Imagen de perfil"/>{% endif %}
+				<td style="width:140px; text-align:left;">
+					<table id="formulario" class="formulario" style="width:127px;">
+						<tr>
+							<td style="padding: 3px;">
+								<img src="{{ path }}{{ foto }}" alt="Mi Imagen de perfil"/>
+							</td>
+						</tr>		
+					</table>
 				</td>
 				<td style="vertical-align:top;">
 					<div id="csrf_token">{% csrf_token %}</div>					
 					<h2>Información básica</h2>
 					<table style="width: 100%;">
 						<tr>
-							<td style="padding: 3px; width: 140px;"><strong>{{ tipoDocumento.nombre }}: </strong></td>				
+							<td style="padding: 3px; width: 130px;"><strong>{{ tipoDocumento.nombre }}: </strong></td>				
 						    <td style="padding: 3px;">{{ usuario.documento }} 
 						    {% if usuario.lugar_expedicion %} 
 						    	de {{usuario.lugar_expedicion}}
