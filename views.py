@@ -2,6 +2,7 @@
 from django.core.context_processors import csrf
 from datetime import datetime, timedelta
 from django.contrib.sessions.models import Session
+from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -81,8 +82,7 @@ def perfil(solicitud):
 def actulizarPerfil(solicitud):
     if solicitud.POST: 
         c = {}
-        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
-        solicitud.session['prueba'] = "llegamos"
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))     
         idUsuario = solicitud.POST.get('idUsuario')
         perfil = solicitud.POST.get('perfil')
         campo = solicitud.POST.get('campo')
@@ -105,6 +105,19 @@ def actulizarPerfil(solicitud):
             usuario.web = valor
         usuario.save() 
         return HttpResponse()
+    
+def fotoPerfil(solicitud):
+    if comprobarPermisos(solicitud):
+        if solicitud.session['grupoUsuarioid'] == 3:
+            usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
+        else:
+            usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+        if solicitud.method == 'POST':
+            usuario.foto = solicitud.FILES['foto']
+            usuario.save() 
+            return HttpResponseRedirect("../")
+    else:
+        return HttpResponse()   
 
 @login_required
 def contrasena(solicitud):

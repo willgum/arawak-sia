@@ -6,28 +6,35 @@
 		function() 
 		{
 			idValor = $(this).attr("name");
-			var validar = $(":input").validator({lang: 'es'});
-			if (!validar.data("validator").checkValidity())
-				$(this).focus();
+			if (idValor == "foto")
+			{
+				document.frmFoto.submit();
+			}
 			else
 			{
-		  		$.ajax
-				(
-					{
-						type: "POST",
-						url: "actualizar/",
-						data:	{
-									idUsuario: {{ user.id }},
-									perfil: {{ request.session.grupoUsuarioid }},
-									campo:$(this).attr("name"),
-									valor:$(this).attr("value"),
-									csrfmiddlewaretoken : $('#csrf_token >div >input').attr("value")
-								},
-						success: function(datos) {},
-						error: 	function(objeto, quepaso, otroobj) {alert("Pasó lo siguiente: "+objeto.statusText);},
-						contentType: "application/x-www-form-urlencoded"
-					}
-				);
+				var validar = $(":input").validator({lang: 'es'});
+				if (!validar.data("validator").checkValidity())
+					$(this).focus();
+				else
+				{
+			  		$.ajax
+					(
+						{
+							type: "POST",
+							url: "actualizar/",
+							data:	{
+										idUsuario: {{ user.id }},
+										perfil: {{ request.session.grupoUsuarioid }},
+										campo:$(this).attr("name"),
+										valor:$(this).attr("value"),
+										csrfmiddlewaretoken : $('#csrf_token >div >input').attr("value")
+									},
+							success: function(datos) {},
+							error: 	function(objeto, quepaso, otroobj) {alert("Pasó lo siguiente: "+objeto.statusText);},
+							contentType: "application/x-www-form-urlencoded"
+						}
+					);
+				}
 			}
 		}
 	);
@@ -54,6 +61,9 @@
 		<h1>Perfil</h1>
 		<table style="width: 100%;">
 			<tr>
+				<td style="width:130px; text-align:left;">
+					{% if foto %}<img src="{{ path }}{{ foto }}" alt="Mi Imagen de perfil"/>{% endif %}
+				</td>
 				<td style="vertical-align:top;">
 					<div id="csrf_token">{% csrf_token %}</div>					
 					<h2>Información básica</h2>
@@ -82,10 +92,17 @@
 							<td style="padding: 3px;"><strong>Lugar de nacimiento: </strong></td>
 							<td style="padding: 3px;">{{usuario.lugar_nacimiento}}</td>
 						</tr>
+						<tr>
+							<td style="padding: 3px;"><strong>Imagen de perfil: </strong></td>
+							<td style="padding: 0px;">
+								<form name="frmFoto" action="foto/" method="post" enctype="multipart/form-data"> 
+									<input type="file" name="foto" accept="image/gif,image/jpeg">
+								</form>
+							</td>
+						</tr>
+						
+					
 					</table>
-				</td>
-				<td style="width:130px; text-align:right;">
-					{% if foto %}<img src="{{ path }}{{ foto }}" alt="Mi Imagen de perfil"/>{% endif %}
 				</td>				 
 			</tr>
 		</table>
