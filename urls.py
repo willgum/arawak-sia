@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     # perfil y actualizar perfil
     (r'^perfil/$', perfil),
     (r'^perfil/actualizar/$', actulizarPerfil),
+    (r'^perfil/foto/$', fotoPerfil),
     
     # contrasena y actualizar contrasena
     (r'^contrasena/$', contrasena),
