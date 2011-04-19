@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia
 from django.contrib import admin
 
 from django.http import HttpResponseRedirect
@@ -190,8 +190,8 @@ class CursoInline(admin.TabularInline):
     extra = 1
     raw_id_fields = ('ciclo', 'materia', 'profesor')
     fields = ('grupo', 'materia', 'profesor', 'ciclo')
-
-
+    
+    
 class MateriaInline(admin.TabularInline):
     model = CompetenciMateria = 1
     raw_id_fields = ('codigo', 'programa', 'nombre')
@@ -343,6 +343,11 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     buttons = [imprimircarnet, ]
 
 
+class ExperienciaProfesorInline(admin.TabularInline):
+    model = ProfesorExperiencia
+    extra = 1
+    fields = ('cargo', 'empresa', 'fecha_inicio', 'fecha_fin', 'actualmente')
+    
 
 class ProfesorAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -358,7 +363,8 @@ class ProfesorAdmin(admin.ModelAdmin):
             'grupo_sanguineo', 
             'fecha_nacimiento', 
             'lugar_nacimiento', 
-            'foto']}),
+            'foto',
+            'titulo']}),
         ('Informacion de contacto', {'fields': [
             'direccion', 
             'lugar_residencia', 
@@ -368,7 +374,7 @@ class ProfesorAdmin(admin.ModelAdmin):
             'web'],
             'classes': ['collapse']}),
     ]
-    inlines = [CursoInline]
+    inlines = [ExperienciaProfesorInline, CursoInline, ]
     list_display = ('documento', 'nombre1', 'apellido1', 'usuario', 'email')
     search_fields = ['documento', 'nombre1', 'apellido1']
 
@@ -393,6 +399,7 @@ class CursoAdmin(admin.ModelAdmin):
     inlines = [HorarioCursoInline,]
     list_display = (
         'codigo',
+        'nombre_programa',
         'nombre',
         'profesor',  
         'ciclo',
