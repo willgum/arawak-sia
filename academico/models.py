@@ -10,6 +10,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 from django.forms import ModelForm, TextInput
+from django.db.models import Max
 
 #NOTA_MIN = 0.0
 #NOTA_MAX = 5.0
@@ -63,7 +64,8 @@ def normalizar_usuario(cadena):
     cadena = cadena.replace(u"ú", "u")
     cadena = cadena.replace(u"ü", "u")
     cadena = cadena.replace(u"ñ", "n")
-    cadena = cadena.replace(" ", "_")
+    cadena = cadena.replace(" ", "")
+#    cadena = cadena.replace(" ", "_")
     return cadena
 
 def normalizar_cadena(cadena):
@@ -341,6 +343,10 @@ class Profesor(models.Model):
     
     def save(self, *args, **kwargs):
         existe_foto = False
+        self.nombre1 = self.nombre1.strip()
+        self.nombre2 = self.nombre2.strip()
+        self.apellido1 = self.apellido1.strip()
+        self.apellido2 = self.apellido2.strip()
         
         if self.foto.name != "":
             tmp_foto = self.documento + "c.jpg"
@@ -476,6 +482,10 @@ class Estudiante(models.Model):
         existe_foto = False
         existe_diploma = False
         existe_documento = False
+        self.nombre1 = self.nombre1.strip()
+        self.nombre2 = self.nombre2.strip()
+        self.apellido1 = self.apellido1.strip()
+        self.apellido2 = self.apellido2.strip()
         
         if self.fotocopia_documento.name != "":
             existe_documento = True
@@ -609,9 +619,14 @@ class MatriculaPrograma(models.Model):
         else:               return 0
      
 #    Asignar automáticamente código de inscripción a estudiante
-#    Se usó sentencia mysql y se requiere modificar settings en mysql
     def save(self, *args, **kwargs):
-        tmp_codigo = "%s" %(MatriculaPrograma.objects.filter(codigo__startswith=self.programa.codigo).count() + 1)
+        tmp_cod = 1
+        q = MatriculaPrograma.objects.filter(codigo__startswith=self.programa.codigo).order_by('-codigo')
+        for tmp_q in q:
+            tmp_cod = int(tmp_q.codigo.replace(self.programa.codigo, "")) + 1
+            break
+#        tmp_codigo = "%s" %(MatriculaPrograma.objects.filter(codigo__startswith=self.programa.codigo).count() + 1)
+        tmp_codigo = "%s" %(tmp_cod)
         if self.id is None:
             self.codigo = "%s%s" %(self.programa.codigo, tmp_codigo.zfill(5))
             
