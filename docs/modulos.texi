@@ -412,6 +412,8 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 		Es un campo de texto opcional. Almacena el lugar en donde nació el profesor (Departamento y/o Municipio). Permite un máximo de 200 caracteres.
 	@item Foto
 		Es la opción que permite subir la foto que identifica al profesor. Es de carácter opcional y solamente sube formatos de imagen válidos.
+	@item Título
+		Es un campo de texto opcional. Almacena el nombre del título profesional que tiene el profesor.
 	@end table
 	
 	@subsubsection Información de contacto
@@ -429,6 +431,21 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 		Es un campo de texto opcional. Almacena el correo electrónico del profesor. Admite un máximo de 75 caracteres. El correo debe estar en el formato correcto.
 	@item Web
 		Es un campo de texto opcional. Almacena la url de la web que referencie el profesor. Admite un máximo de 200 caracteres.
+	@end table
+	
+	@subsubsection Experiencia profesional
+		Es la sección que permite registrar la experiencia laboral de un profesor. Si se desea agregar nueva experiencia laboral, dé clic en el hipervínculo “Agregar otra experiencia profesor”. Esta sección es de carácter opcional, pero si se desea ingresar una nueva experiencia deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
+	@table @dfn
+	@item Cargo
+		Es un campo de texto que almacena el cargo que desempeñó el profesor. Admite un máximo de 200 caracteres.
+	@item Empresa
+		Es un campo de texto que almacena la empresa en la que se desempeñó laboralmente el profesor. Admite un máximo de 200 caracteres.
+	@item Fecha inicio
+		Es un campo que permite determinar la fecha en la que inició labores el profesor en la empresa.
+	@item Fecha fin
+		Es un campo de carácter opcional que indica la fecha en que finalizó labores el profesor en la empresa. Se deja en blanco en caso que aún se encuentre vinculado en el cargo. 	
+	@item Actualmente
+		Es un campo seleccionable de carácter opcional que indica si el profesor aún se encuentra vinculado laboralmente a la empresa.
 	@end table
 	
 	@subsubsection Cursos

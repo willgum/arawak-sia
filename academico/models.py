@@ -327,7 +327,7 @@ class Profesor(models.Model):
     fecha_nacimiento = models.DateField(blank=True, null=True)
     lugar_nacimiento = models.CharField(blank=True, max_length=200)
     foto = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
-    
+    titulo = models.CharField(verbose_name='Título', max_length=200, blank=True)
     # Informacion de contacto
     direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
@@ -392,6 +392,20 @@ class Profesor(models.Model):
         verbose_name_plural = 'profesores'
 
 
+class ProfesorExperiencia(models.Model):
+    profesor = models.ForeignKey(Profesor, blank=True, null=True, default=1)
+    cargo = models.CharField(max_length=200)
+    empresa = models.CharField(max_length=200)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField(blank=True, null=True)
+    actualmente = models.BooleanField(help_text='Indica si trabaja actualmente en la empresa.')
+    
+    def __unicode__(self):
+        return self.cargo
+    
+    class Meta:
+        verbose_name_plural = 'Experiencia profesional'
+    
 class Salon(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=12, unique=True)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
@@ -766,7 +780,7 @@ class Curso(models.Model):
     def codigoPrograma(self):
         return "%s" % (self.materia.codigoPrograma())
     
-    def nombrePrograma(self):
+    def nombre_programa(self):
         return "%s" % (self.materia.nombrePrograma())
     
     def horarios(self):
@@ -780,7 +794,7 @@ class Curso(models.Model):
     
     class Meta:
         unique_together = ("materia", "ciclo", "profesor", "grupo")
-        
+        ordering = ('materia__programa__nombre', 'ciclo', 'materia__nombre')
         
         
 class Amonestacion(models.Model):
@@ -835,8 +849,8 @@ class Calificacion(models.Model):
     def codigoPrograma(self):
         return "%s" % (self.curso.codigoPrograma())
     
-    def nombrePrograma(self):
-        return "%s" % (self.curso.nombrePrograma())
+    def nombre_programa(self):
+        return "%s" % (self.curso.nombre_programa())
     
     def horarios(self):
         return self.curso.horarios()
