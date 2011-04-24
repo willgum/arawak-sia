@@ -319,6 +319,12 @@
 	@end table
 	
 	@subsubsection Funcionarios:
+	@table @dfn
+	@item Control acudiente
+		Es la opción que permite determinar si el estudiante puede o no cambiar la contraseña. Si está activado, impide que estudiantes menores de edad cambien la contraseña.
+	@end table
+	
+	@subsubsection Funcionarios:
 		Esta sección es de carácter opcional. Permite visualizar los fincionarios que hacen parte activa de la Institución. 
 		Si desea añadir más de un funcionario, dé clic en el hipervínculo “Agregar otro Funcionario”. Contiene los siguientes campos:
 	@table @dfn
