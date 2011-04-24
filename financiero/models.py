@@ -126,6 +126,10 @@ class CostoPrograma(models.Model):
     ciclo = models.ForeignKey(Ciclo)
     valor = models.FloatField(default=0)
     
+    class Meta:
+        unique_together = ("programa", "ciclo")
+        ordering = ('ciclo', 'programa__nombre')
+    
     def nombre_programa(self):
         return "%s" %(self.programa.nombre)
     

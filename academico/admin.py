@@ -115,6 +115,7 @@ class CalificacionAdmin(admin.ModelAdmin):
     search_fields = ['matricula_ciclo__ciclo__codigo', 'curso__materia__nombre', 
                      'matricula_ciclo__matricula_programa__estudiante__nombre1', 'matricula_ciclo__matricula_programa__estudiante__nombre2', 
                      'matricula_ciclo__matricula_programa__estudiante__apellido1', 'matricula_ciclo__matricula_programa__estudiante__apellido2',]
+    list_filter = ['matricula_ciclo',]
 
 
 class TipoProgramaAdmin(admin.ModelAdmin):
@@ -227,7 +228,7 @@ class MateriaAdmin(admin.ModelAdmin):
         'grupos',
     )
     
-    list_filter = ['programa', 'intensidad_ciclo', 'periodo']
+    list_filter = ['programa', 'periodo']
     search_fields = ('nombre',)
 
 
@@ -374,7 +375,7 @@ class ProfesorAdmin(admin.ModelAdmin):
             'web'],
             'classes': ['collapse']}),
     ]
-    inlines = [ExperienciaProfesorInline, CursoInline, ]
+    inlines = [ExperienciaProfesorInline, ]
     list_display = ('documento', 'nombre1', 'apellido1', 'usuario', 'email')
     search_fields = ['documento', 'nombre1', 'apellido1']
 

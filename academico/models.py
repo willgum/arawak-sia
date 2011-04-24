@@ -818,6 +818,7 @@ class Calificacion(models.Model):
     class Meta:
         unique_together = ("curso", "matricula_ciclo")
         verbose_name_plural = 'Calificaciones'
+        ordering = ('matricula_ciclo__ciclo__codigo', 'curso__materia__nombre')
     
     def codigo_estudiante(self): # Metodo para mejorar la lectura en la GUI
         return "%s" % (self.matricula_ciclo)
