@@ -51,6 +51,7 @@ class MatriculaCicloAdmin(ButtonableModelAdmin):
             'matricula_programa',
             'ciclo',
             'promedio_ciclo',
+            'materias_inscritas',
             'observaciones']}),
     ]
     list_display = (
@@ -58,15 +59,16 @@ class MatriculaCicloAdmin(ButtonableModelAdmin):
         'nombre_estudiante',
         'nombre_programa',
         'promedio_ciclo',
+        'materias_inscritas',
         'puesto',
         'ciclo',
         'fecha_inscripcion',
     )
-    readonly_fields = ('promedio_ciclo',)
+    readonly_fields = ('promedio_ciclo', 'materias_inscritas', )
     
     inlines = [CalificacionInline]
-    list_filter = ['fecha_inscripcion', 'ciclo']
-    search_fields = ('matricula_programa__programa__id', 'matricula_programa__programa__nombre',
+    list_filter = ['ciclo', 'fecha_inscripcion']
+    search_fields = ('matricula_programa__programa__id', 'matricula_programa__codigo', 'matricula_programa__programa__nombre',
                      'matricula_programa__estudiante__nombre1', 'matricula_programa__estudiante__nombre2', 
                      'matricula_programa__estudiante__apellido1', 'matricula_programa__estudiante__apellido2',)
     date_hierarchy = 'fecha_inscripcion'
@@ -102,6 +104,7 @@ class CalificacionAdmin(admin.ModelAdmin):
     ]
     inlines = [NotaCorteInline]
     list_display = (
+        'codigo_curso',
         'nombre_materia', 
         'nombre_estudiante', 
         'codigo_ciclo',
@@ -112,10 +115,10 @@ class CalificacionAdmin(admin.ModelAdmin):
     )
     
     readonly_fields = ('nota_definitiva', 'codigo_ciclo')
-    search_fields = ['matricula_ciclo__ciclo__codigo', 'curso__materia__nombre', 
+    search_fields = ['curso__materia__codigo', 'matricula_ciclo__ciclo__codigo', 'curso__materia__nombre', 
                      'matricula_ciclo__matricula_programa__estudiante__nombre1', 'matricula_ciclo__matricula_programa__estudiante__nombre2', 
                      'matricula_ciclo__matricula_programa__estudiante__apellido1', 'matricula_ciclo__matricula_programa__estudiante__apellido2',]
-    list_filter = ['matricula_ciclo',]
+#    list_filter = ['matricula_ciclo',]
 
 
 class TipoProgramaAdmin(admin.ModelAdmin):

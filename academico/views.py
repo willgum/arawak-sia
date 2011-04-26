@@ -9,7 +9,7 @@ from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
 from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Curso, Materia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion, MatriculaCicloForm, MatriculaProgramaForm
+from academico.models import Profesor, Estudiante, Curso, Materia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion, MatriculaCicloForm, MatriculaProgramaForm, EstadoInscripcion
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 
 #Pruebas GERALDO
@@ -473,7 +473,34 @@ def materiasDetalleEstudiante(solicitud, materia_id):
         return redireccionar('academico/estudiante/materias.html', solicitud, datos)
     else:
         return logout(solicitud)
-        
+
+@login_required
+def inscripcionMaterias(solicitud):
+    if comprobarPermisos(solicitud):
+        programas = {}
+        ciclo = Ciclo.objects.get(id = cicloActual())
+        matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
+        for matPrograma in matProgramas:
+            aux = {}
+            aux['programas'] = matPrograma
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            for matCiclo in matCiclos:
+                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                if Ciclo.cicloActual(ciclo):
+                    aux['ciclo'] = matCiclo
+                    resultado = buscarMateriasEstudiante(solicitud, matCiclo.id) 
+                    aux['calificaciones'] = resultado
+                    aux['cantCalificaciones'] = len(resultado)
+            programas[matPrograma.id] = aux
+        solicitud.session['url'] = "/academico/estudiante/horarios/"
+        solicitud.session['link'] = "Horarios"
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas,
+                 'ciclo': ciclo}
+        return redireccionar('academico/estudiante/inscripcion.html', solicitud, datos)
+    else:
+        return logout(solicitud)
+            
 #----------------------------------------------vistas administrativas---------------------------------------------------------
 
 @login_required
@@ -517,10 +544,20 @@ def promocion_ciclo(solicitud, ciclo_id):
                 tmp_curso.save()
             
             #Duplicar las matrículas de estudiante a ciclo de un ciclo anterior a un ciclo nuevo
+            try:
+                estado = EstadoInscripcion.objects.get(codigo=6)
+            except EstadoInscripcion.DoesNotExist:
+                estado = ""
             matriculas = MatriculaCiclo.objects.filter(ciclo = ciclo_id)
             for matricula in matriculas:
                 tmp_matricula = MatriculaCiclo(fecha_inscripcion=tmp_fecha_ini, matricula_programa_id=matricula.matricula_programa_id, ciclo_id=tmp_ciclo.id, observaciones=matricula.observaciones)
                 tmp_matricula.save()
+                try:
+                    tmp_matriculaPrograma = MatriculaPrograma.objects.get(id = matricula.matricula_programa_id, estado = 1)
+                    tmp_matriculaPrograma.estado = estado
+                    tmp_matriculaPrograma.save()
+                except MatriculaPrograma.DoesNotExist:
+                    tmp_matriculaPrograma = ""
         
             solicitud.user.message_set.create(message="El ciclo fue promovido correctamente.")
             return HttpResponseRedirect("/admin/academico/ciclo")
