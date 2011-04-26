@@ -77,6 +77,14 @@ def normalizar_cadena(cadena):
     cadena = cadena.replace(u"ú", "u")
     cadena = cadena.replace(u"ü", "u")
     cadena = cadena.replace(u"ñ", "n")
+    
+    cadena = cadena.replace(u"Á", "A")
+    cadena = cadena.replace(u"É", "E")
+    cadena = cadena.replace(u"Í", "I")
+    cadena = cadena.replace(u"Ó", "O")
+    cadena = cadena.replace(u"Ú", "U")
+    cadena = cadena.replace(u"Ü", "U")
+    cadena = cadena.replace(u"Ñ", "N")
     return cadena
 
 
@@ -386,7 +394,8 @@ class Profesor(models.Model):
         return user
         
     def __unicode__(self):
-        return "%s %s" % (self.nombre1, self.apellido1) 
+        return u"%s %s %s %s" %(self.apellido1, self.apellido2, self.nombre1, self.nombre2)
+#        return "%s %s" % (self.nombre1, self.apellido1) 
     
     class Meta:
         verbose_name_plural = 'profesores'
@@ -560,7 +569,8 @@ class Estudiante(models.Model):
         return user
     
     def __unicode__(self):
-        return self.documento
+        return u"%s %s %s %s" %(self.apellido1, self.apellido2, self.nombre1, self.nombre2)
+#        return self.documento
 
 
 class EstudioComplementario(models.Model):
@@ -723,6 +733,10 @@ class MatriculaCiclo(models.Model):
     def nombre_estudiante(self):
         return self.matricula_programa.nombre_estudiante()
     
+    def materias_inscritas(self):
+        tmp_calificacion = Calificacion.objects.filter(matricula_ciclo = self.id)
+        return len(tmp_calificacion)
+    
     def promedioCiclo(self, matricula_ciclo_id):
         tmp_calificacion = Calificacion.objects.filter(matricula_ciclo = matricula_ciclo_id)
         tmp_promedio_ciclo = 0.0
@@ -760,6 +774,7 @@ class Curso(models.Model):
     esperados = models.SmallIntegerField(help_text='Número esperado de estudiantes.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
+#        return "%s" %(self.materia)
         return normalizar_cadena(self.materia.nombre)
     
     def nombre(self):
@@ -828,6 +843,9 @@ class Calificacion(models.Model):
     
     def codigo_ciclo(self):
         return self.matricula_ciclo.codigo_ciclo()
+    
+    def codigo_curso(self):
+        return self.curso.codigo()
     
     def cicloActual(self):
         return self.matricula_ciclo.cicloActual()
