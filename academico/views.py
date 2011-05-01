@@ -42,15 +42,25 @@ def comprobarPermisos(solicitud):
         return False
 
 def redireccionar(plantilla, solicitud, datos):
+    cant = 0
     intituciones = Institucion.objects.all()
     for resultado in intituciones:
         institucion = resultado
-    variables = {
-        'user': solicitud.user, 
-        'titulo': institucion.nombre,
-        'titulo_pagina': institucion.nombre,
-        'path': settings.MEDIA_URL,
-    }
+        cant = cant + 1
+    if cant > 0:    
+        variables = {
+            'user': solicitud.user, 
+            'titulo': institucion.nombre,
+            'titulo_pagina': u"Sistema de Información Académica | " + institucion.nombre,
+            'path': settings.MEDIA_URL,
+        }
+    else:
+        variables = {
+            'user': solicitud.user, 
+            'titulo': 'Claro',
+            'titulo_pagina': u"Sistema de Información Académica | Claro",
+            'path': settings.MEDIA_URL,
+        }    
     llaves = datos.keys()
     for indice in range(0,len(llaves)):
         variables[llaves[indice]] = datos[llaves[indice]]
@@ -357,10 +367,8 @@ def guardarHoras(solicitud):
         calificacion = Calificacion.objects.get(id = idCalificacion)
         calificacion.nota_definitiva = valor
         Calificacion.save(calificacion)
-        programa = Programa.objects.get(id = calificacion.idMatriculaPrograma())
-        matricula = MatriculaCiclo.objects.get(id = calificacion.matricula_ciclo)        
-        calificacion = Calificacion.objects.filter(id = idCalificacion) 
-        return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8')
+        matricula = MatriculaPrograma.objects.get(id = calificacion.idMatriculaPrograma)  
+        return HttpResponse(matricula.horas_bienestar, content_type = 'application/json; charset=utf8')
 
 @login_required
 def materiasDocente(solicitud, materia_id):
