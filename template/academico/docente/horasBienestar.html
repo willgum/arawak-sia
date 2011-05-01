@@ -14,6 +14,7 @@
 			{
 				numero = $(this).val();		
 		    	numero = parseInt(numero);
+		    	horas = $(this).attr("horas");
 		    	idCalificacion = $(this).attr("idCalificacion");
 		        if (isNaN(numero))	
 		    	{
@@ -29,7 +30,7 @@
 							type: 			"POST",
 							url: 			"horas/",
 							data:			{idCalificacion: idCalificacion, valor: numero, csrfmiddlewaretoken: $('#csrf_token >div >input').attr("value")},
-							success:		function(datos){},
+							success:		function(datos){$("#horas_" + idCalificacion).html(datos+"/"+horas);},
 					        error: 			function(objeto, quepaso, otroobj){alert(objeto.status+": "+objeto.statusText);},
 							contentType:	"application/json"
 						}
@@ -86,7 +87,7 @@
 								{% else %}
 									value="{{ calificacion.nota_definitiva }}" 
 								{% endifequal %}
-							idCalificacion="{{calificacion.id}}" required="required"/>
+							idCalificacion="{{calificacion.id}}" horas="{{ calificacion.horas_bienestar }}" required="required"/>
 						</th>
 						<td style="text-align:center;">
 							<div id="horas_{{calificacion.id}}">
