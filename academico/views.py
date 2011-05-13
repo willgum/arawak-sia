@@ -67,6 +67,15 @@ def cicloActual():
     hoy = date.today()
     cicloActual = Ciclo.objects.get(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
     return cicloActual.id
+
+def cicloNuevo():
+    hoy = date.today()
+    cicloNuevo = 0
+    tmp_cicloNuevo = Ciclo.objects.filter(fecha_fin__gte = hoy).order_by('-codigo')
+    for ciclo in tmp_cicloNuevo:
+        cicloNuevo = ciclo.id
+        break
+    return cicloNuevo
         
 def logout(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
@@ -327,6 +336,107 @@ def buscarMateriasEstudiante(solicitud, matricula_ciclo_id):
             calificaciones.append(resultado[indice])
     return calificaciones
 
+#def buscarMateriasInscribir(solicitud, matPrograma):
+#    inscripciones = []
+#    materias = Materia.objects.filter(programa = matPrograma.programa).order_by('periodo', 'nombre')
+#    ciclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+#    for ciclo in ciclos:
+#        calificaciones = Calificacion.objects.filter(matricula_ciclo = ciclo.id)
+#        for materia in materias:
+#            existe = 0
+#            for calificacion in calificaciones:
+#                if calificacion.curso.materia.id == materia.id:
+#                    existe = 1
+#            if existe == 0:
+#                inscripciones.append(materia)
+#        return inscripciones
+
+#def buscarMateriasInscribir(solicitud, ciclo, matPrograma):
+#    calificaciones = []
+#    inscripciones = []
+#    
+#    materias = Materia.objects.filter(programa = matPrograma.programa).order_by('periodo', 'nombre')
+#    ciclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+#    
+#    for ciclo in ciclos:
+#        resultado = Calificacion.objects.filter(matricula_ciclo = ciclo.id, tipo_aprobacion__in=[1,2,3,4])
+#        if len(resultado) > 0:
+#            for indice in range(0, len(resultado)):
+#                calificaciones.append(resultado[indice])
+#    
+#    for materia in materias:
+#        inscripcion = {}
+#        existe = 0
+#        for calificacion in calificaciones:
+#            if materia.id == calificacion.curso.materia.id:
+#                if calificacion.tipo_aprobacion.id == 1:
+#                    existe = 2
+#                else:
+#                    existe = 1
+#                break
+#        if existe == 0:
+#            inscripcion['id'] = materia.id
+#            inscripcion['codigo'] = materia.codigo
+#            inscripcion['nombre'] = materia.nombre
+#            inscripcion['existe'] = existe
+#            inscripcion['inscribir'] = "Inscribir"
+#            inscripciones.append(inscripcion)
+#        if existe == 2:
+#            inscripcion['id'] = materia.id
+#            inscripcion['codigo'] = materia.codigo
+#            inscripcion['nombre'] = materia.nombre
+#            inscripcion['existe'] = existe
+#            inscripcion['inscribir'] = "Inscrita"
+#            inscripciones.append(inscripcion)
+#    
+#    return inscripciones
+
+def buscarMateriasInscribir(solicitud, ciclo, matPrograma):
+    calificaciones = []
+    inscripciones = []
+    
+#    materias = Materia.objects.filter(programa = matPrograma.programa).order_by('periodo', 'nombre')
+    ciclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+    matCiclo = MatriculaCiclo.objects.get(matricula_programa = matPrograma.id, ciclo = ciclo.id)
+    cursos = Curso.objects.filter(ciclo = ciclo.id, materia__programa = matPrograma.programa)
+    
+    for ciclo in ciclos:
+        resultado = Calificacion.objects.filter(matricula_ciclo = ciclo.id, tipo_aprobacion__in=[1,2,3,4])
+        if len(resultado) > 0:
+            for indice in range(0, len(resultado)):
+                calificaciones.append(resultado[indice])
+    
+    for curso in cursos:
+        inscripcion = {}
+        existe = 0
+        for calificacion in calificaciones:
+            if curso.materia.id == calificacion.curso.materia.id:
+                if calificacion.tipo_aprobacion.id == 1:
+                    existe = 2
+                else:
+                    existe = 1
+                break
+        if existe == 0:
+            inscripcion['id'] = curso.materia.id
+            inscripcion['id_curso'] = curso.id
+            inscripcion['id_matCiclo'] = matCiclo.id
+            inscripcion['codigo'] = curso.materia.codigo
+            inscripcion['nombre'] = curso.materia.nombre
+            inscripcion['existe'] = existe
+            inscripcion['inscribir'] = "Inscribir"
+            inscripciones.append(inscripcion)
+        if existe == 2:
+            inscripcion['id'] = curso.materia.id
+            inscripcion['id_curso'] = curso.id
+            inscripcion['id_matCiclo'] = matCiclo.id
+            inscripcion['codigo'] = curso.materia.codigo
+            inscripcion['nombre'] = curso.materia.nombre
+            inscripcion['existe'] = existe
+            inscripcion['inscribir'] = "Inscrita"
+            inscripciones.append(inscripcion)
+    
+    return inscripciones
+
 def buscarMateriasHistorialEstudiante(solicitud):
     matPrograma = buscarMatriculaProgramasEstudiante(solicitud)                
     matCiclo = []
@@ -478,19 +588,16 @@ def materiasDetalleEstudiante(solicitud, materia_id):
 def inscripcionMaterias(solicitud):
     if comprobarPermisos(solicitud):
         programas = {}
-        ciclo = Ciclo.objects.get(id = cicloActual())
+        ciclo = Ciclo.objects.get(id = cicloNuevo())
         matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
         for matPrograma in matProgramas:
             aux = {}
             aux['programas'] = matPrograma
-            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
-            for matCiclo in matCiclos:
-                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
-                if Ciclo.cicloActual(ciclo):
-                    aux['ciclo'] = matCiclo
-                    resultado = buscarMateriasEstudiante(solicitud, matCiclo.id) 
-                    aux['calificaciones'] = resultado
-                    aux['cantCalificaciones'] = len(resultado)
+            aux['ciclo'] = ciclo
+            
+            resultado = buscarMateriasInscribir(solicitud, ciclo, matPrograma) 
+            aux['calificaciones'] = resultado
+            aux['cantCalificaciones'] = len(resultado)
             programas[matPrograma.id] = aux
         solicitud.session['url'] = "/academico/estudiante/horarios/"
         solicitud.session['link'] = "Horarios"
@@ -500,7 +607,30 @@ def inscripcionMaterias(solicitud):
         return redireccionar('academico/estudiante/inscripcion.html', solicitud, datos)
     else:
         return logout(solicitud)
-            
+
+
+def inscribirMateria(solicitud):
+    if solicitud.POST:
+        c = {}
+        texto = "vacia"
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
+        idMatCiclo = solicitud.POST.get('idMatCiclo')
+        curso_id = solicitud.POST.get('curso_id')
+        inscribir = solicitud.POST.get('inscribir')
+        
+        try:
+            if inscribir == "1":
+                tmp_inscripcion = Calificacion(curso_id=curso_id, matricula_ciclo_id=idMatCiclo)
+                tmp_inscripcion.save()
+                texto = "Guardó"
+            else:
+                tmp_inscripcion = Calificacion.objects.get(curso = curso_id, matricula_ciclo = idMatCiclo)
+                tmp_inscripcion.delete();
+                texto = "Eliminó"
+        except:
+            texto = "error"
+        return HttpResponse(texto)          
+
 #----------------------------------------------vistas administrativas---------------------------------------------------------
 
 @login_required

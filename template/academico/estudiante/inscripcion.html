@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+	
+	
+	$("#grilla :input").change
+	(
+		function() 
+		{
+			url = "inscribir/";
+	    	idMatCiclo = $(this).attr("matricula_ciclo_id");
+	        curso_id = $(this).attr("curso_id");
+	        calificacion_id = $(this).attr("calificacion_id");
+	        inscribir=0;
+	        if($(this).is(':checked')){inscribir = 1;}
+	        $.ajax
+			(
+				{
+					type: "POST",
+					url: url,
+					data:	{
+								idMatCiclo: idMatCiclo,
+				        		curso_id: curso_id,
+				        		inscribir: inscribir,
+								csrfmiddlewaretoken : $('#csrf_token >div >input').attr("value")
+							},
+					success: function(dato) {
+											alert("La materia ha sido inscrita correctamente.");
+											$(this).disabled = "disabled" 
+											},
+					error: 	function(objeto, quepaso, otroobj) {alert("Pasó lo siguiente: "+objeto.statusText);},
+					contentType: "application/x-www-form-urlencoded"
+				}
+			);
+			        
+		}
+	);
+	
+	$.tools.validator.localize
+	(
+		"es", {'[required]' 	: 'Digite un valor adecuado'}
+	);	
+{% endblock %}
+
+{% block ruta %} 
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li><a href="/academico/">Académico</a></li>
+	<li>>></li>
+	<li>Horarios</li>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1>Inscripción de asignaturas</h1>
+		<div id="csrf_token">{% csrf_token %}</div>
+		<ul class="tabs">
+			{% for llave, valor in programas.items %}
+				<li><a href="#" title="{{ valor.programas.nombre_programa }}">{{ valor.programas.abreviatura }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for llave, valor in programas.items %}
+				<div class="panesDiv">
+					<div style="height:{{ margintop }}px;"></div>
+					{% if valor.ciclo %}
+						{% if valor.cantCalificaciones > 0 %}
+							<table id="grilla" class="grilla" width="100%">
+								<thead>
+									<tr>
+										<th colspan="4"><h3>Ciclo - {{ ciclo.codigo}}</h3></th>				
+									</tr>
+									<tr>
+										<th style="width: 40px;">Código</th>
+										<th>Materias</th>
+										<th>Inscribir</th>				
+									</tr>
+								</thead>
+								<tfoot>
+									<tr>
+										<th scope="row" colspan="4">Total Materias: {{ valor.cantCalificaciones }}</th>
+									</tr>
+								</tfoot>
+								<tbody>				
+									{% for calificacion in valor.calificaciones %}
+										<tr class="{% cycle '' 'odd' %}">
+											<th scope="row"><a href="../horarios/{{calificacion.id}}/">{{ calificacion.codigo}}</a></th>
+											<td>{{ calificacion.nombre }}</td>
+											<td style="text-align:center;">
+												<div id="perdioFallas{{calificacion.id_curso}}">
+													<input type=CHECKBOX name="chk_{{calificacion.id}}" 
+														calificacion_id = "{{calificacion.id}}" curso_id="{{calificacion.id_curso}}" matricula_ciclo_id="{{calificacion.id_matCiclo}}"
+														{% if calificacion.existe > 0 %}
+															disabled="disabled" CHECKED
+														{% endif %}
+													>
+												</div>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						{% else %}
+							<h4>Lo sentimos, al parecer usted no tiene materias inscritas para este Ciclo.</h4>
+						{% endif %}
+					{% else %}
+						<h4>Lo sentimos, al parecer usted no se ha matriculado en este ciclo.</h4>
+					{% endif %}							
+				</div>
+			{% endfor %}
+		</div>
+	</div>			
+{% endblock %}
