@@ -30,4 +30,8 @@ urlpatterns = patterns('',
     
     (r'^estudiante/historial/$', historialEstudiante),
     (r'^estudiante/historial/(?P<materia_id>\d+)/$', materiasDetalleEstudiante),
+    
+    (r'^estudiante/inscripcion/$', inscripcionMaterias),
+    (r'^estudiante/inscripcion/inscribir/$', inscribirMateria),
+    
 )
