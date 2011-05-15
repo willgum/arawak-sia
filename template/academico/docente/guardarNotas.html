@@ -46,6 +46,10 @@
 										$("#notaDef_" + idCalificacion).html(datos[0]["fields"]["nota_definitiva"]);
 						        		$("#totalFallas_" + idCalificacion).html(datos[0]["fields"]["fallas"]);    
 									},
+					        error: function(objeto, quepaso, otroobj)
+					        	{
+					           		alert(objeto.status+": "+objeto.statusText);
+					        	},
 							contentType: "application/json"
 						}
 					);
