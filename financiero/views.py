@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, date
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 from financiero.models import MatriculaFinanciera, HoraCatedra, Ciclo, Sesion, Adelanto, LiquidarPago, LiquidarPagoForm, Descuento, InscripcionPrograma, Letra
-from academico.models import Profesor, CicloForm, Institucion, Estudiante, MatriculaPrograma
+from academico.models import Profesor, CicloForm, Institucion, Estudiante, MatriculaPrograma, MatriculaCiclo
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -65,10 +65,9 @@ def indice(solicitud):
     else:
         return logout(solicitud)
 
-def cicloActual():
+def cicloActual1():
     hoy = date.today()
-    cicloActual = Ciclo.objects.get(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
-    return cicloActual.id
+    return Ciclo.objects.filter(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
         
 def logout(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
@@ -90,35 +89,35 @@ def buscarMatriculaProgramasEstudiante(solicitud):
 def pazySalvo(solicitud):
     if comprobarPermisos(solicitud):
         programas = {}
-        id_ciclo = cicloActual()
-        ciclo = Ciclo.objects.get(id = id_ciclo)
         matProgramas = buscarMatriculaProgramasEstudiante(solicitud)        
         for matPrograma in matProgramas:
-            aux = {}
-            insPros = InscripcionPrograma.objects.filter(matricula_programa = matPrograma.id)
-            for insPro in insPros:
-                matFinans = MatriculaFinanciera.objects.filter(inscripcion_programa = insPro, ciclo = id_ciclo)
-                for matFinan in matFinans:
-                    aux['matFinans'] = matFinan
-                    letras = Letra.objects.filter(matricula_financiera = matFinan)
-                    aux['letras'] = letras
-                    if len(letras) > 0:
-                        aux['cantidad'] = len(letras)
-                        cantidad = 0
-                        for letra in letras:
-                            if letra.cancelada == True:
-                                cantidad = cantidad + 1
-                        if cantidad == len(letras):
-                            aux['pazysalvo'] = True  
+            aux = {}            
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            for matCiclo in matCiclos:
+                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                insPros = InscripcionPrograma.objects.filter(matricula_programa = matPrograma.id)
+                for insPro in insPros:
+                    matFinans = MatriculaFinanciera.objects.filter(inscripcion_programa = insPro, ciclo = ciclo.id)
+                    for matFinan in matFinans:
+                        aux['matFinans'] = matFinan
+                        letras = Letra.objects.filter(matricula_financiera = matFinan)
+                        aux['letras'] = letras
+                        if len(letras) > 0:
+                            aux['cantidad'] = len(letras)
+                            cantidad = 0
+                            for letra in letras:
+                                if letra.cancelada == True:
+                                    cantidad = cantidad + 1
+                            if cantidad == len(letras):
+                                aux['pazysalvo'] = True  
+                            else:
+                                aux['pazysalvo'] = False
                         else:
-                            aux['pazysalvo'] = False
-                    else:
-                        aux['cantidad'] = 0
+                            aux['cantidad'] = 0
             aux['programas'] = matPrograma
             programas[matPrograma.id] = aux
         datos = {'margintop': calcularMargintop(programas),
-                 'programas': programas,
-                 'ciclo': ciclo}        
+                 'programas': programas}        
         return redireccionar('financiero/estudiante/pazysalvo.html', solicitud, datos)
     else:
         return logout(solicitud)
@@ -140,10 +139,10 @@ def pazySalvoParcial(solicitud, letra_id):
 def pazySalvoTotal(solicitud, inscripcionPrograma_id):
     if comprobarPermisos(solicitud):        
         fecha= datetime.now() 
-        id_ciclo = cicloActual()
+        #id_ciclo = cicloActual()
         datos = {'hora': fecha.strftime("%H:%M %p"),
                  'fecha': fecha.strftime("%d-%m-%Y"),
-                 'ciclo': Ciclo.objects.get(id = id_ciclo),
+                 #'ciclo': Ciclo.objects.get(id = id_ciclo),
                  'estudiante': Estudiante.objects.get(id_usuario = solicitud.user.id),
                  'inscripcionPrograma': InscripcionPrograma.objects.get(id = inscripcionPrograma_id)}        
         return redireccionar('financiero/estudiante/pazysalvofinal.html', solicitud, datos)

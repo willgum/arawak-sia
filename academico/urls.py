@@ -12,10 +12,10 @@ urlpatterns = patterns('',
     
     (r'^docente/notas/$', notasDocente), 
     (r'^docente/notas/(?P<materia_id>\d+)/$', materiasDocente),
-    (r'^docente/notas/guardar/(?P<curso_id>\d+)/$', guardarNotasDocente),
+    (r'^docente/notas/guardar/(?P<ciclo_id>\d+)/(?P<curso_id>\d+)/$', guardarNotasDocente),
     
-    (r'^docente/notas/guardar/\d+/nota/$', guardarNotaDocente),
-    (r'^docente/notas/guardar/\d+/falla/$', guardarFallasDocente),
+    (r'^docente/notas/guardar/\d+/\d+/nota/$', guardarNotaDocente),
+    (r'^docente/notas/guardar/\d+/\d+/falla/$', guardarFallasDocente),
     
     #urls para estudiantes
     (r'^$', indice),

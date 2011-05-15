@@ -65,8 +65,7 @@ def indice(solicitud):
 
 def cicloActual():
     hoy = date.today()
-    cicloActual = Ciclo.objects.get(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
-    return cicloActual.id
+    return Ciclo.objects.filter(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
 
 def cicloNuevo():
     hoy = date.today()
@@ -89,19 +88,21 @@ def logout(solicitud):
 
 def buscarProgramasDocente(solicitud):
     programas = []
-    listaProgramas = []
+    listadoCursos = []
+    listadoProgramas = []
     usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-    cursos = Curso.objects.filter(profesor = usuario.id, ciclo = cicloActual())
-    for curso in cursos:
-        programas.append(Programa.objects.get(id = curso.idPrograma))
-    for indice1 in range(0, len(programas)):
-        contador = 0
-        for indice2 in range(indice1, len(programas)):
-            if programas[indice1].codigo == programas[indice2].codigo:
-                contador += 1
-        if contador <= 1:
-            listaProgramas.append(programas[indice1]);
-    return listaProgramas
+    ciclos = cicloActual()         
+    for ciclo in ciclos:      
+        cursos = Curso.objects.filter(profesor = usuario.id, ciclo = ciclo.id)
+        for curso in cursos:
+            if curso not in listadoCursos:
+                listadoCursos.append(curso) 
+    for curso in listadoCursos:
+        listadoProgramas.append(Programa.objects.get(id = curso.idPrograma()))
+    for item in listadoProgramas:
+        if item not in programas:
+            programas.append(item)
+    return programas
          
 @login_required
 def programasDocente(solicitud):
@@ -116,25 +117,28 @@ def programasDocente(solicitud):
 @login_required
 def horariosDocente(solicitud):
     if comprobarPermisos(solicitud):
-        id_ciclo = cicloActual()
-        ciclo = Ciclo.objects.get(id = id_ciclo)
+        ciclos = cicloActual()
+        listadoProgramas = {}
         programas = buscarProgramasDocente(solicitud)
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-        cursos = Curso.objects.filter(profesor = usuario.id, ciclo = id_ciclo)
-        auxProgramas = {}
         for programa in programas:
-            auxCursos = {}
-            for curso in cursos:          
-                if curso.idPrograma() == programa.id:
-                    auxCursos[curso.id] = curso
-            auxProgramas[programa.id] = {'programa': programa,
-                                         'cursos': auxCursos,
-                                         'cantidad': len(auxCursos),}
+            auxCiclo = {}
+            for ciclo in ciclos:
+                cursos = Curso.objects.filter(profesor = usuario.id, ciclo = ciclo.id)
+                auxCursos = []
+                for curso in cursos:
+                    if curso.idPrograma() == programa.id:
+                        auxCursos.append(curso)
+                if len(auxCursos) > 0:
+                    auxCiclo[ciclo.id] = {'ciclo': ciclo,
+                                          'cursos': auxCursos, 
+                                          'cantidad': len(auxCursos)}
+            listadoProgramas[programa.id] = {'programa': programa,
+                                             'ciclos': auxCiclo}
         solicitud.session['url'] = "/academico/docente/horarios/"
         solicitud.session['link'] = "Horarios"
-        datos = {'programas': auxProgramas,
-                 'margintop': calcularMargintop(programas),
-                 'ciclo': ciclo}
+        datos = {'programas': listadoProgramas,
+                 'margintop': calcularMargintop(programas)}
         return redireccionar('academico/docente/horarios.html', solicitud, datos)
     else:
         return logout(solicitud)
@@ -142,34 +146,37 @@ def horariosDocente(solicitud):
 @login_required
 def notasDocente(solicitud):
     if comprobarPermisos(solicitud):
-        id_ciclo = cicloActual()
-        ciclo = Ciclo.objects.get(id = id_ciclo)
+        ciclos = cicloActual()
+        listadoProgramas = {}
         programas = buscarProgramasDocente(solicitud)
         usuario = Profesor.objects.get(id_usuario = solicitud.user.id)
-        cursos = Curso.objects.filter(profesor = usuario.id, ciclo = id_ciclo)
-        auxProgramas = {}
         for programa in programas:
-            auxCursos = {}
-            for curso in cursos:          
-                if curso.idPrograma() == programa.id:
-                    auxCursos[curso.id] = curso
-            auxProgramas[programa.id] = {'programa': programa,
-                                         'cursos': auxCursos,
-                                         'cantidad': len(auxCursos),}
+            auxCiclo = {}
+            for ciclo in ciclos:
+                cursos = Curso.objects.filter(profesor = usuario.id, ciclo = ciclo.id)
+                auxCursos = []
+                for curso in cursos:
+                    if curso.idPrograma() == programa.id:
+                        auxCursos.append(curso)
+                if len(auxCursos) > 0:
+                    auxCiclo[ciclo.id] = {'ciclo': ciclo,
+                                          'cursos': auxCursos, 
+                                          'cantidad': len(auxCursos)}
+            listadoProgramas[programa.id] = {'programa': programa,
+                                             'ciclos': auxCiclo}
         solicitud.session['url'] = "/academico/docente/notas/"
         solicitud.session['link'] = "Calificaciones"
-        datos = {'programas': auxProgramas,
-                 'margintop': calcularMargintop(programas),
-                 'ciclo': ciclo}
+        datos = {'programas': listadoProgramas,
+                 'margintop': calcularMargintop(programas)}
         return redireccionar('academico/docente/notas.html', solicitud, datos)
     else:
         return logout(solicitud)
 
 @login_required
-def guardarNotasDocente(solicitud, curso_id):
+def guardarNotasDocente(solicitud, ciclo_id, curso_id):
     if comprobarPermisos(solicitud):
         curso = Curso.objects.get(id = curso_id)
-        cortes = Corte.objects.filter(ciclo = cicloActual()).order_by('fecha_inicio')         
+        cortes = Corte.objects.filter(ciclo = ciclo_id).order_by('fecha_inicio')         
         calificaciones = Calificacion.objects.filter(curso = curso_id)
         calificacionesCiclo = []
         for indice in calificaciones:                
@@ -475,7 +482,6 @@ def programasEstudiante(solicitud):
 def horariosEstudiante(solicitud):
     if comprobarPermisos(solicitud):
         programas = {}
-        ciclo = Ciclo.objects.get(id = cicloActual())
         matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
         for matPrograma in matProgramas:
             aux = {}
@@ -503,15 +509,13 @@ def notasEstudiante(solicitud):
     if comprobarPermisos(solicitud):
         programas = {}
         matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
-        id_ciclo = cicloActual()
-        ciclo = Ciclo.objects.get(id = id_ciclo)
-        cortes = Corte.objects.filter(ciclo = id_ciclo).order_by('fecha_inicio')
         for matPrograma in matProgramas:
             aux = {}
             aux['programas'] = matPrograma
             matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
             for matCiclo in matCiclos:
                 ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                cortes = Corte.objects.filter(ciclo = ciclo.id).order_by('fecha_inicio')
                 if Ciclo.cicloActual(ciclo):
                     aux['ciclo'] = matCiclo
                     calificaciones = buscarMateriasEstudiante(solicitud, matCiclo.id) 
@@ -534,6 +538,8 @@ def notasEstudiante(solicitud):
                             except:
                                 notas[corte.id] = {'nota': 0, 'fallas': 0}
                         calificacionesCiclo.append(notas)
+                    aux['ciclo'] = ciclo
+                    aux['cortes'] = cortes
                     aux['calificaciones'] = calificacionesCiclo
                     aux['cantCalificaciones'] = len(calificacionesCiclo)
             programas[matPrograma.id] = aux
@@ -541,8 +547,6 @@ def notasEstudiante(solicitud):
         solicitud.session['link'] = "Calificaciones"
         datos = {'margintop': calcularMargintop(programas),
                  'programas': programas,
-                 'ciclo': ciclo,
-                 'cortes': cortes,
                  'cantCortes': (len(cortes)*2)+5}        
         return redireccionar('academico/estudiante/notas.html', solicitud, datos)
     else:

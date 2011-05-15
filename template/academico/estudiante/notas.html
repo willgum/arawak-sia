@@ -29,12 +29,12 @@
 							<table id="estudiantes" class="grilla" width="100%">
 								<thead>
 									<tr>
-										<th colspan="{{ cantCortes }}"><h3>Ciclo - {{ ciclo.codigo}}</h3></th>				
+										<th colspan="{{ cantCortes }}"><h3>Ciclo {{ valor.ciclo.codigo}}</h3></th>				
 									</tr>
 									<tr>
 										<th style="width: 40px;">Código</th>
 										<th>Materia</th>					
-										{% for corte in cortes %} 
+										{% for corte in valor.cortes %} 
 											<th>F.</th>
 											<th>{{corte.porcentaje}}%</th>
 										{% endfor %}
@@ -53,7 +53,7 @@
 										<tr class="{% cycle '' 'odd' %}">
 											<th scope="row"><a href="{{calificacion.idMateria}}/">{{ calificacion.codigoMateria }}</a></th>
 		                        			<td>{{ calificacion.nombreMateria }}</td>
-		                        			{% for corte in cortes %} 
+		                        			{% for corte in valor.cortes %} 
 												<td style="text-align:center">
 													{% for llave, valor in calificacion.items %}
 													    {% ifequal llave corte.id %}
