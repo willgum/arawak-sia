@@ -64,10 +64,6 @@ def indice(solicitud):
         return redireccionar('financiero/index.html', solicitud, {})
     else:
         return logout(solicitud)
-
-def cicloActual1():
-    hoy = date.today()
-    return Ciclo.objects.filter(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
         
 def logout(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
@@ -114,8 +110,9 @@ def pazySalvo(solicitud):
                                 aux['pazysalvo'] = False
                         else:
                             aux['cantidad'] = 0
-            aux['programas'] = matPrograma
-            programas[matPrograma.id] = aux
+                aux['programas'] = matPrograma
+                aux['ciclo'] = ciclo
+                programas[matPrograma.id] = aux
         datos = {'margintop': calcularMargintop(programas),
                  'programas': programas}        
         return redireccionar('financiero/estudiante/pazysalvo.html', solicitud, datos)
