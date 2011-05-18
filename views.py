@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.context_processors import csrf
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -9,7 +9,8 @@ from django.views.static import Context, HttpResponseRedirect                   
 from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
 from django.contrib import auth                                   
 from django.contrib.auth.models import Group, User
-from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion
+from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion, MatriculaPrograma, MatriculaCiclo
+from financiero.models import MatriculaFinanciera, Ciclo, InscripcionPrograma, Letra
 from django.contrib.auth.decorators import login_required                           # permite usar @login_requerid
 
 def buscarPerfil(solicitud):
@@ -57,7 +58,36 @@ def redireccionar(plantilla, solicitud, datos):
         variables[llaves[indice]] = datos[llaves[indice]]
     variables =  Context(variables)
     return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
-        
+
+def buscarMatriculaProgramasEstudiante(solicitud):
+    hoy = date.today()
+    usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+    return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
+     
+def pazySalvo(solicitud):
+    mora = False
+    matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
+    for matPrograma in matProgramas:       
+        matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+        for matCiclo in matCiclos:
+            ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+            insPros = InscripcionPrograma.objects.filter(matricula_programa = matPrograma.id)
+            for insPro in insPros:
+                matFinans = MatriculaFinanciera.objects.filter(inscripcion_programa = insPro, ciclo = ciclo.id)
+                for matFinan in matFinans:
+                    letras = Letra.objects.filter(matricula_financiera = matFinan)
+                    if len(letras) > 0:
+                        cantidad = 0
+                        for letra in letras:
+                            if letra.cancelada == True:
+                                cantidad = cantidad + 1
+                        if cantidad != len(letras):
+                            mora = True
+                    else:
+                        if matFinan.paz_y_salvo == False:
+                            mora = True
+    return mora
+    
 def indice(solicitud):
     return redireccionar('index.html', solicitud, {})
 
@@ -155,6 +185,8 @@ def login(solicitud):
             resultado = buscarPerfil(solicitud)    
             if resultado[0]['resultado'] == True:        
                 solicitud.session['grupoUsuarioid'] = resultado[0]['grupoUsuarioid']
+                if solicitud.session['grupoUsuarioid'] == 4:
+                    solicitud.session['mora'] = pazySalvo(solicitud)
                 intituciones = Institucion.objects.all()
                 institucion = {}
                 for resultado in intituciones:
@@ -195,7 +227,9 @@ def login(solicitud):
 def logout(solicitud):
     if 'grupoUsuarioid' in solicitud.session:
         del solicitud.session['grupoUsuarioid']
+    if 'mora' in solicitud.session:
+        del solicitud.session['mora']
     if 'msg_error' in solicitud.session:
-        solicitud.session['msg_error']
+        del solicitud.session['msg_error']
     auth.logout(solicitud)    
     return HttpResponseRedirect("/")

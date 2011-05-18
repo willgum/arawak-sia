@@ -6,10 +6,10 @@ from django.contrib.sessions.models import Session
 from django.http import HttpResponse
 from financiero.models import MatriculaFinanciera, HoraCatedra, Ciclo, Sesion, Adelanto, LiquidarPago, LiquidarPagoForm, Descuento, InscripcionPrograma, Letra
 from academico.models import Profesor, CicloForm, Institucion, Estudiante, MatriculaPrograma, MatriculaCiclo
-from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
+from django.contrib.auth.decorators import login_required                                                       # me permite usar eö @login_requerid
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.views.static import Context, HttpResponseRedirect                                                     # se incorporo para poder acceder a archivos estaticos
+from django.views.static import Context, HttpResponseRedirect                                                   # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings  
 from django.contrib import auth   
 

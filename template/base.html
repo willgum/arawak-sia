@@ -71,24 +71,33 @@
 										<li><a href="/academico/docente/notas/">Calificaciones</a></li>
 									{% endif %}
 									{% if request.session.grupoUsuarioid == 4 %}
-										<li><a href="/academico/estudiante/programas/">Programas</a></li>
-										<li><a href="/academico/estudiante/horarios/">Horarios</a></li>
-										<li><a href="/academico/estudiante/notas/">Calificaciones</a></li>
-										<li><a href="/academico/estudiante/historial/">Historial académico</a></li>
-										<li><a href="/academico/estudiante/inscripcion/">Inscribir materias</a></li>
+										{% if not request.session.mora %}
+											<li><a href="/academico/estudiante/programas/">Programas</a></li>
+											<li><a href="/academico/estudiante/horarios/">Horarios</a></li>
+											<li><a href="/academico/estudiante/notas/">Calificaciones</a></li>
+											<li><a href="/academico/estudiante/historial/">Historial académico</a></li>
+											<li><a href="/academico/estudiante/inscripcion/">Inscribir materias</a></li>
+										{% endif %}
 									{% endif %}
 								</ul>
 								{% if request.session.grupoUsuarioid == 4 %}
 									<h2>Financiero</h2>	
 									<ul>
-										<li><a href="/financiero/estudiante/pazysalvo/">Paz y salvo</a></li>
+										{% if not request.session.mora %}
+											<li><a href="/financiero/estudiante/pazysalvo/">Paz y salvo</a></li>
+										{% endif %}
 									</ul>
 								{% endif %}
 							{% endif %}
 						</div>				
 					</td>
 					<td valign="top">
-						{% block contenido %}
+						{% if request.session.mora %}
+							<div class="msgerror">
+								En este momento usted se encuentra en mora con la institución por lo cual algunas bandades del sistema han sido desactivadas, por favor acercarse a pagaduria para obtener más información al respecto. 
+							</div>
+						{% endif %}
+						{% block contenido %}							
 						{% endblock %}
 					</td>
 					<td valign="top">
