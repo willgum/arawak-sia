@@ -56,7 +56,13 @@ def redireccionar(plantilla, solicitud, datos):
     for indice in range(0,len(llaves)):
         variables[llaves[indice]] = datos[llaves[indice]]
     variables =  Context(variables)
-    return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
+    if solicitud.session['grupoUsuarioid'] == 3:
+        return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
+    else:
+        if solicitud.session['mora']:
+            return render_to_response('academico/index.html', variables, context_instance=RequestContext(solicitud))
+        else:
+            return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
 
 @login_required
 def indice(solicitud):

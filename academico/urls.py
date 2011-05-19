@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     (r'^estudiante/programas/$', programasEstudiante),
 
     (r'^estudiante/horarios/$', horariosEstudiante),
-    (r'^estudiante/horarios/(?P<materia_id>\d+)/$', materiasDetalleEstudiante), 
+    (r'^estudiante/horarios/(?P<materia_id>\d+)/$', materiasDetalleEstudiante),
     
     (r'^estudiante/notas/$', notasEstudiante),
     (r'^estudiante/notas/(?P<materia_id>\d+)/$', materiasDetalleEstudiante),
