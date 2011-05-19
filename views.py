@@ -81,6 +81,9 @@ def pazySalvo(solicitud):
                         for letra in letras:
                             if letra.cancelada == True:
                                 cantidad = cantidad + 1
+                            else:
+                                if letra.fecha_expedicion >= date.today() or  letra.fecha_vencimiento >= date.today():
+                                    cantidad = cantidad + 1                                    
                         if cantidad != len(letras):
                             mora = True
                     else:
