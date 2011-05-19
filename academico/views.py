@@ -70,7 +70,7 @@ def cicloActual():
 def cicloNuevo():
     hoy = date.today()
     cicloNuevo = 0
-    tmp_cicloNuevo = Ciclo.objects.filter(fecha_fin__gte = hoy).order_by('-codigo')
+    tmp_cicloNuevo = Ciclo.objects.filter(fecha_fin__gte = hoy).order_by('-fecha_fin')
     for ciclo in tmp_cicloNuevo:
         cicloNuevo = ciclo.id
         break
@@ -343,105 +343,52 @@ def buscarMateriasEstudiante(solicitud, matricula_ciclo_id):
             calificaciones.append(resultado[indice])
     return calificaciones
 
-#def buscarMateriasInscribir(solicitud, matPrograma):
-#    inscripciones = []
-#    materias = Materia.objects.filter(programa = matPrograma.programa).order_by('periodo', 'nombre')
-#    ciclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
-#    for ciclo in ciclos:
-#        calificaciones = Calificacion.objects.filter(matricula_ciclo = ciclo.id)
-#        for materia in materias:
-#            existe = 0
-#            for calificacion in calificaciones:
-#                if calificacion.curso.materia.id == materia.id:
-#                    existe = 1
-#            if existe == 0:
-#                inscripciones.append(materia)
-#        return inscripciones
-
-#def buscarMateriasInscribir(solicitud, ciclo, matPrograma):
-#    calificaciones = []
-#    inscripciones = []
-#    
-#    materias = Materia.objects.filter(programa = matPrograma.programa).order_by('periodo', 'nombre')
-#    ciclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
-#    
-#    for ciclo in ciclos:
-#        resultado = Calificacion.objects.filter(matricula_ciclo = ciclo.id, tipo_aprobacion__in=[1,2,3,4])
-#        if len(resultado) > 0:
-#            for indice in range(0, len(resultado)):
-#                calificaciones.append(resultado[indice])
-#    
-#    for materia in materias:
-#        inscripcion = {}
-#        existe = 0
-#        for calificacion in calificaciones:
-#            if materia.id == calificacion.curso.materia.id:
-#                if calificacion.tipo_aprobacion.id == 1:
-#                    existe = 2
-#                else:
-#                    existe = 1
-#                break
-#        if existe == 0:
-#            inscripcion['id'] = materia.id
-#            inscripcion['codigo'] = materia.codigo
-#            inscripcion['nombre'] = materia.nombre
-#            inscripcion['existe'] = existe
-#            inscripcion['inscribir'] = "Inscribir"
-#            inscripciones.append(inscripcion)
-#        if existe == 2:
-#            inscripcion['id'] = materia.id
-#            inscripcion['codigo'] = materia.codigo
-#            inscripcion['nombre'] = materia.nombre
-#            inscripcion['existe'] = existe
-#            inscripcion['inscribir'] = "Inscrita"
-#            inscripciones.append(inscripcion)
-#    
-#    return inscripciones
-
 def buscarMateriasInscribir(solicitud, ciclo, matPrograma):
     calificaciones = []
     inscripciones = []
     
-#    materias = Materia.objects.filter(programa = matPrograma.programa).order_by('periodo', 'nombre')
-    ciclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
-    matCiclo = MatriculaCiclo.objects.get(matricula_programa = matPrograma.id, ciclo = ciclo.id)
-    cursos = Curso.objects.filter(ciclo = ciclo.id, materia__programa = matPrograma.programa)
-    
-    for ciclo in ciclos:
-        resultado = Calificacion.objects.filter(matricula_ciclo = ciclo.id, tipo_aprobacion__in=[1,2,3,4])
-        if len(resultado) > 0:
-            for indice in range(0, len(resultado)):
-                calificaciones.append(resultado[indice])
-    
-    for curso in cursos:
-        inscripcion = {}
-        existe = 0
-        for calificacion in calificaciones:
-            if curso.materia.id == calificacion.curso.materia.id:
-                if calificacion.tipo_aprobacion.id == 1:
-                    existe = 2
-                else:
-                    existe = 1
-                break
-        if existe == 0:
-            inscripcion['id'] = curso.materia.id
-            inscripcion['id_curso'] = curso.id
-            inscripcion['id_matCiclo'] = matCiclo.id
-            inscripcion['codigo'] = curso.materia.codigo
-            inscripcion['nombre'] = curso.materia.nombre
-            inscripcion['existe'] = existe
-            inscripcion['inscribir'] = "Inscribir"
-            inscripciones.append(inscripcion)
-        if existe == 2:
-            inscripcion['id'] = curso.materia.id
-            inscripcion['id_curso'] = curso.id
-            inscripcion['id_matCiclo'] = matCiclo.id
-            inscripcion['codigo'] = curso.materia.codigo
-            inscripcion['nombre'] = curso.materia.nombre
-            inscripcion['existe'] = existe
-            inscripcion['inscribir'] = "Inscrita"
-            inscripciones.append(inscripcion)
-    
+    try:
+        ciclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+        matCiclo = MatriculaCiclo.objects.get(matricula_programa = matPrograma.id, ciclo = ciclo.id)
+        cursos = Curso.objects.filter(ciclo = ciclo.id, materia__programa = matPrograma.programa)
+        
+        for ciclo in ciclos:
+            resultado = Calificacion.objects.filter(matricula_ciclo = ciclo.id, tipo_aprobacion__in=[1,2,3,4])
+            if len(resultado) > 0:
+                for indice in range(0, len(resultado)):
+                    calificaciones.append(resultado[indice])
+        
+        for curso in cursos:
+            inscripcion = {}
+            existe = 0
+            for calificacion in calificaciones:
+                if curso.materia.id == calificacion.curso.materia.id:
+                    if calificacion.tipo_aprobacion.id == 1:
+                        existe = 2
+                    else:
+                        existe = 1
+                    break
+            if existe == 0:
+                inscripcion['id'] = curso.materia.id
+                inscripcion['id_curso'] = curso.id
+                inscripcion['id_matCiclo'] = matCiclo.id
+                inscripcion['codigo'] = curso.materia.codigo
+                inscripcion['nombre'] = curso.materia.nombre
+                inscripcion['existe'] = existe
+                inscripcion['inscribir'] = "Inscribir"
+                inscripciones.append(inscripcion)
+            if existe == 2:
+                inscripcion['id'] = curso.materia.id
+                inscripcion['id_curso'] = curso.id
+                inscripcion['id_matCiclo'] = matCiclo.id
+                inscripcion['codigo'] = curso.materia.codigo
+                inscripcion['nombre'] = curso.materia.nombre
+                inscripcion['existe'] = existe
+                inscripcion['inscribir'] = "Inscrita"
+                inscripciones.append(inscripcion)
+    except:
+        inscripciones = []
+        
     return inscripciones
 
 def buscarMateriasHistorialEstudiante(solicitud):

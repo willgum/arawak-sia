@@ -23,46 +23,45 @@ Las siguientes aplicaciones deben estar instaladas y configuradas en el servidor
 En la @ref{fig:diagrama_procesos} se muestra el flujo de trabajo recomendado para facilitar el uso de la plataforma y ofrecer una experiencia de usuario
 satisfactoria.
 
-@float Figure, fig:diagrama_procesos
+@float Figura, fig:diagrama_procesos
 @center @image{img/diagrama_procesos, 15cm, , 'Diagrama de procesos', png}
 @shortcaption{Diagrama de procesos}
-@caption{Diagrama de procesos. Cada uno de los recuadros indica el conjunto de actividades necesarias para cargar la información correctamente, no obstante el enfoque versátil de la plataforma permite realizar la alimentación en cualquier orden, es decir la secuencia ilustrada en el diagrama debe intrepretarse como una recomendación y por ningún como una secuencia estricta.}
+@caption{Diagrama de procesos. Cada uno de los recuadros indica el conjunto de actividades necesarias para cargar la información correctamente, no obstante el enfoque versátil de la plataforma permite realizar la alimentación en cualquier orden, es decir la secuencia ilustrada en el diagrama debe intrepretarse como una recomendación y no como una secuencia estricta.}
 @end float
 
 @subsection Configuración general
 Es el primer proceso en el flujo de trabajo. Agrupa los subprocesos que hacen parte de la configuración general.
 @itemize 
-@item @emph{Administrar Programas}: es el subproceso que se encarga de administrar la información de los programas académicos ofrecidos por la Institución Educativa.
-@item @emph{Administrar Ciclos}: es el subproceso en donde se establece cada ciclo académico con el rango de fechas inicial y final. Por ejemplo, los ciclos pueden ser establecidos en periodos de tiempo bimestral, trimestral, semestral, entre otros.
-@item @emph{Administrar Salones}: es el subproceso que permite gestionar los salones que están habilitados para tomar las diferentes clases.
+@item @emph{Administrar Programas}: Es el subproceso que se encarga de administrar la información de los programas académicos ofrecidos por la Institución Educativa.
+@item @emph{Administrar Ciclos}: Es el subproceso en donde se establece cada ciclo académico con el rango de fechas inicial y final. Por ejemplo, los ciclos pueden ser establecidos en periodos de tiempo bimestral, trimestral, semestral, entre otros.
+@item @emph{Administrar Salones}: Es el subproceso que permite gestionar los salones que están habilitados para tomar las diferentes clases.
 @end itemize
 
  
 @subsection Configuración institucional
 Es el segundo proceso en el flujo de trabajo. Agrupa subprocesos más específicos de configuración de la Institución Educativa.
-@itemize 
-@item @emph{Administrar Materias}: es el subproceso que facilita la administración de materias que pertenecen a determinado programa.
-@item @emph{Administrar Cortes}: es el subproceso en donde se establece los cortes en los que está dividido el ciclo académico. Contiene un porcentaje de corte y un rango de fechas inicial y final del corte.
-@item @emph{Administrar Estudiantes}: es el subproceso en donde se gestiona la información de los estudiantes de la Institución Educativa.
-@item @emph{Administrar Profesores}: A través de este subproceso se gestiona la información básica y de contacto de los profesores de la Institución Educativa.
-@end itemize
+@table @dfn 
+@item @emph{Administrar Materias}: Facilita la administración de materias que pertenecen a determinado programa.
+@item @emph{Administrar Cortes}: Se establece los cortes en los que está dividido el ciclo académico. Contiene un porcentaje de corte y un rango de fechas inicial y final del corte.
+@item @emph{Administrar Estudiantes}: Gestiona la información de los estudiantes de la Institución Educativa.
+@item @emph{Administrar Profesores}: Se gestiona la información básica y de contacto de los profesores de la Institución Educativa.
+@end table
 
 
 @subsection Configuración periódica
 Es el tercer proceso en el flujo de trabajo. Agrupa los subprocesos que deberán ejecutarse con cada cambio de periodo académico.  
-@itemize
-@item @emph{Administrar Cursos}: Es el subproceso en donde se determina las materias que estarán a cargo de cada docente en cada ciclo académico.  Opcionalmente, se puede establecer el horario de clases para el curso.
-@item @emph{Administrar Matrícula de Programas}: En este subproceso se matricula al estudiante en el programa académico correspondiente.
-@item @emph{Administrar Matrícula de Ciclos}: Desde este subproceso se matricula al estudiante de determinado programa académico, en un nuevo ciclo.
-@item @emph{Administrar Calificaciones}: Este subproceso tiene como función principal establecer los cursos en los que está inscrito el estudiante en el ciclo. 
-@end itemize
+@table @dfn
+@item @emph{Administrar Cursos}: Se determinan las materias que estarán a cargo de cada docente en cada ciclo académico.  Opcionalmente, se puede establecer el horario de clases para el curso.
+@item @emph{Administrar Matrícula de Programas}: Se matricula al estudiante en el programa académico correspondiente.
+@item @emph{Administrar Matrícula de Ciclos}: Se matricula al estudiante de determinado programa académico, en un nuevo ciclo.
+@item @emph{Administrar Calificaciones}: Tiene como función principal establecer los cursos en los que está inscrito el estudiante en el ciclo. 
+@end table
 
 
 @subsection Calificaciones
 Es el cuarto proceso en el flujo de trabajo. Agrupa los subprocesos que se encargan de las calificaciones del estudiante en cada uno de los cursos.  
-@itemize
-@item @emph{Notas de Corte}: Es el subproceso en donde se almacena las notas de los cortes que conforman el curso en el ciclo académico. 
+@table @dfn
+@item @emph{Notas de Corte}: Almacena las notas de los cortes que conforman el curso en el ciclo académico. 
                             Como resultado se tiene una calificación definitiva de ciclo. En caso que la nota definitiva sea reprobatoria, el sistema admite
                             una nota de habilitación y de esta forma obtener la nota final del estudiante en el curso. 
-@end itemize
-
+@end table
