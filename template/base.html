@@ -94,7 +94,7 @@
 					<td valign="top">
 						{% if request.session.mora %}
 							<div class="msgerror">
-								En este momento usted se encuentra en mora con la institución por lo cual algunas bandades del sistema han sido desactivadas, por favor acercarse a pagaduria para obtener más información al respecto. 
+								De acuerdo con nuestros registros usted presenta una mora de {{ request.session.diasMora }} día(s), por favor acérquese a nuestras oficinas para habilitar su expediente. 
 							</div>
 						{% endif %}
 						{% block contenido %}							
