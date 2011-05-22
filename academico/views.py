@@ -54,14 +54,17 @@ def redireccionar(plantilla, solicitud, datos):
     for indice in range(0,len(llaves)):
         variables[llaves[indice]] = datos[llaves[indice]]
     variables =  Context(variables)
-    if solicitud.session['grupoUsuarioid'] == 3:
-        return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
-    else:
-        if solicitud.session['mora']:
-            return render_to_response('academico/index.html', variables, context_instance=RequestContext(solicitud))
-        else:
+    try:
+        if solicitud.session['grupoUsuarioid'] == 3:
             return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
-
+        else:
+            if solicitud.session['mora']:
+                return render_to_response('academico/index.html', variables, context_instance=RequestContext(solicitud))
+            else:
+                return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
+    except:
+        return render_to_response(plantilla, variables, context_instance=RequestContext(solicitud))
+    
 @login_required
 def indice(solicitud):
     if comprobarPermisos(solicitud):
@@ -73,12 +76,13 @@ def cicloActual():
     hoy = date.today()
     return Ciclo.objects.filter(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
 
-def cicloNuevo():
+def cicloNuevo(solicitud):
     hoy = date.today()
     cicloNuevo = 0
-    tmp_cicloNuevo = Ciclo.objects.filter(fecha_fin__gte = hoy).order_by('-fecha_fin')
-    for ciclo in tmp_cicloNuevo:
-        cicloNuevo = ciclo.id
+#    tmp_cicloNuevo = Ciclo.objects.filter(fecha_fin__gte = hoy).order_by('-fecha_fin')
+    tmp_cicloNuevo = MatriculaCiclo.objects.filter(matricula_programa__estudiante = solicitud.user.id, ciclo__fecha_fin__gte = hoy).order_by('-ciclo__fecha_fin')
+    for tmp_ciclo in tmp_cicloNuevo:
+        cicloNuevo = tmp_ciclo.ciclo.id
         break
     return cicloNuevo
         
@@ -545,7 +549,7 @@ def materiasDetalleEstudiante(solicitud, materia_id):
 def inscripcionMaterias(solicitud):
     if comprobarPermisos(solicitud):
         programas = {}
-        ciclo = Ciclo.objects.get(id = cicloNuevo())
+        ciclo = Ciclo.objects.get(id = cicloNuevo(solicitud))
         matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
         for matPrograma in matProgramas:
             aux = {}
