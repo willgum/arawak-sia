@@ -1008,7 +1008,16 @@ class Institucion(models.Model):
             scale(logo_org, THUMB_WIDTH, THUMB_HEIGHT, logo_thu)
             scale(logo_org, MINI_WIDTH, MINI_HEIGHT, logo_min)
            
-       
+
+class ConfiguracionInscripcion(models.Model):
+    ciclo = models.ForeignKey(Ciclo)
+    fecha_inicio = models.DateField()
+    fecha_fin = models.DateField()
+    
+    class Meta:
+        verbose_name_plural = 'Configuración inscripciones'
+
+
 class Funcionario(models.Model):
     institucion = models.ForeignKey(Institucion)
     nombre = models.CharField(max_length=200, verbose_name='Nombre')
