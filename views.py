@@ -9,9 +9,10 @@ from django.views.static import Context, HttpResponseRedirect                   
 from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
 from django.contrib import auth                                   
 from django.contrib.auth.models import Group, User
-from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion, MatriculaPrograma, MatriculaCiclo
+from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion, MatriculaPrograma, MatriculaCiclo, ConfiguracionInscripcion
 from financiero.models import MatriculaFinanciera, Ciclo, InscripcionPrograma, Letra
 from django.contrib.auth.decorators import login_required                           # permite usar @login_requerid
+from academico.views import cicloNuevo
 
 def buscarPerfil(solicitud):
     respuesta = [] 
@@ -63,7 +64,17 @@ def buscarMatriculaProgramasEstudiante(solicitud):
     hoy = date.today()
     usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
     return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
-     
+
+
+def buscarInscribirMaterias(solicitud):
+    inscribir = 0
+    hoy = date.today()
+    inscripcion = ConfiguracionInscripcion.objects.filter(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
+    if len(inscripcion)>0:
+        inscribir = 1
+    return inscribir
+ 
+ 
 def pazySalvo(solicitud):
     mora = False
     hoy = date.today()
@@ -207,6 +218,7 @@ def login(solicitud):
                 solicitud.session['grupoUsuarioid'] = resultado[0]['grupoUsuarioid']
                 if solicitud.session['grupoUsuarioid'] == 4:
                     pazySalvo(solicitud)
+                solicitud.session['inscribir'] = buscarInscribirMaterias(solicitud)
                 intituciones = Institucion.objects.all()
                 institucion = {}
                 for resultado in intituciones:

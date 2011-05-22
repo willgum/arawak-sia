@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion
 from django.contrib import admin
 
 from django.http import HttpResponseRedirect
@@ -492,6 +492,25 @@ class InstitucionAdmin(admin.ModelAdmin):
     search_fields = ('nit',)
     
 
+class InscripcionAdmin(admin.ModelAdmin):
+    raw_id_fields = ('ciclo',)
+    
+    fieldsets = [
+        ('Información básica', {'fields': [
+            'ciclo',
+            'fecha_inicio',
+            'fecha_fin',
+            ]}),
+    ]
+    
+    list_display = (
+        'ciclo',
+        'fecha_inicio',         
+        'fecha_fin',   
+    )
+    
+    search_fields = ('ciclo',)
+
 
 class CicloAdmin(ButtonableModelAdmin):
     fieldsets = [
@@ -519,13 +538,14 @@ class CicloAdmin(ButtonableModelAdmin):
     promocion.short_description='Promover ciclo'
     
     buttons = [ promocion, ]
-
+    
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
 #===============================================================================
 admin.site.register(Calificacion, CalificacionAdmin)
 admin.site.register(Ciclo, CicloAdmin)
 admin.site.register(Materia, MateriaAdmin)
+admin.site.register(ConfiguracionInscripcion, InscripcionAdmin)
 admin.site.register(Corte, CorteAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(Estudiante, EstudianteAdmin)
