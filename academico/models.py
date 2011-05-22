@@ -457,6 +457,12 @@ class Programa(models.Model):
     
     def abreviatura(self):
         return self.nombre[0:5] + " ... " + self.nombre[-5:]
+    
+    def notaMin(self):
+        return self.tipo_programa.nota_minima
+    
+    def notaMax(self):
+        return self.tipo_programa.nota_maxima
 
 
 class Estudiante(models.Model):
@@ -706,6 +712,12 @@ class Materia(models.Model):
     
     def nombrePrograma(self):
         return "%s" % (self.programa.nombre)
+        
+    def notaMin(self):
+        return self.programa.notaMin()
+    
+    def notaMax(self):
+        return self.programa.notaMax()
   
   
 class MatriculaCiclo(models.Model):
@@ -797,6 +809,12 @@ class Curso(models.Model):
     
     def nombre_programa(self):
         return "%s" % (self.materia.nombrePrograma())
+        
+    def notaMin(self):
+        return self.materia.notaMin()
+    
+    def notaMax(self):
+        return self.materia.notaMax()
     
     def horarios(self):
         return HorarioCurso.objects.filter(curso=self)

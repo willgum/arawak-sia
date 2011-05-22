@@ -66,6 +66,7 @@ def buscarMatriculaProgramasEstudiante(solicitud):
      
 def pazySalvo(solicitud):
     mora = False
+    hoy = date.today()
     matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
     for matPrograma in matProgramas:       
         matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
@@ -78,18 +79,34 @@ def pazySalvo(solicitud):
                     letras = Letra.objects.filter(matricula_financiera = matFinan)
                     if len(letras) > 0:
                         cantidad = 0
+                        fechaVencimiento = matFinan.fecha_expedicion
                         for letra in letras:
                             if letra.cancelada == True:
                                 cantidad = cantidad + 1
                             else:
-                                if letra.fecha_expedicion >= date.today() or  letra.fecha_vencimiento >= date.today():
-                                    cantidad = cantidad + 1                                    
+                                if letra.fecha_expedicion >= date.today() or  letra.fecha_vencimiento >= hoy:
+                                    cantidad = cantidad + 1
+                                else:
+                                    if matFinan.fecha_expedicion == fechaVencimiento:
+                                        fechaVencimiento = letra.fecha_vencimiento
+                                    if fechaVencimiento > letra.fecha_vencimiento:
+                                        fechaVencimiento = letra.fecha_vencimiento                                   
                         if cantidad != len(letras):
                             mora = True
+                            diasMora = hoy - fechaVencimiento
+                            if 'diasMora' in solicitud.session and solicitud.session['diasMora'] < diasMora.days:
+                                solicitud.session['diasMora'] = diasMora.days
+                            else:
+                                solicitud.session['diasMora'] = diasMora.days
                     else:
                         if matFinan.paz_y_salvo == False:
                             mora = True
-    return mora
+                            diasMora = hoy - matFinan.fecha_expedicion
+                            if 'diasMora' in solicitud.session and solicitud.session['diasMora'] < diasMora.days:
+                                solicitud.session['diasMora'] = diasMora.days
+                            else:
+                                solicitud.session['diasMora'] = diasMora.days                       
+    solicitud.session['mora'] = mora
     
 def indice(solicitud):
     return redireccionar('index.html', solicitud, {})
@@ -189,7 +206,7 @@ def login(solicitud):
             if resultado[0]['resultado'] == True:        
                 solicitud.session['grupoUsuarioid'] = resultado[0]['grupoUsuarioid']
                 if solicitud.session['grupoUsuarioid'] == 4:
-                    solicitud.session['mora'] = pazySalvo(solicitud)
+                    pazySalvo(solicitud)
                 intituciones = Institucion.objects.all()
                 institucion = {}
                 for resultado in intituciones:
@@ -232,6 +249,8 @@ def logout(solicitud):
         del solicitud.session['grupoUsuarioid']
     if 'mora' in solicitud.session:
         del solicitud.session['mora']
+    if 'diasMora' in solicitud.session:
+        del solicitud.session['diasMora'] 
     if 'msg_error' in solicitud.session:
         del solicitud.session['msg_error']
     auth.logout(solicitud)    
