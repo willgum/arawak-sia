@@ -65,49 +65,18 @@
 	Finalmente se tiene las opciones para eliminar un ciclo existente. Grabar el ciclo  actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar el ciclo  actual y dejar la ventana activa para seguir editando el registro. Grabar el ciclo actual y volver a la ventana de ciclos.
 
 	
-@subsection Materias
-	Son las materias que conforman el Programa Académico ofrecido por la institución educativa y que deberán ser cursadas para su aprobación.
-	@subsubsection Información básica
-		@table @dfn
-		@item Programa
-			Campo seleccionable de carácter obligatorio. Contiene los programas académicos ofrecidos por la institución educativa. haga clic en el botón “Mas” para agregar un nuevo programa. 
-		@item Sufijo
-			Campo de texto de carácter obligatorio que identifica la materia. El sufijo de la materia junto con el código de programa forma el código de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 3 caracteres, por ejemplo 012 o 032 son ejemplos de sufijos válidos.
-		@item Nombre
-			Campo de texto de carácter obligatorio. Es el nombre de la materia. Permite un máximo de 	50 caracteres.
-		@item Descripción
-			Campo de texto de carácter opcional. Almacena una breve descripción de la materia.
-		@item Intensidad_semanal
-			Campo de texto de carácter opcional. Almacena el número de horas requeridas a la semana para impartir el contenido de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
-		@item Intensidad_ciclo
-			Campo de texto de carácter opcional. Almacena el número de horas requeridas en el ciclo académico para impartir el contenido de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
-		@item Créditos
-			Campo de texto de carácter opcional. Almacena el número de créditos que ofrece la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
-		@item Periodo
-			Campo de texto de carácter opcional. Almacena el ciclo o nivel en el cual debe verse esta materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
-		@end table
+@subsection Configuración inscripciones
+	Se configura el periodo de fechas inicial y final en que el estudiante podrá inscribir materias para el nuevo ciclo académico.
+	@table @dfn
+	@item Ciclo
+		Campo de texto de carácter obligatorio que almacena el ciclo académico sobre el cuál se inscribirán las nuevas materias.  Para buscar algún ciclo haga clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes. 
+	@item Fecha inicio
+		Campo de fecha de carácter obligatorio. Almacena la fecha en que se dará inicio el proceso de inscripción de materias. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@item Fecha fin
+		Campo de fecha de carácter obligatorio. Almacena la fecha en que se dará fin al proceso de inscripción de materias. Tiene las opciones para seleccionar la fecha de Hoy o para abrir un calendario y seleccionar allí la fecha deseada. El formato de fecha dependerá de la configuración regional y de idioma predeterminado  en el sistema operativo.
+	@end table
 	
-	@subsubsection Requisitos
-		Es la sección que permite asignar materias que son requisito de la materia seleccionada. Esta sección es de carácter opcional. Contiene los siguientes campos: 
-		@table @dfn
-		@item Requisitos disponibles
-			Lista con las materias disponibles para ser seleccionadas como requisito. Si desea asignar alguna, seleccionela y haga clic en la flecha que apunta a la derecha.
-		@item Requisitos elegidos
-			Sa lista con las materias que han sido seleccionadas para ser requisito de la materia actual. Si desea quitar alguna, seleccionela y haga clic en la flecha que apunta hacia la izquierda.
-		@end table
-		
-	@subsubsection Cursos
-		Es la sección que permite asignar la materia a un ciclo y profesor seleccionado. Para agregar la materia a un nuevo curso, haga clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
-		@table @dfn
-		@item Grupo
-			Campo de texto que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
-		@item Profesor
-			Campo de texto que almacena el docente que impartirá el curso. Para buscar algún docente haga clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
-		@item Ciclo
-			Campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo haga clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
-		@end table
-	
-	Finalmente se tiene las opciones para eliminar una materia existente. Grabar la materia actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar la materia actual y dejar la ventana activa para seguir editando el registro. Grabar la materia actual y volver a la ventana de materias.
+	Finalmente se tiene las opciones para eliminar una configuración existente. Grabar el corte actual y habilitar una nueva ventana para añadir una nueva configuración. Grabar la configuración actual y dejar la ventana activa para seguir editando el registro. Grabar la configuración actual y volver a la ventana de configuraciones.
 
 
 @subsection Cortes
@@ -349,6 +318,51 @@
 		Campo de texto almacena el tipo de funcionario que está siendo agregado. Las opciones son: Director(a), Tesorero(a), Coordinador(a) académico, Secretaria(o), Bibliotecaria(o).
 	@end table
 	
+@subsection Materias
+	Son las materias que conforman el Programa Académico ofrecido por la institución educativa y que deberán ser cursadas para su aprobación.
+	@subsubsection Información básica
+		@table @dfn
+		@item Programa
+			Campo seleccionable de carácter obligatorio. Contiene los programas académicos ofrecidos por la institución educativa. haga clic en el botón “Mas” para agregar un nuevo programa. 
+		@item Sufijo
+			Campo de texto de carácter obligatorio que identifica la materia. El sufijo de la materia junto con el código de programa forma el código de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 3 caracteres, por ejemplo 012 o 032 son ejemplos de sufijos válidos.
+		@item Nombre
+			Campo de texto de carácter obligatorio. Es el nombre de la materia. Permite un máximo de 	50 caracteres.
+		@item Descripción
+			Campo de texto de carácter opcional. Almacena una breve descripción de la materia.
+		@item Intensidad_semanal
+			Campo de texto de carácter opcional. Almacena el número de horas requeridas a la semana para impartir el contenido de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Intensidad_ciclo
+			Campo de texto de carácter opcional. Almacena el número de horas requeridas en el ciclo académico para impartir el contenido de la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Créditos
+			Campo de texto de carácter opcional. Almacena el número de créditos que ofrece la materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@item Periodo
+			Campo de texto de carácter opcional. Almacena el ciclo o nivel en el cual debe verse esta materia. El campo es de tipo numérico y solo admite dígitos (Sin puntos ni comas) y tiene una longitud máxima de 4 caracteres.
+		@end table
+	
+	@subsubsection Requisitos
+		Es la sección que permite asignar materias que son requisito de la materia seleccionada. Esta sección es de carácter opcional. Contiene los siguientes campos: 
+		@table @dfn
+		@item Requisitos disponibles
+			Lista con las materias disponibles para ser seleccionadas como requisito. Si desea asignar alguna, seleccionela y haga clic en la flecha que apunta a la derecha.
+		@item Requisitos elegidos
+			Sa lista con las materias que han sido seleccionadas para ser requisito de la materia actual. Si desea quitar alguna, seleccionela y haga clic en la flecha que apunta hacia la izquierda.
+		@end table
+		
+	@subsubsection Cursos
+		Es la sección que permite asignar la materia a un ciclo y profesor seleccionado. Para agregar la materia a un nuevo curso, haga clic en el hipervínculo “Agregar otro curso”. Esta sección es de carácter opcional, pero si se desea ingresar un curso deberá diligenciarse todos los campos de la sección. Contiene los siguientes campos: 
+		@table @dfn
+		@item Grupo
+			Campo de texto que almacena el grupo del curso. Permite una longitud máxima de 2 caracteres. 
+		@item Profesor
+			Campo de texto que almacena el docente que impartirá el curso. Para buscar algún docente haga clic en el botón Lupa para abrir una nueva ventana con los docentes existentes en el sistema.
+		@item Ciclo
+			Campo de texto que almacena el ciclo académico en el que se ofrecerá el curso.  Para buscar algún ciclo haga clic en el botón Lupa para abrir una ventana nueva con los ciclos existentes.
+		@end table
+	
+	Finalmente se tiene las opciones para eliminar una materia existente. Grabar la materia actual y habilitar una nueva ventana para añadir un nuevo registro. Grabar la materia actual y dejar la ventana activa para seguir editando el registro. Grabar la materia actual y volver a la ventana de materias.
+
+
 @subsection Matrícula ciclos
 	@subsubsection Información básica:
 	@table @dfn
