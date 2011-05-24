@@ -386,8 +386,20 @@ class ProfesorAdmin(admin.ModelAdmin):
 class HorarioCursoInline(admin.TabularInline):
     model = HorarioCurso
     extra = 1
-
-
+    
+class estudiantesInscritosInline(admin.TabularInline):
+    model = Calificacion
+    verbose_name_plural = 'Estudiantes inscritos'
+    fields = ['matricula_ciclo',
+              'nombre_estudiante',
+              'tipo_aprobacion',
+              'nota_definitiva',
+              'nota_habilitacion',
+              'fallas',
+              'perdio_fallas']
+    raw_id_fields = ('matricula_ciclo',)
+    readonly_fields = ['nombre_estudiante', 'nota_definitiva', 'tipo_aprobacion']
+    extra = 0    
 
 class CursoAdmin(admin.ModelAdmin):
     raw_id_fields = ('materia', 'profesor', 'ciclo')
@@ -397,10 +409,9 @@ class CursoAdmin(admin.ModelAdmin):
             'grupo',
             'profesor',
             'ciclo',
-            'esperados']}),
-    ]
-    
-    inlines = [HorarioCursoInline,]
+            'esperados']})
+    ]    
+    inlines = [estudiantesInscritosInline, HorarioCursoInline,]
     list_display = (
         'codigo',
         'nombre_programa',
@@ -511,7 +522,6 @@ class InscripcionAdmin(admin.ModelAdmin):
     
     search_fields = ('ciclo',)
 
-
 class CicloAdmin(ButtonableModelAdmin):
     fieldsets = [
         ('Información básica', {'fields': [
@@ -538,7 +548,7 @@ class CicloAdmin(ButtonableModelAdmin):
     promocion.short_description='Promover ciclo'
     
     buttons = [ promocion, ]
-    
+
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
 #===============================================================================
