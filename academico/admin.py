@@ -310,6 +310,7 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
                                    'programa',
                                    'fecha_inscripcion',
                                    'fecha_vencimiento',
+                                   'usuario', 
                                    'estado',
                                    'promedio_acumulado',
                                    'becado',
@@ -318,6 +319,7 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     
     list_display = (
                     'codigo',
+                    'usuario',
                     'nombre_estudiante',
                     'nombre_programa',
                     'promedio_acumulado',
@@ -327,7 +329,7 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     
     date_hierarchy = 'fecha_inscripcion'
     
-    readonly_fields = ('promedio_acumulado',)
+    readonly_fields = ('promedio_acumulado', 'usuario', )
     
     list_filter = ['estado', 'programa']
     search_fields = ('codigo', 'programa__nombre', 'estado__nombre', 'estudiante__nombre1', 'estudiante__apellido1')
