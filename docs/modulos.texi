@@ -523,8 +523,8 @@ Finalmente se tiene las opciones para eliminar el registro actual. Grabar el reg
 		
 	@subsubsection Información Adicional
 		@table @dfn
-		@item Actitudes
-			Campo de texto opcional que almacena las actitudes requeridas para los aspirantes. 
+		@item Aptitudes
+			Campo de texto opcional que almacena las aptitudes requeridas para los aspirantes. 
 		@item Perfil Profesional
 			Campo de texto opcional que almacena el perfil profesional del estudiante egresado.
 		@item Funciones
