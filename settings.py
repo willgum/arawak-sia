@@ -29,7 +29,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'syspro', 
+        'NAME': 'arawak_sia', 
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
@@ -74,6 +74,19 @@ MEDIA_URL = '/media/'
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
 ADMIN_MEDIA_PREFIX = '/media/admin/'
+
+
+
+TINYMCE_JS_URL = '/media/tiny_mce/tiny_mce_src.js'
+TINYMCE_JS_ROOT  = os.path.join(PROJECT_DIR, 'media/tiny_mce/tiny_mce_src.js')
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "advanced",
+}
+TINYMCE_SPELLCHECKER = True
+TINYMCE_COMPRESSOR = True
+
+
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '72s-$fo25mpw#)*7&%bqrtc-ufi1w$am*@_czu-tg*v^vkh469'

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, Curso, HorarioCurso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion
 from django.contrib import admin
 
 from django.http import HttpResponseRedirect
@@ -80,6 +80,10 @@ class MatriculaCicloAdmin(ButtonableModelAdmin):
     constancia.short_description='Imprimir constancia'
     
     buttons = [constancia, ]
+    
+    class Media:
+        js = ('js/tiny_mce/tiny_mce.js',
+              'js/tiny_mce/textareas.js',)
 
 
 class NotaCorteInline(admin.TabularInline):
@@ -157,7 +161,7 @@ class ProgramaAdmin(admin.ModelAdmin):
             'jornada'], 
             'classes': ['collapse']}),
         ('Informacion adicional', {'fields': [  
-            'actitudes', 
+            'aptitudes', 
             'perfil_profesional', 
             'funciones'], 
             'classes': ['collapse']}),
@@ -174,7 +178,10 @@ class ProgramaAdmin(admin.ModelAdmin):
     list_display_links = ('codigo', 'nombre')
     search_fields = ['codigo', 'nombre']
     list_filter = ['tipo_programa', 'jornada', 'periodicidad']
-
+    
+    class Media:
+        js = ('js/tiny_mce/tiny_mce.js',
+              'js/tiny_mce/textareas.js',)
 
 class SalonAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -187,6 +194,10 @@ class SalonAdmin(admin.ModelAdmin):
     list_display = ('codigo', 'descripcion', 'capacidad', 'tipo_salon')
     search_fields = ['codigo', 'descripcion']
     list_filter = ['tipo_salon']
+        
+    class Media:
+        js = ('js/tiny_mce/tiny_mce.js',
+              'js/tiny_mce/textareas.js',)
 
 
 class CursoInline(admin.TabularInline):
@@ -233,6 +244,10 @@ class MateriaAdmin(admin.ModelAdmin):
     
     list_filter = ['programa', 'periodo']
     search_fields = ('nombre',)
+    
+    class Media:
+        js = ('js/tiny_mce/tiny_mce.js',
+              'js/tiny_mce/textareas.js',)
 
 
 class EstudioComplementarioInline(admin.TabularInline):
@@ -255,6 +270,10 @@ class AmonestacionInline(admin.TabularInline):
     raw_id_fields = ('curso',)
     model = Amonestacion
     extra = 1
+    class Media:
+        js = ('js/tiny_mce/tiny_mce.js',
+              'js/tiny_mce/textareas.js',)
+
 
 
 class EstudianteAdmin(ButtonableModelAdmin):
@@ -420,9 +439,8 @@ class CursoAdmin(admin.ModelAdmin):
         'nombre',
         'profesor',  
         'ciclo',
-        'esperados', 
         'inscritos',
-        'sesiones',
+        'promedio',
     )
     list_filter = ['ciclo']
     search_fields = ('materia__nombre', 'profesor__nombre1', 'profesor__nombre2', 
@@ -504,6 +522,10 @@ class InstitucionAdmin(admin.ModelAdmin):
     inlines = [FuncionarioInline, ]
     search_fields = ('nit',)
     
+    class Media:
+        js = ('js/tiny_mce/tiny_mce.js',
+              'js/tiny_mce/textareas.js',)
+
 
 class InscripcionAdmin(admin.ModelAdmin):
     raw_id_fields = ('ciclo',)
