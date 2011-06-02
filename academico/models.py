@@ -10,7 +10,6 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 from django.forms import ModelForm, TextInput
-from django.db.models import Max
 
 #NOTA_MIN = 0.0
 #NOTA_MAX = 5.0
@@ -445,10 +444,10 @@ class Programa(models.Model):
     jornada = models.ForeignKey(Jornada, blank=True, null=True, default=1)
     
     # Informacion adicional
-    actitudes = models.TextField(max_length=200, help_text="Actitudes requeridas para los aspirantes.", blank=True)
+    aptitudes = models.TextField(max_length=200, help_text="Aptitudes requeridas para los aspirantes.", blank=True)
     perfil_profesional = models.TextField(max_length=200, help_text="Perfil profesional del egresado.", blank=True)
     funciones = models.TextField(max_length=200,help_text="Funciones en las que se puede desempeñar el egresado.", blank=True)
-    
+ 
     def materias(self):
         return len(Materia.objects.filter(programa=self))
     
@@ -792,6 +791,25 @@ class Curso(models.Model):
 #        return "%s" %(self.materia)
         return normalizar_cadena(self.materia.nombre)
     
+    def promedio(self):
+        if self.materia.tipo_valoracion == "1":
+            calificaciones = Calificacion.objects.filter(curso = self.id)
+            promedio_curso = 0.0
+            
+            for tmp_nota in calificaciones:
+                if tmp_nota.nota_definitiva >= tmp_nota.nota_habilitacion:
+                    promedio_curso = promedio_curso + tmp_nota.nota_definitiva
+                else: 
+                    promedio_curso = promedio_curso + tmp_nota.nota_habilitacion
+            
+            if len(calificaciones)>0:
+                promedio = round(promedio_curso/len(calificaciones), 2)
+            else:
+                promedio = 0
+        else:
+            promedio = '-'
+        return "%s" % (promedio)
+        
     def nombre(self):
         return self.materia.nombre
     

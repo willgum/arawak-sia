@@ -293,7 +293,7 @@ def buscarProgramasEstudiante(solicitud):
         programa['duracion'] =              programas.duracion
         programa['jornada'] =               programas.jornada
         programa['materias'] =              programas.materias()
-        programa['actitudes'] =             programas.actitudes
+        programa['aptitudes'] =             programas.aptitudes
         programa['perfil_profesional'] =    programas.perfil_profesional
         programa['funciones'] =             programas.funciones
         matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matricula.id)
@@ -445,8 +445,9 @@ def horariosEstudiante(solicitud):
             aux['programas'] = matPrograma
             matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
             for matCiclo in matCiclos:
-                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
-                if Ciclo.cicloActual(ciclo):
+                tmp_ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                if Ciclo.cicloActual(tmp_ciclo):
+                    ciclo = tmp_ciclo
                     aux['ciclo'] = matCiclo
                     resultado = buscarMateriasEstudiante(solicitud, matCiclo.id) 
                     aux['calificaciones'] = resultado
@@ -471,9 +472,10 @@ def notasEstudiante(solicitud):
             aux['programas'] = matPrograma
             matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
             for matCiclo in matCiclos:
-                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
-                cortes = Corte.objects.filter(ciclo = ciclo.id).order_by('fecha_inicio')
-                if Ciclo.cicloActual(ciclo):
+                tmp_ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                cortes = Corte.objects.filter(ciclo = tmp_ciclo.id).order_by('fecha_inicio')
+                if Ciclo.cicloActual(tmp_ciclo):
+                    ciclo = tmp_ciclo
                     aux['ciclo'] = matCiclo
                     calificaciones = buscarMateriasEstudiante(solicitud, matCiclo.id) 
                     calificacionesCiclo = []
