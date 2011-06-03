@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, Curso, HorarioCurso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, Curso, HorarioCurso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion, User
 from django.contrib import admin
+#from django.contrib.auth.models import User, Group
 
 from django.http import HttpResponseRedirect
 
@@ -568,10 +569,31 @@ class CicloAdmin(ButtonableModelAdmin):
     def promocion(self, obj):
         url = "/admin/academico/ciclo/promocion"
         return HttpResponseRedirect( url )
-    promocion.url = "/admin/academico/ciclo/promocion"    #puts this on the end of the admin URL.
+    promocion.url = "/admin/academico/ciclo/promocion"    #puts this on the end of the admi URL.
     promocion.short_description='Promover ciclo'
     
     buttons = [ promocion, ]
+
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'email',         
+        'first_name',         
+        'last_name',
+        'last_login',
+        'is_staff'
+    )
+    
+    list_filter = ['is_staff',]
+    
+#    def groups_for_manytomany(self, db_field, request, **kwargs):
+#        if db_field.name == "groups":
+#            kwargs["queryset"] = Group.objects.filter(owner=request.user)
+#        return super(UserAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
+    
+    
+
 
 #===============================================================================
 #AGREGAR VISTAS A INTERFAZ ADMIN 
@@ -591,3 +613,5 @@ admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(TipoPrograma, TipoProgramaAdmin)
 admin.site.register(TipoNotaConceptual, TipoNotaConceptualAdmin)
 admin.site.register(Profesor, ProfesorAdmin)
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
