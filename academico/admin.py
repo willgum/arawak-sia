@@ -586,12 +586,7 @@ class UserAdmin(admin.ModelAdmin):
     )
     
     list_filter = ['is_staff',]
-    
-#    def groups_for_manytomany(self, db_field, request, **kwargs):
-#        if db_field.name == "groups":
-#            kwargs["queryset"] = Group.objects.filter(owner=request.user)
-#        return super(UserAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
-    
+
     
 
 
@@ -613,5 +608,5 @@ admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(TipoPrograma, TipoProgramaAdmin)
 admin.site.register(TipoNotaConceptual, TipoNotaConceptualAdmin)
 admin.site.register(Profesor, ProfesorAdmin)
-admin.site.unregister(User)
-admin.site.register(User, UserAdmin)
+#admin.site.unregister(User)
+#admin.site.register(User, UserAdmin)

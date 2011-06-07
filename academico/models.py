@@ -276,6 +276,7 @@ def scale(fname, width, height, fname_scaled):
         out = out.crop(box)
         out.save(fname_scaled, "JPEG")
 
+
 class CustomStorage(FileSystemStorage):
 #    En caso de que la imagen exista, la borra para ingresarla de nuevo
 #    Django por defecto no sobreescribe la original, 
@@ -975,7 +976,11 @@ class NotaCorte(models.Model):
     def save(self, *args, **kwargs):
         super(NotaCorte, self).save(*args, **kwargs)
         self.calificacion.calculaDefinitiva(self.calificacion.id)
-                
+    
+    def delete(self, *args, **kwargs):
+        super(NotaCorte, self).delete(*args, **kwargs)
+        self.calificacion.calculaDefinitiva(self.calificacion.id)
+    
     class Meta:
         unique_together = ("calificacion", "corte")
  
@@ -988,9 +993,6 @@ class HorarioCurso(models.Model):
     
     def __unicode__(self):
         return "%s %s - %s %s" % (self.dia.nombre, self.hora_inicio.strftime("%H:%M"), self.hora_fin.strftime("%H:%M"), self.salon)
-    
-    class Meta:
-        unique_together = ("dia", "hora_inicio","hora_fin", "salon")
 
 
 class Institucion(models.Model):
