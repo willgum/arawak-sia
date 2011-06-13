@@ -16,6 +16,17 @@ table.grilla tbody a{color:#378052;text-decoration:none;padding:1px 2px;}
 table.grilla tbody a:active,table.grilla tbody a:hover,table.grilla tbody a:focus,table.grilla tbody a:visited{color:#378052;}
 table.grilla tbody tr:hover{background-color:#EEE;color:#333;}
 #content table.grilla input[type=text]{border:solid;color:#144d29;font:10px Arial;width:30px;text-align:right;border-width:1px;padding:3px;}
+
+table.tablesorter{color:#666;border-collapse:collapse;}
+table.tablesorter thead th,table.tablesorter tfoot th,table.tablesorter tfoot td{background-color:#144d29;color:#FFF;padding:10px;}
+table.tablesorter tbody th{padding:10px;}
+table.tablesorter tbody tr.odd{background-color:#F7F7F7;}
+table.tablesorter tbody a{color:#378052;text-decoration:none;padding:1px 2px;}
+table.tablesorter tbody a:active,table.tablesorter tbody a:hover,table.tablesorter tbody a:focus,table.tablesorter tbody a:visited{color:#378052;}
+table.tablesorter tbody tr:hover{background-color:#EEE;color:#333;}
+#content table.tablesorter input[type=text]{border:solid;color:#144d29;font:10px Arial;width:30px;text-align:right;border-width:1px;padding:3px;}
+table.tablesorter thead tr .header {background-image: url(../images/bg.gif);background-repeat: no-repeat;background-position: center right;}
+
 #content .tabs{height:30px;border-bottom:1px solid #144d29;margin:0 !important;padding:0;}
 #content .tabs li{float:left;list-style-type:none;margin:0;padding:0;}
 #content .tabs a{font:11px Arial;font-weight:700;float:left;display:block;text-decoration:none;border:1px solid #144d29;border-bottom:0;height:16px;background-color:#144d29;color:#fff;position:relative;top:1px;outline:0;margin:3px 1px 0 0;padding:5px 10px 4px;}
