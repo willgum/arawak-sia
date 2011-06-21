@@ -41,6 +41,24 @@
 	</head>
  
 	<body>
+		<div id="perfil">
+			{% if request.session.grupoUsuarioid %}
+					<ul id="nav_perfil">
+						<li> <a href="/perfil/">{{ user.get_full_name }}</a> </li>
+						{% if user.groups.all %}
+						{% else %}
+							<li> No tiene permisos habilitados. </li>
+						{% endif %}
+						{% ifequal request.session.control 0 %}
+							<li> | </li>
+						 	<li> <a href="/contrasena/">Cambiar contraseña</a>  </li>
+						 {% endifequal %}
+						 <li> | </li>
+						 <li> <a href="/logout/">Cerrar sesión</a> </li>
+						{% block notificaciones %}			
+						{% endblock %}	
+			{% endif %}
+		</div>
 		<div id="wrapper" class="fixed">
 			<div id="header">		
 					<div id="titulo">
@@ -136,7 +154,6 @@
 						{% endblock %}
 					</td>
 					<td valign="top">
-						{% if request.session.grupoUsuarioid %}
 								<div id="sidebar_right">
 									<div id="adsense_cuadrado"> 
 										<script type="text/javascript"><!--
@@ -152,28 +169,8 @@
 										</script>
 										<br/> 
 									</div>
+								</div>
 								
-								<h2>Bienvenido</h2>
-								<p>
-								<strong>Usuario:</strong> {{ user.get_full_name }}<br/>
-								{% if user.groups.all %}
-								    {% for tipo in user.groups.all %}
-								        <strong>Perfil:</strong> {{ tipo }} <br/>
-								    {% endfor %}
-								{% else %}
-									No tiene permisos habilitados.<br/>
-								{% endif %}
-								</p>			
-								<h2>Mi Cuenta</h2>
-								<ul>
-									<li><a href="/perfil/">Mi perfil</a></li>
-									{% ifequal request.session.control 0 %}<li><a href="/contrasena/">Cambiar contraseña</a></li>{% endifequal %}
-									<li><a href="/logout/">Cerrar sesión</a></li>
-								</ul>
-								{% block notificaciones %}			
-								{% endblock %}
-							</div>	
-						{% endif %}
 					</td>
 				</tr>
 			</table>		

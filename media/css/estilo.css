@@ -1,3 +1,9 @@
+#perfil{width:1110px; margin:0 auto;padding:5px; text-align:right;}
+#nav_perfil{font:14px Arial;line-height:22px;margin:0;}
+#nav_perfil li{list-style:none;display:inline;color:#eee;padding:7px 3px;}
+#nav_perfil li a{color:#eee;text-decoration:none;padding:7px 3px;}
+#nav_perfil li a:hover{text-decoration:underline;}
+
 body{font-family:Arial;color:#555;background:url(../images/body.jpg) top repeat-x #838281;height:100%;margin:20px;}
 *{margin:0;padding:0;}
 #wrapper{background:#fff;border:4px solid #222;margin:0 auto;padding:5px;}
@@ -41,7 +47,9 @@ table.tablesorter tbody a{color:#378052;text-decoration:none;padding:1px 2px;}
 table.tablesorter tbody a:active,table.tablesorter tbody a:hover,table.tablesorter tbody a:focus,table.tablesorter tbody a:visited{color:#378052;}
 table.tablesorter tbody tr:hover{background-color:#EEE;color:#333;}
 #content table.tablesorter input[type=text]{border:solid;color:#144d29;font:10px Arial;width:30px;text-align:right;border-width:1px;padding:3px;}
-table.tablesorter thead tr .header {background-image: url(../images/bg.gif);background-repeat: no-repeat;background-position: center right;cursor: pointer;}
+table.tablesorter thead tr .header {background-repeat: no-repeat;background-position: center right;cursor: pointer;}
+table.tablesorter thead tr .headerSortUp {background-image: url(../images/arriba.png);}
+table.tablesorter thead tr .headerSortDown {background-image: url(../images/abajo.png);}
 
 #content .tabs{margin:0 !important;padding:0 2px;}
 #content .tabs li{float:left;list-style-type:none;margin:0;padding:0;}
