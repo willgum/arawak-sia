@@ -25,7 +25,9 @@ table.tablesorter tbody a{color:#378052;text-decoration:none;padding:1px 2px;}
 table.tablesorter tbody a:active,table.tablesorter tbody a:hover,table.tablesorter tbody a:focus,table.tablesorter tbody a:visited{color:#378052;}
 table.tablesorter tbody tr:hover{background-color:#EEE;color:#333;}
 #content table.tablesorter input[type=text]{border:solid;color:#144d29;font:10px Arial;width:30px;text-align:right;border-width:1px;padding:3px;}
-table.tablesorter thead tr .header {background-image: url(../images/bg.gif);background-repeat: no-repeat;background-position: center right;}
+table.tablesorter thead tr .header {background-repeat: no-repeat;background-position: center right;cursor: pointer;}
+table.tablesorter thead tr .headerSortUp {background-image: url(../images/arriba.png);}
+table.tablesorter thead tr .headerSortDown {background-image: url(../images/abajo.png);}
 
 #content .tabs{height:30px;border-bottom:1px solid #144d29;margin:0 !important;padding:0;}
 #content .tabs li{float:left;list-style-type:none;margin:0;padding:0;}
