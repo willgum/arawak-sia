@@ -224,6 +224,8 @@ def login(solicitud):
                 for resultado in intituciones:
                     institucion = resultado
                 if institucion.control_acudiente == True:
+                    if solicitud.session['grupoUsuarioid'] == 3:
+                        solicitud.session['control'] = 0
                     if solicitud.session['grupoUsuarioid'] == 4:
                         usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
                         if usuario.fecha_nacimiento is None:
