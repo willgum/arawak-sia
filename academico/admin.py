@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, Curso, HorarioCurso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion, User
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion
 from django.contrib import admin
 #from django.contrib.auth.models import User, Group
 
@@ -162,6 +162,7 @@ class ProgramaAdmin(admin.ModelAdmin):
             'jornada'], 
             'classes': ['collapse']}),
         ('Informacion adicional', {'fields': [  
+            'horas_bienestar',
             'aptitudes', 
             'perfil_profesional', 
             'funciones'], 
@@ -333,6 +334,7 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
                                    'usuario', 
                                    'estado',
                                    'promedio_acumulado',
+                                   'horas_bienestar',
                                    'becado',
                                    ]}),
                  ]
@@ -349,7 +351,7 @@ class MatriculaProgramaAdmin(ButtonableModelAdmin):
     
     date_hierarchy = 'fecha_inscripcion'
     
-    readonly_fields = ('promedio_acumulado', 'usuario', )
+    readonly_fields = ('horas_bienestar', 'promedio_acumulado', 'usuario',)
     
     list_filter = ['estado', 'programa']
     search_fields = ('codigo', 'programa__nombre', 'estado__nombre', 'estudiante__nombre1', 'estudiante__apellido1')
@@ -526,7 +528,6 @@ class InstitucionAdmin(admin.ModelAdmin):
     class Media:
         js = ('js/tiny_mce/tiny_mce.js',
               'js/tiny_mce/textareas.js',)
-
 
 class InscripcionAdmin(admin.ModelAdmin):
     raw_id_fields = ('ciclo',)

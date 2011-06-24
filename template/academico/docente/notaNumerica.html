@@ -1,10 +1,6 @@
 {% extends 'base.html' %}
 
-{% block jquerycript %}
-	$(function() {		
-		$("#estudiantes").tablesorter({sortList:[[0,0],[2,1]], widgets: ['zebra']});
-		$("#options").tablesorter({sortList: [[0,0]], headers: { 3:{sorter: false}, 4:{sorter: false}}});
-	}); 
+{% block jquerycript %} 
 	$(":input").change
 	(
 		function() 
@@ -39,10 +35,10 @@
 		    		notaMin = notaMin.toString().replace(",", ".");		
 		    		notaMax = notaMax.toString().replace(",", ".");
 		    		
-			        if ($(this).attr("nota") && (notaMin > numero || notaMax < numero))	
+		    		if ($(this).attr("nota") && (notaMin > numero || notaMax < numero))	
 			        {
 			        	this.focus();
-			    		alert("Por favor ingrese un valor entre {{curso.notaMin}}");
+			    		alert("Por favor ingrese un valor entre {{curso.notaMin}} y {{curso.notaMax}}");
 			        }
 			        else
 			        {
@@ -95,9 +91,8 @@
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1> {{curso.nombre}} </h1>	
-		<div id="csrf_token">{% csrf_token %}</div>
-		<table id="estudiantes" class="tablesorter" width="100%">	
-		<!--<table id="estudiantes" class="grilla" width="100%">-->
+		<div id="csrf_token">{% csrf_token %}</div>	
+		<table id="estudiantes" class="grilla" width="100%">
 			<thead>
 				<tr>
 					<th>Código</th>
@@ -169,7 +164,7 @@
 						<td style="text-align:center;">
 							<div id="perdioFallas{{calificacion.id}}">
 								<INPUT NAME="perdioFallas{{calificacion.id}}" TYPE=CHECKBOX disabled="disabled" 
-									{% ifequal calificacion.perdio_fallas 0 %}
+									{% ifequal calificacion.perdio_fallas 1 %}
 										CHECKED
 									{% endifequal %}
 								>

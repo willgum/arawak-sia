@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block jquerycript %} 
+	$(":input").change
+	(
+		function() 
+		{
+			if($(this).attr("falla") != null)
+			{
+				var validar = $(":input").validator({lang: 'es'});
+				if (!validar.data("validator").checkValidity())
+				{
+					this.focus();
+				}
+				else
+				{
+					numero = $(this).val();		
+			    	numero = parseInt(numero);
+			    	idCalificacion = $(this).attr("idCalificacion");
+			        if (isNaN(numero))	
+			    	{
+			    		$(this).val("");
+			    		validar.data("validator").checkValidity();
+			    		this.focus();
+			    	}
+			    	else
+			    	{	
+				    	$.ajax
+						(
+							{
+								type: 			"POST",
+								url: 			"fallas/",
+								data:			{idCalificacion: idCalificacion, valor: numero, csrfmiddlewaretoken: $('#csrf_token >div >input').attr("value")},
+								success:		function(datos){},
+						        error: 			function(objeto, quepaso, otroobj){alert(objeto.status+": "+objeto.statusText);},
+								contentType:	"application/json"
+							}
+						);
+				        $(this).val(numero.toString());
+					}
+				}
+			}
+			else
+			{
+				idCalificacion = $(this).attr("idCalificacion");
+				$.ajax
+				(
+					{
+						type: 			"POST",
+						url: 			"valoracion/",
+						data:			{idCalificacion: idCalificacion, valor: this.options[this.selectedIndex].value, csrfmiddlewaretoken: $('#csrf_token >div >input').attr("value")},
+						success:		function(datos){},
+				        error: 			function(objeto, quepaso, otroobj){alert(objeto.status+": "+objeto.statusText);},
+						contentType:	"application/json"
+					}
+				);
+			}
+		}
+	);
+	
+	$.tools.validator.localize
+	(
+		"es", {'[required]' 	: 'Digite un valor adecuado'}
+	);	
+{% endblock %}
+
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li><a href="/academico/">Académico</a></li>
+	<li>>></li>
+	<li><a href="/academico/docente/notas/">Calificaciones</a></li>
+	<li>>></li>
+	<li>{{curso.nombre}}</li>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1> {{curso.nombre}} </h1>	
+		<div id="csrf_token">{% csrf_token %}</div>	
+		<table id="estudiantes" class="grilla" width="100%">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Nombre</th>	
+					<th style="width: 80px;">Valoración</th>	
+					<th style="width: 40px;">Fallas.</th>
+					<th style="width: 20px;">P.F.</th>					
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th scope="row" colspan="5">Total Estudiantes: {{ cantidad }}</th>
+				</tr>
+			</tfoot>
+			<tbody>				
+				{% for calificacion in calificaciones %}
+					<tr class="{% cycle '' 'odd' %}">
+						<th scope="row">{{ calificacion.codigo_estudiante }}</th>
+						<td>{{ calificacion.nombre_estudiante }}</td>
+						<th style="text-align:center;">
+							<select id="valoracion_{{calificacion.id}}" idCalificacion="{{calificacion.id}}"> 
+								<option value="0">...</option>
+							{% for valoracion in valoraciones %}
+								<option value="{{ valoracion.id }}" 
+								{% ifequal calificacion.index forloop.counter %}
+									selected
+								{% endifequal %}
+								>{{ valoracion.nombre }}</option>
+							{% endfor %}
+							</select>
+						</th>
+						<td style="text-align:center;">
+							<input type="text" id="fallas_{{calificacion.id}}" 
+								{% ifequal calificacion.fallas None %}
+									value="0" 
+								{% else %}
+									value="{{ calificacion.fallas }}" 
+								{% endifequal %}
+							falla="falla" idCalificacion="{{calificacion.id}}" required="required"/>
+						</td>
+						<td style="text-align:center;">
+							<div id="perdioFallas{{calificacion.id}}">
+								<input name="perdioFallas_{{calificacion.id}}" type=checkbox disabled="disabled" 
+									{% ifequal calificacion.perdio_fallas 1 %}
+										checked
+									{% endifequal %}
+								pf="pf">
+							</div>
+						</td>
+					</tr>					
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>			
+{% endblock %}

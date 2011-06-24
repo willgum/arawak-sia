@@ -9,8 +9,9 @@ from django.template import RequestContext
 from django.views.static import Context, HttpResponseRedirect                                               # se incorporo para poder acceder a archivos estaticos
 from django.conf import settings    
 from django.contrib import auth                                                                             # se incopora para poder acceder a los valores creados en el settings
-from academico.models import Profesor, Estudiante, Curso, Materia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion, MatriculaCicloForm, MatriculaProgramaForm, EstadoInscripcion
+from academico.models import Profesor, Estudiante, Curso, Materia, Programa, MatriculaPrograma, MatriculaCiclo, Calificacion, Ciclo, Corte, NotaCorte, CicloForm, TipoPrograma, Institucion, MatriculaCicloForm, MatriculaProgramaForm, EstadoInscripcion, TipoNotaConceptual
 from django.contrib.auth.decorators import login_required                                                   # me permite usar eö @login_requerid
+from django.views.decorators.csrf import csrf_exempt
 
 #Pruebas GERALDO
 from reportes import rpt_ConstanciaCiclo, rpt_EstudiantesInscritos, rpt_ConsolidadoInscritos, rpt_EstudianteCarnet
@@ -182,38 +183,103 @@ def notasDocente(solicitud):
     else:
         return logout(solicitud)
 
+def calificacionNumerica(ciclo_id, curso_id):
+    cortes = Corte.objects.filter(ciclo = ciclo_id).order_by('fecha_inicio')         
+    calificaciones = Calificacion.objects.filter(curso = curso_id)
+    calificacionesCiclo = []
+    for indice in calificaciones:                
+        if Calificacion.cicloActual(indice):
+            notas = {}
+            notas['id'] =                   indice.id
+            notas['matricula_ciclo'] =      indice.matricula_ciclo
+            notas['nota_definitiva'] =      indice.nota_definitiva
+            notas['nota_habilitacion'] =    indice.nota_habilitacion
+            notas['perdio_fallas'] =        indice.perdio_fallas
+            notas['fallas'] =               indice.fallas
+            notas['codigo_estudiante'] =    Calificacion.codigo_estudiante(indice)
+            notas['nombre_estudiante'] =    Calificacion.nombre_estudiante(indice)
+            notas['codigo_ciclo'] =         Calificacion.codigo_ciclo(indice)
+            for corte in cortes:
+                try:
+                    resultado = NotaCorte.objects.get(calificacion = indice.id, corte = corte.id)
+                    notas[corte.id] = {'nota': resultado.nota, 'fallas': resultado.fallas}
+                except:
+                    notas[corte.id] = {'nota': 0, 'fallas': 0}
+            calificacionesCiclo.append(notas) 
+    datos = {'cortes': cortes,
+             'calificaciones': calificacionesCiclo,
+             'cantidad': len(calificacionesCiclo),
+             'cantidadCortes': 5+(len(cortes)*2)}
+    return datos
+
+def calificacionConceptual(ciclo_id, curso_id):
+    calificaciones = Calificacion.objects.filter(curso = curso_id)
+    tipoNotas = TipoNotaConceptual.objects.all()
+    valoraciones = []
+    for indice in calificaciones:                
+        if Calificacion.cicloActual(indice):
+            notas = {}
+            index = 0
+            notas['id'] =                   indice.id
+            notas['matricula_ciclo'] =      indice.matricula_ciclo
+            notas['nota_definitiva'] =      indice.nota_definitiva
+            notas['perdio_fallas'] =        indice.perdio_fallas
+            notas['fallas'] =               indice.fallas
+            notas['codigo_estudiante'] =    Calificacion.codigo_estudiante(indice)
+            notas['nombre_estudiante'] =    Calificacion.nombre_estudiante(indice)
+            notas['codigo_ciclo'] =         Calificacion.codigo_ciclo(indice)
+            notas['index'] =                index
+            for tipoNota in tipoNotas:
+                index += 1
+                numero = str(indice.nota_definitiva).split('.')
+                if tipoNota.id == int(numero[0]):
+                    notas['index'] = index
+            valoraciones.append(notas) 
+    datos = {'calificaciones': valoraciones,
+             'cantidad': len(valoraciones),
+             'valoraciones': tipoNotas}
+    return datos
+
+def horasBienestar(ciclo_id, curso_id):
+    calificaciones = Calificacion.objects.filter(curso = curso_id)
+    calificacionesCiclo = []
+    for indice in calificaciones:                
+        if Calificacion.cicloActual(indice):
+            notas = {}
+            numero = str(indice.nota_definitiva).split('.')
+            notas['id'] =                   indice.id
+            notas['matricula_ciclo'] =      indice.matricula_ciclo
+            notas['nota_definitiva'] =      int(numero[0])
+            notas['codigo_estudiante'] =    Calificacion.codigo_estudiante(indice)
+            notas['nombre_estudiante'] =    Calificacion.nombre_estudiante(indice)
+            notas['codigo_ciclo'] =         Calificacion.codigo_ciclo(indice)
+            programa = Programa.objects.get(id = indice.idPrograma)
+            matricula = MatriculaPrograma.objects.get(id = indice.idMatriculaPrograma)
+            notas['horas_bienestar'] =      programa.horas_bienestar
+            notas['total_horas'] =          matricula.horas_bienestar
+            calificacionesCiclo.append(notas) 
+    datos = {'calificaciones': calificacionesCiclo,
+             'cantidad': len(calificacionesCiclo)}
+    return datos
+    
 @login_required
 def guardarNotasDocente(solicitud, ciclo_id, curso_id):
     if comprobarPermisos(solicitud):
+        datos = {}
         curso = Curso.objects.get(id = curso_id)
-        cortes = Corte.objects.filter(ciclo = ciclo_id).order_by('fecha_inicio')         
-        calificaciones = Calificacion.objects.filter(curso = curso_id)
-        calificacionesCiclo = []
-        for indice in calificaciones:                
-            if Calificacion.cicloActual(indice):
-                notas = {}
-                notas['id'] =                   indice.id
-                notas['matricula_ciclo'] =      indice.matricula_ciclo
-                notas['nota_definitiva'] =      indice.nota_definitiva
-                notas['nota_habilitacion'] =    indice.nota_habilitacion
-                notas['perdio_fallas'] =        indice.perdio_fallas
-                notas['fallas'] =               indice.fallas
-                notas['codigo_estudiante'] =    Calificacion.codigo_estudiante(indice)
-                notas['nombre_estudiante'] =    Calificacion.nombre_estudiante(indice)
-                notas['codigo_ciclo'] =         Calificacion.codigo_ciclo(indice)
-                for corte in cortes:
-                    try:
-                        resultado = NotaCorte.objects.get(calificacion = indice.id, corte = corte.id)
-                        notas[corte.id] = {'nota': resultado.nota, 'fallas': resultado.fallas}
-                    except:
-                        notas[corte.id] = {'nota': 0, 'fallas': 0}
-                calificacionesCiclo.append(notas)               
-        datos = {'curso': curso,
-                 'cortes': cortes,
-                 'calificaciones': calificacionesCiclo,
-                 'cantidad': len(calificacionesCiclo),
-                 'cantidadCortes': 5+(len(cortes)*2)}
-        return redireccionar('academico/docente/guardarNotas.html', solicitud, datos)
+        materia = Materia.objects.get(id = curso.idMateria)
+        if materia.tipo_valoracion == "2":
+            datos = calificacionConceptual(ciclo_id, curso_id)
+            datos['curso'] = curso
+            return redireccionar('academico/docente/notaConceptual.html', solicitud, datos)
+        elif materia.tipo_valoracion == "3":
+            datos = horasBienestar(ciclo_id, curso_id)
+            datos['curso'] = curso
+            return redireccionar('academico/docente/horasBienestar.html', solicitud, datos)
+        else:
+            datos = calificacionNumerica(ciclo_id, curso_id)
+            datos['curso'] = curso
+            return redireccionar('academico/docente/notaNumerica.html', solicitud, datos)
     else:
         return logout(solicitud)
         
@@ -237,7 +303,7 @@ def guardarNotaDocente(solicitud):
         calificacion = Calificacion.objects.filter(id = idCalificacion)
         return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8') 
 
-def guardarFallasDocente(solicitud):
+def guardarFallaDocente(solicitud):
     if solicitud.POST:
         c = {}
         c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
@@ -254,6 +320,45 @@ def guardarFallasDocente(solicitud):
                 NotaCorte.save(notacorte)
             except:
                 "error"
+        calificacion = Calificacion.objects.filter(id = idCalificacion) 
+        return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8')
+    
+def guardarFallas(solicitud):
+    if solicitud.POST:
+        c = {}
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
+        idCalificacion = solicitud.POST.get('idCalificacion')
+        valor = solicitud.POST.get('valor')  
+        calificacion = Calificacion.objects.get(id = idCalificacion)
+        calificacion.fallas = valor
+        Calificacion.save(calificacion)
+        calificacion = Calificacion.objects.filter(id = idCalificacion) 
+        return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8')
+    
+def guardarValoracion(solicitud):
+    if solicitud.POST:
+        c = {}
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
+        idCalificacion = solicitud.POST.get('idCalificacion')
+        valor = solicitud.POST.get('valor')  
+        calificacion = Calificacion.objects.get(id = idCalificacion)
+        calificacion.nota_definitiva = valor
+        Calificacion.save(calificacion)
+        calificacion = Calificacion.objects.filter(id = idCalificacion) 
+        return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8')
+
+@csrf_exempt   
+def guardarHoras(solicitud):
+    if solicitud.POST:
+        c = {}
+        c.update(csrf(solicitud.POST.get('csrfmiddlewaretoken')))       
+        idCalificacion = solicitud.POST.get('idCalificacion')
+        valor = solicitud.POST.get('valor')  
+        calificacion = Calificacion.objects.get(id = idCalificacion)
+        calificacion.nota_definitiva = valor
+        Calificacion.save(calificacion)
+        programa = Programa.objects.get(id = calificacion.idMatriculaPrograma())
+        matricula = MatriculaCiclo.objects.get(id = calificacion.matricula_ciclo)        
         calificacion = Calificacion.objects.filter(id = idCalificacion) 
         return HttpResponse(serializers.serialize("json", calificacion), content_type = 'application/json; charset=utf8')
 
