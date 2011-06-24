@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block jquerycript %} 
+	$(":input").change
+	(
+		function() 
+		{
+			var validar = $(":input").validator({lang: 'es'});
+			if (!validar.data("validator").checkValidity())
+			{
+				this.focus();
+			}
+			else
+			{
+				numero = $(this).val();		
+		    	numero = parseInt(numero);
+		    	idCalificacion = $(this).attr("idCalificacion");
+		        if (isNaN(numero))	
+		    	{
+		    		$(this).val("");
+		    		validar.data("validator").checkValidity();
+		    		this.focus();
+		    	}
+		    	else
+		    	{	
+			    	$.ajax
+					(
+						{
+							type: 			"POST",
+							url: 			"horas/",
+							data:			{idCalificacion: idCalificacion, valor: numero, csrfmiddlewaretoken: $('#csrf_token >div >input').attr("value")},
+							success:		function(datos){},
+					        error: 			function(objeto, quepaso, otroobj){alert(objeto.status+": "+objeto.statusText);},
+							contentType:	"application/json"
+						}
+					);
+			        $(this).val(numero.toString());
+				}
+			}
+		}
+	);
+	
+	$.tools.validator.localize
+	(
+		"es", {'[required]' 	: 'Digite un valor adecuado'}
+	);	
+{% endblock %}
+
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li><a href="/academico/">Académico</a></li>
+	<li>>></li>
+	<li><a href="/academico/docente/notas/">Calificaciones</a></li>
+	<li>>></li>
+	<li>{{curso.nombre}}</li>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1> {{curso.nombre}} </h1>	
+		<div id="csrf_token">{% csrf_token %}</div>	
+		<table id="estudiantes" class="grilla" width="100%">
+			<thead>
+				<tr>
+					<th>Código</th>
+					<th>Nombre</th>	
+					<th style="width: 50px;">Horas</th>	
+					<th style="width: 50px;">Totales</th>					
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<th scope="row" colspan="4">Total Estudiantes: {{ cantidad }}</th>
+				</tr>
+			</tfoot>
+			<tbody>				
+				{% for calificacion in calificaciones %}
+					<tr class="{% cycle '' 'odd' %}">
+						<th scope="row">{{ calificacion.codigo_estudiante }}</th>
+						<td>{{ calificacion.nombre_estudiante }}</td>
+						<th style="text-align:center;">
+							<input type="text" id="fallas_{{calificacion.id}}" 
+								{% ifequal calificacion.nota_definitiva None %}
+									value="0" 
+								{% else %}
+									value="{{ calificacion.nota_definitiva }}" 
+								{% endifequal %}
+							idCalificacion="{{calificacion.id}}" required="required"/>
+						</th>
+						<td style="text-align:center;">
+							<div id="horas_{{calificacion.id}}">
+								{{ calificacion.total_horas }}/{{ calificacion.horas_bienestar }}
+							</div>
+						</td>
+					</tr>					
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>			
+{% endblock %}

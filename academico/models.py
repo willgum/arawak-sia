@@ -445,6 +445,7 @@ class Programa(models.Model):
     jornada = models.ForeignKey(Jornada, blank=True, null=True, default=1)
     
     # Informacion adicional
+    horas_bienestar = models.IntegerField(help_text="Número de horas de bienestar necesaria para aprobar el programa.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     aptitudes = models.TextField(max_length=200, help_text="Aptitudes requeridas para los aspirantes.", blank=True)
     perfil_profesional = models.TextField(max_length=200, help_text="Perfil profesional del egresado.", blank=True)
     funciones = models.TextField(max_length=200,help_text="Funciones en las que se puede desempeñar el egresado.", blank=True)
@@ -606,6 +607,7 @@ class MatriculaPrograma(models.Model):
     fecha_vencimiento = models.DateField()
     becado = models.BooleanField(help_text='Indica si el estudiante recibe o no beca.')
     promedio_acumulado = models.FloatField(blank=True, null=True, default=0)
+    horas_bienestar = models.IntegerField(help_text="Número de horas de bienestar acumuladas.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
     
     def nombre_estudiante(self):
         return self.estudiante.nombre()
@@ -732,7 +734,10 @@ class MatriculaCiclo(models.Model):
     
     def __unicode__(self):
         return self.matricula_programa.codigo
-  
+    
+    def idMatriculaPrograma(self):
+        return "%s" % (self.matricula_programa.id)
+    
     def nombre_programa(self):
         return self.matricula_programa.nombre_programa()
     
@@ -757,10 +762,11 @@ class MatriculaCiclo(models.Model):
         tmp_promedio_ciclo = 0.0
         
         for tmp_nota in tmp_calificacion:
-            if tmp_nota.nota_definitiva >= tmp_nota.nota_habilitacion:
-                tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_definitiva
-            else: 
-                tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_habilitacion
+            if tmp_nota.tipoValoracion() == "1":
+                if tmp_nota.nota_definitiva >= tmp_nota.nota_habilitacion:
+                    tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_definitiva
+                else: 
+                    tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_habilitacion
               
         self.promedio_ciclo = round(tmp_promedio_ciclo/len(tmp_calificacion), 2)
         MatriculaCiclo.save(self)
@@ -847,6 +853,9 @@ class Curso(models.Model):
     def inscritos(self):
         return len(Calificacion.objects.filter(curso=self))
     
+    def tipoValoracion(self):
+        return self.materia.tipo_valoracion
+    
     class Meta:
         unique_together = ("materia", "ciclo", "profesor", "grupo")
         ordering = ('materia__programa__nombre', 'ciclo', 'materia__nombre')
@@ -902,6 +911,9 @@ class Calificacion(models.Model):
     def nombre_materia(self):
         return u"%s" % (self.curso.nombre())
     
+    def idMatriculaPrograma(self):
+        return "%s" % (self.matricula_ciclo.idMatriculaPrograma())
+    
     def idPrograma(self):
         return "%s" % (self.curso.idPrograma())
     
@@ -913,6 +925,9 @@ class Calificacion(models.Model):
     
     def horarios(self):
         return self.curso.horarios()
+    
+    def tipoValoracion(self):
+        return self.curso.tipoValoracion()
     
     def abreviatura_aprobacion(self):
         return "%s" % (self.tipo_aprobacion.get_codigo())
@@ -932,7 +947,7 @@ class Calificacion(models.Model):
             self.fallas = tmp_fallas
             Calificacion.save(self)
             
-#        Valoración por horas. Suma las horas de los cortes,como el caso de bienestar institucional.
+#       Valoración por horas. Suma las horas de los cortes,como el caso de bienestar institucional.
         if self.curso.materia.tipo_valoracion=="3":
             for tmp_nota in tmp_notas:
                 tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
@@ -943,6 +958,20 @@ class Calificacion(models.Model):
             self.fallas = tmp_fallas
             Calificacion.save(self)
         self.matricula_ciclo.promedioCiclo(self.matricula_ciclo.id)
+    
+    def save(self, *args, **kwargs):
+        super(Calificacion, self).save(*args, **kwargs)  
+        horas = 0
+        matCiclos = MatriculaCiclo.objects.filter(matricula_programa = self.idMatriculaPrograma())
+        for matCiclo in matCiclos:
+            calificaciones = Calificacion.objects.filter(matricula_ciclo = matCiclo.id)
+            for calificacion in calificaciones:
+                if calificacion.tipoValoracion() == "3" and calificacion.id != self.id:
+                    horas = horas + calificacion.nota_definitiva     
+        matricula = MatriculaPrograma.objects.get(id = self.idMatriculaPrograma())
+        cal = Calificacion.objects.get(id = self.id)
+        matricula.horas_bienestar = horas + cal.nota_definitiva
+        super(MatriculaPrograma, matricula).save(*args, **kwargs)  
         
     
 class Corte(models.Model):
@@ -993,6 +1022,9 @@ class HorarioCurso(models.Model):
     
     def __unicode__(self):
         return "%s %s - %s %s" % (self.dia.nombre, self.hora_inicio.strftime("%H:%M"), self.hora_fin.strftime("%H:%M"), self.salon)
+    
+    class Meta:
+        unique_together = ("dia", "hora_inicio","hora_fin", "salon")
 
 
 class Institucion(models.Model):
