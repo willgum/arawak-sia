@@ -15,23 +15,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql', 
-#        'NAME': 'arawakte_sia', 
-#        'USER': 'arawakte_sia',
-#        'PASSWORD': 'nTzIp;r,m$pP',
-#        'HOST': 'arawaktechnologies.com',
-#        'PORT': '3306',
-#    }
-#}
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'arawak_sia', 
+        'NAME': 'sia', 
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
     }

@@ -209,7 +209,7 @@ def login(solicitud):
     password = solicitud.POST['contrasena']
     user = auth.authenticate(username=username, password=password)
     if user is None:
-        solicitud.session['msg_error'] = 'Nombre de usuario y/o contraseña incorrectos.'
+        solicitud.session['msg_error'] = 'Usuario/contraseña incorrecto.'
     else:
         if user.is_active:
             auth.login(solicitud, user)
