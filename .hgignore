@@ -1,0 +1,6 @@
+
+syntax: glob
+*.pyc
+academico/*.pyc
+academico/management/*.pyc
+financiero/*.pyc
