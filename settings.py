@@ -1,9 +1,9 @@
 # Django settings for sia project.
 import os.path
 
-DEBUG = True
+DEBUG = True # Cambiar a False para versiones de Claro en produccion
 TEMPLATE_DEBUG = DEBUG
-SESSION_EXPIRE_AT_BROWSER_CLOSE = True      # se indica a la aplicacion que la sesion xpira cuando se cierra el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True      # se indica a la aplicacion que la sesion expira cuando se cierra el navegador
 PROJECT_DIR = os.path.dirname(__file__)
 LOGIN_URL = '/'
 
@@ -120,7 +120,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     # 'django.contrib.sites',
     'django.contrib.messages',
-    
+    'django.contrib.humanize', # Agrega formato a los numeros para facil lectura 
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'django.contrib.redirects',
