@@ -36,7 +36,7 @@
 			
 			  (function() {
 			    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' [^] : 'http://www' [^]) + '.google-analytics.com/ga.js';
+			    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			  })();
 			//-->
@@ -65,7 +65,7 @@
 		<div id="wrapper" class="fixed">
 			<div id="header">		
 					<div id="titulo">	
-						<h1>{{ titulo }}</h1>
+						<h1><strong>{{ titulo }}</strong></h1>
 					</div>
 					<div id="adsense">
 						{% if request.session.grupoUsuarioid %}
@@ -194,5 +194,39 @@
 				<p><a href="http://www.arawak.com.co/" target="_blank">Arawak</a> Claro - Sistema de Información Académica © 2011.</p>
 			</div>
 		</div>
+		
+		{% if debug %}
+		<!-- Debug Consults lentas -->
+			<div id="debug">
+				<h2>Consultas</h2>
+				<p>
+					{{ sql_queries|length }} Quer{{ sql_queries|pluralize:"y,ies" }}
+					{% ifnotequal sql_queries|length 0 %}
+						(<span style="cursor: pointer;" onclick="var s=document.getElementById('debugQueryTable').style;s.display=s.display=='none'?'':'none';this.innerHTML=this.innerHTML=='Show'?'Hide':'Show';">Show</span>)
+					{% endifnotequal %}
+				</p>
+				<table id="debugQueryTable" style="display: none;">
+					<col width="1"></col>
+					<col></col>
+					<col width="1"></col>
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">SQL</th>
+							<th scope="col">Tiempo</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for query in sql_queries %}
+							<tr class="{% cycle odd,even %}">
+								<td>{{ forloop.counter }}</td>
+								<td>{{ query.sql|escape }}</td>
+								<td>{{ query.time }}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		{% endif %}
 	</body>
 </html>

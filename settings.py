@@ -6,6 +6,9 @@ TEMPLATE_DEBUG = DEBUG
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True      # se indica a la aplicacion que la sesion expira cuando se cierra el navegador
 PROJECT_DIR = os.path.dirname(__file__)
 LOGIN_URL = '/'
+INTERNAL_IPS = ( # Requerido para depurar las consultas SQL
+    '127.0.0.1',
+) 
 
 ADMINS = (
     ('Javier Enciso', 'j4r.e4o@gmail.com'),

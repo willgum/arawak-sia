@@ -51,7 +51,7 @@ def redireccionar(plantilla, solicitud, datos):
     variables = {
         'user': solicitud.user, 
         'titulo': institucion.nombre,
-        'titulo_pagina': 'Sistema de Información Académica |' + institucion.nombre,
+        'titulo_pagina': 'Sistema de Información Académica | ' + institucion.nombre,
         'path': settings.MEDIA_URL,
     }
     llaves = datos.keys()
