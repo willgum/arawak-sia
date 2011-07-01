@@ -544,13 +544,14 @@ def programasEstudiante(solicitud):
 def horariosEstudiante(solicitud):
     if comprobarPermisos(solicitud):
         programas = {}
+        ciclo = 0 
         matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
         for matPrograma in matProgramas:
             aux = {}
             aux['programas'] = matPrograma
             matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
             for matCiclo in matCiclos:
-                tmp_ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                tmp_ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id)
                 if Ciclo.cicloActual(tmp_ciclo):
                     ciclo = tmp_ciclo
                     aux['ciclo'] = matCiclo
@@ -571,6 +572,7 @@ def horariosEstudiante(solicitud):
 def notasEstudiante(solicitud):
     if comprobarPermisos(solicitud):
         programas = {}
+        cortes = {}
         matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
         for matPrograma in matProgramas:
             aux = {}
