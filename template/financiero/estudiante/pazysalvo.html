@@ -1,5 +1,5 @@
-{% load humanize %}
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block jquerycript %}
 	$(function() {$("ul.tabs").tabs("div.panes > div");});
@@ -55,7 +55,7 @@
                         					-
                         				{% endif %}
                         			</th>
-                        			<th scope="row">{{ letra.valor|floatformat(0)|intcomma }}</th>
+                        			<th scope="row">{{ letra.valor|floatformat|intcomma }}</th>
                         			<th scope="row">
                         				{% if letra.cancelada %}
                         					<a href="plazo/{{letra.id}}/" target="_blank">Recibo</a>

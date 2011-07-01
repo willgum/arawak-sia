@@ -1381,6 +1381,13 @@
 		"nota_habilitacion": 0,
 		"perdio_fallas": 0
 	}
+  },
+  {
+  	"model": "academico.institucion", 
+  	"pk":1, 
+	"fields": {
+		"nombre": "INSTITUTO DE FORMACION",
+		"nit": "12345"
+	}
   }
-
 ]

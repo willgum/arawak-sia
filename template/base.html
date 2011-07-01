@@ -3,6 +3,9 @@
 	<head>
 		<title>{{ titulo_pagina }}</title>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="keywords" content="sistema, informacion, academica, claro, arawak, notas" /> 
+		<meta name="description" content="Bienvenido al Sistema de Información y Gestión Académica." /> 
+		<meta name="generator" content="Arawak Claro - Sistema de Información y Gestión Académica" /> 
 		<link rel="shortcut icon" href="{{ path }}images/favicon.ico"/>
 		<link rel="stylesheet" href="{{ path }}css/estilo.css" type="text/css" media="screen,projection" />
 		<link rel="stylesheet" href="{{ path }}css/estilo_imprimir.css" type="text/css" media="print" />
@@ -61,24 +64,25 @@
 		</div>
 		<div id="wrapper" class="fixed">
 			<div id="header">		
-					<div id="titulo">
-						<!--{{ titulo_pagina }}-->	
-						<h1><strong>{{ titulo_pagina }}</strong></h1>
+					<div id="titulo">	
+						<h1>{{ titulo }}</h1>
 					</div>
-					<div id="adsense"> 
-						<script type="text/javascript"><!--
-							google_ad_client = "ca-pub-9998564962931934";
-							/* Banner Claro */
-							google_ad_slot = "1354798256";
-							google_ad_width = 468;
-							google_ad_height = 60;
-							//-->
+					<div id="adsense">
+						{% if request.session.grupoUsuarioid %}
+							<!-- B-SIA -->
+							<script type="text/javascript"><!--
+								google_ad_client = "ca-pub-9998564962931934";
+								google_ad_slot = "1354798256";
+								google_ad_width = 468;
+								google_ad_height = 60;
+								//-->
 							</script>
-							<script type="text/javascript"
-							src="https://pagead2.googlesyndication.com/pagead/show_ads.js">
-						</script> 
+							<script type="text/javascript" 
+								src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+							</script>
+						{% endif %} 
 					</div> 
-					<!--/* claro.net.co Ad System Javascript Tag */--> 
+					 
 					<ul id="nav">
 						{% block ruta %}{% endblock %}		
 					</ul>
@@ -155,18 +159,21 @@
 					</td>
 					<td valign="top">
 								<div id="sidebar_right">
-									<div id="adsense_cuadrado"> 
-										<script type="text/javascript"><!--
-											google_ad_client = "ca-pub-9998564962931934";
-											/* Rectángulo mediano Claro */
-											google_ad_slot = "3476839449";
-											google_ad_width = 300;
-											google_ad_height = 250;
-											//-->
-										</script>
-										<script type="text/javascript"
-											src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-										</script>
+									<div id="adsense_cuadrado">
+										{% if request.session.grupoUsuarioid %}
+											<!-- R-SIA --> 
+											<script type="text/javascript"><!--
+												google_ad_client = "ca-pub-9998564962931934";
+												/* Rectángulo mediano Claro */
+												google_ad_slot = "3476839449";
+												google_ad_width = 300;
+												google_ad_height = 250;
+												//-->
+											</script>
+											<script type="text/javascript"
+												src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+											</script>
+										{% endif %}
 										<br/> 
 									</div>
 								</div>
