@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 
 {% block javascript %}
 	function imprimir()	{if (window.print)	window.print();}
@@ -64,7 +65,7 @@
 			</tr>
 			<tr align="left">
 				<td colspan="2"><strong>Valor:</strong></td>
-				<td colspan="8">$ {{ inscripcionPrograma.valor_inscripcion }}</td>
+				<td colspan="8">$ {{ inscripcionPrograma.valor_inscripcion|floatformat|intcomma }}</td>
 			</tr>
 			<tr align="left">
 				<td colspan="2"><strong>Fecha de inscripción:</strong></td>
