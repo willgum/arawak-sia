@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block jquerycript %} 
+	$(function() {		
+		$("#estudiantes").tablesorter({sortList:[[0,0],[2,1]], widgets: ['zebra']});
+		$("#options").tablesorter({sortList: [[0,0]], headers: { 3:{sorter: false}, 4:{sorter: false}}});
+	}); 
 	$(":input").change
 	(
 		function() 
@@ -92,7 +96,7 @@
 	<div id="content" class="with_sidebar">
 		<h1> {{curso.nombre}} </h1>	
 		<div id="csrf_token">{% csrf_token %}</div>	
-		<table id="estudiantes" class="grilla" width="100%">
+		<table id="estudiantes" class="tablesorter" width="100%">
 			<thead>
 				<tr>
 					<th>Código</th>
