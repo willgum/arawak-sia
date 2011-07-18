@@ -392,7 +392,8 @@ class ProfesorAdmin(admin.ModelAdmin):
             'fecha_nacimiento', 
             'lugar_nacimiento', 
             'foto',
-            'titulo']}),
+            'titulo',
+            'perfil_profesional',]}),
         ('Informacion de contacto', {'fields': [
             'direccion', 
             'lugar_residencia', 
@@ -405,6 +406,10 @@ class ProfesorAdmin(admin.ModelAdmin):
     inlines = [ExperienciaProfesorInline, ]
     list_display = ('documento', 'nombre1', 'apellido1', 'usuario', 'email')
     search_fields = ['documento', 'nombre1', 'apellido1']
+    
+    class Media:
+        js = ('js/tiny_mce/tiny_mce.js',
+              'js/tiny_mce/textareas.js',)
 
 
 class HorarioCursoInline(admin.TabularInline):
