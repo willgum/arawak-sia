@@ -336,6 +336,7 @@ class Profesor(models.Model):
     lugar_nacimiento = models.CharField(blank=True, max_length=200)
     foto = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
     titulo = models.CharField(verbose_name='Título', max_length=200, blank=True)
+    perfil_profesional = models.TextField(max_length=300, blank=True)
     # Informacion de contacto
     direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
     lugar_residencia = models.CharField(max_length=200, blank=True)
@@ -1070,7 +1071,7 @@ class Institucion(models.Model):
     web = models.URLField(blank=True)
     logo = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
     control_acudiente = models.BooleanField(help_text="Activado, impide que estudiantes menores de edad cambien la contraseña.")
-    saludo = models.TextField( help_text='Mensaje de bienvenida', max_length=300, blank=True)
+    saludo = models.TextField(help_text='Mensaje de bienvenida', max_length=300, blank=True)
     class Meta:
         verbose_name_plural = 'Institución'
     
