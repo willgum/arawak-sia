@@ -1,0 +1,1394 @@
+[
+  {
+    "model": "academico.ciclo",
+    "pk": 1,
+    "fields": {
+      "codigo": "2011-1",
+      "fecha_inicio": "2011-01-01",
+      "fecha_fin": "2011-06-30"
+    }
+  },
+  {
+    "model": "academico.ciclo",
+    "pk": 2,
+    "fields": {
+      "codigo": "2011-2",
+      "fecha_inicio": "2011-07-01",
+      "fecha_fin": "2011-12-31"
+    }
+  },
+  {
+    "model": "academico.corte",
+    "pk": 1,
+    "fields": {
+      "ciclo": 1,
+      "sufijo": "1",
+      "porcentaje": 30,
+      "fecha_inicio": "2011-01-01",
+      "fecha_fin": "2011-02-28"
+    }
+  },
+  {
+    "model": "academico.corte",
+    "pk": 2,
+    "fields": {
+      "ciclo": 1,
+      "sufijo": "2",
+      "porcentaje": 30,
+      "fecha_inicio": "2011-03-01",
+      "fecha_fin": "2011-04-30"
+    }
+  },
+  {
+    "model": "academico.corte",
+    "pk": 3,
+    "fields": {
+      "ciclo": 1,
+      "sufijo": "3",
+      "porcentaje": 40,
+      "fecha_inicio": "2011-05-01",
+      "fecha_fin": "2011-06-30"
+    }
+  },
+  {
+    "model": "academico.corte",
+    "pk": 4,
+    "fields": {
+      "ciclo": 2,
+      "sufijo": "1",
+      "porcentaje": 30,
+      "fecha_inicio": "2011-07-01",
+      "fecha_fin": "2011-08-31"
+    }
+  },
+  {
+    "model": "academico.corte",
+    "pk": 5,
+    "fields": {
+      "ciclo": 2,
+      "sufijo": "2",
+      "porcentaje": 30,
+      "fecha_inicio": "2011-09-01",
+      "fecha_fin": "2011-10-31"
+    }
+  },
+  {
+    "model": "academico.corte",
+    "pk": 6,
+    "fields": {
+      "ciclo": 2,
+      "sufijo": "3",
+      "porcentaje": 40,
+      "fecha_inicio": "2011-11-01",
+      "fecha_fin": "2011-12-31"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 1,
+    "fields": {
+      "codigo": "101",
+      "nombre": "Administración Ambiental"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 2,
+    "fields": {
+      "codigo": "102",
+      "nombre": "Administración Bancaria"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 3,
+    "fields": {
+      "codigo": "103",
+      "nombre": "Administración Financiera y Auditoría"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 4,
+    "fields": {
+      "codigo": "104",
+      "nombre": "Administración Pública y Gobierno"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 5,
+    "fields": {
+      "codigo": "105",
+      "nombre": "Administración Tributaría y Gestión Pública"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 6,
+    "fields": {
+      "codigo": "106",
+      "nombre": "Comercio Exterior"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 7,
+    "fields": {
+      "codigo": "107",
+      "nombre": "Contabilidad Sistematizada"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 8,
+    "fields": {
+      "codigo": "108",
+      "nombre": "Diseño de Envases, Embalajes, Gestión de Marcas y Logística en Comercio Exterior"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 9,
+    "fields": {
+      "codigo": "109",
+      "nombre": "Gerencia Financiera y de Seguros"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 10,
+    "fields": {
+      "codigo": "110",
+      "nombre": "Hotelería y Turismo"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 11,
+    "fields": {
+      "codigo": "111",
+      "nombre": "Ingeniería de Negocios y Ubicación Sectorial"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 12,
+    "fields": {
+      "codigo": "112",
+      "nombre": "Secretariado Contable Sistematizado"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 13,
+    "fields": {
+      "codigo": "113",
+      "nombre": "Secretariado Ejecutivo Bilingüe y Secretario Contable Sistematizado"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 14,
+    "fields": {
+      "codigo": "201",
+      "nombre": "Diseño y Obras Civiles"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 15,
+    "fields": {
+      "codigo": "202",
+      "nombre": "Electricidad, Electrónica y Telecomunicaciones"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 16,
+    "fields": {
+      "codigo": "203",
+      "nombre": "Ingeniería de Sistemas"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 17,
+    "fields": {
+      "codigo": "204",
+      "nombre": "Seguridad Industrial para la Industria Petrolera"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 18,
+    "fields": {
+      "codigo": "205",
+      "nombre": "Seminario Taller de Electrónica Práctica"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 19,
+    "fields": {
+      "codigo": "206",
+      "nombre": "Sistemas, Redes y Circuitos Eléctricos"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 20,
+    "fields": {
+      "codigo": "301",
+      "nombre": "Comunicación Social y Extensión Periodistica"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 21,
+    "fields": {
+      "codigo": "302",
+      "nombre": "Gestión y Trabajo Social"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 22,
+    "fields": {
+      "codigo": "303",
+      "nombre": "Pedagogía y Psicología Infantil"
+    }
+  },
+  {
+    "model": "academico.programa",
+    "pk": 23,
+    "fields": {
+      "codigo": "401",
+      "nombre": "Diseño Gráfico y Dibujo"
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 1,
+    "fields": {
+      "programa": "1",
+      "codigo": "10111",
+      "sufijo": "11",
+      "nombre": "Cálculo Diferencial",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 2,
+    "fields": {
+      "programa": "1",
+      "codigo": "10112",
+      "sufijo": "12",
+      "nombre": "Administración General",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 3,
+    "fields": {
+      "programa": "1",
+      "codigo": "10113",
+      "sufijo": "13",
+      "nombre": "Introducción a la Administración Ambiental",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 4,
+    "fields": {
+      "programa": "1",
+      "sufijo": "14",
+      "codigo": "10114",
+      "nombre": "Física",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 5,
+    "fields": {
+      "programa": "1",
+      "codigo": "10115",
+      "sufijo": "15",
+      "nombre": "Introducción a la Química",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 6,
+    "fields": {
+      "programa": "1",
+      "codigo": "10116",
+      "sufijo": "16",
+      "nombre": "Cátedra Institucional",
+      "periodo": 1
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 7,
+    "fields": {
+      "programa": "1",
+      "codigo": "10121",
+      "sufijo": "21",
+      "nombre": "Cálculo Integral",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 8,
+    "fields": {
+      "programa": "1",
+      "codigo": "10122",
+      "sufijo": "22",
+      "nombre": "Contabilidad",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 9,
+    "fields": {
+      "programa": "1",
+      "sufijo": "23",
+      "codigo": "10123",
+      "nombre": "Ecología",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 10,
+    "fields": {
+      "programa": "1",
+      "codigo": "10124",
+      "sufijo": "24",
+      "nombre": "Química Ambiental",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 11,
+    "fields": {
+      "programa": "1",
+      "codigo": "10125",
+      "sufijo": "25",
+      "nombre": "Sociedad y Ambiente",
+      "periodo": 2
+    }
+  },
+  {
+    "model": "academico.materia",
+    "pk": 12,
+    "fields": {
+      "programa": "1",
+      "codigo": "10126",
+      "sufijo": "26",
+      "nombre": "Técnicas de Expresión Oral y Escrita",
+      "periodo": 2
+    }
+  },
+  {	
+  	"model": "auth.user", "pk":1, 
+	"fields": {
+		"username": "admin",
+		"first_name": "",
+		"last_name": "",
+		"email": "admin@arawak.com.co",
+		"password": "sha1$5d02b$a74e1cc8606f8a6db945baec2b18c51dda180fd9",
+		"is_staff": "1",
+		"is_active": "1",
+		"is_superuser": "1"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":2, 
+	"fields": {
+		"username": "jenciso",
+		"first_name": "Javier",
+		"last_name": "Enciso",
+		"email": "jenciso@mail.com",
+		"password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":3, 
+	"fields": {
+		"username": "rherrera",
+		"first_name": "Roger",
+		"last_name": "Herrera",
+		"email": "rherrera@mail.com",
+		"password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":4, 
+	"fields": {
+		"username": "ecarranza",
+		"first_name": "Edwar",
+		"last_name": "Carranza",
+		"email": "ecarranza@mail.com",
+		"password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":5, 
+	"fields": {
+		"username": "jpabon",
+		"first_name": "Jerson",
+		"last_name": "Pabon",
+		"email": "jpabon@mail.com",
+		"password": "sha1$d8449$6eaba93b0246e090349a786fa2808bc470ef05d5",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":6, 
+	"fields": {
+		"username": "efmaciasc",
+		"first_name": "Edna",
+		"last_name": "Macias",
+		"email": "edna.macias@hotmail.com",
+		"password": "sha1$561b6$fa99906690744fdfd72961d4d7869a4586027d18",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":7, 
+	"fields": {
+		"username": "mgarciac",
+		"first_name": "Mercy",
+		"last_name": "Garcia",
+		"email": "mercy.garcia@gmail.com",
+		"password": "sha1$fb862$d96b676c3fdbbb4e0dcaf1a4c639c01d6b827996",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":8, 
+	"fields": {
+		"username": "oeguevarar",
+		"first_name": "Omar",
+		"last_name": "Guevara",
+		"email": "omar.guevara@gmail.com",
+		"password": "sha1$c6701$cce424870896734a4df2043b5f697e5ccd9bbbaa",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":9, 
+	"fields": {
+		"username": "argarcias",
+		"first_name": "Andres",
+		"last_name": "Garcia",
+		"email": "andres.garcia@gmail.com",
+		"password": "sha1$af009$3ea32ebda669f26dfa7e0f8aee33a84c39ba0e8b",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+  	"model": "auth.user", "pk":10, 
+	"fields": {
+		"username": "dncarranza",
+		"first_name": "Diego",
+		"last_name": "Carranza",
+		"email": "nicolas.carranza@gmail.com",
+		"password": "sha1$118b7$062eb2add77a808fa608843f111489ccad57ef23",
+		"is_staff": "0",
+		"is_active": "1",
+		"is_superuser": "0"
+	}
+  },
+  {
+    "model": "academico.profesor",
+    "pk": 1,
+    "fields": {
+      "nombre1": "Javier",
+      "apellido1": "Enciso",
+      "documento": "80097702",
+      "email": "jenciso@mail.com",
+      "id_usuario": 2      
+    }
+  },
+  {
+    "model": "academico.profesor",
+    "pk": 2,
+    "fields": {
+      "nombre1": "Roger",
+      "apellido1": "Herrera",
+      "documento": "86079213",
+      "email": "rherrera@mail.com",
+      "id_usuario": 3     
+    }
+  },
+  {
+    "model": "academico.profesor",
+    "pk": 3,
+    "fields": {
+      "nombre1": "Edwar",
+      "apellido1": "Carranza",
+      "documento": "86088352",
+      "email": "ecarranza@mail.com",
+      "id_usuario": 4     
+    }
+  },
+  {
+ 	"model":"auth.user_groups", 
+ 	"pk":1, 
+	"fields": {
+		"user": 2,
+		"group": 3
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":2, 
+	"fields": {
+		"user": 3,
+		"group": 3
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":3, 
+	"fields": {
+		"user": 4,
+		"group": 3
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":4, 
+	"fields": {
+		"user": 5,
+		"group": 4
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":5, 
+	"fields": {
+		"user": 6,
+		"group": 4
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":6, 
+	"fields": {
+		"user": 7,
+		"group": 4
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":7, 
+	"fields": {
+		"user": 8,
+		"group": 4
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":8, 
+	"fields": {
+		"user": 9,
+		"group": 4
+	}
+  },
+  {
+  	"model":"auth.user_groups", 
+  	"pk":9, 
+	"fields": {
+		"user":"10",
+		"group":"4"
+	}
+  },
+  {
+    "model": "academico.curso",
+    "pk": 1,
+    "fields": {
+      "materia": 1,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 2,
+    "fields": {
+      "materia": 2,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 3,
+    "fields": {
+      "materia": 3,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  },
+    {
+    "model": "academico.curso",
+    "pk": 4,
+    "fields": {
+      "materia": 4,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 5,
+    "fields": {
+      "materia": 5,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 6,
+    "fields": {
+      "materia": 6,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 7,
+    "fields": {
+      "materia": 7,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 8,
+    "fields": {
+      "materia": 8,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 9,
+    "fields": {
+      "materia": 9,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  },
+    {
+    "model": "academico.curso",
+    "pk": 10,
+    "fields": {
+      "materia": 10,
+      "grupo": 1,
+      "profesor": 1,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 11,
+    "fields": {
+      "materia": 11,
+      "grupo": 1,
+      "profesor": 2,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.curso",
+    "pk": 12,
+    "fields": {
+      "materia": 12,
+      "grupo": 1,
+      "profesor": 3,
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 1,
+    "fields": {
+      "codigo": "A101"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 2,
+    "fields": {
+      "codigo": "A102"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 3,
+    "fields": {
+      "codigo": "A103"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 4,
+    "fields": {
+      "codigo": "A201"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 5,
+    "fields": {
+      "codigo": "A202"
+    }
+  },
+  {
+    "model": "academico.salon",
+    "pk": 6,
+    "fields": {
+      "codigo": "A203"
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 1,
+    "fields": {
+      "curso": 1,
+      "dia": 2,
+      "hora_inicio": "07:30",
+      "hora_fin": "09:00",
+      "salon": 1
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 2,
+    "fields": {
+      "curso": 1,
+      "dia": 4,
+      "hora_inicio": "07:30",
+      "hora_fin": "09:00",
+      "salon": 1
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 3,
+    "fields": {
+      "curso": 2,
+      "dia": 2,
+      "hora_inicio": "09:30",
+      "hora_fin": "11:00",
+      "salon": 2
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 4,
+    "fields": {
+      "curso": 2,
+      "dia": 4,
+      "hora_inicio": "09:30",
+      "hora_fin": "11:00",
+      "salon": 3
+    }
+  },
+    {
+    "model": "academico.horariocurso",
+    "pk": 5,
+    "fields": {
+      "curso": 3,
+      "dia": 2,
+      "hora_inicio": "13:00",
+      "hora_fin": "14:30",
+      "salon": 3
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 6,
+    "fields": {
+      "curso": 3,
+      "dia": 4,
+      "hora_inicio": "13:00",
+      "hora_fin": "14:30",
+      "salon": 3
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 7,
+    "fields": {
+      "curso": 4,
+      "dia": 5,
+      "hora_inicio": "13:00",
+      "hora_fin": "14:30",
+      "salon": 5
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 8,
+    "fields": {
+      "curso": 5,
+      "dia": 5,
+      "hora_inicio": "15:00",
+      "hora_fin": "16:30",
+      "salon": 5
+    }
+  },
+  {
+    "model": "academico.horariocurso",
+    "pk": 9,
+    "fields": {
+      "curso": 6,
+      "dia": 5,
+      "hora_inicio": "17:00",
+      "hora_fin": "18:00",
+      "salon": 2
+    }
+  },
+  {
+    "model": "academico.estudiante",
+    "pk": 1,
+    "fields": {
+      "nombre1": "Jerson",
+      "nombre2": "Eduardo",
+      "apellido1": "Pabón",
+      "apellido2": "Mora",
+      "documento": "86273452",
+      "email": "jpabon@mail.com",
+      "id_usuario": 5 
+      
+    }
+  },
+  {
+  	"model": "academico.estudiante", 
+  	"pk":2, 
+	"fields": {
+		"nombre1": "Edna",
+		"nombre2": "Faisully",
+		"apellido1": "Macias",
+		"apellido2": "Calderón",
+		"genero": 2,
+		"tipo_documento": 2,
+		"documento": "1121821635",
+		"lugar_expedicion": "Villavicencio",
+		"fecha_nacimiento": "1986-12-01",
+		"lugar_nacimiento": "Villavicencio",
+		"fotocopia_documento": "",
+		"fotocopia_diploma": "",
+		"foto": "imagenes/original/1121821635c.jpg",
+		"direccion": "Conjunto residencial almería",
+		"lugar_residencia": "Villavicencio",
+		"estrato": 4,
+		"telefono": "",
+		"movil": "3004282125",
+		"email": "edna.macias@hotmail.com",
+		"web": "",
+		"id_usuario": 6,
+		"sisben": 1,
+		"discapacidad": 1,
+		"etnia": 1
+	}
+  },
+  {
+  	"model": "academico.estudiante", 
+  	"pk":3, 
+	"fields": {
+		"nombre1": "Mercy",
+		"nombre2": "",
+		"apellido1": "Garcia",
+		"apellido2": "Cascavita",
+		"genero": 2,
+		"tipo_documento": 2,
+		"documento": "1121824630",
+		"lugar_expedicion": "Villavicencio",
+		"fecha_nacimiento": "1986-02-04",
+		"lugar_nacimiento": "Villavicencio",
+		"fotocopia_documento": "",
+		"fotocopia_diploma": "",
+		"foto": "imagenes/original/1121824630c.jpg",
+		"direccion": "Conjunto residencial almería",
+		"lugar_residencia": "Villavicencio",
+		"estrato": 4,
+		"telefono": "",
+		"movil": "3109035922",
+		"email": "mercy.garcia@gmail.com",
+		"web": "",
+		"id_usuario": 7,
+		"sisben": 1,
+		"discapacidad": 1,
+		"etnia": 1
+	}
+  },
+  {
+  	"model": "academico.estudiante", 
+  	"pk":4, 
+	"fields": {
+		"nombre1": "Omar",
+		"nombre2": "Eduardo",
+		"apellido1": "Guevara",
+		"apellido2": "Riveros",
+		"genero": 3,
+		"tipo_documento": 2,
+		"documento": "86008402",
+		"lugar_expedicion": "Villavicencio",
+		"fecha_nacimiento": "1985-11-26",
+		"lugar_nacimiento": "Acacías",
+		"fotocopia_documento": "",
+		"fotocopia_diploma": "",
+		"foto": "",
+		"direccion": "Conjunto residencial Llano lindo",
+		"lugar_residencia": "Villavicencio",
+		"estrato": 5,
+		"telefono": "",
+		"movil": "3004282044",
+		"email": "omar.guevara@gmail.com",
+		"web": "",
+		"id_usuario": 8,
+		"sisben": 1,
+		"discapacidad": 1,
+		"etnia": 1
+	}
+  },
+  {
+  	"model": "academico.estudiante", 
+  	"pk":5, 
+	"fields": {
+		"nombre1": "Andres",
+		"nombre2": "Ricardo",
+		"apellido1": "Garcia",
+		"apellido2": "Soto",
+		"genero": 3,
+		"tipo_documento": 2,
+		"documento": "86088354",
+		"lugar_expedicion": "Bogotá",
+		"fecha_nacimiento": "1985-04-04",
+		"lugar_nacimiento": "Villavicencio",
+		"fotocopia_documento": "",
+		"fotocopia_diploma": "",
+		"foto": "",
+		"direccion": "Barrio la Esperanza",
+		"lugar_residencia": "Villavicencio",
+		"estrato": 4,
+		"telefono": "",
+		"movil": "3008318009",
+		"email": "andres.garcia@gmail.com",
+		"web": "",
+		"id_usuario": 9,
+		"sisben": 1,
+		"discapacidad": 1,
+		"etnia": 1
+	}
+  },
+  {
+  	"model": "academico.estudiante", 
+  	"pk":6, 
+	"fields": {
+		"nombre1": "Diego",
+		"nombre2": "Nicolás",
+		"apellido1": "Carranza",
+		"apellido2": "",
+		"genero": 3,
+		"tipo_documento": 3,
+		"documento": "01091745231",
+		"lugar_expedicion": "Villavicencio",
+		"fecha_nacimiento": "2001-09-17",
+		"lugar_nacimiento": "Villavicencio",
+		"fotocopia_documento": "",
+		"fotocopia_diploma": "",
+		"foto": "",
+		"direccion": "Cll. 37c No. 10-41 La floresta",
+		"lugar_residencia": "Villavicencio",
+		"estrato": 4,
+		"telefono": "",
+		"movil": "3104779585",
+		"email": "nicolas.carranza@gmail.com",
+		"web": "",
+		"id_usuario": 10,
+		"sisben": 1,
+		"discapacidad": 1,
+		"etnia": 1
+	}
+  },
+  {
+  	"model": "academico.matriculaprograma", 
+  	"pk":1, 
+	"fields": {
+		"estudiante": 1,
+		"fecha_inscripcion": "2011-01-30",
+		"programa": 1,
+		"codigo": "10100001",
+		"estado": 1,
+		"fecha_vencimiento": "2013-01-30",
+		"becado": 0,
+		"promedio_acumulado": 0
+	}
+  },
+  {
+  	"model": "academico.matriculaprograma", 
+  	"pk":2, 
+	"fields": {
+		"estudiante": 2,
+		"fecha_inscripcion": "2011-01-26",
+		"programa": 1,
+		"codigo": "10100002",
+		"estado": 1,
+		"fecha_vencimiento": "2012-12-14",
+		"becado": 0,
+		"promedio_acumulado": 0
+	}
+  },
+  {
+  	"model": "academico.matriculaprograma", 
+  	"pk":3, 
+	"fields": {
+		"estudiante": 3,
+		"fecha_inscripcion": "2011-01-26",
+		"programa": 2,
+		"codigo": "10200001",
+		"estado": 1,
+		"fecha_vencimiento": "2012-12-14",
+		"becado": 0,
+		"promedio_acumulado": 0
+	}
+  },
+  {
+  	"model": "academico.matriculaprograma", 
+  	"pk":4, 
+	"fields": {
+		"estudiante": 4,
+		"fecha_inscripcion": "2011-01-26",
+		"programa": 1,
+		"codigo": "10100003",
+		"estado": 1,
+		"fecha_vencimiento": "2012-12-14",
+		"becado": 0,
+		"promedio_acumulado": 0
+	}
+  },
+  {
+  	"model": "academico.matriculaprograma", 
+  	"pk":5, 
+	"fields": {
+		"estudiante": 5,
+		"fecha_inscripcion": "2011-01-26",
+		"programa": 2,
+		"codigo": "10200002",
+		"estado": 1,
+		"fecha_vencimiento": "2012-12-14",
+		"becado": 0,
+		"promedio_acumulado": 0
+	}
+  },
+  {
+  	"model": "academico.matriculaprograma", 
+  	"pk":6, 
+	"fields": {
+		"estudiante": 6,
+		"fecha_inscripcion": "2011-01-26",
+		"programa": 3,
+		"codigo": "10300001",
+		"estado": 1,
+		"fecha_vencimiento": "2011-12-26",
+		"becado": 0,
+		"promedio_acumulado": 0
+	}
+  },
+
+  {
+  	"model": "academico.matriculaciclo", 
+  	"pk":1, 
+	"fields": {
+		"fecha_inscripcion": "2011-01-31",
+		"matricula_programa": "1",
+		"ciclo": "1",
+		"observaciones": ""
+	}
+  },
+  {
+  	"model": "academico.matriculaciclo", 
+  	"pk":2, 
+	"fields": {
+		"fecha_inscripcion": "2011-01-26",
+		"matricula_programa": 4,
+		"ciclo": 1,
+		"observaciones": ""
+	}
+  },
+  {
+  	"model": "academico.matriculaciclo", 
+  	"pk":3, 
+	"fields": {
+		"fecha_inscripcion": "2011-01-26",
+		"matricula_programa": 2,
+		"ciclo": 1,
+		"observaciones": ""
+	}
+  },
+  {
+	"model": "academico.matriculaciclo", 
+	"pk":4, 
+	"fields": {
+		"fecha_inscripcion": "2011-01-26",
+		"matricula_programa": 3,
+		"ciclo": 2,
+		"observaciones": ""
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":1, 
+	"fields": {
+		"curso": 1,
+		"matricula_ciclo": 1,
+		"nota_definitiva": 3.6,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":2, 
+	"fields": {
+		"curso": 2,
+		"matricula_ciclo": 1,
+		"nota_definitiva": 4.6,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":3, 
+	"fields": {
+		"curso": 3,
+		"matricula_ciclo": 1,
+		"nota_definitiva": 4.1,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":4, 
+	"fields": {
+		"curso": 4,
+		"matricula_ciclo": 1,
+		"nota_definitiva": 3,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":5, 
+	"fields": {
+		"curso": 5,
+		"matricula_ciclo": 1,
+		"nota_definitiva": 3.6,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":6, 
+	"fields": {
+		"curso": 6,
+		"matricula_ciclo": 1,
+		"nota_definitiva": 3.2,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":7, 
+	"fields": {
+		"curso": 12,
+		"matricula_ciclo": 2,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":8, 
+	"fields": {
+		"curso": 11,
+		"matricula_ciclo": 2,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":9, 
+	"fields": {
+		"curso": 10,
+		"matricula_ciclo": 2,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":10, 
+	"fields": {
+		"curso": 9,
+		"matricula_ciclo": 2,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":11, 
+	"fields": {
+		"curso": 8,
+		"matricula_ciclo": 2,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":12, 
+	"fields": {
+		"curso": 12,
+		"matricula_ciclo": 3,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":13, 
+	"fields": {
+		"curso": 11,
+		"matricula_ciclo": 3,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":14, 
+	"fields": {
+		"curso": 10,
+		"matricula_ciclo": 3,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":15, 
+	"fields": {
+		"curso": 9,
+		"matricula_ciclo": 3,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":16, 
+	"fields": {
+		"curso": 1,
+		"matricula_ciclo": 4,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":17, 
+	"fields": {
+		"curso": 2,
+		"matricula_ciclo": 4,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.calificacion", 
+  	"pk":18, 
+	"fields": {
+		"curso": 6,
+		"matricula_ciclo": 4,
+		"nota_definitiva": 0,
+		"nota_habilitacion": 0,
+		"perdio_fallas": 0
+	}
+  },
+  {
+  	"model": "academico.institucion", 
+  	"pk":1, 
+	"fields": {
+		"nombre": "INSTITUTO DE FORMACIÓN",
+		"nit": "1234567-8",
+		"saludo": "<p>En nombre de las directivas, docentes y personal administrativo del Instituto, queremos darles la bienvenida a este servicio académico, deseándoles muchos éxitos en este nuevo semestre que inicia, lleno de retos y sueños por cumplir.</p><p>Para nosotros es muy importante que logren alcanzar sus metas y afiancen el proyecto de vida que se han propuesto en su desarrollo personal y profesional.</p>"
+	}
+  }
+]

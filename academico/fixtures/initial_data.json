@@ -684,7 +684,10 @@
     "pk": 1,
     "fields": {
       "codigo": "1",
-      "nombre": "Sin Asignar"
+      "nombre": "Sin Asignar",
+      "nota_minima": 0,
+      "nota_aprobacion": 3.0,
+      "nota_maxima": 5
     }
   },  
   {
@@ -692,7 +695,10 @@
     "pk": 2,
     "fields": {
       "codigo": "2",
-      "nombre": "Técnico"
+      "nombre": "Técnico",
+      "nota_minima": 0,
+      "nota_aprobacion": 3.5,
+      "nota_maxima": 5
     }
   },
   {
@@ -700,7 +706,10 @@
     "pk": 3,
     "fields": {
       "codigo": "3",
-      "nombre": "Auxiliar"
+      "nombre": "Auxiliar",
+      "nota_minima": 0,
+      "nota_aprobacion": 3.0,
+      "nota_maxima": 5
     }
   },
   {
@@ -1521,5 +1530,12 @@
     "fields": {
       "name": "Estudiante"
     }
+  },
+  {
+  	"model": "academico.sede", 
+  	"pk":1, 
+	"fields": {
+		"nombre": "Principal"
+	}
   }
 ]
