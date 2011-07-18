@@ -40,4 +40,4 @@ table.tablesorter thead tr .headerSortDown {background-image: url(../images/abaj
 .error{height:20px;background-color:#ea1919;color:#fff;display:none;font:10px Arial;line-height:20px;padding:0 10px;}
 .tooltip{background-color:#000;width:150px;display:none;color:#fff;text-align:left;font:10px Arial;line-height:15px;padding:0 10px;}
 .msgerror{color:#D8000C;text-align:center;}
-#header,#nav,#sidebar_left,#sidebar_right,#footer{visibility:hidden;display:none;}
+#header,#nav,#sidebar_left,#sidebar_right,#footer,#nav_perfil{visibility:hidden;display:none;}
