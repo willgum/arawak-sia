@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion
+from academico.models import Sede
 from django.contrib import admin
 #from django.contrib.auth.models import User, Group
 
@@ -147,8 +148,11 @@ class TipoProgramaAdmin(admin.ModelAdmin):
     
 
 class ProgramaAdmin(admin.ModelAdmin):
+    raw_id_fields = ('sede',)
+    
     fieldsets = [
         ('Información básica', {'fields': [     
+            'sede',
             'codigo',             
             'nombre',
             'tipo_programa', 
@@ -171,42 +175,39 @@ class ProgramaAdmin(admin.ModelAdmin):
     list_display = (
         'codigo',
         'nombre',
-        'tipo_programa',  
+        'tipo_programa',
+        'sede',
         'periodicidad', 
         'duracion', 
         'jornada',
         'materias'
     )
-    list_display_links = ('codigo', 'nombre')
+    list_display_links = ('nombre',)
     search_fields = ['codigo', 'nombre']
-    list_filter = ['tipo_programa', 'jornada', 'periodicidad']
+    list_filter = ['tipo_programa', 'jornada', 'periodicidad', 'sede']
     
     class Media:
         js = ('js/tiny_mce/tiny_mce.js',
               'js/tiny_mce/textareas.js',)
 
 class SalonAdmin(admin.ModelAdmin):
+    raw_id_fields = ('sede',)
     fieldsets = [
         ('Información básica', {'fields': [
-            'codigo', 
+            'sede', 
+            'codigo',
             'descripcion', 
             'capacidad', 
             'tipo_salon']}),
     ]
-    list_display = ('codigo', 'descripcion', 'capacidad', 'tipo_salon')
-    search_fields = ['codigo', 'descripcion']
-    list_filter = ['tipo_salon']
+    list_display = ('codigo', 'sede', 'descripcion', 'capacidad', 'tipo_salon')
+    search_fields = ['codigo',]
+    list_filter = ['tipo_salon',]
         
     class Media:
         js = ('js/tiny_mce/tiny_mce.js',
               'js/tiny_mce/textareas.js',)
 
-
-class CursoInline(admin.TabularInline):
-    model = Curso
-    extra = 1
-    raw_id_fields = ('ciclo', 'materia', 'profesor')
-    fields = ('grupo', 'materia', 'profesor', 'ciclo')
     
     
 class MateriaInline(admin.TabularInline):
@@ -232,8 +233,7 @@ class MateriaAdmin(admin.ModelAdmin):
     
     filter_horizontal = ('requisito',)
     
-    inlines = [CursoInline]
-    list_display_links = ('codigo', 'nombre',)
+    list_display_links = ('nombre',)
     list_display = (
         'codigo', 
         'nombre', 
@@ -435,7 +435,7 @@ class CursoAdmin(admin.ModelAdmin):
             'ciclo',
             'esperados']})
     ]    
-    inlines = [estudiantesInscritosInline, HorarioCursoInline,]
+    inlines = [HorarioCursoInline, estudiantesInscritosInline, ]
     list_display = (
         'codigo',
         'nombre_programa',
@@ -497,6 +497,32 @@ class TipoNotaConceptualAdmin(admin.ModelAdmin):
     
     search_fields = ('codigo', 'nombre')
 
+
+class SedeAdmin(admin.ModelAdmin):
+
+    fieldsets = [
+        ('Información básica', {'fields': [
+            'nombre',
+            'direccion',
+            'ciudad',
+            'departamento',
+            'telefono',
+            'email',
+            'web'
+            ]}),
+    ]
+    
+    list_display = (
+        'nombre',
+        'direccion',
+        'ciudad',
+        'departamento',
+        'telefono', 
+        'email',
+        'web'
+    )
+
+    search_fields = ('nombre',)
     
 class InstitucionAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -511,6 +537,7 @@ class InstitucionAdmin(admin.ModelAdmin):
             'web',
             'logo',]}),
         ('Configuracion', {'fields': [
+            'saludo',
             'control_acudiente',]}),
     ]
     
@@ -605,6 +632,7 @@ admin.site.register(Institucion, InstitucionAdmin)
 admin.site.register(MatriculaCiclo, MatriculaCicloAdmin)
 admin.site.register(MatriculaPrograma, MatriculaProgramaAdmin)
 admin.site.register(Salon, SalonAdmin)
+admin.site.register(Sede, SedeAdmin)
 admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(TipoPrograma, TipoProgramaAdmin)
 admin.site.register(TipoNotaConceptual, TipoNotaConceptualAdmin)

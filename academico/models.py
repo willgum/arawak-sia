@@ -414,8 +414,22 @@ class ProfesorExperiencia(models.Model):
     
     class Meta:
         verbose_name_plural = 'Experiencia profesional'
+
+class Sede(models.Model):
+    nombre = models.CharField(max_length=200)
+    direccion = models.CharField(verbose_name='Dirección', max_length=200, blank=True)
+    ciudad = models.CharField(max_length=200, blank=True)
+    departamento = models.CharField(max_length=200, blank=True)
+    telefono = models.CharField(verbose_name='Teléfono', max_length=20, blank=True)
+    fax = models.CharField(max_length=20, blank=True)
+    email = models.EmailField(blank=True)
+    web = models.URLField(blank=True)
     
+    def __unicode__(self):
+        return u"%s" % self.nombre
+        
 class Salon(models.Model):
+    sede = models.ForeignKey(Sede, blank=True, null=True, default=1)
     codigo = models.CharField(verbose_name='Código', max_length=12, unique=True)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
     capacidad = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
@@ -426,12 +440,12 @@ class Salon(models.Model):
     
     class Meta:
         verbose_name_plural = 'salones'
-
-
+    
 class Programa(models.Model):
     
     # Informacion general
     tipo_programa = models.ForeignKey(TipoPrograma, blank=True, null=True, default=1)
+    sede = models.ForeignKey(Sede, blank=True, null=True, default=1)
     codigo = models.CharField(verbose_name='Código', max_length=4, unique=True)
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
@@ -683,16 +697,35 @@ class MatriculaProgramaForm(ModelForm):
         
 class Materia(models.Model):
     programa = models.ForeignKey(Programa)
-    requisito = models.ManyToManyField("self", symmetrical=False, blank=True, null=True)
+    requisito = models.ManyToManyField("self", 
+                                       symmetrical=False, 
+                                       blank=True, 
+                                       null=True)
     codigo = models.CharField(max_length=10)
-    sufijo = models.CharField(max_length=3, help_text='El sufijo se añade al código del programa y forma el código')
+    sufijo = models.CharField(max_length=3, 
+                              help_text='El sufijo se añade al final del código del programa y forma el código de la materia.')
     nombre = models.CharField(max_length=50)
-    descripcion = models.TextField(verbose_name='Descripción', max_length=200, blank=True)
-    creditos = models.IntegerField(help_text='Número de créditos de la materia.', blank=True, null=True)
-    periodo = models.SmallIntegerField(help_text='Nivel en el cual se debe ver esta materia.', blank=True, null=True)
-    tipo_valoracion = models.CharField(max_length=1, choices=TipoValoracion, blank=True, default='1')
-    intensidad_semanal = models.SmallIntegerField(help_text='Número de horas requeridas en la semana.', blank=True, null=True, validators=[MinValueValidator(0)])
-    intensidad_ciclo = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la compentencia.', blank=True, null=True, validators=[MinValueValidator(0)])
+    descripcion = models.TextField(verbose_name='Descripción', 
+                                   max_length=200, 
+                                   blank=True)
+    creditos = models.IntegerField(help_text='Número de créditos de la materia.', 
+                                   blank=True, 
+                                   null=True)
+    periodo = models.SmallIntegerField(help_text='Nivel en el cual se debe ver esta materia.', 
+                                       blank=True, 
+                                       null=True)
+    tipo_valoracion = models.CharField(max_length=1, 
+                                       choices=TipoValoracion, 
+                                       blank=True, 
+                                       default='1')
+    intensidad_semanal = models.SmallIntegerField(help_text='Número de horas requeridas en la semana.', 
+                                                  blank=True, 
+                                                  null=True, 
+                                                  validators=[MinValueValidator(0)])
+    intensidad_ciclo = models.SmallIntegerField(help_text='Número de horas requeridas para dictar la materia.', 
+                                                blank=True, 
+                                                null=True, 
+                                                validators=[MinValueValidator(0)])
     
     class Meta:
         ordering = ('programa__nombre', 'periodo', 'nombre')
@@ -702,9 +735,7 @@ class Materia(models.Model):
         super(Materia, self).save(*args, **kwargs)
     
     def __unicode__(self):
-        return u"%s | %s" % (
-            unicode(self.programa.abreviatura()),
-            unicode(self.nombre))
+        return u"%s %s" % (self.codigo, self.nombre)
     
     def grupos(self):
         return len(Curso.objects.filter(materia=self))
@@ -1027,6 +1058,7 @@ class HorarioCurso(models.Model):
         unique_together = ("dia", "hora_inicio","hora_fin", "salon")
 
 
+
 class Institucion(models.Model):
     nombre = models.CharField(max_length=200)
     nit = models.CharField(max_length=20)
@@ -1038,6 +1070,7 @@ class Institucion(models.Model):
     web = models.URLField(blank=True)
     logo = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
     control_acudiente = models.BooleanField(help_text="Activado, impide que estudiantes menores de edad cambien la contraseña.")
+    saludo = models.TextField( help_text='Mensaje de bienvenida', max_length=300, blank=True)
     class Meta:
         verbose_name_plural = 'Institución'
     
