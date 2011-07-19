@@ -9,7 +9,7 @@ from django.views.static import Context, HttpResponseRedirect                   
 from django.conf import settings                                                    # incopora para poder acceder a los valores creados en el settings
 from django.contrib import auth                                   
 from django.contrib.auth.models import Group, User
-from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion, MatriculaPrograma, MatriculaCiclo, ConfiguracionInscripcion
+from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion, MatriculaPrograma, MatriculaCiclo
 from financiero.models import MatriculaFinanciera, Ciclo, InscripcionPrograma, Letra
 from django.contrib.auth.decorators import login_required                           # permite usar @login_requerid
 from academico.views import cicloNuevo
@@ -79,7 +79,7 @@ def buscarMatriculaProgramasEstudiante(solicitud):
 def buscarInscribirMaterias(solicitud):
     inscribir = 0
     hoy = date.today()
-    inscripcion = ConfiguracionInscripcion.objects.filter(fecha_inicio__lte = hoy, fecha_fin__gte = hoy)
+    inscripcion = Ciclo.objects.filter(fecha_inicio_inscripcion__lte = hoy, fecha_fin_inscripcion__gte = hoy)
     if len(inscripcion)>0:
         inscribir = 1
     return inscribir

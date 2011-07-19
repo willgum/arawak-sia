@@ -301,6 +301,8 @@ class Ciclo(models.Model):
     codigo = models.CharField(verbose_name='Código', max_length=8, unique=True)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
+    fecha_inicio_inscripcion = models.DateField()
+    fecha_fin_inscripcion = models.DateField()
     
     def __unicode__(self):
         return self.codigo
@@ -1096,15 +1098,6 @@ class Institucion(models.Model):
             
             scale(logo_org, THUMB_WIDTH, THUMB_HEIGHT, logo_thu)
             scale(logo_org, MINI_WIDTH, MINI_HEIGHT, logo_min)
-           
-
-class ConfiguracionInscripcion(models.Model):
-    ciclo = models.ForeignKey(Ciclo)
-    fecha_inicio = models.DateField()
-    fecha_fin = models.DateField()
-    
-    class Meta:
-        verbose_name_plural = 'Configuración inscripciones'
 
 
 class Funcionario(models.Model):

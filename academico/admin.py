@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, ConfiguracionInscripcion
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia
 from academico.models import Sede
 from django.contrib import admin
-#from django.contrib.auth.models import User, Group
 
 from django.http import HttpResponseRedirect
 
@@ -586,6 +585,9 @@ class CicloAdmin(ButtonableModelAdmin):
             'codigo', 
             'fecha_inicio', 
             'fecha_fin',]}),
+        ('Configurar inscripciones', {'fields': [
+            'fecha_inicio_inscripcion', 
+            'fecha_fin_inscripcion',]}),
     ]
     
     list_display = (
@@ -629,7 +631,6 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(Calificacion, CalificacionAdmin)
 admin.site.register(Ciclo, CicloAdmin)
 admin.site.register(Materia, MateriaAdmin)
-admin.site.register(ConfiguracionInscripcion, InscripcionAdmin)
 admin.site.register(Corte, CorteAdmin)
 admin.site.register(Curso, CursoAdmin)
 admin.site.register(Estudiante, EstudianteAdmin)
