@@ -52,8 +52,9 @@ def redireccionar(plantilla, solicitud, datos):
         cant = cant + 1
     if cant > 0:    
         variables = {
-            'user': solicitud.user, 
+            'user': solicitud.user,
             'titulo': institucion.nombre,
+            'saludo': institucion.saludo,
             'titulo_pagina': u"Sistema de Información Académica | " + institucion.nombre,
             'path': settings.MEDIA_URL,
         }
@@ -61,6 +62,7 @@ def redireccionar(plantilla, solicitud, datos):
         variables = {
             'user': solicitud.user, 
             'titulo': 'Claro',
+            'saludo': '',
             'titulo_pagina': u"Sistema de Información Académica | Claro",
             'path': settings.MEDIA_URL,
         }    
