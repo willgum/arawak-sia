@@ -11,10 +11,6 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files import File
 from django.forms import ModelForm, TextInput
 
-#NOTA_MIN = 0.0
-#NOTA_MAX = 5.0
-#NOTA_APR = 3.5
-
 MINI_WIDTH = 80
 MINI_HEIGHT = 100
 THUMB_WIDTH = 120
@@ -205,28 +201,32 @@ class TipoAprobacion(models.Model):
 
     
 class TipoNotaConceptual(models.Model):
-    codigo = models.CharField(max_length=3)
+    codigo = models.CharField(verbose_name="Código",
+                              help_text="Máximo 3 caracteres",
+                              max_length=3)
     nombre = models.CharField(max_length=50)
     
     def __unicode__(self):
-        return self.nombre
+        return u'%s' % self.nombre
     
     def get_codigo(self):
-        return self.codigo
+        return u'%s' % self.codigo
     
     class Meta:
         verbose_name_plural = 'Tipo notas conceptuales'
 
 
 class TipoPrograma(models.Model):
-    codigo = models.CharField(max_length=3)
+    codigo = models.CharField(max_length=3,
+                              verbose_name="Código",
+                              help_text="Máximo 3 caracteres")
     nombre = models.CharField(max_length=50)
     nota_minima = models.FloatField(blank=True, null=True, default=0)
     nota_maxima = models.FloatField(blank=True, null=True, default=0)
     nota_aprobacion = models.FloatField(blank=True, null=True, default=0)
     
     def __unicode__(self):
-        return self.nombre
+        return u'%s' % self.nombre
 
 
 class TipoFuncionario (models.Model):
@@ -234,7 +234,7 @@ class TipoFuncionario (models.Model):
     nombre = models.CharField(max_length = 50)
     
     def __unicode__(self):
-        return self.nombre
+        return u'%s' % self.nombre
 
 
 #    TODO: implementar opción para validar notas permitidas
@@ -459,7 +459,7 @@ class Programa(models.Model):
     # Horario
     periodicidad = models.ForeignKey(Periodicidad, blank=True, null=True, default=2) 
     duracion = models.SmallIntegerField(verbose_name='Duración', blank=True, null=True, validators=[MinValueValidator(0)])
-    jornada = models.ForeignKey(Jornada, blank=True, null=True, default=1)
+    jornada = models.ManyToManyField(Jornada, blank=True, null=True)
     
     # Informacion adicional
     horas_bienestar = models.IntegerField(help_text="Número de horas de bienestar necesaria para aprobar el programa.", blank=True, null=True, default=0, validators=[MinValueValidator(0)])
@@ -699,14 +699,17 @@ class MatriculaProgramaForm(ModelForm):
         
         
 class Materia(models.Model):
-    programa = models.ForeignKey(Programa)
+    programa = models.ManyToManyField(Programa, 
+                                       symmetrical=False, 
+                                       blank=True, 
+                                       null=True)
     requisito = models.ManyToManyField("self", 
                                        symmetrical=False, 
                                        blank=True, 
                                        null=True)
-    codigo = models.CharField(max_length=10)
-    sufijo = models.CharField(max_length=3, 
-                              help_text='El sufijo se añade al final del código del programa y forma el código de la materia.')
+    codigo = models.CharField(verbose_name='Código',
+                              help_text="Máximo 10 caracteres.",
+                              max_length=10)
     nombre = models.CharField(max_length=50)
     descripcion = models.TextField(verbose_name='Descripción', 
                                    max_length=200, 
@@ -714,9 +717,6 @@ class Materia(models.Model):
     creditos = models.IntegerField(help_text='Número de créditos de la materia.', 
                                    blank=True, 
                                    null=True)
-    periodo = models.SmallIntegerField(help_text='Nivel en el cual se debe ver esta materia.', 
-                                       blank=True, 
-                                       null=True)
     tipo_valoracion = models.CharField(max_length=1, 
                                        choices=TipoValoracion, 
                                        blank=True, 
@@ -730,27 +730,18 @@ class Materia(models.Model):
                                                 null=True, 
                                                 validators=[MinValueValidator(0)])
     
-    class Meta:
-        ordering = ('programa__nombre', 'periodo', 'nombre')
-        
-    def save(self, *args, **kwargs):
-        self.codigo = "%s%s" % (self.programa.codigo, self.sufijo)
-        super(Materia, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return u"%s %s" % (self.codigo, self.nombre)
-    
-    def grupos(self):
-        return len(Curso.objects.filter(materia=self))
     
     def idPrograma(self):
         return self.programa.id
     
     def codigoPrograma(self):
-        return "%s" % (self.programa.codigo)
+        return u"%s" % (self.programa.codigo)
     
     def nombrePrograma(self):
-        return "%s" % (self.programa.nombre)
+        return u"%s" % (self.programa.nombre)
         
     def notaMin(self):
         return self.programa.notaMin()
@@ -787,7 +778,7 @@ class MatriculaCiclo(models.Model):
     def nombre_estudiante(self):
         return self.matricula_programa.nombre_estudiante()
     
-    def materias_inscritas(self):
+    def cursos_inscritos(self):
         tmp_calificacion = Calificacion.objects.filter(matricula_ciclo = self.id)
         return len(tmp_calificacion)
     
@@ -829,8 +820,8 @@ class Curso(models.Model):
     esperados = models.SmallIntegerField(help_text='Número esperado de estudiantes.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
-#        return "%s" %(self.materia)
-        return normalizar_cadena(self.materia.nombre)
+        return u'%s' % self.materia
+#        return normalizar_cadena(self.materia.nombre)
     
     def promedio(self):
         if self.materia.tipo_valoracion == "1":
@@ -851,11 +842,11 @@ class Curso(models.Model):
             promedio = '-'
         return "%s" % (promedio)
         
-    def nombre(self):
+    def nombre_curso(self):
         return self.materia.nombre
     
     def codigo(self):
-        return "%s-%s" % (self.materia.codigo, self.grupo)
+        return self.materia.codigo
     
     def idMateria(self):
         return "%s" % (self.materia.id)
@@ -868,9 +859,6 @@ class Curso(models.Model):
     
     def codigoPrograma(self):
         return "%s" % (self.materia.codigoPrograma())
-    
-    def nombre_programa(self):
-        return "%s" % (self.materia.nombrePrograma())
         
     def notaMin(self):
         return self.materia.notaMin()
@@ -1019,7 +1007,7 @@ class Corte(models.Model):
         return self.ciclo.codigo + "-" + self.sufijo
     
     def corte_actual(self):
-        hoy = datetime.date.today() 
+        hoy = datetime.date.today()
         return self.fecha_inicio <= hoy <= self.fecha_fin
     
     def codigo_corte(self):

@@ -52,26 +52,32 @@ class MatriculaCicloAdmin(ButtonableModelAdmin):
             'matricula_programa',
             'ciclo',
             'promedio_ciclo',
-            'materias_inscritas',
+            'cursos_inscritos',
             'observaciones']}),
     ]
+    list_display_links = ('nombre_estudiante',)
+    
     list_display = (
         'codigo_estudiante',
         'nombre_estudiante',
         'nombre_programa',
         'promedio_ciclo',
-        'materias_inscritas',
+        'cursos_inscritos',
         'puesto',
         'ciclo',
         'fecha_inscripcion',
     )
-    readonly_fields = ('promedio_ciclo', 'materias_inscritas', )
+    readonly_fields = ('promedio_ciclo', 'cursos_inscritos', )
     
     inlines = [CalificacionInline]
-    list_filter = ['ciclo', 'fecha_inscripcion']
-    search_fields = ('matricula_programa__programa__id', 'matricula_programa__codigo', 'matricula_programa__programa__nombre',
-                     'matricula_programa__estudiante__nombre1', 'matricula_programa__estudiante__nombre2', 
-                     'matricula_programa__estudiante__apellido1', 'matricula_programa__estudiante__apellido2',)
+    list_filter = ['ciclo', 'fecha_inscripcion', ]
+    search_fields = ('matricula_programa__programa__id', 
+                     'matricula_programa__codigo', 
+                     'matricula_programa__programa__nombre',
+                     'matricula_programa__estudiante__nombre1', 
+                     'matricula_programa__estudiante__nombre2', 
+                     'matricula_programa__estudiante__apellido1', 
+                     'matricula_programa__estudiante__apellido2',)
     date_hierarchy = 'fecha_inscripcion'
     
     def constancia(self, obj):
@@ -98,10 +104,11 @@ class CalificacionAdmin(admin.ModelAdmin):
     
     fieldsets = [
         ('Información básica', {'fields': [
-            'curso', 
-            'matricula_ciclo',
+            'nombre_estudiante',
             'codigo_ciclo',
-            'nota_definitiva', 
+            'nota_definitiva',
+            'curso', 
+            'matricula_ciclo', 
             'nota_habilitacion',
             'perdio_fallas',
             'tipo_aprobacion',
@@ -119,11 +126,11 @@ class CalificacionAdmin(admin.ModelAdmin):
         'perdio_fallas',
     )
     
-    readonly_fields = ('nota_definitiva', 'codigo_ciclo')
+    readonly_fields = ('nombre_estudiante', 'nota_definitiva', 'codigo_ciclo')
     search_fields = ['curso__materia__codigo', 'matricula_ciclo__ciclo__codigo', 'curso__materia__nombre', 
                      'matricula_ciclo__matricula_programa__estudiante__nombre1', 'matricula_ciclo__matricula_programa__estudiante__nombre2', 
                      'matricula_ciclo__matricula_programa__estudiante__apellido1', 'matricula_ciclo__matricula_programa__estudiante__apellido2',]
-#    list_filter = ['matricula_ciclo',]
+    list_filter = ['perdio_fallas',]
 
 
 class TipoProgramaAdmin(admin.ModelAdmin):
@@ -152,8 +159,8 @@ class ProgramaAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Información básica', {'fields': [     
             'sede',
-            'codigo',             
             'nombre',
+            'codigo',             
             'tipo_programa', 
             'descripcion', 
             'titulo', 
@@ -178,12 +185,11 @@ class ProgramaAdmin(admin.ModelAdmin):
         'sede',
         'periodicidad', 
         'duracion', 
-        'jornada',
-        'materias'
+        'materias',
     )
     list_display_links = ('nombre',)
     search_fields = ['codigo', 'nombre']
-    list_filter = ['tipo_programa', 'jornada', 'periodicidad', 'sede']
+    list_filter = ['tipo_programa', 'periodicidad', 'sede']
     
     class Media:
         js = ('js/tiny_mce/tiny_mce.js',
@@ -209,42 +215,31 @@ class SalonAdmin(admin.ModelAdmin):
 
     
     
-class MateriaInline(admin.TabularInline):
-    model = CompetenciMateria = 1
-    raw_id_fields = ('codigo', 'programa', 'nombre')
-    fields = ('grupo', 'profesor', 'ciclo')
-
-
 class MateriaAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Información básica', {'fields': [
-            'programa', 
-            'sufijo', 
-            'nombre', 
+            'nombre',
+            'codigo',
+            'programa',
             'descripcion', 
             'intensidad_semanal',
             'intensidad_ciclo', 
             'creditos',
-            'periodo',
             'tipo_valoracion']}),
         ('Requisitos', {'fields': ('requisito',)})
     )
     
-    filter_horizontal = ('requisito',)
+    filter_horizontal = ('programa', 'requisito',)
     
     list_display_links = ('nombre',)
     list_display = (
         'codigo', 
-        'nombre', 
-        'programa', 
+        'nombre',  
         'intensidad_ciclo', 
-        'creditos',
-        'periodo',
-        'grupos',
+        'creditos'
     )
     
-    list_filter = ['programa', 'periodo']
-    search_fields = ('nombre',)
+    search_fields = ('nombre', 'codigo')
     
     class Media:
         js = ('js/tiny_mce/tiny_mce.js',
@@ -440,18 +435,27 @@ class CursoAdmin(admin.ModelAdmin):
             'esperados']})
     ]    
     inlines = [HorarioCursoInline, estudiantesInscritosInline, ]
+    
+    list_display_links = ('nombre_curso',)
     list_display = (
         'codigo',
-        'nombre_programa',
-        'nombre',
+        'grupo',
+        'nombre_curso',
         'profesor',  
         'ciclo',
         'inscritos',
         'promedio',
     )
-    list_filter = ['ciclo']
-    search_fields = ('materia__nombre', 'profesor__nombre1', 'profesor__nombre2', 
-                     'profesor__apellido1', 'profesor__apellido2',)
+    
+    
+    
+    list_filter = ['ciclo', 'grupo']
+    search_fields = ('materia__codigo', 
+                     'materia__nombre', 
+                     'profesor__nombre1', 
+                     'profesor__nombre2', 
+                     'profesor__apellido1', 
+                     'profesor__apellido2',)
 
 class CorteInline(admin.TabularInline):
     model = Corte
@@ -474,11 +478,10 @@ class CorteAdmin(admin.ModelAdmin):
         'porcentaje',         
         'fecha_inicio', 
         'fecha_fin',
-        'ciclo',
-        'corte_actual'        
+        'ciclo',        
     )
+    list_filter =  ['ciclo',]
     search_fields = ('codigo_corte',)
-    date_hierarchy = 'fecha_inicio'
     
 
 class FuncionarioInline(admin.TabularInline):
