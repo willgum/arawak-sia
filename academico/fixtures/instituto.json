@@ -5,7 +5,9 @@
     "fields": {
       "codigo": "2011-1",
       "fecha_inicio": "2011-01-01",
-      "fecha_fin": "2011-06-30"
+      "fecha_fin": "2011-06-30",
+      "fecha_inicio_inscripcion": "2011-01-01",
+      "fecha_fin_inscripcion": "2011-06-30"
     }
   },
   {
@@ -14,7 +16,9 @@
     "fields": {
       "codigo": "2011-2",
       "fecha_inicio": "2011-07-01",
-      "fecha_fin": "2011-12-31"
+      "fecha_fin": "2011-12-31",
+      "fecha_inicio_inscripcion": "2011-07-01",
+      "fecha_fin_inscripcion": "2011-12-31"
     }
   },
   {

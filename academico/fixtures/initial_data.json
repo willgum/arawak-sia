@@ -683,7 +683,7 @@
     "model": "academico.tipoprograma",
     "pk": 1,
     "fields": {
-      "codigo": "1",
+      "codigo": "N/A",
       "nombre": "Sin Asignar",
       "nota_minima": 0,
       "nota_aprobacion": 3.0,
@@ -694,7 +694,7 @@
     "model": "academico.tipoprograma",
     "pk": 2,
     "fields": {
-      "codigo": "2",
+      "codigo": "TEC",
       "nombre": "Técnico",
       "nota_minima": 0,
       "nota_aprobacion": 3.5,
@@ -705,7 +705,7 @@
     "model": "academico.tipoprograma",
     "pk": 3,
     "fields": {
-      "codigo": "3",
+      "codigo": "AUX",
       "nombre": "Auxiliar",
       "nota_minima": 0,
       "nota_aprobacion": 3.0,
@@ -1536,6 +1536,22 @@
   	"pk":1, 
 	"fields": {
 		"nombre": "Principal"
+	}
+  },
+  {
+  	"model": "academico.tiponotaconceptual", 
+  	"pk":1, 
+	"fields": {
+		"codigo": "R",
+		"nombre": "Reprobó"
+	}
+  },
+  {
+  	"model": "academico.tiponotaconceptual", 
+  	"pk":2, 
+	"fields": {
+		"codigo": "A",
+		"nombre": "Aprobó"
 	}
   }
 ]
