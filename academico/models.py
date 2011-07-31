@@ -278,9 +278,9 @@ def scale(fname, width, height, fname_scaled):
 
 
 class CustomStorage(FileSystemStorage):
-#    En caso de que la imagen exista, la borra para ingresarla de nuevo
-#    Django por defecto no sobreescribe la original, 
-#    sino que agrega un _# al final del nombre del archivo.
+    # En caso de que la imagen exista, la borra para ingresarla de nuevo
+    # Django por defecto no sobreescribe la original, sino que agrega 
+    # el simbolo _# al final del nombre del archivo.
     def _open(self, name, mode='rb'):
         return File(open(self.path(name), mode))
 
@@ -438,11 +438,33 @@ class Salon(models.Model):
     capacidad = models.IntegerField(blank=True, null=True, validators=[MinValueValidator(0)])
     tipo_salon = models.ForeignKey(TipoSalon, blank=True, default=1)
     
+    mapa = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
+    
     def __unicode__(self):
         return self.codigo
     
     class Meta:
         verbose_name_plural = 'salones'
+        
+    def save(self, *args, **kwargs):
+        existe_mapa = False
+        self.codigo = self.codigo.strip()
+        
+        if self.mapa.name != "":
+            existe_mapa = True
+            tmp_mapa = "%s%s" % (self.codigo, "a.jpg")
+            self.mapa.name = "imagenes/original/" + tmp_mapa
+        
+        super(Salon, self).save(*args, **kwargs)
+        
+        # Escalar imágenes
+        if existe_mapa == True:
+            img_org = settings.MEDIA_ROOT + "imagenes/original/" + tmp_mapa
+            img_min = settings.MEDIA_ROOT + "imagenes/mini/" + tmp_mapa
+            img_thu = settings.MEDIA_ROOT + "imagenes/thumbnail/" + tmp_mapa
+            scale(img_org, THUMB_WIDTH, THUMB_HEIGHT, img_thu)
+            scale(img_org, MINI_WIDTH, MINI_HEIGHT, img_min)
+        
     
 class Programa(models.Model):
     
@@ -714,9 +736,8 @@ class Materia(models.Model):
     descripcion = models.TextField(verbose_name='Descripción', 
                                    max_length=200, 
                                    blank=True)
-    creditos = models.IntegerField(help_text='Número de créditos de la materia.', 
-                                   blank=True, 
-                                   null=True)
+    creditos = models.IntegerField(help_text='Número de créditos de la materia. Ingrese 0 si no usa sistema de créditos.', 
+                                   default=0)
     tipo_valoracion = models.CharField(max_length=1, 
                                        choices=TipoValoracion, 
                                        blank=True, 
@@ -758,13 +779,16 @@ class MatriculaCiclo(models.Model):
     promedio_ciclo = models.FloatField(blank=True, null=True, default=0)
     
     def __unicode__(self):
-        return self.matricula_programa.codigo
+        return u'%s' % self.matricula_programa.codigo
     
     def idMatriculaPrograma(self):
         return "%s" % (self.matricula_programa.id)
     
     def nombre_programa(self):
         return self.matricula_programa.nombre_programa()
+    
+    def sede(self):
+        return self.matricula_programa.programa.sede
     
     def codigo_estudiante(self):
         return self.matricula_programa.codigo
@@ -782,18 +806,27 @@ class MatriculaCiclo(models.Model):
         tmp_calificacion = Calificacion.objects.filter(matricula_ciclo = self.id)
         return len(tmp_calificacion)
     
+    def total_creditos(self):
+        suma_creditos = 0.0
+        calificaciones = Calificacion.objects.filter(matricula_ciclo = self.id)
+        for calificacion in calificaciones:
+            suma_creditos = suma_creditos + calificacion.curso.materia.creditos
+        return suma_creditos
+    
     def promedioCiclo(self, matricula_ciclo_id):
-        tmp_calificacion = Calificacion.objects.filter(matricula_ciclo = matricula_ciclo_id)
-        tmp_promedio_ciclo = 0.0
+        calificaciones = Calificacion.objects.filter(matricula_ciclo = matricula_ciclo_id)
+        suma_promedio = 0.0
         
-        for tmp_nota in tmp_calificacion:
-            if tmp_nota.tipoValoracion() == "1":
-                if tmp_nota.nota_definitiva >= tmp_nota.nota_habilitacion:
-                    tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_definitiva
-                else: 
-                    tmp_promedio_ciclo = tmp_promedio_ciclo + tmp_nota.nota_habilitacion
+        for calificacion in calificaciones:
+            if calificacion.tipoValoracion() == "1":
+                suma_promedio = suma_promedio + max(calificacion.nota_definitiva, calificacion.nota_habilitacion)
+                
+#                if calificacion.nota_definitiva >= calificacion.nota_habilitacion:
+#                    suma_promedio = suma_promedio + calificacion.nota_definitiva
+#                else: 
+#                    suma_promedio = suma_promedio + calificacion.nota_habilitacion
               
-        self.promedio_ciclo = round(tmp_promedio_ciclo/len(tmp_calificacion), 2)
+        self.promedio_ciclo = round(suma_promedio/len(calificaciones), 2)
         MatriculaCiclo.save(self)
         self.matricula_programa.calculaPromedioAcumulado(self.matricula_programa.id)
     
@@ -931,7 +964,7 @@ class Calificacion(models.Model):
         return "%s" % (self.curso.codigoMateria())
     
     def nombre_materia(self):
-        return u"%s" % (self.curso.nombre())
+        return u"%s" % (self.curso.materia.nombre)
     
     def idMatriculaPrograma(self):
         return "%s" % (self.matricula_ciclo.idMatriculaPrograma())
@@ -958,8 +991,10 @@ class Calificacion(models.Model):
         tmp_notas = NotaCorte.objects.filter(calificacion = calificacion_id)
         tmp_calificacion = 0.0
         tmp_fallas = 0
-#        Valoración numérica. Suma las notas de los cortes por el porcentaje de corte equivalente. Caso valoración numérica.
-        if self.curso.materia.tipo_valoracion=="1":
+        # TODO: Los dos if pueden ser reemplazados con un dict. 
+        # Valoración numérica. Suma las notas de los cortes por el 
+        # porcentaje de corte equivalente. Caso valoración numérica.
+        if self.curso.materia.tipo_valoracion == '1':
             for tmp_nota in tmp_notas:
                 tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
                 tmp_calificacion = tmp_calificacion + (tmp_nota.nota * (tmp_corte.porcentaje * 0.01))
@@ -969,7 +1004,8 @@ class Calificacion(models.Model):
             self.fallas = tmp_fallas
             Calificacion.save(self)
             
-#       Valoración por horas. Suma las horas de los cortes,como el caso de bienestar institucional.
+        # Valoración por horas. Suma las horas de los cortes,como el 
+        # caso de bienestar institucional.
         if self.curso.materia.tipo_valoracion=="3":
             for tmp_nota in tmp_notas:
                 tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)

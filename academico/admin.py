@@ -2,9 +2,7 @@
 from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia
 from academico.models import Sede
 from django.contrib import admin
-
 from django.http import HttpResponseRedirect
-
 
 class ButtonableModelAdmin(admin.ModelAdmin):
     """
@@ -46,13 +44,22 @@ class CalificacionInline(admin.TabularInline):
 
 class MatriculaCicloAdmin(ButtonableModelAdmin):
     raw_id_fields = ('matricula_programa', 'ciclo')
+    readonly_fields = ('sede',
+                       'nombre_estudiante', 
+                       'promedio_ciclo', 
+                       'cursos_inscritos', 
+                       'nombre_programa',)
     fieldsets = [
+        ('Resumen', {'fields': [
+            'nombre_estudiante',
+            'nombre_programa',
+            'promedio_ciclo',
+            'cursos_inscritos',
+            'sede',]}),
         ('Información básica', {'fields': [
             'fecha_inscripcion', 
             'matricula_programa',
             'ciclo',
-            'promedio_ciclo',
-            'cursos_inscritos',
             'observaciones']}),
     ]
     list_display_links = ('nombre_estudiante',)
@@ -65,12 +72,13 @@ class MatriculaCicloAdmin(ButtonableModelAdmin):
         'cursos_inscritos',
         'puesto',
         'ciclo',
+        'total_creditos',
         'fecha_inscripcion',
     )
-    readonly_fields = ('promedio_ciclo', 'cursos_inscritos', )
+    
     
     inlines = [CalificacionInline]
-    list_filter = ['ciclo', 'fecha_inscripcion', ]
+    list_filter = ['ciclo', 'fecha_inscripcion',]
     search_fields = ('matricula_programa__programa__id', 
                      'matricula_programa__codigo', 
                      'matricula_programa__programa__nombre',
@@ -130,7 +138,7 @@ class CalificacionAdmin(admin.ModelAdmin):
     search_fields = ['curso__materia__codigo', 'matricula_ciclo__ciclo__codigo', 'curso__materia__nombre', 
                      'matricula_ciclo__matricula_programa__estudiante__nombre1', 'matricula_ciclo__matricula_programa__estudiante__nombre2', 
                      'matricula_ciclo__matricula_programa__estudiante__apellido1', 'matricula_ciclo__matricula_programa__estudiante__apellido2',]
-    list_filter = ['perdio_fallas',]
+    list_filter = ['perdio_fallas']
 
 
 class TipoProgramaAdmin(admin.ModelAdmin):
@@ -199,11 +207,12 @@ class SalonAdmin(admin.ModelAdmin):
     raw_id_fields = ('sede',)
     fieldsets = [
         ('Información básica', {'fields': [
-            'sede', 
             'codigo',
+            'sede', 
             'descripcion', 
             'capacidad', 
-            'tipo_salon']}),
+            'tipo_salon',
+            'mapa']}),
     ]
     list_display = ('codigo', 'sede', 'descripcion', 'capacidad', 'tipo_salon')
     search_fields = ['codigo',]
