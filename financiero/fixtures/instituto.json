@@ -1,0 +1,63 @@
+[
+  {
+    "model": "financiero.costoprograma",
+    "pk": 1,
+    "fields": {
+      "ciclo": "1",
+      "valor": 500
+    }
+  },
+  {
+    "model": "financiero.costoprograma_programa",
+    "pk": 1,
+    "fields": {
+      "costoprograma": "1",
+      "programa": "1"
+    }
+  },
+  {
+    "model": "financiero.calendariopago",
+    "pk": 1,
+    "fields": {
+      "ciclo": 1
+    }
+  },
+  {
+    "model": "financiero.calendariopago_programa",
+    "pk": 1,
+    "fields": {
+      "calendariopago": 1,
+      "programa": 1
+    }
+  },
+  {
+    "model": "financiero.plazo",
+    "pk": 1,
+    "fields": {
+      "calendario_pago": 1,
+      "fecha_ordinaria": "2011-07-17",
+      "fecha_extraordinaria": "2011-07-20",
+      "valor_incremento": 10
+    }
+  },
+  {
+    "model": "financiero.plazo",
+    "pk": 2,
+    "fields": {
+      "calendario_pago": 1,
+      "fecha_ordinaria": "2011-08-17",
+      "fecha_extraordinaria": "2011-08-20",
+      "valor_incremento": 10
+    }
+  },
+  {
+    "model": "financiero.plazo",
+    "pk": 3,
+    "fields": {
+      "calendario_pago": 1,
+      "fecha_ordinaria": "2011-09-17",
+      "fecha_extraordinaria": "2011-09-20",
+      "valor_incremento": 10
+    }
+  }
+]

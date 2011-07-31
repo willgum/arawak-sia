@@ -277,9 +277,9 @@
     "fields": {
       "programa": "1",
       "codigo": "10111",
-      "sufijo": "11",
       "nombre": "Cálculo Diferencial",
-      "periodo": 1
+      "periodo": 1,
+      "creditos": 1
     }
   },
   {
@@ -288,9 +288,9 @@
     "fields": {
       "programa": "1",
       "codigo": "10112",
-      "sufijo": "12",
       "nombre": "Administración General",
-      "periodo": 1
+      "periodo": 1,
+      "creditos": 1
     }
   },
   {
@@ -299,9 +299,9 @@
     "fields": {
       "programa": "1",
       "codigo": "10113",
-      "sufijo": "13",
       "nombre": "Introducción a la Administración Ambiental",
-      "periodo": 1
+      "periodo": 1,
+      "creditos": 1
     }
   },
   {
@@ -309,10 +309,10 @@
     "pk": 4,
     "fields": {
       "programa": "1",
-      "sufijo": "14",
       "codigo": "10114",
       "nombre": "Física",
-      "periodo": 1
+      "periodo": 1,
+      "creditos": 1
     }
   },
   {
@@ -321,9 +321,9 @@
     "fields": {
       "programa": "1",
       "codigo": "10115",
-      "sufijo": "15",
       "nombre": "Introducción a la Química",
-      "periodo": 1
+      "periodo": 1,
+      "creditos": 1
     }
   },
   {
@@ -332,7 +332,7 @@
     "fields": {
       "programa": "1",
       "codigo": "10116",
-      "sufijo": "16",
+      "creditos": 1,
       "nombre": "Cátedra Institucional",
       "periodo": 1
     }
@@ -343,7 +343,7 @@
     "fields": {
       "programa": "1",
       "codigo": "10121",
-      "sufijo": "21",
+      "creditos": 1,
       "nombre": "Cálculo Integral",
       "periodo": 2
     }
@@ -354,7 +354,7 @@
     "fields": {
       "programa": "1",
       "codigo": "10122",
-      "sufijo": "22",
+      "creditos": 1,
       "nombre": "Contabilidad",
       "periodo": 2
     }
@@ -364,7 +364,7 @@
     "pk": 9,
     "fields": {
       "programa": "1",
-      "sufijo": "23",
+      "creditos": 1,
       "codigo": "10123",
       "nombre": "Ecología",
       "periodo": 2
@@ -376,7 +376,7 @@
     "fields": {
       "programa": "1",
       "codigo": "10124",
-      "sufijo": "24",
+      "creditos": 1,
       "nombre": "Química Ambiental",
       "periodo": 2
     }
@@ -387,7 +387,7 @@
     "fields": {
       "programa": "1",
       "codigo": "10125",
-      "sufijo": "25",
+      "creditos": 1,
       "nombre": "Sociedad y Ambiente",
       "periodo": 2
     }
@@ -398,7 +398,7 @@
     "fields": {
       "programa": "1",
       "codigo": "10126",
-      "sufijo": "26",
+      "creditos": 1,
       "nombre": "Técnicas de Expresión Oral y Escrita",
       "periodo": 2
     }
