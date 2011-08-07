@@ -10,7 +10,7 @@ from django.conf import settings                                                
 from django.contrib import auth                                   
 from django.contrib.auth.models import Group, User
 from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion, MatriculaPrograma, MatriculaCiclo
-from financiero.models import MatriculaFinanciera, Ciclo, InscripcionPrograma, Letra
+from financiero.models import MatriculaFinanciera, Ciclo
 from django.contrib.auth.decorators import login_required                           # permite usar @login_requerid
 from academico.views import cicloNuevo
 
