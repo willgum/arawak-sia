@@ -21,9 +21,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'arawak_syspro', 
+        'NAME': 'sia', 
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -132,7 +132,6 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'academico',
     'geraldo',
-    # 'continuada',
     'financiero',
     # 'egresados',
 )
