@@ -121,7 +121,7 @@
 								<h2>Académico</h2>								
 								<ul>
 									{% if request.session.grupoUsuarioid == 3 %}
-										<li><a href="/academico/docente/programas/">Programas</a></li>
+										<!-- <li><a href="/academico/docente/programas/">Programas</a></li> -->
 										<li><a href="/academico/docente/horarios/">Horarios</a></li>
 										<li><a href="/academico/docente/notas/">Calificaciones</a></li>
 									{% endif %}
@@ -141,7 +141,8 @@
 									<h2>Financiero</h2>	
 									<ul>
 										{% if not request.session.mora %}
-											<li><a href="/financiero/estudiante/pazysalvo/">Paz y salvo</a></li>
+											<li><a href="/financiero/estudiante/pagos/">Pagos</a></li>
+											<li><a href="/financiero/estudiante/calendario/">Calendario de pagos</a></li>
 										{% endif %}
 									</ul>
 								{% endif %}

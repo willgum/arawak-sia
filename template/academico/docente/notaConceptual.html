@@ -75,12 +75,12 @@
 	<li>>></li>
 	<li><a href="/academico/docente/notas/">Calificaciones</a></li>
 	<li>>></li>
-	<li>{{curso.nombre}}</li>
+	<li>{{curso.nombre_curso}}</li>
 {% endblock %}
 
 {% block contenido %}
 	<div id="content" class="with_sidebar">
-		<h1> {{curso.nombre}} </h1>	
+	 	<h1> {{curso.nombre_curso}}</h1>	
 		<div id="csrf_token">{% csrf_token %}</div>	
 		<table id="estudiantes" class="tablesorter" width="100%">
 			<thead>

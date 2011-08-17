@@ -16,11 +16,11 @@ MINI_HEIGHT = 100
 THUMB_WIDTH = 120
 THUMB_HEIGHT = 150
 
-TipoValoracion = (
-    ('1', 'Numérica'),
-    ('2', 'Conceptual'),
-    ('3', 'Horas'),
-)
+#TipoValoracion = (
+#    ('1', 'Numérica'),
+#    ('2', 'Conceptual'),
+#    ('3', 'Horas'),
+#)
 
 def crear_usuario(nombre1, nombre2, apellido1, apellido2):
     tmp_nombre2 = ""
@@ -81,6 +81,15 @@ def normalizar_cadena(cadena):
     cadena = cadena.replace(u"Ü", "U")
     cadena = cadena.replace(u"Ñ", "N")
     return cadena
+
+class TipoValoracion(models.Model): 
+    nombre = models.CharField(max_length = 50)
+    nota_minima = models.FloatField(blank=True, null=True, default=0)
+    nota_maxima = models.FloatField(blank=True, null=True, default=0)
+    nota_aprobacion = models.FloatField(blank=True, null=True, default=0)
+    
+    def __unicode__(self):
+        return self.nombre
 
 
 class Sisben (models.Model):
@@ -221,9 +230,9 @@ class TipoPrograma(models.Model):
                               verbose_name="Código",
                               help_text="Máximo 3 caracteres")
     nombre = models.CharField(max_length=50)
-    nota_minima = models.FloatField(blank=True, null=True, default=0)
-    nota_maxima = models.FloatField(blank=True, null=True, default=0)
-    nota_aprobacion = models.FloatField(blank=True, null=True, default=0)
+#    nota_minima = models.FloatField(blank=True, null=True, default=0)
+#    nota_maxima = models.FloatField(blank=True, null=True, default=0)
+#    nota_aprobacion = models.FloatField(blank=True, null=True, default=0)
     
     def __unicode__(self):
         return u'%s' % self.nombre
@@ -498,11 +507,11 @@ class Programa(models.Model):
     def abreviatura(self):
         return self.nombre[0:5] + " ... " + self.nombre[-5:]
     
-    def notaMin(self):
-        return self.tipo_programa.nota_minima
-    
-    def notaMax(self):
-        return self.tipo_programa.nota_maxima
+#    def notaMin(self):
+#        return self.tipo_programa.nota_minima
+#    
+#    def notaMax(self):
+#        return self.tipo_programa.nota_maxima
 
 
 class Estudiante(models.Model):
@@ -738,10 +747,11 @@ class Materia(models.Model):
                                    blank=True)
     creditos = models.IntegerField(help_text='Número de créditos de la materia. Ingrese 0 si no usa sistema de créditos.', 
                                    default=0)
-    tipo_valoracion = models.CharField(max_length=1, 
-                                       choices=TipoValoracion, 
-                                       blank=True, 
-                                       default='1')
+    tipo_valoracion = models.ForeignKey(TipoValoracion)
+#    tipo_valoracion = models.CharField(max_length=1, 
+#                                       choices=TipoValoracion, 
+#                                       blank=True, 
+#                                       default='1')
     intensidad_semanal = models.SmallIntegerField(help_text='Número de horas requeridas en la semana.', 
                                                   blank=True, 
                                                   null=True, 
@@ -753,8 +763,9 @@ class Materia(models.Model):
     
     
     def __unicode__(self):
-        return u"%s %s" % (self.codigo, self.nombre)
-    
+        return u"%s | %s" % (self.codigo, unicode(self.nombre))
+#        return u"%s %s" % (self.codigo, self.nombre)
+        
     def idPrograma(self):
         return self.programa.id
     
@@ -765,10 +776,12 @@ class Materia(models.Model):
         return u"%s" % (self.programa.nombre)
         
     def notaMin(self):
-        return self.programa.notaMin()
+        return self.tipo_valoracion.nota_minima
+#        return self.programa.notaMin()
     
     def notaMax(self):
-        return self.programa.notaMax()
+        return self.tipo_valoracion.nota_maxima
+#        return self.programa.notaMax()
   
   
 class MatriculaCiclo(models.Model):
@@ -818,7 +831,7 @@ class MatriculaCiclo(models.Model):
         suma_promedio = 0.0
         
         for calificacion in calificaciones:
-            if calificacion.tipoValoracion() == "1":
+            if calificacion.tipoValoracion() == 1:
                 suma_promedio = suma_promedio + max(calificacion.nota_definitiva, calificacion.nota_habilitacion)
                 
 #                if calificacion.nota_definitiva >= calificacion.nota_habilitacion:
@@ -853,8 +866,8 @@ class Curso(models.Model):
     esperados = models.SmallIntegerField(help_text='Número esperado de estudiantes.', blank=True, null=True, validators=[MinValueValidator(0)])
     
     def __unicode__(self):
-        return u'%s' % self.materia
-#        return normalizar_cadena(self.materia.nombre)
+#        return u'%s' % self.materia
+        return normalizar_cadena(self.materia.nombre)
     
     def promedio(self):
         if self.materia.tipo_valoracion == "1":
@@ -909,7 +922,7 @@ class Curso(models.Model):
         return len(Calificacion.objects.filter(curso=self))
     
     def tipoValoracion(self):
-        return self.materia.tipo_valoracion
+        return self.materia.tipo_valoracion.id
     
     class Meta:
         unique_together = ("materia", "ciclo", "profesor", "grupo")
@@ -994,7 +1007,7 @@ class Calificacion(models.Model):
         # TODO: Los dos if pueden ser reemplazados con un dict. 
         # Valoración numérica. Suma las notas de los cortes por el 
         # porcentaje de corte equivalente. Caso valoración numérica.
-        if self.curso.materia.tipo_valoracion == '1':
+        if self.curso.materia.tipo_valoracion.id == 1:
             for tmp_nota in tmp_notas:
                 tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
                 tmp_calificacion = tmp_calificacion + (tmp_nota.nota * (tmp_corte.porcentaje * 0.01))
@@ -1003,10 +1016,10 @@ class Calificacion(models.Model):
             self.nota_definitiva = round(tmp_calificacion, 2)
             self.fallas = tmp_fallas
             Calificacion.save(self)
-            
-        # Valoración por horas. Suma las horas de los cortes,como el 
-        # caso de bienestar institucional.
-        if self.curso.materia.tipo_valoracion=="3":
+#            
+#        # Valoración por horas. Suma las horas de los cortes,como el 
+#        # caso de bienestar institucional.
+        if self.curso.materia.tipo_valoracion.id==3:
             for tmp_nota in tmp_notas:
                 tmp_corte = Corte.objects.get(id = tmp_nota.corte_id)
                 tmp_calificacion = tmp_calificacion + tmp_nota.nota
@@ -1015,6 +1028,7 @@ class Calificacion(models.Model):
             self.nota_definitiva = tmp_calificacion
             self.fallas = tmp_fallas
             Calificacion.save(self)
+        
         self.matricula_ciclo.promedioCiclo(self.matricula_ciclo.id)
     
     def save(self, *args, **kwargs):
@@ -1024,7 +1038,7 @@ class Calificacion(models.Model):
         for matCiclo in matCiclos:
             calificaciones = Calificacion.objects.filter(matricula_ciclo = matCiclo.id)
             for calificacion in calificaciones:
-                if calificacion.tipoValoracion() == "3" and calificacion.id != self.id:
+                if calificacion.tipoValoracion() == 3 and calificacion.id != self.id:
                     horas = horas + calificacion.nota_definitiva     
         matricula = MatriculaPrograma.objects.get(id = self.idMatriculaPrograma())
         cal = Calificacion.objects.get(id = self.id)
@@ -1098,6 +1112,7 @@ class Institucion(models.Model):
     logo = models.ImageField(storage=CustomStorage(), upload_to='imagenes/original/', blank=True)
     control_acudiente = models.BooleanField(help_text="Activado, impide que estudiantes menores de edad cambien la contraseña.")
     saludo = models.TextField(help_text='Mensaje de bienvenida', max_length=300, blank=True)
+    informacion_bancaria = models.TextField(verbose_name='Información bancaria', help_text='Información como números de cuenta y entidades bancarias', max_length=300, blank=True)
     class Meta:
         verbose_name_plural = 'Institución'
     
