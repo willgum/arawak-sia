@@ -4,7 +4,7 @@
 from datetime import datetime, timedelta, date
 from django.contrib.sessions.models import Session
 from django.http import HttpResponse
-from financiero.models import MatriculaFinanciera, HoraCatedra, Ciclo, Sesion, Adelanto,  Descuento
+from financiero.models import MatriculaFinanciera, Pago, Plazo, HoraCatedra, Ciclo, Sesion, Adelanto,  Descuento
 from academico.models import Profesor, CicloForm, Institucion, Estudiante, MatriculaPrograma, MatriculaCiclo
 from django.contrib.auth.decorators import login_required                                                       # me permite usar eö @login_requerid
 from django.shortcuts import render_to_response
@@ -91,10 +91,72 @@ def logout(solicitud):
 #----------------------------------------------vistas estudiante---------------------------------------------------------
 
 
-#def buscarMatriculaProgramasEstudiante(solicitud):
-#    hoy = date.today()
-#    usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
-#    return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
+def buscarMatriculaProgramasEstudiante(solicitud):
+    hoy = date.today()
+    usuario = Estudiante.objects.get(id_usuario = solicitud.user.id)
+    return MatriculaPrograma.objects.filter(estudiante = usuario.id, fecha_inscripcion__lte = hoy, fecha_vencimiento__gte = hoy)
+
+
+@login_required
+def pagos(solicitud):
+    if comprobarPermisos(solicitud):
+        programas = {}
+        matProgramas = buscarMatriculaProgramasEstudiante(solicitud)        
+        for matPrograma in matProgramas:
+            aux = {}            
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            for matCiclo in matCiclos:
+                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                matFinan = MatriculaFinanciera.objects.filter(matricula_ciclo = matCiclo.id)
+                for matFin in matFinan:
+                    pagos = Pago.objects.filter(matricula_financiera = matFin)
+                    aux['matFinan'] = matFin
+                    aux['pagos'] = pagos
+                    aux['cantidad'] = len(pagos)
+                aux['programas'] = matPrograma
+                aux['ciclo'] = ciclo
+                programas[matPrograma.id] = aux
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas}        
+        return redireccionar('financiero/estudiante/pagos.html', solicitud, datos)
+    else:
+        return logout(solicitud)
+
+
+@login_required
+def calendario(solicitud):
+    if comprobarPermisos(solicitud):
+        programas = {}
+        cuota_extra = 0.0
+        matProgramas = buscarMatriculaProgramasEstudiante(solicitud)        
+        for matPrograma in matProgramas:
+            aux = {}            
+            matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+            for matCiclo in matCiclos:
+                ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+                matFinan = MatriculaFinanciera.objects.filter(matricula_ciclo = matCiclo.id)
+                for matFin in matFinan:
+                    ca = Plazo.objects.filter(calendario_pago = matFin.calendario_pago)[:1]
+                    porcentaje = 0
+                    for c in ca:
+                        porcentaje = c.porcentaje_incremento
+                    
+                    calendario = Plazo.objects.filter(calendario_pago = matFin.calendario_pago)
+                    cuota_extra = round(matFin.valor_matricula/len(calendario) + (matFin.valor_matricula*porcentaje)/(100*len(calendario)), 0)
+                    
+                    aux['matFinan'] = matFin
+                    aux['calendario'] = calendario
+                    aux['cuota_ordin'] = matFin.valor_matricula/len(calendario)
+                    aux['cuota_extra'] = cuota_extra
+                    aux['cantidad'] = len(calendario)
+                aux['programas'] = matPrograma
+                aux['ciclo'] = ciclo
+                programas[matPrograma.id] = aux
+        datos = {'margintop': calcularMargintop(programas),
+                 'programas': programas}        
+        return redireccionar('financiero/estudiante/calendario.html', solicitud, datos)
+    else:
+        return logout(solicitud)
 
 #@login_required
 #def pazySalvo(solicitud):
@@ -147,19 +209,19 @@ def logout(solicitud):
 #    else:
 #        return logout(solicitud)
     
-#@login_required
-#def pazySalvoTotal(solicitud, inscripcionPrograma_id):
-#    if comprobarPermisos(solicitud):        
-#        fecha= datetime.now() 
-#        #id_ciclo = cicloActual()
-#        datos = {'hora': fecha.strftime("%H:%M %p"),
-#                 'fecha': fecha.strftime("%d-%m-%Y"),
-#                 #'ciclo': Ciclo.objects.get(id = id_ciclo),
-#                 'estudiante': Estudiante.objects.get(id_usuario = solicitud.user.id),
-##                 'inscripcionPrograma': InscripcionPrograma.objects.get(id = inscripcionPrograma_id)}        
-#        return redireccionar('financiero/estudiante/pazysalvofinal.html', solicitud, datos)
-#    else:
-#        return logout(solicitud)
+@login_required
+def pazySalvoTotal(solicitud, matriculaFinanciera_id):
+    if comprobarPermisos(solicitud):        
+        fecha= datetime.now() 
+        #id_ciclo = cicloActual()
+        datos = {'hora': fecha.strftime("%H:%M %p"),
+                 'fecha': fecha.strftime("%d-%m-%Y"),
+                 #'ciclo': Ciclo.objects.get(id = id_ciclo),
+                 'estudiante': Estudiante.objects.get(id_usuario = solicitud.user.id),
+                 'matriculaFinanciera': MatriculaFinanciera.objects.get(id = matriculaFinanciera_id)}        
+        return redireccionar('financiero/estudiante/pazysalvofinal.html', solicitud, datos)
+    else:
+        return logout(solicitud)
     
 ##@login_required
 #def liquidarNomina(solicitud):

@@ -10,7 +10,7 @@ from django.conf import settings                                                
 from django.contrib import auth                                   
 from django.contrib.auth.models import Group, User
 from academico.models import Profesor, Estudiante, TipoDocumento, Genero, Estrato, Institucion, MatriculaPrograma, MatriculaCiclo
-from financiero.models import MatriculaFinanciera, Ciclo
+from financiero.models import MatriculaFinanciera, Ciclo, Pago, Plazo
 from django.contrib.auth.decorators import login_required                           # permite usar @login_requerid
 from academico.views import cicloNuevo
 
@@ -87,48 +87,41 @@ def buscarInscribirMaterias(solicitud):
     return inscribir
  
  
-def pazySalvo(solicitud):
+def historialPagos(solicitud):
     mora = False
-    hoy = date.today()
-    matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
-    for matPrograma in matProgramas:       
-        matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
-        for matCiclo in matCiclos:
-            ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
-            insPros = InscripcionPrograma.objects.filter(matricula_programa = matPrograma.id)
-            for insPro in insPros:
-                matFinans = MatriculaFinanciera.objects.filter(inscripcion_programa = insPro, ciclo = ciclo.id)
-                for matFinan in matFinans:
-                    letras = Letra.objects.filter(matricula_financiera = matFinan)
-                    if len(letras) > 0:
-                        cantidad = 0
-                        fechaVencimiento = matFinan.fecha_expedicion
-                        for letra in letras:
-                            if letra.cancelada == True:
-                                cantidad = cantidad + 1
-                            else:
-                                if letra.fecha_expedicion >= date.today() or  letra.fecha_vencimiento >= hoy:
-                                    cantidad = cantidad + 1
-                                else:
-                                    if matFinan.fecha_expedicion == fechaVencimiento:
-                                        fechaVencimiento = letra.fecha_vencimiento
-                                    if fechaVencimiento > letra.fecha_vencimiento:
-                                        fechaVencimiento = letra.fecha_vencimiento                                   
-                        if cantidad != len(letras):
-                            mora = True
-                            diasMora = hoy - fechaVencimiento
-                            if 'diasMora' in solicitud.session and solicitud.session['diasMora'] < diasMora.days:
-                                solicitud.session['diasMora'] = diasMora.days
-                            else:
-                                solicitud.session['diasMora'] = diasMora.days
-                    else:
-                        if matFinan.paz_y_salvo == False:
-                            mora = True
-                            diasMora = hoy - matFinan.fecha_expedicion
-                            if 'diasMora' in solicitud.session and solicitud.session['diasMora'] < diasMora.days:
-                                solicitud.session['diasMora'] = diasMora.days
-                            else:
-                                solicitud.session['diasMora'] = diasMora.days                       
+#    hoy = date.today()
+#    matProgramas = buscarMatriculaProgramasEstudiante(solicitud)
+#    for matPrograma in matProgramas:       
+#        matCiclos = MatriculaCiclo.objects.filter(matricula_programa = matPrograma.id)
+#        for matCiclo in matCiclos:
+##            ciclo = Ciclo.objects.get(id = matCiclo.ciclo_id) 
+#            matFinans = MatriculaFinanciera.objects.filter(matricula_ciclo = matCiclo.ciclo_id)
+#            for matFinan in matFinans:
+#                pagos = Pago.objects.filter(matricula_financiera = matFinan)
+#                plazo = Plazo.objects.filter(calendario_pago = matFinan.calendario_pago)
+#                if len(pagos) > 0:
+#                    cantidad = 0
+#                    fechaVencimiento = matFinan.fecha_expedicion
+#                    for pago in pagos:
+#                        if matFinan.fecha_expedicion == fechaVencimiento:
+#                            fechaVencimiento = letra.fecha_vencimiento
+#                        if fechaVencimiento > letra.fecha_vencimiento:
+#                            fechaVencimiento = letra.fecha_vencimiento                                   
+#                    if cantidad != len(letras):
+#                        mora = True
+#                        diasMora = hoy - fechaVencimiento
+#                        if 'diasMora' in solicitud.session and solicitud.session['diasMora'] < diasMora.days:
+#                            solicitud.session['diasMora'] = diasMora.days
+#                        else:
+#                            solicitud.session['diasMora'] = diasMora.days
+#                else:
+#                    if matFinan.paz_y_salvo == False:
+#                        mora = True
+#                        diasMora = hoy - matFinan.fecha_expedicion
+#                        if 'diasMora' in solicitud.session and solicitud.session['diasMora'] < diasMora.days:
+#                            solicitud.session['diasMora'] = diasMora.days
+#                        else:
+#                            solicitud.session['diasMora'] = diasMora.days                       
     solicitud.session['mora'] = mora
     
 def indice(solicitud):
@@ -229,7 +222,7 @@ def login(solicitud):
             if resultado[0]['resultado'] == True:        
                 solicitud.session['grupoUsuarioid'] = resultado[0]['grupoUsuarioid']
                 if solicitud.session['grupoUsuarioid'] == 4:
-                    pazySalvo(solicitud)
+                    historialPagos(solicitud)
                 solicitud.session['inscribir'] = buscarInscribirMaterias(solicitud)
                 intituciones = Institucion.objects.all()
                 institucion = {}

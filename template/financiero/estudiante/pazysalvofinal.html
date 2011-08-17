@@ -57,21 +57,19 @@
 			</tr>
 			<tr align="left">
 				<td colspan="2"><strong>Ciclo:</strong></td>
-				<td colspan="8">{{ciclo }}</td>
+				<td colspan="8">{{matriculaFinanciera.matricula_ciclo.codigo_ciclo }}</td>
 			</tr>
 			<tr align="left">
 				<td colspan="2"><strong>Programa:</strong></td>
-				<td colspan="8">{{ inscripcionPrograma.nombre_programa }}</td>
+				<td colspan="8">{{ matriculaFinanciera.nombre_programa }}</td>
 			</tr>
 			<tr align="left">
 				<td colspan="2"><strong>Valor:</strong></td>
-				<td colspan="8">$ {{ inscripcionPrograma.valor_inscripcion|floatformat|intcomma }}</td>
+				<td colspan="8">$ {{ matriculaFinanciera.valor_matricula|floatformat|intcomma }}</td>
 			</tr>
 			<tr align="left">
 				<td colspan="2"><strong>Fecha de inscripción:</strong></td>
-				<td colspan="3">{{ inscripcionPrograma.fecha_inscripcion }}</td>
-				<td colspan="2"><strong>Fecha de pago:</strong></td>
-				<td colspan="3">{{ inscripcionPrograma.fecha_pago }}</td>
+				<td colspan="3">{{ matriculaFinanciera.fecha_matricula }}</td>
 			</tr>
 			<tr align="left">
 				<td colspan="10">

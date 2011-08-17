@@ -145,17 +145,11 @@ class TipoProgramaAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Información básica', {'fields': [     
             'codigo',             
-            'nombre',
-            'nota_minima', 
-            'nota_maxima', 
-            'nota_aprobacion']}),
+            'nombre']}),
     ]
     list_display = (
-        'codigo',             
+            'codigo',             
             'nombre',
-            'nota_minima', 
-            'nota_maxima', 
-            'nota_aprobacion',
     )
     list_display_links = ('codigo', 'nombre')
     search_fields = ['codigo', 'nombre']
@@ -554,6 +548,7 @@ class InstitucionAdmin(admin.ModelAdmin):
             'logo',]}),
         ('Configuracion', {'fields': [
             'saludo',
+            'informacion_bancaria',
             'control_acudiente',]}),
     ]
     

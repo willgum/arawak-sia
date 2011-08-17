@@ -15,54 +15,40 @@
 {% block contenido %}
 	<div id="content" class="with_sidebar">
 		<h1>Horarios</h1>
-		<ul class="tabs">
-			{% for llave, valor in programas.items %}
-				<li><a href="#" title="{{ valor.programa.nombre }}">{{ valor.programa.abreviatura }}</a></li>
-			{% endfor %}
-		</ul>		
 		<div class="panes">
-			{% for programa in programas %}
-				<div class="panesDiv">
-				<div style="height:{{ margintop }}px;"></div>
-				{% for lProgramas, vProgramas in programas.items %}
-					{% ifequal programa vProgramas.programa.id %}
-						{% for lCiclo, vCiclo in vProgramas.ciclos.items %}
-							<table id="estudiantes" class="grilla" width="100%">
-								<thead>
-									<tr>
-										<th colspan="3"><h3>Ciclo: {{ vCiclo.ciclo.codigo}}</h3></th>				
-									</tr>
-									<tr>
-										<th style="width: 80px;">Código</th>
-										<th>Materia</th>
-										<th style="width: 150px;">Horario</th>				
-									</tr>
-								</thead>
-								<tfoot>
-									<tr>
-										<th scope="row" colspan="3">Total Materias: {{ vCiclo.cantidad }}</th>
-									</tr>
-								</tfoot>
-								<tbody>				
-									{% for curso in vCiclo.cursos %}
-										<tr class="{% cycle '' 'odd' %}">
-											<th scope="row"><a href="{{curso.idMateria}}/">{{ curso.codigoMateria }}</a></th>
-		                        			<td>{{ curso.nombre }}</td>
-		                        			<td>
-		                        				{% for horario in curso.horarios %}
-													{{ horario }}<br/>
-												{% endfor %}
-											</td>
-										</tr>
-									{% endfor %}
-								</tbody>
-							</table>
-							&nbsp;
-						{% endfor %}
-					{% endifequal %}
+				{% for lciclo, vciclo in ciclo.items %}
+					<table id="estudiantes" class="grilla" width="100%">
+						<thead>
+							<tr>
+								<th colspan="3"><h3>Ciclo: {{ vciclo.ciclo.codigo}}</h3></th>				
+							</tr>
+							<tr>
+								<th style="width: 80px;">Código</th>
+								<th>Materia</th>
+								<th style="width: 150px;">Horario</th>				
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th scope="row" colspan="3">Total Materias: {{ vciclo.cantidad }}</th>
+							</tr>
+						</tfoot>
+						<tbody>				
+							{% for curso in vciclo.cursos %}
+								<tr class="{% cycle '' 'odd' %}">
+									<th scope="row"><a href="{{curso.idMateria}}/">{{ curso.codigoMateria }}</a></th>
+                        			<td>{{ curso.nombre_curso }}</td>
+                        			<td>
+                        				{% for horario in curso.horarios %}
+											{{ horario }}<br/>
+										{% endfor %}
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					&nbsp;
 				{% endfor %}
-				</div>
-			{% endfor %}
 		</div>
 	</div>			
 {% endblock %}

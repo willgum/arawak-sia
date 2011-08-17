@@ -24,12 +24,12 @@
 			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.codigo }}</td>
 			</tr>
 			<tr>
-				<td valign="top" style="padding: 3px; text-align:left"><strong>Programa: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.programa }}</td>
-			</tr>
-			<tr>
 				<td valign="top" style="padding: 3px; text-align:left"><strong>Descripción: </strong></td>				
-			    <td valign="top" style="padding: 3px; text-align:justify">{{ materia.descripcion }}</td>
+			    <td valign="top" style="padding: 3px; text-align:justify">
+			    {% autoescape off %}
+			    {{ materia.descripcion }}
+			    {% endautoescape %}
+			    </td>
 			</tr>
 			<tr>
 				<td valign="top" style="padding: 3px; text-align:left"><strong>Intensidad: </strong></td>				

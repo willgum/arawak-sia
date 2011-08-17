@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+{% endblock %}
+
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li><a href="/financiero/">Financiero</a></li>
+	<li>>></li>
+	<li>Calendario</li>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1>Calendario de pagos</h1>
+		<ul class="tabs">
+			{% for llave, valor in programas.items %}
+				<li><a href="#" title="{{ valor.programas.nombre_programa }}">{{ valor.programas.abreviatura }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for llave, valor in programas.items %}
+				<div class="panesDiv">
+					<div style="height:{{ margintop }}px;"></div>
+					<table class="grilla" width="100%">
+						<thead>
+							<tr>
+								<th colspan="5"><h3>Ciclo - {{ valor.ciclo.codigo}}</h3></th>				
+							</tr>
+							<tr>
+								<th>Fecha ordinaria</th>
+								<th>Valor</th>		
+								<th>Fecha extraordinaria</th>
+								<th>Valor</th>					
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th scope="row" colspan="5">Total Cuotas: {{ valor.cantidad }}</th>
+							</tr>
+						</tfoot>
+						<tbody>				
+							{% for calen in valor.calendario %}
+								<tr class="{% cycle '' 'odd' %}">
+									<th scope="row">{{ calen.fecha_ordinaria }}</th>
+									<th scope="row">{{ valor.cuota_ordin|floatformat|intcomma }}</th>
+									<th scope="row">{{ calen.fecha_extraordinaria }}</th>
+									<th scope="row">{{ valor.cuota_extra|floatformat|intcomma }}</th>
+									<!--
+                        			<th scope="row">
+                        				{% if letra.cancelada %}
+                        					<a href="plazo/{{letra.id}}/" target="_blank">Recibo</a>
+                        				{% endif %}
+                        			</th>
+                        			-->
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>				
+				</div>
+			{% endfor %}
+		</div>
+	</div>			
+{% endblock %}

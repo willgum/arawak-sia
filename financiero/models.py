@@ -20,7 +20,7 @@ class CalendarioPago(models.Model):
 
 class MatriculaFinanciera(models.Model):
     fecha_matricula = models.DateField()
-    matricula_ciclo = models.ForeignKey(MatriculaCiclo)
+    matricula_ciclo = models.ForeignKey(MatriculaCiclo, unique=True)
     calendario_pago = models.ForeignKey(CalendarioPago)
     
     valor_inscripcion = models.FloatField(verbose_name="Valor inscripción", 
@@ -86,14 +86,14 @@ class MatriculaFinanciera(models.Model):
         
     def save(self, *args, **kwargs):
         try:
-            costo_programa = CostoPrograma.objects.get(programa = self.matricula_ciclo.matricula_programa.id)
+            costo_programa = CostoPrograma.objects.get(programa = self.matricula_ciclo.matricula_programa.programa)
             creditos_cursados = self.matricula_ciclo.total_creditos()
             costo_programa_creditos = creditos_cursados * costo_programa.valor_credito
             # Maximo entre el valor del programa basico y por creditos
             subtotal = max(costo_programa_creditos, costo_programa.valor) 
             valor = subtotal - self.descuento
         except CostoPrograma.DoesNotExist:
-            valor = 0
+            valor = -5
             
         self.valor_matricula = valor
         super(MatriculaFinanciera, self).save(*args, **kwargs)

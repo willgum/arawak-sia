@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% block jquerycript %}
+	$(function() {$("ul.tabs").tabs("div.panes > div");});
+{% endblock %}
+
+{% block ruta %}
+	<li><a href="/">Inicio</a></li>
+	<li>>></li>
+	<li><a href="/financiero/">Financiero</a></li>
+	<li>>></li>
+	<li>Pagos</li>
+{% endblock %}
+
+{% block contenido %}
+	<div id="content" class="with_sidebar">
+		<h1>Pagos realizados</h1>
+		<ul class="tabs">
+			{% for llave, valor in programas.items %}
+				<li><a href="#" title="{{ valor.programas.nombre_programa }}">{{ valor.programas.abreviatura }}</a></li>
+			{% endfor %}
+		</ul>		
+		<div class="panes">
+			{% for llave, valor in programas.items %}
+				<div class="panesDiv">
+					<div style="height:{{ margintop }}px;"></div>
+					<table class="grilla" width="100%">
+						<thead>
+							<tr>
+								<th colspan="5"><h3>Ciclo - {{ valor.ciclo.codigo}}</h3></th>				
+							</tr>
+							<tr>
+								<th>Fecha de pago</th>
+								<th>Concepto</th>		
+								<th>Valor</th>
+								<th></th>			
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Total abonado:</th>
+								<th></th>
+								<th> {{ valor.matFinan.valor_abonado|floatformat|intcomma  }}</th>
+								<th></th>
+							</tr>
+							<tr>
+								<th>Saldo: </th>
+								<th></th>
+								<th>{{ valor.matFinan.saldo|floatformat|intcomma  }}</th>
+								<th></th>
+								
+							</tr>
+						</tfoot>
+						<tbody>				
+							{% for pago in valor.pagos %}
+								<tr class="{% cycle '' 'odd' %}">
+									<th scope="row">{{ pago.fecha_pago }}</th>
+									<th scope="row">{{ pago.concepto }}</th>
+									<th scope="row">{{ pago.valor|floatformat|intcomma  }}</th>
+									<th scope="row"></th>
+									<!--
+                        			<th scope="row">
+                        				{% if letra.cancelada %}
+                        					<a href="plazo/{{letra.id}}/" target="_blank">Recibo</a>
+                        				{% endif %}
+                        			</th>
+                        			-->
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% if valor.matFinan.paz_y_salvo %}	
+						<h2>Nota:</h2>
+						<p>Usted ya cancelo la totalidad del valor de la matricula de este programa. <strong><a href="{{ valor.matFinan.id }}/" target="_blank">Generar Paz y salvo</a></strong></p> 
+					{% else %}
+						<h2>Nota:</h2>
+						<p>Aún no ha cancelado la totalidad del valor de matrícula.</p>  
+					{% endif %}				
+				</div>
+			{% endfor %}
+		</div>
+	</div>			
+{% endblock %}
