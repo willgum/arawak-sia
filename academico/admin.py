@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia
+from academico.models import Ciclo, NotaCorte, MatriculaCiclo, Calificacion, Corte, Programa, Salon, Materia, EstudioComplementario, Referencia, MatriculaPrograma, Amonestacion, Estudiante, Profesor, HorarioCurso, Curso, Institucion, Funcionario, TipoPrograma, TipoNotaConceptual, ProfesorExperiencia, TipoValoracion
 from academico.models import Sede
 from django.contrib import admin
 from django.http import HttpResponseRedirect
@@ -508,6 +508,26 @@ class TipoNotaConceptualAdmin(admin.ModelAdmin):
     search_fields = ('codigo', 'nombre')
 
 
+class TipoValoracionAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Información básica', {'fields': [
+            'nombre',
+            'nota_minima',
+            'nota_maxima',
+            'nota_aprobacion',
+            ]}),
+    ]
+    
+    list_display = (
+        'nombre',
+        'nota_minima',
+        'nota_maxima',
+        'nota_aprobacion',      
+    )
+    
+    search_fields = ('nombre',)
+
+
 class SedeAdmin(admin.ModelAdmin):
 
     fieldsets = [
@@ -649,6 +669,7 @@ admin.site.register(Sede, SedeAdmin)
 admin.site.register(Programa, ProgramaAdmin)
 admin.site.register(TipoPrograma, TipoProgramaAdmin)
 admin.site.register(TipoNotaConceptual, TipoNotaConceptualAdmin)
+admin.site.register(TipoValoracion, TipoValoracionAdmin)
 admin.site.register(Profesor, ProfesorAdmin)
 #admin.site.unregister(User)
 #admin.site.register(User, UserAdmin)
