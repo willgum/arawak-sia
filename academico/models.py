@@ -90,6 +90,9 @@ class TipoValoracion(models.Model):
     
     def __unicode__(self):
         return self.nombre
+    
+    class Meta:
+        verbose_name_plural = 'Tipo valoraciones'
 
 
 class Sisben (models.Model):
